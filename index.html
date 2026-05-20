@@ -1389,6 +1389,7 @@
   if (!dock) return;
   const convo = dock.querySelector(".ai-convo");
   const followupsSection = dock.querySelector(".ai-followups");
+  const chipsContainer = followupsSection.querySelector(".ai-followup-chips");
   const toggle = dock.querySelector(".ai-toggle");
   const collapseBtn = dock.querySelector(".ai-collapse");
   const form = dock.querySelector(".ai-input");
@@ -1413,9 +1414,11 @@
     return toggle && toggle.getAttribute("aria-checked") === "true" ? "recruiter" : null;
   }
 
-  // Render streamed text as <p> blocks, preserving <mark> tags from the model
+  // Render streamed text as <p> blocks, preserving <mark> tags from the model.
+  // Strip the ---ASK--- followup section out of the displayed message.
   function renderBot(container, text) {
-    const paragraphs = text.split(/\n\n+/).filter((p) => p.length > 0);
+    const main = text.split(/---ASK---/i)[0].trim();
+    const paragraphs = main.split(/\n\n+/).filter((p) => p.length > 0);
     if (paragraphs.length === 0) {
       container.innerHTML = '<p></p>';
       return;
@@ -1423,6 +1426,29 @@
     container.innerHTML = paragraphs
       .map((p) => `<p>${p.replace(/\n/g, "<br>")}</p>`)
       .join("");
+  }
+
+  // Extract follow-up questions from the model output and refresh the chips
+  function extractFollowups(text) {
+    const parts = text.split(/---ASK---/i);
+    if (parts.length < 2) return [];
+    return parts[1]
+      .split("\n")
+      .map((s) => s.trim())
+      .filter((s) => s.length > 0 && s.length < 80)
+      .slice(0, 3);
+  }
+
+  function refreshFollowups(items) {
+    if (!items || items.length === 0) return;
+    chipsContainer.innerHTML = "";
+    items.forEach((text) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "ai-followup";
+      btn.textContent = text;
+      chipsContainer.appendChild(btn);
+    });
   }
 
   function escapeHtml(s) {
@@ -1518,7 +1544,11 @@
       }
 
       botMsg.classList.remove("ai-msg-streaming");
-      history.push({ role: "assistant", content: accumulated });
+      // Strip the followups section before saving to history
+      const cleanForHistory = accumulated.split(/---ASK---/i)[0].trim();
+      history.push({ role: "assistant", content: cleanForHistory });
+      // Pull suggested follow-ups out of the response and refresh the chips
+      refreshFollowups(extractFollowups(accumulated));
     } catch (err) {
       if (typing.parentNode) typing.remove();
       const errMsg = document.createElement("div");
