@@ -114,6 +114,15 @@ The visitor has toggled recruiter mode. Adjust your focus:
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default async function handler(req) {
+  // GET — diagnostic ping. Lets you browse to /api/chat and see proof of life.
+  if (req.method === "GET") {
+    return json({
+      status: "alive",
+      function: "Dinesh's portfolio AI",
+      model: "claude-haiku-4-5",
+      hint: "Send a POST with JSON body { messages: [...], mode?: 'recruiter' }"
+    });
+  }
   if (req.method !== "POST") {
     return json({ error: "Method not allowed" }, 405);
   }
