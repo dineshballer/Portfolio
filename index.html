@@ -685,19 +685,41 @@
     width: min(540px, calc(100vw - 48px));
     z-index: 20;
   }
+  /* Whole dock is one continuous card — header, conversation, and input share the same surface */
   .ai-dock-inner {
-    background: rgba(252, 250, 245, 0.98);
-    backdrop-filter: blur(24px) saturate(1.15);
-    -webkit-backdrop-filter: blur(24px) saturate(1.15);
-    border: 1px solid rgba(23, 23, 23, 0.08);
-    border-radius: 16px;
-    box-shadow: 0 1px 2px rgba(23, 23, 23, 0.04),
-                0 8px 24px rgba(31, 77, 62, 0.10),
-                0 24px 56px rgba(31, 77, 62, 0.12);
-    overflow: hidden;
+    position: relative;
     display: flex;
     flex-direction: column;
+    background: rgba(252, 250, 245, 0.97);
+    backdrop-filter: blur(24px) saturate(1.15);
+    -webkit-backdrop-filter: blur(24px) saturate(1.15);
+    border: 1px solid rgba(23, 23, 23, 0.10);
+    border-radius: 20px;
+    box-shadow: 0 1px 2px rgba(23, 23, 23, 0.04),
+                0 12px 32px rgba(31, 77, 62, 0.10),
+                0 24px 56px rgba(31, 77, 62, 0.12);
+    overflow: hidden;
     max-height: min(620px, calc(100vh - 48px));
+    transition: border-color 280ms cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .ai-dock-inner:focus-within {
+    border-color: rgba(31, 77, 62, 0.32);
+    box-shadow: 0 1px 2px rgba(23, 23, 23, 0.04),
+                0 18px 44px rgba(31, 77, 62, 0.18),
+                0 0 0 4px rgba(31, 77, 62, 0.06);
+  }
+
+  /* Panel now just structural — sits inline above input within the card */
+  .ai-panel {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
   }
 
   /* Header */
@@ -929,80 +951,120 @@
     transform: translateY(-1px);
   }
 
-  /* Input row — clean modern */
+  /* Input row — seamless bottom of the card, no separate pill background */
   .ai-input {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 12px 12px;
+    gap: 10px;
+    padding: 10px 12px 12px 18px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     border-top: 1px solid rgba(23, 23, 23, 0.06);
-    background: rgba(255, 255, 255, 0.5);
   }
   .ai-input input {
     flex: 1;
+    min-width: 0;
     appearance: none;
-    background: #FFFFFF;
-    border: 1px solid rgba(23, 23, 23, 0.10);
-    border-radius: 10px;
-    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    padding: 10px 0;
     font-family: var(--body);
-    font-size: 13.5px;
+    font-size: 14px;
     color: var(--ink);
     outline: none;
-    transition: border-color 220ms ease, box-shadow 220ms ease;
   }
   .ai-input input::placeholder {
     color: var(--ink-mute);
+    opacity: 1;
   }
-  .ai-input input:focus {
-    border-color: var(--green-strong);
-    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.10);
+
+  /* Sparkle icon at the left of the input pill */
+  .ai-input-spark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green-strong);
+    flex-shrink: 0;
+    animation: spark-rotate 4.8s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  /* Small label above the input pill — identifies the chat */
+  .ai-greeting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-family: var(--body);
+    font-size: 11.5px;
+    color: var(--ink-mute);
+    letter-spacing: 0.005em;
+    user-select: none;
+    pointer-events: none;
+  }
+  .ai-greeting strong {
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .ai-greeting .ai-greeting-dot {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(31, 77, 62, 0.45);
   }
   .ai-send {
     appearance: none;
     background: var(--ink);
     color: #FFFFFF;
     border: none;
-    width: 36px; height: 36px;
-    border-radius: 10px;
+    height: 32px;
+    padding: 0 8px 0 12px;
+    border-radius: 999px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    transition: background 220ms cubic-bezier(0.16, 1, 0.3, 1),
-                transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    gap: 6px;
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: scale(0.7) translateY(2px);
+    pointer-events: none;
+    transition: opacity 260ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+                background 220ms cubic-bezier(0.16, 1, 0.3, 1);
     flex-shrink: 0;
+  }
+  .ai-input.has-content .ai-send {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
   }
   .ai-send:hover {
     background: var(--green-strong);
-    transform: translateY(-1px);
+    transform: scale(1.03) translateY(-1px);
   }
-  .ai-send svg {
-    width: 16px; height: 16px;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    fill: none;
+  .ai-send-label {
+    letter-spacing: 0.03em;
   }
-
-  /* Powered by footer */
-  .ai-foot {
-    display: flex;
+  .ai-send-kbd {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 7px 0 9px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 4px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     font-family: var(--body);
-    font-size: 10px;
-    font-weight: 400;
-    color: var(--ink-mute);
-    letter-spacing: 0.04em;
-    background: rgba(23, 23, 23, 0.015);
-    border-top: 1px solid rgba(23, 23, 23, 0.04);
-  }
-  .ai-foot strong {
-    color: var(--ink-soft);
+    font-size: 13px;
+    line-height: 1;
     font-weight: 500;
   }
 
@@ -1040,12 +1102,25 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Collapsed state */
+  /* Conversation area animation for expand/collapse */
+  .ai-convo {
+    transition: max-height 360ms cubic-bezier(0.16, 1, 0.3, 1),
+                padding 360ms cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Collapsed = panel header still visible, conversation area hidden */
   .ai-collapse svg { transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1); }
-  .ai-dock.collapsed .ai-convo,
-  .ai-dock.collapsed .ai-input { display: none; }
-  .ai-dock.collapsed .ai-header { border-bottom: none; }
-  .ai-dock.collapsed .ai-collapse svg { transform: rotate(180deg); }
+  .ai-dock.collapsed .ai-convo {
+    max-height: 0 !important;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+  .ai-dock.collapsed .ai-collapse svg {
+    transform: rotate(180deg);
+  }
 
   @media (max-width: 720px) {
     .ai-dock {
@@ -1055,10 +1130,10 @@
       transform: none;
       width: auto;
     }
-    .ai-dock-inner {
-      max-height: calc(100vh - 32px);
+    .ai-panel {
+      max-height: calc(100vh - 100px);
     }
-    .ai-msg-bot { font-size: 14.5px; padding: 16px 18px; }
+    .ai-msg-bot { font-size: 14.5px; padding: 4px 0 4px 14px; }
   }
 
   /* Responsive */
@@ -1141,64 +1216,60 @@
   <!-- ───────────────────────────────────────────────
        AI chat dock (static demo — backend wiring next)
   ─────────────────────────────────────────────── -->
-  <aside class="ai-dock" aria-label="Chat with Dinesh's portfolio">
+  <aside class="ai-dock collapsed" aria-label="Chat with Dinesh's portfolio">
     <div class="ai-dock-inner">
 
-      <header class="ai-header">
-        <div class="ai-header-text">
-          <h3>
-            <svg class="ai-spark" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-              <path d="M12 2 L13.4 9.4 L20.8 10.8 L13.4 12.2 L12 19.6 L10.6 12.2 L3.2 10.8 L10.6 9.4 Z" fill="currentColor"/>
-              <path d="M18 3.5 L18.6 5.4 L20.5 6 L18.6 6.6 L18 8.5 L17.4 6.6 L15.5 6 L17.4 5.4 Z" fill="currentColor" opacity="0.7"/>
-            </svg>
-            Dinesh's AI
-          </h3>
-          <p>Projects, approach, role fit — ask anything.</p>
-        </div>
-        <div class="ai-controls">
-          <span class="ai-mode-label">Recruiter</span>
-          <button class="ai-toggle" role="switch" aria-checked="false" aria-label="Toggle recruiter mode">
-            <span class="ai-toggle-thumb"></span>
-          </button>
-          <button class="ai-collapse" aria-label="Minimize chat">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 5l4 4 4-4"/>
-            </svg>
-          </button>
-        </div>
-      </header>
+      <!-- Conversation panel — slides up above the input pill when expanded -->
+      <div class="ai-panel">
 
-      <div class="ai-convo">
-
-        <p class="ai-msg-user">What kind of work do you focus on?</p>
-
-        <div class="ai-msg-bot">
-          <p>Dinesh designs <mark>operational software</mark> for the people running <mark>financial operations</mark>. Most recently at <mark>Onity Group</mark>, building <mark>real-time client portals</mark> and release pipelines for mortgage servicing — work that cut case resolution by <mark>62%</mark> and gave account managers six hours of their week back.</p>
-          <p>Before that, <mark>AI sales tooling</mark> at Dell and operational design at Red Hat. About a decade quietly making the systems that keep teams moving.</p>
-        </div>
-
-        <div class="ai-followups">
-          <p class="ai-followup-label">Ask me more</p>
-          <div class="ai-followup-chips">
-            <button class="ai-followup">Tell me about the loan deboarding work</button>
-            <button class="ai-followup">How do you approach AI features?</button>
-            <button class="ai-followup">Paste a job description</button>
+        <header class="ai-header">
+          <div class="ai-header-text">
+            <h3>Dinesh's AI</h3>
+            <p>Projects, approach, role fit — ask anything.</p>
           </div>
+          <div class="ai-controls">
+            <span class="ai-mode-label">Recruiter</span>
+            <button class="ai-toggle" role="switch" aria-checked="false" aria-label="Toggle recruiter mode">
+              <span class="ai-toggle-thumb"></span>
+            </button>
+            <button class="ai-collapse" aria-label="Minimize chat">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 5l4 4 4-4"/>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div class="ai-convo">
+
+          <div class="ai-followups">
+            <p class="ai-followup-label">Try asking</p>
+            <div class="ai-followup-chips">
+              <button class="ai-followup">What are his skills?</button>
+              <button class="ai-followup">What are his hobbies?</button>
+              <button class="ai-followup">Tell me about a recent project</button>
+              <button class="ai-followup">Paste a job description</button>
+            </div>
+          </div>
+
         </div>
 
       </div>
 
+      <!-- Input pill — always visible at bottom, with cycling typewriter placeholder -->
       <form class="ai-input" onsubmit="event.preventDefault();">
-        <input type="text" placeholder="Ask Dinesh's AI anything…" />
-        <button type="submit" class="ai-send" aria-label="Send message">
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        <span class="ai-input-spark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="16" height="16">
+            <path d="M12 2 L13.4 9.4 L20.8 10.8 L13.4 12.2 L12 19.6 L10.6 12.2 L3.2 10.8 L10.6 9.4 Z" fill="currentColor"/>
+            <path d="M18 3.5 L18.6 5.4 L20.5 6 L18.6 6.6 L18 8.5 L17.4 6.6 L15.5 6 L17.4 5.4 Z" fill="currentColor" opacity="0.7"/>
+          </svg>
+        </span>
+        <input type="text" placeholder="" aria-label="Ask Dinesh's AI anything" />
+        <button type="submit" class="ai-send" aria-label="Press Enter to send">
+          <span class="ai-send-label">Press</span>
+          <span class="ai-send-kbd" aria-hidden="true">↵</span>
         </button>
       </form>
-
-      <div class="ai-foot" aria-hidden="true">
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.4 9.4 L20.8 10.8 L13.4 12.2 L12 19.6 L10.6 12.2 L3.2 10.8 L10.6 9.4 Z"/></svg>
-        powered by <strong>Claude Haiku</strong>
-      </div>
 
     </div>
   </aside>
@@ -1362,6 +1433,8 @@
 
   async function ask(question) {
     if (!question || !question.trim()) return;
+    // Expand the panel if it's collapsed (e.g. user typed and hit enter from pill)
+    dock.classList.remove("collapsed");
     clearDemo();
     input.disabled = true;
 
@@ -1494,6 +1567,68 @@
     input.value = "";
     ask(value);
   });
+
+  // ─── Auto-expand the panel when the input gets focus ───
+  input.addEventListener("focus", () => {
+    dock.classList.remove("collapsed");
+  });
+
+  // ─── Toggle the send button visibility based on whether the user has typed ───
+  input.addEventListener("input", () => {
+    if (input.value.trim().length > 0) {
+      form.classList.add("has-content");
+    } else {
+      form.classList.remove("has-content");
+    }
+  });
+
+  // ─── Typewriter placeholder — cycles through prompts character-by-character ───
+  const placeholders = [
+    "What are his skills?",
+    "What are his hobbies?",
+    "Tell me about a recent project",
+    "Why hire Dinesh?",
+    "What's his strongest fit?",
+    "Paste a job description",
+  ];
+
+  let phIdx = 0;
+  let charIdx = 0;
+  let deleting = false;
+
+  function typewriterStep() {
+    // Pause when user is interacting — their input takes priority
+    if (document.activeElement === input || input.value.length > 0) {
+      input.placeholder = "";
+      setTimeout(typewriterStep, 400);
+      return;
+    }
+
+    const current = placeholders[phIdx];
+    if (!deleting) {
+      charIdx++;
+      input.placeholder = current.slice(0, charIdx) + "▎";
+      if (charIdx >= current.length) {
+        deleting = true;
+        setTimeout(typewriterStep, 1500); // hold full word
+        return;
+      }
+      setTimeout(typewriterStep, 55 + Math.random() * 45); // human-ish typing variance
+    } else {
+      charIdx--;
+      input.placeholder = current.slice(0, charIdx) + "▎";
+      if (charIdx <= 0) {
+        deleting = false;
+        phIdx = (phIdx + 1) % placeholders.length;
+        setTimeout(typewriterStep, 400); // brief beat before next word
+        return;
+      }
+      setTimeout(typewriterStep, 28); // faster on delete
+    }
+  }
+
+  // Kick off the typewriter
+  typewriterStep();
 })();
 
 /* ───────────────────────────────────────────────
