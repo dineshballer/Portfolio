@@ -865,6 +865,24 @@
     border-bottom: 1px dotted var(--green-strong);
     padding: 0 1px 1px;
   }
+  /* Streaming-in-progress — subtle pulsing cursor on the left rule */
+  .ai-msg-streaming {
+    border-left-color: var(--green-strong);
+    animation: stream-pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes stream-pulse {
+    0%, 100% { border-left-color: rgba(31, 77, 62, 0.30); }
+    50%      { border-left-color: rgba(31, 77, 62, 0.85); }
+  }
+  /* Error message — softer red left rule */
+  .ai-msg-error {
+    border-left-color: rgba(180, 70, 70, 0.55);
+    color: var(--ink-soft);
+  }
+  .ai-msg-error em {
+    color: var(--ink-mute);
+    font-style: italic;
+  }
 
   /* Suggested follow-ups */
   .ai-followups {
@@ -1293,131 +1311,167 @@
 
 <script>
 /* ───────────────────────────────────────────────
-   AI chat dock — interactive demo
+   AI chat dock — live streaming to /api/chat
 ─────────────────────────────────────────────── */
 (() => {
   const dock = document.querySelector(".ai-dock");
   if (!dock) return;
   const convo = dock.querySelector(".ai-convo");
   const followupsSection = dock.querySelector(".ai-followups");
-  const chipsContainer = dock.querySelector(".ai-followup-chips");
+  const toggle = dock.querySelector(".ai-toggle");
+  const collapseBtn = dock.querySelector(".ai-collapse");
+  const form = dock.querySelector(".ai-input");
+  const input = form.querySelector("input");
 
-  const responses = {
-    "Tell me about the loan deboarding work": {
-      answer: `<p>Onity's <mark>mortgage servicing team</mark> takes loans off the platform when clients close out — and every client prepares the data differently. Different LOS systems, different reports, different exception lists. The receiving team was absorbing all of that as side conversations and parallel spreadsheets.</p><p>I designed <mark>one release record</mark> that absorbs <mark>five client workflows</mark> into a single structure. Analysts validate at the door, exceptions move through an audit-tracked lane, and reconciliation stitches to the record. In prototype testing, <mark>9 of 9 users</mark> found release status without help — analysts projected <mark>~6 hours saved</mark> per week.</p>`,
-      followups: [
-        "What was the hardest exception to absorb?",
-        "How did you run the research?",
-        "Paste a job description"
-      ]
-    },
-    "How do you approach AI features?": {
-      answer: `<p>I treat AI as a feature inside a workflow, not as the workflow itself. The question I keep asking: what would this operator have had to do without it? If the answer is "open three other tools and copy-paste between them," there's something real to design for.</p><p>At <mark>Dell</mark>, that meant folding <mark>six scattered sales tools</mark> into one conversational interface. The AI handled lookup and summarization; the design handled context, attribution, and what to show when the AI was wrong. <mark>92% task completion</mark>.</p>`,
-      followups: [
-        "What happens when the AI is wrong?",
-        "Tell me about the loan deboarding work",
-        "Paste a job description"
-      ]
-    },
-    "Paste a job description": {
-      answer: `<p>Drop the JD in the input below and I'll walk through where Dinesh's work overlaps — <mark>operations</mark>, <mark>mortgage servicing</mark>, <mark>AI tooling</mark>, <mark>enterprise SaaS</mark> — and where it doesn't. I'll be honest about the gaps too.</p><p>Best context to include: the team's tools, the operator type (analysts? account managers? sales? back-office?), and what shipping looks like in your org.</p>`,
-      followups: [
-        "Tell me about the loan deboarding work",
-        "How do you approach AI features?",
-        "What's his strongest fit?"
-      ]
-    },
-    "What was the hardest exception to absorb?": {
-      answer: `<p>Cross-investor splits — one loan pool getting partially sold to investor A and the rest held by investor B, but recorded across two spreadsheets in two formats. The receiving team would catch it three days later when the reconciliation numbers didn't match.</p><p>The fix wasn't in the data; it was in the model. I rebuilt the release record around <mark>investor segments</mark> as a first-class field, so a single submission could carry multiple segments without leaving the pipeline.</p>`,
-      followups: [
-        "How did you run the research?",
-        "Tell me about another project",
-        "Paste a job description"
-      ]
-    },
-    "How did you run the research?": {
-      answer: `<p>Three representative client orgs, each shadowing a different LOS system. Two-hour sessions: half observing how they actually prepared a release, half walking through a clickable prototype.</p><p>The most useful artifact came out of the observation half — a <mark>variation map</mark> showing where each client's process diverged from the others. That map drove which fields became flexible in the release record and which stayed rigid.</p>`,
-      followups: [
-        "Tell me about the loan deboarding work",
-        "How do you approach AI features?",
-        "Paste a job description"
-      ]
-    },
-    "What happens when the AI is wrong?": {
-      answer: `<p>This is the part most AI features ignore. At Dell, every AI response carried <mark>attribution</mark> — the source document, the section, the confidence. If the sales rep saw a suspicious answer, they could click straight through to verify, then flag the response with one tap. Flags fed back into retraining.</p><p>The design rule: <mark>never hide the seams</mark>. Show where the AI is sourcing from, what it's unsure about, and how to push back.</p>`,
-      followups: [
-        "How do you approach AI features?",
-        "Tell me about the loan deboarding work",
-        "What's his strongest fit?"
-      ]
-    },
-    "What's his strongest fit?": {
-      answer: `<p>Operations-adjacent SaaS at companies where the design org is small or absent, and the operators using the product are highly trained but underserved. Mortgage, claims, supply chain, B2B fintech, internal AI tooling.</p><p>Less strong fit: consumer apps, design-system-first orgs with mature teams, marketing surfaces. Strongest when the work is <mark>research-led</mark>, <mark>structure-first</mark>, and the metric is "the operator's day got quieter."</p>`,
-      followups: [
-        "Tell me about the loan deboarding work",
-        "How do you approach AI features?",
-        "Paste a job description"
-      ]
-    }
-  };
+  // Conversation history sent to /api/chat on each turn
+  const history = [];
+  // Whether the initial demo Q+A has been cleared
+  let demoCleared = false;
 
   function scrollDown() {
     convo.scrollTop = convo.scrollHeight;
   }
 
-  function appendExchange(question) {
-    const data = responses[question];
+  function clearDemo() {
+    if (demoCleared) return;
+    convo.querySelectorAll(".ai-msg-user, .ai-msg-bot").forEach((el) => el.remove());
+    demoCleared = true;
+  }
 
-    // 1. User message
+  function getMode() {
+    return toggle && toggle.getAttribute("aria-checked") === "true" ? "recruiter" : null;
+  }
+
+  // Render streamed text as <p> blocks, preserving <mark> tags from the model
+  function renderBot(container, text) {
+    const paragraphs = text.split(/\n\n+/).filter((p) => p.length > 0);
+    if (paragraphs.length === 0) {
+      container.innerHTML = '<p></p>';
+      return;
+    }
+    container.innerHTML = paragraphs
+      .map((p) => `<p>${p.replace(/\n/g, "<br>")}</p>`)
+      .join("");
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    })[c]);
+  }
+
+  async function ask(question) {
+    if (!question || !question.trim()) return;
+    clearDemo();
+    input.disabled = true;
+
+    // Add user message to UI + history
     const userMsg = document.createElement("p");
     userMsg.className = "ai-msg-user";
     userMsg.textContent = question;
     convo.insertBefore(userMsg, followupsSection);
-    scrollDown();
+    history.push({ role: "user", content: question });
 
-    // 2. Typing indicator
+    // Typing indicator
     const typing = document.createElement("div");
     typing.className = "ai-typing";
     typing.innerHTML = '<span></span><span></span><span></span>';
     convo.insertBefore(typing, followupsSection);
     scrollDown();
 
-    // 3. Response after delay
-    setTimeout(() => {
-      typing.remove();
+    const mode = getMode();
+    let accumulated = "";
+    let botMsg;
 
-      const botMsg = document.createElement("div");
-      botMsg.className = "ai-msg-bot";
-      botMsg.innerHTML = data
-        ? data.answer
-        : '<p>That one’s coming once the backend is wired up. For now, try one of the suggested prompts.</p>';
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: history,
+          ...(mode ? { mode } : {}),
+        }),
+      });
+
+      if (!res.ok) {
+        let detail = `HTTP ${res.status}`;
+        try {
+          const errPayload = await res.json();
+          if (errPayload && errPayload.error) detail = errPayload.error;
+        } catch {}
+        throw new Error(detail);
+      }
+
+      // Swap typing indicator for the bot message container
+      typing.remove();
+      botMsg = document.createElement("div");
+      botMsg.className = "ai-msg-bot ai-msg-streaming";
       convo.insertBefore(botMsg, followupsSection);
 
-      // 4. Refresh follow-up chips
-      if (data && data.followups) {
-        chipsContainer.innerHTML = "";
-        data.followups.forEach((text) => {
-          const btn = document.createElement("button");
-          btn.type = "button";
-          btn.className = "ai-followup";
-          btn.textContent = text;
-          chipsContainer.appendChild(btn);
-        });
+      // Parse Anthropic SSE stream
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const data = line.slice(6).trim();
+          if (!data || data === "[DONE]") continue;
+
+          try {
+            const evt = JSON.parse(data);
+            if (
+              evt.type === "content_block_delta" &&
+              evt.delta &&
+              evt.delta.type === "text_delta" &&
+              typeof evt.delta.text === "string"
+            ) {
+              accumulated += evt.delta.text;
+              renderBot(botMsg, accumulated);
+              scrollDown();
+            }
+          } catch {
+            /* ignore JSON parse errors from partial chunks */
+          }
+        }
       }
+
+      botMsg.classList.remove("ai-msg-streaming");
+      history.push({ role: "assistant", content: accumulated });
+    } catch (err) {
+      if (typing.parentNode) typing.remove();
+      const errMsg = document.createElement("div");
+      errMsg.className = "ai-msg-bot ai-msg-error";
+      errMsg.innerHTML =
+        `<p>Couldn't reach the AI right now — <em>${escapeHtml(
+          err.message || "unknown error"
+        )}</em>. Try again in a moment.</p>`;
+      convo.insertBefore(errMsg, followupsSection);
+      // Roll back the user message from history so retries don't poison context
+      history.pop();
+    } finally {
+      input.disabled = false;
       scrollDown();
-    }, 1100);
+    }
   }
 
-  // Event delegation — works for replaced chips too
+  // Click on any suggested follow-up chip (event delegation)
   convo.addEventListener("click", (e) => {
     const chip = e.target.closest(".ai-followup");
     if (!chip) return;
     e.preventDefault();
-    appendExchange(chip.textContent.trim());
+    ask(chip.textContent.trim());
   });
 
-  // Recruiter toggle
-  const toggle = dock.querySelector(".ai-toggle");
+  // Recruiter mode toggle
   if (toggle) {
     toggle.addEventListener("click", () => {
       const next = toggle.getAttribute("aria-checked") !== "true";
@@ -1426,22 +1480,19 @@
   }
 
   // Collapse / expand
-  const collapseBtn = dock.querySelector(".ai-collapse");
   if (collapseBtn) {
     collapseBtn.addEventListener("click", () => {
       dock.classList.toggle("collapsed");
     });
   }
 
-  // Input submit — sends as a user message; mock response for now
-  const form = dock.querySelector(".ai-input");
-  const input = form.querySelector("input");
+  // Free-form input submit
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const value = input.value.trim();
     if (!value) return;
-    appendExchange(value);
     input.value = "";
+    ask(value);
   });
 })();
 
