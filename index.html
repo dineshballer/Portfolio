@@ -854,38 +854,33 @@
     border-radius: 12px;
     border-top-right-radius: 4px;
   }
-  /* Bot response — no bubble, sage left rule, clean prose */
+  /* Bot response — sage-tinted card with pill highlights */
   .ai-msg-bot {
-    padding: 4px 0 4px 16px;
-    border-left: 2px solid rgba(31, 77, 62, 0.30);
+    padding: 16px 18px;
+    background: linear-gradient(135deg, rgba(31, 77, 62, 0.045), rgba(31, 77, 62, 0.08));
+    border: 1px solid rgba(31, 77, 62, 0.12);
+    border-radius: 14px;
     font-family: var(--body);
     font-weight: 400;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.62;
     color: var(--ink);
     letter-spacing: 0;
   }
   .ai-msg-bot p {
     margin: 0 0 10px;
-    opacity: 0;
-    animation: para-in 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  .ai-msg-bot p:nth-child(1) { animation-delay:   0ms; }
-  .ai-msg-bot p:nth-child(2) { animation-delay: 280ms; }
-  .ai-msg-bot p:nth-child(3) { animation-delay: 560ms; }
-  .ai-msg-bot p:nth-child(4) { animation-delay: 840ms; }
   .ai-msg-bot p:last-child { margin-bottom: 0; }
-  @keyframes para-in {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  /* Highlighted terms — editorial underline, not pill chips */
+  /* Highlighted terms — soft sage pill, not dotted underline */
   .ai-msg-bot mark {
-    background: transparent;
+    background: rgba(31, 77, 62, 0.10);
     color: var(--green-strong);
     font-weight: 500;
-    border-bottom: 1px dotted var(--green-strong);
-    padding: 0 1px 1px;
+    padding: 1px 6px;
+    border-radius: 5px;
+    border: none;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
   /* Streaming-in-progress — subtle pulsing cursor on the left rule */
   .ai-msg-streaming {
@@ -1068,29 +1063,66 @@
     font-weight: 500;
   }
 
-  /* Typing indicator while AI "thinks" */
+  /* Typing indicator — pixelated 3x3 grid pulsing in a wave */
   .ai-typing {
     align-self: flex-start;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 16px 20px;
-    background: rgba(31, 77, 62, 0.05);
-    border: 1px solid rgba(31, 77, 62, 0.08);
+    gap: 12px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, rgba(31, 77, 62, 0.045), rgba(31, 77, 62, 0.08));
+    border: 1px solid rgba(31, 77, 62, 0.12);
     border-radius: 14px;
   }
-  .ai-typing span {
-    width: 7px; height: 7px;
-    background: var(--green-strong);
-    border-radius: 50%;
-    opacity: 0.4;
-    animation: typing-bounce 1.2s ease-in-out infinite;
+  .ai-typing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 5px);
+    grid-template-rows: repeat(3, 5px);
+    gap: 3px;
   }
-  .ai-typing span:nth-child(2) { animation-delay: 0.15s; }
-  .ai-typing span:nth-child(3) { animation-delay: 0.30s; }
-  @keyframes typing-bounce {
-    0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
-    30%           { opacity: 1;   transform: translateY(-4px); }
+  .ai-typing-grid span {
+    width: 5px;
+    height: 5px;
+    background: var(--green-strong);
+    border-radius: 1px;
+    opacity: 0.18;
+    animation: pixel-wave 1.4s ease-in-out infinite;
+    will-change: opacity, transform;
+  }
+  /* Diagonal stagger — top-left → bottom-right wave */
+  .ai-typing-grid span:nth-child(1) { animation-delay:  0ms;   }
+  .ai-typing-grid span:nth-child(2) { animation-delay:  90ms;  }
+  .ai-typing-grid span:nth-child(3) { animation-delay: 180ms;  }
+  .ai-typing-grid span:nth-child(4) { animation-delay:  90ms;  }
+  .ai-typing-grid span:nth-child(5) { animation-delay: 180ms;  }
+  .ai-typing-grid span:nth-child(6) { animation-delay: 270ms;  }
+  .ai-typing-grid span:nth-child(7) { animation-delay: 180ms;  }
+  .ai-typing-grid span:nth-child(8) { animation-delay: 270ms;  }
+  .ai-typing-grid span:nth-child(9) { animation-delay: 360ms;  }
+  @keyframes pixel-wave {
+    0%, 100% { opacity: 0.18; transform: scale(1); }
+    50%      { opacity: 1;    transform: scale(1.15); }
+  }
+  .ai-typing-text {
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+  }
+  .ai-typing-text::after {
+    content: "";
+    display: inline-block;
+    width: 0;
+    overflow: hidden;
+    animation: typing-dots 1.4s steps(4, end) infinite;
+  }
+  @keyframes typing-dots {
+    0%   { content: ""; }
+    25%  { content: "."; }
+    50%  { content: ".."; }
+    75%  { content: "..."; }
+    100% { content: ""; }
   }
 
   /* New-message entrance */
@@ -1471,10 +1503,17 @@
     convo.insertBefore(userMsg, followupsSection);
     history.push({ role: "user", content: question });
 
-    // Typing indicator
+    // Typing indicator — pixel grid + label
     const typing = document.createElement("div");
     typing.className = "ai-typing";
-    typing.innerHTML = '<span></span><span></span><span></span>';
+    typing.innerHTML = `
+      <div class="ai-typing-grid" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <span class="ai-typing-text">Thinking</span>
+    `;
     convo.insertBefore(typing, followupsSection);
     scrollDown();
 
