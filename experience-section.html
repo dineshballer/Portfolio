@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experience — Dinesh</title>
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────
+       DESIGN TOKENS
+       ───────────────────────────────────────── */
+    :root {
+      --ink: #111;
+      --ink-soft: #555;
+      --ink-mute: #6e6e6e;
+      --ink-faint: #888;
+      --line: rgba(0, 0, 0, 0.08);
+      --line-soft: rgba(0, 0, 0, 0.06);
+
+      --now-bg:  #E8F5EE;
+      --now-ink: #1d6e47;
+      --now-dot: #28a868;
+
+      --current-row-bg: #fafdfb;
+
+      --radius-card: 16px;
+      --radius-logo: 10px;
+
+      --font-sans: 'Satoshi', -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background: #FAFAF7;
+      -webkit-font-smoothing: antialiased;
+      padding: 60px 24px;
+      display: flex; justify-content: center;
+    }
+
+    /* ─────────────────────────────────────────
+       SECTION SHELL
+       ───────────────────────────────────────── */
+    .exp {
+      width: 100%; max-width: 980px;
+      background: #fff;
+      border: 0.5px solid var(--line);
+      border-radius: var(--radius-card);
+      padding: 8px 0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    }
+
+    .exp-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 32px 18px;
+      border-bottom: 0.5px solid var(--line-soft);
+    }
+    .exp-head h2 {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink); margin: 0;
+    }
+    .exp-head .count {
+      font-size: 12px; color: var(--ink-faint);
+    }
+
+    /* ─────────────────────────────────────────
+       ROLE ROW
+       ───────────────────────────────────────── */
+    .role {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 20px;
+      padding: 24px 32px;
+      border-bottom: 0.5px solid var(--line-soft);
+      align-items: start;
+    }
+    .role:last-child { border-bottom: 0; }
+    .role.current { background: var(--current-row-bg); }
+
+    /* Logo box — uniform 44×44 */
+    .logo {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-logo);
+      border: 0.5px solid var(--line);
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; letter-spacing: -0.02em;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    /* Brand-tinted logo backgrounds — swap for SVG/PNG marks if you have them */
+    .logo.onity  { background: #0F1F3D; color: #fff; }
+    .logo.dell   { background: #fff;    color: #007DB8; border-color: #007DB8; }
+    .logo.redhat { background: #EE0000; color: #fff; }
+    .logo.free   { background: #f6efe6; color: #b48a4a; }
+
+    /* Middle — company / role / desc / tags */
+    .mid { min-width: 0; }
+
+    .company {
+      display: flex; align-items: center; gap: 10px;
+      margin: -2px 0 2px;
+    }
+    .company h3 {
+      font-size: 19px; line-height: 1.2; font-weight: 600;
+      letter-spacing: -0.015em; margin: 0;
+    }
+
+    .now-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 2px 8px 2px 7px;
+      background: var(--now-bg); color: var(--now-ink);
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border-radius: 999px;
+    }
+    .now-pill .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--now-dot);
+      box-shadow: 0 0 0 2.5px rgba(40, 168, 104, 0.18);
+    }
+
+    .role-title {
+      font-size: 13px; font-weight: 500; color: #4a4a4a;
+      margin: 0 0 8px;
+    }
+    .desc {
+      font-size: 14px; line-height: 1.55; color: var(--ink-soft);
+      max-width: 540px; margin: 0 0 12px;
+    }
+
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .chip {
+      padding: 3px 10px;
+      border: 0.5px solid #e0e0e0;
+      border-radius: 999px;
+      font-size: 11px; color: #555;
+      background: #fff;
+    }
+
+    /* Right — dates */
+    .dates {
+      text-align: right;
+      font-size: 12px;
+      color: var(--ink-mute);
+      white-space: nowrap;
+      padding-top: 4px;
+      font-feature-settings: "tnum" on;
+      font-variant-numeric: tabular-nums;
+    }
+    .dates .yrs  { font-weight: 500; color: #1a1a1a; }
+    .dates .span { font-size: 11px; color: #999; margin-top: 2px; }
+
+    @media (max-width: 640px) {
+      .role { grid-template-columns: 44px 1fr; }
+      .dates { grid-column: 2; text-align: left; padding-top: 6px; }
+      .exp-head, .role { padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="exp">
+
+    <header class="exp-head">
+      <h2>Experience</h2>
+      <span class="count">8 years · 4 roles</span>
+    </header>
+
+    <!-- Onity Group · current -->
+    <article class="role current">
+      <div class="logo onity">OG</div>
+      <div class="mid">
+        <div class="company">
+          <h3>Onity Group</h3>
+          <span class="now-pill"><span class="dot"></span>Now</span>
+        </div>
+        <p class="role-title">Senior UX Designer</p>
+        <p class="desc">Leading UX for enterprise mortgage servicing — designing client-facing portals for inquiry tracking, loan deboarding, and post-release reconciliation.</p>
+        <div class="tags">
+          <span class="chip">Enterprise UX</span>
+          <span class="chip">B2B SaaS</span>
+          <span class="chip">Fintech</span>
+          <span class="chip">Design Systems</span>
+        </div>
+      </div>
+      <div class="dates">
+        <div class="yrs">2025 — Now</div>
+        <div class="span">~6 mo</div>
+      </div>
+    </article>
+
+    <!-- Dell -->
+    <article class="role">
+      <div class="logo dell">Dell</div>
+      <div class="mid">
+        <div class="company"><h3>Dell</h3></div>
+        <p class="role-title">UX Designer</p>
+        <p class="desc">Designed user-centered data visualization systems and AI-powered productivity tools for enterprise users — focusing on usability and signal density.</p>
+        <div class="tags">
+          <span class="chip">Data Viz</span>
+          <span class="chip">AI Tools</span>
+          <span class="chip">Enterprise</span>
+        </div>
+      </div>
+      <div class="dates">
+        <div class="yrs">2022 — 2025</div>
+        <div class="span">3 yrs</div>
+      </div>
+    </article>
+
+    <!-- Red Hat -->
+    <article class="role">
+      <div class="logo redhat">RH</div>
+      <div class="mid">
+        <div class="company"><h3>Red Hat</h3></div>
+        <p class="role-title">UX Designer · UI Developer</p>
+        <p class="desc">Partnered with stakeholders to gather requirements and shipped accessible, intuitive interfaces for internal tools and websites.</p>
+        <div class="tags">
+          <span class="chip">Internal Tools</span>
+          <span class="chip">Accessibility</span>
+          <span class="chip">UI Dev</span>
+        </div>
+      </div>
+      <div class="dates">
+        <div class="yrs">2021 — 2022</div>
+        <div class="span">1 yr</div>
+      </div>
+    </article>
+
+    <!-- Freelance -->
+    <article class="role">
+      <div class="logo free">FL</div>
+      <div class="mid">
+        <div class="company"><h3>Freelance</h3></div>
+        <p class="role-title">UX Designer · UI Developer</p>
+        <p class="desc">Designed and shipped websites for small and medium businesses — translating ambiguous briefs into clean, conversion-focused experiences.</p>
+        <div class="tags">
+          <span class="chip">Web Design</span>
+          <span class="chip">SMB</span>
+        </div>
+      </div>
+      <div class="dates">
+        <div class="yrs">2018 — 2019</div>
+        <div class="span">1 yr</div>
+      </div>
+    </article>
+
+  </section>
+
+</body>
+</html>

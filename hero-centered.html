@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dinesh Kumar — Senior UX Designer</title>
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <!--
+    Type pairing per frontend-design skill:
+    - Cabinet Grotesk (body sans) — distinctive, characterful, not Inter
+    - Instrument Serif Italic (display italic) — editorial, elegant
+    - JetBrains Mono (metadata) — distinctive monospace
+  -->
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────
+       DESIGN TOKENS — Light editorial with warm cream + purple accent
+       Atmosphere over flat color: subtle film grain + one soft warm glow.
+       Distinctive type pairing (NOT Inter).
+       ───────────────────────────────────────── */
+    :root {
+      --bg:        #F6F2E9;          /* warmer cream than pure #FAFAF7 — feels printed */
+      --ink:       #16140F;          /* warm near-black, not pure */
+      --ink-soft:  #5C574C;
+      --ink-mute:  #908A7E;
+      --ink-faint: #C4BEAF;
+      --rule:      #DBD3C3;
+
+      --accent:        #6B5BEF;      /* the purple — kept as requested */
+      --accent-soft:   #EEEAFD;
+      --signal:        #28A868;      /* green dot only */
+
+      --grain-opacity: 0.07;
+
+      --font-body:    'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-italic:  'Instrument Serif', Georgia, serif;
+      --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--bg); }
+    body {
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Film grain — atmosphere instead of flat color */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='1'/></svg>");
+      opacity: var(--grain-opacity);
+      mix-blend-mode: multiply;
+    }
+
+    /* One soft warm glow top-right — subtle depth without a gradient on text */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -300px; right: -200px;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(107, 91, 239, 0.06) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─────────────────────────────────────────
+       NAV
+       ───────────────────────────────────────── */
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 26px 56px;
+      max-width: 1400px;
+      margin: 0 auto;
+      position: relative; z-index: 10;
+    }
+    .nav-mark {
+      font-family: var(--font-italic);
+      font-style: italic;
+      font-size: 26px;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .nav-mark::after {
+      content: '.';
+      color: var(--accent);
+    }
+    .nav-center { display: flex; gap: 4px; }
+    .nav-link {
+      padding: 8px 14px;
+      font-size: 14px; font-weight: 500;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-radius: 6px;
+      transition: color 0.15s ease, background 0.2s ease;
+      letter-spacing: -0.005em;
+    }
+    .nav-link:hover { color: var(--ink); background: rgba(22, 20, 15, 0.04); }
+    .nav-link.active { color: var(--ink); }
+    .nav-cta {
+      padding: 9px 18px;
+      background: var(--ink);
+      color: var(--bg);
+      font-size: 13px; font-weight: 500;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.15s ease;
+      letter-spacing: -0.005em;
+    }
+    .nav-cta:hover { transform: translateY(-1px); }
+
+    /* ─────────────────────────────────────────
+       HERO — centered, refined
+       ───────────────────────────────────────── */
+    .hero {
+      padding: 72px 24px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex; flex-direction: column; align-items: center;
+      position: relative; z-index: 5;
+    }
+
+    /* Greeting pill — refined, with mono detail */
+    .greeting {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 5px 14px 5px 18px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.15s forwards;
+    }
+    .greeting-text {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+    }
+    .greeting-portrait {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 30%, #F0D8C0, #C7967A);
+      border: 1.5px solid var(--bg);
+      box-shadow: 0 0 0 0.5px rgba(22, 20, 15, 0.08);
+      flex-shrink: 0;
+    }
+
+    /* Headline */
+    .headline {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: clamp(36px, 5.8vw, 64px);
+      line-height: 1.1;
+      letter-spacing: -0.028em;
+      color: var(--ink);
+      margin-bottom: 32px;
+      max-width: 980px;
+    }
+    .headline .line {
+      display: inline;
+      opacity: 0;
+      transform: translateY(14px);
+      animation: revealLine 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+    }
+    .headline .line:nth-of-type(1) { animation-delay: 0.35s; }
+    .headline .line:nth-of-type(2) { animation-delay: 0.6s; }
+
+    .headline .italic {
+      font-family: var(--font-italic);
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+      font-size: 1.12em;
+      letter-spacing: -0.018em;
+      padding: 0 2px;
+    }
+
+    /* Tagline */
+    .tagline {
+      font-family: var(--font-italic);
+      font-style: italic;
+      font-size: 19px;
+      color: var(--ink-mute);
+      margin-bottom: 36px;
+      max-width: 540px;
+      line-height: 1.5;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.95s forwards;
+    }
+
+    /* CTA */
+    .cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 28px;
+      background: var(--ink);
+      color: var(--bg);
+      font-family: var(--font-body);
+      font-size: 14px; font-weight: 500;
+      border: none; border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: -0.005em;
+      transition: transform 0.15s ease, box-shadow 0.2s ease;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 1.15s forwards;
+      box-shadow: 0 1px 0 rgba(22,20,15,0.08), 0 4px 12px rgba(22,20,15,0.06);
+    }
+    .cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 1px 0 rgba(22,20,15,0.08), 0 8px 20px rgba(22,20,15,0.10);
+    }
+    .cta-arrow {
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .cta:hover .cta-arrow { transform: translateX(3px); }
+
+    /* ─────────────────────────────────────────
+       STATS ROW — refined, monospace numerals
+       ───────────────────────────────────────── */
+    .stats {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 40px 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      position: relative; z-index: 5;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 1.35s forwards;
+    }
+    .stat {
+      padding: 24px 24px;
+      border-right: 1px solid var(--rule);
+      text-align: left;
+    }
+    .stat:last-child { border-right: none; }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 10px;
+    }
+    .stat-value {
+      font-family: var(--font-italic);
+      font-weight: 400;
+      font-size: 28px;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .stat-value .num {
+      font-family: var(--font-body);
+      font-style: normal;
+      font-weight: 500;
+    }
+    .stat-value .em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    /* ─────────────────────────────────────────
+       COMPANY STRIP — bottom, subtle
+       ───────────────────────────────────────── */
+    .companies {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px 56px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+      position: relative; z-index: 5;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 1.6s forwards;
+    }
+    .companies .now {
+      color: var(--ink);
+      font-weight: 500;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .companies .now-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--signal);
+      box-shadow: 0 0 0 2.5px rgba(40, 168, 104, 0.18);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .companies .sep {
+      color: var(--ink-faint);
+    }
+
+    /* ─────────────────────────────────────────
+       ANIMATIONS
+       ───────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes revealLine {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%      { transform: scale(1.18); opacity: 0.85; }
+    }
+
+    /* ─────────────────────────────────────────
+       MOBILE
+       ───────────────────────────────────────── */
+    @media (max-width: 760px) {
+      .nav { padding: 18px 22px; }
+      .nav-center { display: none; }
+      .hero { padding: 48px 20px 32px; }
+      .greeting { margin-bottom: 32px; }
+      .headline { font-size: clamp(28px, 9vw, 40px); }
+      .tagline { font-size: 16px; }
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 36px 20px 24px; }
+      .stat { padding: 16px 14px; border-right: 1px solid var(--rule); }
+      .stat:nth-child(even) { border-right: none; }
+      .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--rule); }
+      .companies { flex-wrap: wrap; padding: 0 20px 48px; gap: 10px; font-size: 10px; }
+      .companies .sep { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV — italic mark instead of letterform box -->
+  <nav class="nav">
+    <a href="/" class="nav-mark">dinesh</a>
+    <div class="nav-center">
+      <a href="#work" class="nav-link active">Work</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="/archive" class="nav-link">Archive</a>
+    </div>
+    <a href="/resume.pdf" class="nav-cta">Resume</a>
+  </nav>
+
+  <!-- HERO — centered layout, refined with distinctive type -->
+  <main class="hero">
+
+    <!-- Greeting pill — backdrop-blurred, mono text, gradient portrait -->
+    <div class="greeting">
+      <span class="greeting-text">I'M DINESH</span>
+      <span class="greeting-portrait"></span>
+    </div>
+
+    <!-- Headline — Cabinet Grotesk body + Instrument Serif Italic accent -->
+    <h1 class="headline">
+      <span class="line">A UX designer who</span>
+      <span class="line italic">crafts enterprise experiences with intention</span>
+    </h1>
+
+    <!-- Tagline — italic, muted -->
+    <p class="tagline">Pushing for progress over pixels.</p>
+
+    <!-- CTA -->
+    <a href="#work" class="cta">
+      View my work
+      <span class="cta-arrow">→</span>
+    </a>
+  </main>
+
+  <!-- STATS — mono labels + italic-mixed values, dashed-style dividers -->
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-label">Experience</div>
+      <div class="stat-value"><span class="num">5+</span> years</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Focus</div>
+      <div class="stat-value">Enterprise <span class="em">UX</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Built at</div>
+      <div class="stat-value">Onity · Dell · <span class="em">Red Hat</span></div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Working on</div>
+      <div class="stat-value">B2B + <span class="em">AI</span></div>
+    </div>
+  </section>
+
+  <!-- COMPANIES — subtle mono strip with pulsing signal -->
+  <div class="companies">
+    <span class="now"><span class="now-dot"></span>Now · Onity Group</span>
+    <span class="sep">/</span>
+    <span>Prev · Dell, Red Hat, Freelance</span>
+  </div>
+
+</body>
+</html>

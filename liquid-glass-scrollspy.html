@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liquid Glass Scroll Spy — Dinesh</title>
+  <style>
+    /* ─────────────────────────────────────────
+       DESIGN TOKENS — same family as the navbar
+       ───────────────────────────────────────── */
+    :root {
+      /* Glass material */
+      --glass-bg:        rgba(255, 255, 255, 0.42);
+      --glass-border:    rgba(255, 255, 255, 0.45);
+      --glass-blur:      28px;
+      --glass-saturate:  200%;
+
+      /* Active item — its own little pill */
+      --active-bg:       rgba(255, 255, 255, 0.55);
+      --hover-bg:        rgba(255, 255, 255, 0.28);
+
+      /* Accent bar */
+      --accent:          #28a868;
+
+      /* Text */
+      --ink:             rgba(20, 20, 30, 0.96);
+      --ink-soft:        rgba(20, 20, 30, 0.62);
+      --ink-mute:        rgba(20, 20, 30, 0.52);
+
+      /* Layered shadow stack */
+      --shadow-stack:
+        inset 0 1px 1px rgba(255, 255, 255, 0.65),
+        inset 0 -1px 1px rgba(0, 0, 0, 0.04),
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        0 8px 24px rgba(0, 0, 0, 0.06),
+        0 18px 48px rgba(0, 0, 0, 0.04);
+
+      --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+
+      /* Demo backdrop — replace with your real page content */
+      min-height: 100vh;
+      background:
+        radial-gradient(60% 70% at 15% 20%, #FF8A65 0%, transparent 60%),
+        radial-gradient(50% 70% at 85% 15%, #B57BFF 0%, transparent 55%),
+        radial-gradient(70% 70% at 30% 90%, #4ECDC4 0%, transparent 60%),
+        radial-gradient(60% 70% at 80% 85%, #5B9DF7 0%, transparent 55%),
+        linear-gradient(180deg, #FFD8A8 0%, #FFE4B0 100%);
+    }
+
+    /* ─────────────────────────────────────────
+       SCROLL SPY — sticky on the side
+       ───────────────────────────────────────── */
+    .spy-wrap {
+      position: fixed;
+      top: 96px;
+      left: 32px;
+      z-index: 40;
+    }
+
+    .spy {
+      width: 232px;
+      padding: 14px 12px 16px;
+      border-radius: 18px;
+
+      background: var(--glass-bg);
+      -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+      backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow-stack);
+    }
+
+    .spy-eyebrow {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink-mute);
+      padding: 6px 12px 10px;
+    }
+
+    .spy-list {
+      display: flex; flex-direction: column; gap: 1px;
+    }
+
+    .spy-item {
+      position: relative;
+      display: block;
+      padding: 8px 14px;
+      font-size: 13.5px; font-weight: 500;
+      color: var(--ink-soft);
+      text-decoration: none;
+      border-radius: 10px;
+      transition: color 0.15s ease, background 0.2s ease;
+    }
+    .spy-item:hover {
+      color: var(--ink);
+      background: var(--hover-bg);
+    }
+    .spy-item.active {
+      color: var(--ink);
+      background: var(--active-bg);
+      box-shadow:
+        inset 0 0.5px 0 rgba(255, 255, 255, 0.7),
+        0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+    /* Subtle accent bar on active item */
+    .spy-item.active::before {
+      content: '';
+      position: absolute;
+      left: 4px; top: 9px;
+      width: 2px; height: 18px;
+      background: var(--accent);
+      border-radius: 0 2px 2px 0;
+      box-shadow: 0 0 6px rgba(40, 168, 104, 0.35);
+    }
+
+    /* ─────────────────────────────────────────
+       DARK MODE (auto)
+       ───────────────────────────────────────── */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --glass-bg:     rgba(28, 28, 32, 0.45);
+        --glass-border: rgba(255, 255, 255, 0.12);
+
+        --ink:          rgba(255, 255, 255, 0.96);
+        --ink-soft:     rgba(255, 255, 255, 0.55);
+        --ink-mute:     rgba(255, 255, 255, 0.4);
+
+        --active-bg:    rgba(255, 255, 255, 0.14);
+        --hover-bg:     rgba(255, 255, 255, 0.07);
+      }
+    }
+
+    /* Demo page content stub — remove on your real site */
+    .demo {
+      padding: 100px 32px 100px 320px;
+      max-width: 900px;
+      color: rgba(60, 30, 20, 0.55);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="spy-wrap">
+    <aside class="spy" aria-label="On this page">
+      <div class="spy-eyebrow">On this page</div>
+      <nav class="spy-list">
+        <a href="#overview"     class="spy-item">Overview</a>
+        <a href="#problem-area" class="spy-item active">Problem area</a>
+        <a href="#design-goals" class="spy-item">Design goals</a>
+        <a href="#solution"     class="spy-item">Solution</a>
+        <a href="#dashboard"    class="spy-item">Dashboard view</a>
+        <a href="#case-detail"  class="spy-item">Case detail</a>
+        <a href="#validation"   class="spy-item">Validation</a>
+        <a href="#post-launch"  class="spy-item">Post-launch</a>
+      </nav>
+    </aside>
+  </div>
+
+  <main class="demo">
+    Your case study content sits here. The scroll spy is fixed on the left and stays in view as the user scrolls. The colored backdrop on this demo page exists only to make the glass material visible — replace with your real page styling.
+  </main>
+
+</body>
+</html>

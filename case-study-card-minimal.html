@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minimal Case Study Cards</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────
+       DESIGN TOKENS
+       ───────────────────────────────────────── */
+    :root {
+      --ink: #0F0F12;
+      --ink-soft: #555;
+      --ink-mute: #888;
+      --line: rgba(0, 0, 0, 0.08);
+
+      --bg-page: #FAFAF7;
+
+      /* Per-card tints (one for each case study) */
+      --cs1-bg: #EAF2FB;        /* soft blue — Real-Time Inquiry Portal */
+      --cs1-accent: #1a6fdb;
+
+      --cs2-bg: #EFF5EF;        /* soft mint — Loan Deboarding Portal */
+      --cs2-accent: #1F4D3E;
+
+      --cs3-bg: #E5F2E9;        /* soft green — AI Sales Enablement (Dell) */
+      --cs3-accent: #2A7A4D;
+
+      --cs4-bg: #FAF6E0;        /* soft cream/yellow — AI Chat Interface (Dell) */
+      --cs4-accent: #8A6D1A;
+
+      --cs5-bg: #FAEEE2;        /* soft peach — Dell's INC redesign */
+      --cs5-accent: #B8521D;
+
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background: var(--bg-page);
+      -webkit-font-smoothing: antialiased;
+      padding: 60px 24px;
+    }
+
+    .grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* ─────────────────────────────────────────
+       CARD
+       ───────────────────────────────────────── */
+    .card {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      min-height: 480px;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Tinted backgrounds per card */
+    .card.blue   { background: var(--cs1-bg); }
+    .card.mint   { background: var(--cs2-bg); }
+    .card.green  { background: var(--cs3-bg); }
+    .card.cream  { background: var(--cs4-bg); }
+    .card.peach  { background: var(--cs5-bg); }
+
+    /* Reverse alternate cards so image alternates left/right */
+    .card.flip { grid-template-columns: 1.2fr 1fr; }
+    .card.flip .card-content { order: 2; }
+    .card.flip .card-visual  { order: 1; }
+
+    /* ─── Content side ─── */
+    .card-content {
+      padding: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .card-top { display: flex; flex-direction: column; gap: 12px; }
+
+    .card-chip {
+      display: inline-block;
+      padding: 5px 14px;
+      background: #fff;
+      border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+      width: fit-content;
+    }
+
+    .card h2 {
+      font-size: 36px; line-height: 1.15; font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin: 0;
+      max-width: 460px;
+    }
+
+    .card-desc {
+      font-size: 15px; line-height: 1.55;
+      color: var(--ink-soft);
+      margin: 0;
+      max-width: 440px;
+    }
+
+    .card-tags {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .card-tag {
+      padding: 4px 12px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      background: transparent;
+    }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    /* Outcomes — 2-3 chip cards inline */
+    .outcomes {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .outcome {
+      padding: 10px 14px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 10px;
+      min-width: 110px;
+    }
+    .outcome-num {
+      font-size: 18px; font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .outcome-label {
+      font-size: 11px;
+      color: var(--ink-mute);
+      margin-top: 2px;
+    }
+
+    /* CTA arrow — absolute-positioned at the bottom-right of the entire card */
+    .card-arrow {
+      position: absolute;
+      bottom: 32px;
+      right: 32px;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.2s ease, background 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      z-index: 2;
+    }
+    .card:hover .card-arrow {
+      transform: translateX(4px);
+      background: var(--ink);
+      color: #fff;
+    }
+    .card-arrow svg { width: 18px; height: 18px; }
+
+    /* ─── Visual side ─── */
+    .card-visual {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 32px;
+      overflow: hidden;
+    }
+    .card-visual img {
+      max-width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.1));
+    }
+
+    /* Placeholder visual while real screenshots load */
+    .visual-placeholder {
+      width: 100%;
+      max-width: 420px;
+      aspect-ratio: 4/3;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px dashed rgba(0, 0, 0, 0.12);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink-mute);
+      font-size: 13px;
+      text-align: center;
+      padding: 24px;
+    }
+
+    /* ─────────────────────────────────────────
+       MOBILE
+       ───────────────────────────────────────── */
+    @media (max-width: 880px) {
+      body { padding: 32px 16px; }
+      .card,
+      .card.flip { grid-template-columns: 1fr; min-height: auto; }
+      .card.flip .card-content { order: 1; }
+      .card.flip .card-visual  { order: 2; }
+      .card-content { padding: 32px 24px; gap: 20px; }
+      .card h2 { font-size: 26px; }
+      .card-visual { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid">
+
+    <!-- ─── Card 1 — Real-Time Inquiry Portal (blue, Onity) ─── -->
+    <a href="/case-study-1" class="card blue">
+      <div class="card-content">
+        <div class="card-top">
+          <span class="card-chip">Real-Time Inquiry Portal · Onity</span>
+          <h2>From email threads to real-time visibility.</h2>
+          <p class="card-desc">Replaced "just checking in" emails and bi-weekly status meetings with a live portal — one place where mortgage clients see every inquiry's status, owner, and key dates.</p>
+          <div class="card-tags">
+            <span class="card-tag">Enterprise UX</span>
+            <span class="card-tag">B2B SaaS</span>
+            <span class="card-tag">Fintech</span>
+          </div>
+        </div>
+        <div class="outcomes">
+          <div class="outcome"><div class="outcome-num">62%</div><div class="outcome-label">Faster resolution</div></div>
+          <div class="outcome"><div class="outcome-num">6 hrs</div><div class="outcome-label">Saved weekly</div></div>
+        </div>
+      </div>
+      <div class="card-visual">
+        <div class="visual-placeholder">Real product screenshot<br/>(LoanSpan inquiry dashboard)</div>
+      </div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <!-- ─── Card 2 — Loan Deboarding Portal (mint, Onity, flipped) ─── -->
+    <a href="/case-study-2" class="card mint flip">
+      <div class="card-content">
+        <div class="card-top">
+          <span class="card-chip">Loan Deboarding Portal · Onity</span>
+          <h2>One pipeline for many operational shapes.</h2>
+          <p class="card-desc">A release record that absorbs how each client prepares its data — different LOS systems, different reports — and gives the receiving team one shared structure.</p>
+          <div class="card-tags">
+            <span class="card-tag">Enterprise UX</span>
+            <span class="card-tag">B2B SaaS</span>
+            <span class="card-tag">Fintech</span>
+          </div>
+        </div>
+        <div class="outcomes">
+          <div class="outcome"><div class="outcome-num">9/9</div><div class="outcome-label">Found status unaided</div></div>
+          <div class="outcome"><div class="outcome-num">~6 hrs</div><div class="outcome-label">Saved weekly</div></div>
+        </div>
+      </div>
+      <div class="card-visual">
+        <div class="visual-placeholder">Real product screenshot<br/>(Release record with milestone timeline)</div>
+      </div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <!-- ─── Card 3 — AI Sales Enablement (green, Dell) ─── -->
+    <a href="/case-study-3" class="card green">
+      <div class="card-content">
+        <div class="card-top">
+          <span class="card-chip">AI Sales Enablement · Dell</span>
+          <h2>Turning chaos into clarity.</h2>
+          <p class="card-desc">Redesigned Dell's AI chat interface into an intuitive platform — cutting support tickets by 55% and boosting self-serve adoption across enterprise teams.</p>
+          <div class="card-tags">
+            <span class="card-tag">AI Tools</span>
+            <span class="card-tag">Enterprise UX</span>
+            <span class="card-tag">B2B SaaS</span>
+          </div>
+        </div>
+        <div class="outcomes">
+          <div class="outcome"><div class="outcome-num">85%</div><div class="outcome-label">AI adoption lift</div></div>
+          <div class="outcome"><div class="outcome-num">55%</div><div class="outcome-label">Tickets reduced</div></div>
+        </div>
+      </div>
+      <div class="card-visual">
+        <div class="visual-placeholder">Real product screenshot<br/>(Dell AI chat platform on laptop)</div>
+      </div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <!-- ─── Card 4 — AI Chat Interface (cream/yellow, Dell, flipped) ─── -->
+    <a href="/case-study-4" class="card cream flip">
+      <div class="card-content">
+        <div class="card-top">
+          <span class="card-chip">GEN-AI Chat Interface · Dell</span>
+          <h2>92% task completion on a GEN-AI sales chat.</h2>
+          <p class="card-desc">Centralized product info, order details, and sales articles into a GEN-AI chat — saving sales teams hours every week and combining six tools into one.</p>
+          <div class="card-tags">
+            <span class="card-tag">AI Tools</span>
+            <span class="card-tag">B2B SaaS</span>
+            <span class="card-tag">Enterprise UX</span>
+          </div>
+        </div>
+        <div class="outcomes">
+          <div class="outcome"><div class="outcome-num">92%</div><div class="outcome-label">Task completion</div></div>
+          <div class="outcome"><div class="outcome-num">6+ tools</div><div class="outcome-label">Combined into one</div></div>
+        </div>
+      </div>
+      <div class="card-visual">
+        <div class="visual-placeholder">Real product screenshot<br/>(Intelliassist chat interface)</div>
+      </div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <!-- ─── Card 5 — Dell INC Redesign (peach, Dell) ─── -->
+    <a href="/case-study-5" class="card peach">
+      <div class="card-content">
+        <div class="card-top">
+          <span class="card-chip">Information Architecture · Dell</span>
+          <h2>40% better findability across Dell's INC.</h2>
+          <p class="card-desc">Led the redesign of Dell's Information Network Center — restructuring the IA, streamlining navigation, and bridging research and design across teams.</p>
+          <div class="card-tags">
+            <span class="card-tag">IA</span>
+            <span class="card-tag">Design Systems</span>
+            <span class="card-tag">Research</span>
+          </div>
+        </div>
+        <div class="outcomes">
+          <div class="outcome"><div class="outcome-num">40%</div><div class="outcome-label">Findability lift</div></div>
+          <div class="outcome"><div class="outcome-num">70%</div><div class="outcome-label">Ease of access boost</div></div>
+        </div>
+      </div>
+      <div class="card-visual">
+        <div class="visual-placeholder">Two screenshots side-by-side<br/>(Design + Research views)</div>
+      </div>
+      <div class="card-arrow">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+  </div>
+
+</body>
+</html>

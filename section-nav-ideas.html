@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section nav — 3 ideas for a sticky side menu</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-mute: #757575;
+    --line: #ececec;
+    --line-2: #d8d8d8;
+    --accent: #1f4d3e;
+    --accent-soft: #e8f1ed;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1280px; margin: 0 auto; padding: 64px 30px; }
+  h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .sub { font-size: 15px; color: var(--ink-mute); margin: 0 0 56px; max-width: 680px; }
+
+  .idea {
+    margin-bottom: 80px;
+    padding-bottom: 64px;
+    border-bottom: 1px solid var(--line);
+  }
+  .idea:last-child { border-bottom: none; }
+  .idea-label {
+    display: inline-block;
+    background: var(--ink); color: white;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 5px 11px; border-radius: 4px;
+    margin-bottom: 14px;
+  }
+  .idea-title { font-size: 20px; font-weight: 600; margin: 0 0 6px; }
+  .idea-note {
+    font-size: 13px; color: var(--ink-mute); margin: 0 0 32px;
+    max-width: 720px;
+  }
+
+  /* Demo frame — mimics a case study */
+  .demo {
+    background: var(--bg);
+    border: 1px dashed var(--line-2);
+    border-radius: 14px;
+    padding: 44px 36px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  /* Mock case study content (right side of every demo) */
+  .mock {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 36px 32px;
+    min-height: 380px;
+  }
+  .mock-eb {
+    text-transform: uppercase;
+    font-size: 11px; letter-spacing: 0.14em;
+    font-weight: 600; color: var(--ink-mute);
+    margin-bottom: 12px;
+  }
+  .mock h2 {
+    font-size: 28px; font-weight: 600; letter-spacing: -0.02em;
+    margin: 0 0 14px;
+  }
+  .mock p {
+    font-size: 15px; color: var(--ink-soft); margin: 0 0 12px;
+    line-height: 1.6;
+  }
+  .mock-bar {
+    height: 6px; background: var(--line); border-radius: 3px;
+    margin-top: 22px;
+    width: 70%;
+  }
+
+  /* ========== VARIANT A — Anchor list (left bar + labels) ========== */
+  .nav-a {
+    position: sticky; top: 24px;
+    padding: 4px 0;
+  }
+  .nav-a .nav-label {
+    text-transform: uppercase;
+    font-size: 11px; letter-spacing: 0.14em;
+    font-weight: 600; color: var(--ink-mute);
+    margin-bottom: 16px;
+  }
+  .nav-a ul { list-style: none; padding: 0; margin: 0; }
+  .nav-a li {
+    position: relative;
+    font-size: 14px; font-weight: 500;
+    color: var(--ink-mute);
+    padding: 9px 0 9px 16px;
+    cursor: pointer;
+    transition: color 0.15s;
+    border-left: 2px solid transparent;
+  }
+  .nav-a li:hover { color: var(--ink); }
+  .nav-a li.active {
+    color: var(--ink);
+    font-weight: 600;
+    border-left-color: var(--accent);
+  }
+
+  /* ========== VARIANT B — Numbered + indicator dot ========== */
+  .nav-b {
+    position: sticky; top: 24px;
+    padding: 4px 0;
+  }
+  .nav-b .nav-label {
+    text-transform: uppercase;
+    font-size: 11px; letter-spacing: 0.14em;
+    font-weight: 600; color: var(--ink-mute);
+    margin-bottom: 16px;
+  }
+  .nav-b ul { list-style: none; padding: 0; margin: 0; }
+  .nav-b li {
+    display: flex; align-items: center; gap: 14px;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: color 0.15s;
+    color: var(--ink-mute);
+  }
+  .nav-b .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--line-2);
+    font-size: 10px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-mute);
+    transition: all 0.15s;
+  }
+  .nav-b .lbl {
+    font-size: 14px; font-weight: 500;
+  }
+  .nav-b li:hover { color: var(--ink); }
+  .nav-b li:hover .num { border-color: var(--ink); color: var(--ink); }
+  .nav-b li.active { color: var(--ink); }
+  .nav-b li.active .num {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+  .nav-b li.active .lbl { font-weight: 600; }
+
+  /* ========== VARIANT C — Progress line + dots ========== */
+  .nav-c {
+    position: sticky; top: 24px;
+    padding: 4px 0 4px 4px;
+    position: relative;
+  }
+  .nav-c .nav-label {
+    text-transform: uppercase;
+    font-size: 11px; letter-spacing: 0.14em;
+    font-weight: 600; color: var(--ink-mute);
+    margin-bottom: 18px;
+  }
+  .nav-c-track {
+    position: relative;
+    padding-left: 22px;
+  }
+  .nav-c-track::before {
+    content: ""; position: absolute;
+    left: 5px; top: 6px; bottom: 6px;
+    width: 2px;
+    background: var(--line);
+    border-radius: 1px;
+  }
+  .nav-c-progress {
+    content: ""; position: absolute;
+    left: 5px; top: 6px;
+    width: 2px; height: calc(40% - 4px);
+    background: var(--accent);
+    border-radius: 1px;
+    transition: height 0.2s;
+  }
+  .nav-c ul { list-style: none; padding: 0; margin: 0; position: relative; }
+  .nav-c li {
+    position: relative;
+    font-size: 14px; font-weight: 500;
+    color: var(--ink-mute);
+    padding: 8px 0;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+  .nav-c li::before {
+    content: ""; position: absolute;
+    left: -22px; top: 14px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--line);
+    transition: all 0.15s;
+  }
+  .nav-c li:hover { color: var(--ink); }
+  .nav-c li:hover::before { border-color: var(--ink); }
+  .nav-c li.passed { color: var(--ink-soft); }
+  .nav-c li.passed::before { border-color: var(--accent); background: var(--accent); }
+  .nav-c li.active { color: var(--ink); font-weight: 600; }
+  .nav-c li.active::before {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <h1>Sticky section nav — 3 ideas</h1>
+  <p class="sub">Three takes on a left-side anchor menu for the case studies. Each is shown alongside a simulated case-study panel so you can compare. Pick one and I'll wire it into both case studies (HTML + Figma).</p>
+
+  <!-- IDEA A -->
+  <div class="idea">
+    <span class="idea-label">Idea A · Anchor list</span>
+    <h3 class="idea-title">Minimal text list with left accent bar</h3>
+    <p class="idea-note">Closest to Linear, Stripe docs, and Vercel. Just section names, muted by default. The active section pulls a thin green accent bar on the left and the label gets darker + bolder. Cleanest, most familiar pattern. No icons, no numbers, no decoration.</p>
+
+    <div class="demo">
+      <nav class="nav-a">
+        <div class="nav-label">On this page</div>
+        <ul>
+          <li>Overview</li>
+          <li>Problem area</li>
+          <li>Design goals</li>
+          <li class="active">Solution</li>
+          <li>Dashboard view</li>
+          <li>Case detail view</li>
+          <li>Validation</li>
+          <li>Post-launch</li>
+        </ul>
+      </nav>
+      <div class="mock">
+        <div class="mock-eb">Solution</div>
+        <h2>A central hub for real-time oversight</h2>
+        <p>I built a central hub that brings every loan inquiry into one clear, organized view. Clients no longer have to dig through their inboxes to find out if a case is moving forward.</p>
+        <p>Everything is right there, updated in real time so nobody is left guessing about the status of their work.</p>
+        <div class="mock-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDEA B -->
+  <div class="idea">
+    <span class="idea-label">Idea B · Numbered</span>
+    <h3 class="idea-title">Numbered steps with filled active dot</h3>
+    <p class="idea-note">Treats the case study like a guided walkthrough — each section has a numeric chip. The active step's chip fills with the brand green; everything else stays understated. Slightly more "designed" feel, signals progression. Works well if the recruiter wants a sense of "where am I in the story."</p>
+
+    <div class="demo">
+      <nav class="nav-b">
+        <div class="nav-label">Sections</div>
+        <ul>
+          <li><span class="num">01</span><span class="lbl">Overview</span></li>
+          <li><span class="num">02</span><span class="lbl">Problem area</span></li>
+          <li><span class="num">03</span><span class="lbl">Design goals</span></li>
+          <li class="active"><span class="num">04</span><span class="lbl">Solution</span></li>
+          <li><span class="num">05</span><span class="lbl">Dashboard view</span></li>
+          <li><span class="num">06</span><span class="lbl">Case detail</span></li>
+          <li><span class="num">07</span><span class="lbl">Validation</span></li>
+          <li><span class="num">08</span><span class="lbl">Post-launch</span></li>
+        </ul>
+      </nav>
+      <div class="mock">
+        <div class="mock-eb">Solution</div>
+        <h2>A central hub for real-time oversight</h2>
+        <p>I built a central hub that brings every loan inquiry into one clear, organized view. Clients no longer have to dig through their inboxes to find out if a case is moving forward.</p>
+        <p>Everything is right there, updated in real time so nobody is left guessing about the status of their work.</p>
+        <div class="mock-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDEA C -->
+  <div class="idea">
+    <span class="idea-label">Idea C · Progress line</span>
+    <h3 class="idea-title">Vertical progress line with dot per section</h3>
+    <p class="idea-note">A continuous vertical track on the left. Each section is a dot on the line; sections you've already scrolled past fill in green. The active section's dot has a soft green halo. Adds a subtle sense of progress through the page — feels like reading a long article. Slightly more visual than A, less labeled than B.</p>
+
+    <div class="demo">
+      <nav class="nav-c">
+        <div class="nav-label">Sections</div>
+        <div class="nav-c-track">
+          <div class="nav-c-progress"></div>
+          <ul>
+            <li class="passed">Overview</li>
+            <li class="passed">Problem area</li>
+            <li class="passed">Design goals</li>
+            <li class="active">Solution</li>
+            <li>Dashboard view</li>
+            <li>Case detail view</li>
+            <li>Validation</li>
+            <li>Post-launch</li>
+          </ul>
+        </div>
+      </nav>
+      <div class="mock">
+        <div class="mock-eb">Solution</div>
+        <h2>A central hub for real-time oversight</h2>
+        <p>I built a central hub that brings every loan inquiry into one clear, organized view. Clients no longer have to dig through their inboxes to find out if a case is moving forward.</p>
+        <p>Everything is right there, updated in real time so nobody is left guessing about the status of their work.</p>
+        <div class="mock-bar"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study 2 — Loan Deboarding Portal</title>
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" rel="stylesheet" />
+  <style>
+    /* ─────────────────────────────────────────
+       DESIGN TOKENS
+       ───────────────────────────────────────── */
+    :root {
+      --ink: #111;
+      --ink-soft: #5a5a5a;
+      --ink-mute: #8a8a8a;
+      --line: rgba(0, 0, 0, 0.08);
+      --line-soft: rgba(0, 0, 0, 0.06);
+
+      --accent: #1F4D3E;
+      --accent-soft: #E8F1ED;
+      --after-bg: #F2F6F2;
+
+      --before-bg: #FBF8F0;
+      --before-line: #ece2cd;
+      --before-tag: #a89568;
+
+      /* Skeleton tones — one per pane, harmonized to its background */
+      --sk-before: #dccfb0;
+      --sk-after:  #c8d6cf;
+
+      --radius-card: 18px;
+      --radius-inner: 9px;
+
+      --font-sans: 'Satoshi', -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background: #FAFAF7;
+      -webkit-font-smoothing: antialiased;
+      padding: 60px 24px;
+      display: flex; justify-content: center;
+    }
+
+    /* ─────────────────────────────────────────
+       CARD SHELL
+       ───────────────────────────────────────── */
+    .case-card {
+      width: 100%; max-width: 980px;
+      background: #fff;
+      border: 0.5px solid var(--line);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 16px 40px rgba(0, 0, 0, 0.04);
+    }
+
+    /* ─────────────────────────────────────────
+       VISUAL SPLIT — fully skeletonized
+       ───────────────────────────────────────── */
+    .v-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 280px;
+    }
+    .pane { padding: 24px 24px 28px; }
+    .b-pane { background: var(--before-bg); border-right: 0.5px solid var(--line-soft); }
+    .a-pane { background: var(--after-bg); }
+
+    .pane-tag {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 9.5px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--before-tag);
+      margin-bottom: 14px;
+    }
+    .pane-tag.aft { color: var(--accent); }
+    .pane-tag .pip {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: currentColor; opacity: 0.5;
+    }
+
+    /* ── Skeleton — single tone per pane ── */
+    .b-pane .sk { background: var(--sk-before); }
+    .a-pane .sk { background: var(--sk-after); }
+
+    /* ── Inbox ── */
+    .inbox {
+      background: #fff; border: 0.5px solid var(--before-line);
+      border-radius: var(--radius-inner); overflow: hidden;
+    }
+    .inbox-h {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 12px; background: #fefcf6;
+      border-bottom: 0.5px solid #f4eedb;
+    }
+    .inbox-h .hbar  { width: 60px; height: 6px; border-radius: 3px; }
+    .inbox-h .badge { width: 28px; height: 12px; border-radius: 999px; }
+
+    .mail-row {
+      display: grid; grid-template-columns: 18px 1fr 6px;
+      gap: 10px; align-items: center;
+      padding: 10px 12px; border-top: 0.5px solid #f5edd9;
+    }
+    .mail-row:first-of-type { border-top: 0; }
+    .mail-row .av { width: 18px; height: 18px; border-radius: 50%; }
+    .mail-row .av.a1 { background: #c69b3f; }
+    .mail-row .av.a2 { background: #8d9c6c; }
+    .mail-row .av.a3 { background: #a06a52; }
+    .mail-row .av.a4 { background: #6e7e8f; }
+    .mail-row .av.a5 { background: #a08068; }
+
+    .barwrap { display: flex; flex-direction: column; gap: 4px; }
+    .bar { height: 5px; border-radius: 3px; }
+    .w30 { width: 30%; } .w40 { width: 40%; }
+    .w50 { width: 50%; } .w55 { width: 55%; }
+    .w65 { width: 65%; } .w70 { width: 70%; }
+    .w75 { width: 75%; } .w85 { width: 85%; }
+
+    .mail-row .udot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #d0a534; opacity: 0;
+    }
+    .mail-row.unread .udot { opacity: 1; }
+
+    /* ── Release record ── */
+    .record {
+      background: #fff; border: 0.5px solid #d8e4dc;
+      border-radius: var(--radius-inner); overflow: hidden;
+    }
+    .rec-h {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 14px; border-bottom: 0.5px solid #e4ede7;
+    }
+    .rec-h .idbar { width: 64px; height: 6px; border-radius: 3px; }
+    .rec-h .pill {
+      width: 56px; height: 14px; border-radius: 4px;
+      background: var(--accent);
+    }
+
+    .timeline {
+      padding: 16px 14px;
+      display: flex; flex-direction: column; gap: 11px;
+    }
+    .ms-row { display: flex; gap: 11px; align-items: center; position: relative; }
+    .ms-dot {
+      width: 13px; height: 13px; border-radius: 50%;
+      border: 1.5px solid #c7d4cd; background: #fff;
+      flex-shrink: 0; position: relative;
+    }
+    .ms-dot.done {
+      background: var(--accent); border-color: var(--accent);
+    }
+    .ms-dot.done::after {
+      content: ''; position: absolute;
+      left: 2.5px; top: 4.5px; width: 4.5px; height: 2.2px;
+      border-left: 1.4px solid #fff; border-bottom: 1.4px solid #fff;
+      transform: rotate(-45deg);
+    }
+    .ms-dot.cur {
+      background: #fff; border-color: var(--accent);
+      box-shadow: 0 0 0 3.5px rgba(31, 77, 62, 0.15);
+    }
+    .ms-row:not(:last-child)::before {
+      content: ''; position: absolute;
+      left: 5.5px; top: 13px; width: 2px; height: calc(100% + 11px);
+      background: linear-gradient(to bottom, #c7d4cd 50%, transparent 50%);
+      background-size: 2px 4px;
+    }
+    .ms-row.done:not(:last-child)::before { background: var(--accent); }
+
+    .ms-row .lblbar { height: 6px; border-radius: 3px; }
+    /* Current row gets an accent-colored bar to mirror the focused dot */
+    .ms-row.cur .lblbar { background: var(--accent); }
+
+    /* ─────────────────────────────────────────
+       FOOTER
+       ───────────────────────────────────────── */
+    .meta-bar {
+      padding: 28px 32px;
+      border-top: 0.5px solid var(--line-soft);
+      display: grid;
+      grid-template-columns: 1.4fr auto;
+      gap: 32px;
+      align-items: center;
+    }
+    .eyebrow-chip {
+      display: inline-block;
+      padding: 5px 12px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    .meta-bar h2 {
+      font-size: 28px; line-height: 1.15;
+      font-weight: 600; letter-spacing: -0.022em;
+      margin: 0 0 12px; color: var(--ink);
+    }
+    .desc {
+      font-size: 14px; color: var(--ink-soft);
+      line-height: 1.55; max-width: 500px;
+      margin: 0 0 16px;
+    }
+    .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .chip {
+      padding: 4px 11px;
+      border: 0.5px solid #d8d8d8;
+      border-radius: 999px;
+      font-size: 11px; color: #4a4a4a;
+    }
+    .stats {
+      display: flex; flex-direction: column; gap: 16px;
+      border-left: 0.5px solid var(--line-soft);
+      padding-left: 32px;
+    }
+    .stat .num {
+      font-size: 24px; font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--accent); line-height: 1;
+    }
+    .stat .lbl {
+      font-size: 10px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--ink-mute);
+      margin-top: 5px;
+    }
+
+    @media (max-width: 720px) {
+      .v-split { grid-template-columns: 1fr; }
+      .b-pane { border-right: 0; border-bottom: 0.5px solid var(--line-soft); }
+      .meta-bar { grid-template-columns: 1fr; }
+      .stats {
+        border-left: 0; padding-left: 0;
+        flex-direction: row; gap: 32px;
+        padding-top: 14px;
+        border-top: 0.5px solid var(--line-soft);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <article class="case-card">
+
+    <div class="v-split">
+      <!-- BEFORE -->
+      <div class="pane b-pane">
+        <div class="pane-tag"><span class="pip"></span> Before · escalation inbox</div>
+        <div class="inbox" aria-hidden="true">
+          <div class="inbox-h"><span class="hbar sk"></span><span class="badge sk"></span></div>
+          <div class="mail-row unread">
+            <span class="av a1"></span>
+            <div class="barwrap"><span class="bar sk w30"></span><span class="bar sk w70"></span></div>
+            <span class="udot"></span>
+          </div>
+          <div class="mail-row unread">
+            <span class="av a2"></span>
+            <div class="barwrap"><span class="bar sk w30"></span><span class="bar sk w85"></span></div>
+            <span class="udot"></span>
+          </div>
+          <div class="mail-row">
+            <span class="av a3"></span>
+            <div class="barwrap"><span class="bar sk w30"></span><span class="bar sk w55"></span></div>
+            <span class="udot"></span>
+          </div>
+          <div class="mail-row unread">
+            <span class="av a4"></span>
+            <div class="barwrap"><span class="bar sk w30"></span><span class="bar sk w65"></span></div>
+            <span class="udot"></span>
+          </div>
+          <div class="mail-row">
+            <span class="av a5"></span>
+            <div class="barwrap"><span class="bar sk w30"></span><span class="bar sk w40"></span></div>
+            <span class="udot"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- AFTER -->
+      <div class="pane a-pane">
+        <div class="pane-tag aft"><span class="pip"></span> After · one release record</div>
+        <div class="record" aria-hidden="true">
+          <div class="rec-h">
+            <span class="idbar sk"></span>
+            <span class="pill"></span>
+          </div>
+          <div class="timeline">
+            <div class="ms-row done"><span class="ms-dot done"></span><span class="lblbar sk w50"></span></div>
+            <div class="ms-row done"><span class="ms-dot done"></span><span class="lblbar sk w40"></span></div>
+            <div class="ms-row done"><span class="ms-dot done"></span><span class="lblbar sk w65"></span></div>
+            <div class="ms-row cur"><span class="ms-dot cur"></span><span class="lblbar w55"></span></div>
+            <div class="ms-row"><span class="ms-dot"></span><span class="lblbar sk w40"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="meta-bar">
+      <div>
+        <span class="eyebrow-chip">Loan Deboarding Portal</span>
+        <h2>One pipeline for many operational shapes.</h2>
+        <p class="desc">A release record that absorbs how each client prepares its data — different LOS systems, different reports, different investor mixes — and gives the receiving team one shared structure downstream.</p>
+        <div class="tags">
+          <span class="chip">Enterprise UX</span>
+          <span class="chip">B2B SaaS</span>
+          <span class="chip">Fintech</span>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="num">9/9</div><div class="lbl">Found status unaided</div></div>
+        <div class="stat"><div class="num">~6 hrs</div><div class="lbl">Saved weekly · per analyst</div></div>
+      </div>
+    </div>
+
+  </article>
+
+</body>
+</html>

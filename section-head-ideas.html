@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section head — balance ideas</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-mute: #757575;
+    --line: #ececec;
+    --accent: #1f4d3e;
+    --accent-soft: #e8f1ed;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: 1100px; margin: 0 auto; padding: 64px 30px; }
+  .page-title {
+    font-size: 32px; font-weight: 600; letter-spacing: -0.02em;
+    margin: 0 0 8px;
+  }
+  .page-sub { font-size: 15px; color: var(--ink-mute); margin: 0 0 56px; }
+
+  .idea {
+    margin-bottom: 80px;
+    padding-bottom: 64px;
+    border-bottom: 1px solid var(--line);
+  }
+  .idea:last-child { border-bottom: none; }
+  .idea-label {
+    display: inline-block;
+    background: var(--ink);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 4px;
+    margin-bottom: 18px;
+  }
+  .idea-title {
+    font-size: 20px; font-weight: 600; margin: 0 0 4px;
+  }
+  .idea-note {
+    font-size: 13px; color: var(--ink-mute); margin: 0 0 32px;
+    max-width: 560px;
+  }
+
+  /* Section head (the actual case study layout) */
+  .sec-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+    background: var(--bg);
+    border: 1px dashed var(--line);
+    border-radius: 14px;
+    padding: 40px 36px;
+  }
+  .sec-head .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-mute);
+    margin-bottom: 14px;
+  }
+  .sec-head h2 {
+    font-size: 36px; line-height: 1.15; letter-spacing: -0.02em;
+    margin: 0 0 16px;
+  }
+  .sec-head p { font-size: 17px; color: var(--ink-soft); margin: 0; }
+
+  /* === IDEA 1 — BIG SECTION NUMBER === */
+  .num-block {
+    display: flex; flex-direction: column; align-items: flex-end;
+    text-align: right;
+  }
+  .num-block .label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-mute); margin-bottom: 4px;
+  }
+  .num-block .digit {
+    font-size: 180px; font-weight: 600; line-height: 0.85;
+    letter-spacing: -0.06em; color: var(--ink);
+    font-feature-settings: "tnum";
+    margin-bottom: 8px;
+  }
+  .num-block .total {
+    font-size: 13px; color: var(--ink-mute);
+  }
+
+  /* === IDEA 2 — PULL QUOTE === */
+  .pq-block {
+    border-left: 3px solid var(--accent);
+    padding: 6px 0 6px 24px;
+  }
+  .pq-block blockquote {
+    margin: 0 0 14px;
+    font-size: 22px; line-height: 1.35;
+    font-weight: 500; letter-spacing: -0.01em;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .pq-block cite {
+    font-style: normal;
+    font-size: 13px; color: var(--ink-mute);
+  }
+  .pq-block cite strong { color: var(--ink); font-weight: 600; }
+
+  /* === IDEA 3 — STAT / KEY FIGURE CARD === */
+  .stat-block {
+    background: var(--ink); color: white;
+    border-radius: 16px;
+    padding: 32px 28px;
+  }
+  .stat-block .label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6); margin-bottom: 12px;
+  }
+  .stat-block .num {
+    font-size: 56px; font-weight: 600; line-height: 1;
+    letter-spacing: -0.03em; color: white;
+    margin-bottom: 12px;
+  }
+  .stat-block .ctx {
+    font-size: 14px; line-height: 1.45;
+    color: rgba(255,255,255,0.78);
+  }
+
+  /* === IDEA 4 — PROBLEM ICONS / VISUAL TAGS === */
+  .icons-block {
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .icon-tag {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .icon-tag .icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .icon-tag .text {
+    font-size: 14px; font-weight: 500; color: var(--ink);
+  }
+  .icon-tag .sub {
+    font-size: 12px; color: var(--ink-mute);
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <h1 class="page-title">Section head — 4 ideas to balance the right side</h1>
+  <p class="page-sub">Same left-side content (Problem Area). Different right-side treatments. Pick what feels right.</p>
+
+  <!-- IDEA 1 -->
+  <div class="idea">
+    <span class="idea-label">Idea 1 · Big Section Number</span>
+    <h3 class="idea-title">Editorial section number</h3>
+    <p class="idea-note">Big numeric counter (01 / 02 / 03) acts as a visual landmark. Looks like a magazine spread or design pub. Most polished, simplest to add. No additional content required.</p>
+
+    <div class="sec-row">
+      <div class="sec-head">
+        <div class="eyebrow">Problem area</div>
+        <h2>Lost in the back-and-forth</h2>
+        <p>Mortgage companies and subserviced clients lack a way to manage their loan inquiries after the initial request is sent. Because there is no central place to track progress, exchange documents, or message teams, clients are forced to dig through hundreds of emails to find specific case details or files.</p>
+      </div>
+      <div class="num-block">
+        <div class="label">Section</div>
+        <div class="digit">03</div>
+        <div class="total">of 09</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDEA 2 -->
+  <div class="idea">
+    <span class="idea-label">Idea 2 · Pull Quote</span>
+    <h3 class="idea-title">Research quote in the margin</h3>
+    <p class="idea-note">Pull a key user-research line and put it next to the section it belongs to. Adds voice + qualitative weight. Lets you reuse the Ivan/Glenda quotes contextually rather than dumping them all in one block.</p>
+
+    <div class="sec-row">
+      <div class="sec-head">
+        <div class="eyebrow">Problem area</div>
+        <h2>Lost in the back-and-forth</h2>
+        <p>Mortgage companies and subserviced clients lack a way to manage their loan inquiries after the initial request is sent. Because there is no central place to track progress, exchange documents, or message teams, clients are forced to dig through hundreds of emails to find specific case details or files.</p>
+      </div>
+      <div class="pq-block">
+        <blockquote>"I'm digging through 200+ emails per case just to find one document."</blockquote>
+        <cite><strong>Ivan Camarena</strong> · Client Account Manager</cite>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDEA 3 -->
+  <div class="idea">
+    <span class="idea-label">Idea 3 · Stat Card</span>
+    <h3 class="idea-title">Key figure / context stat</h3>
+    <p class="idea-note">A bold supporting metric that makes the problem tangible. Eye-catching, gives the recruiter a "tweet-able" data point at every section. Works especially well next to Problem and Validation sections.</p>
+
+    <div class="sec-row">
+      <div class="sec-head">
+        <div class="eyebrow">Problem area</div>
+        <h2>Lost in the back-and-forth</h2>
+        <p>Mortgage companies and subserviced clients lack a way to manage their loan inquiries after the initial request is sent. Because there is no central place to track progress, exchange documents, or message teams, clients are forced to dig through hundreds of emails to find specific case details or files.</p>
+      </div>
+      <div class="stat-block">
+        <div class="label">The cost of fragmentation</div>
+        <div class="num">12 hrs</div>
+        <div class="ctx">spent per analyst per week chasing case status across email threads and Excel sheets — before this redesign.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IDEA 4 -->
+  <div class="idea">
+    <span class="idea-label">Idea 4 · Icon Tag List</span>
+    <h3 class="idea-title">Mini icon-tag preview</h3>
+    <p class="idea-note">Three small icon tags previewing the problems below (or the solution sub-features). Acts as a "table of contents" for the section, so the reader knows what's coming. Functional + visual.</p>
+
+    <div class="sec-row">
+      <div class="sec-head">
+        <div class="eyebrow">Problem area</div>
+        <h2>Lost in the back-and-forth</h2>
+        <p>Mortgage companies and subserviced clients lack a way to manage their loan inquiries after the initial request is sent. Because there is no central place to track progress, exchange documents, or message teams, clients are forced to dig through hundreds of emails to find specific case details or files.</p>
+      </div>
+      <div class="icons-block">
+        <div class="icon-tag">
+          <div class="icon">👁️</div>
+          <div>
+            <div class="text">Zero visibility</div>
+            <div class="sub">after a case is opened</div>
+          </div>
+        </div>
+        <div class="icon-tag">
+          <div class="icon">📨</div>
+          <div>
+            <div class="text">Fragmented files &amp; messages</div>
+            <div class="sub">scattered across inboxes</div>
+          </div>
+        </div>
+        <div class="icon-tag">
+          <div class="icon">📅</div>
+          <div>
+            <div class="text">Meeting-heavy status</div>
+            <div class="sub">bi-weekly check-ins to stay synced</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

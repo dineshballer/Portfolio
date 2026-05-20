@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dinesh Baller — Product Designer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..500&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --ink: #171717;
+    --ink-soft: #5A5A55;
+    --ink-mute: #9A9489;
+    --accent: #1F4D3E;
+    --green-mute: rgba(31, 77, 62, 0.50);
+    --green-hover: rgba(31, 77, 62, 0.80);
+    --green-strong: #1F4D3E;
+    --line: rgba(23, 23, 23, 0.10);
+    --display: "Fraunces", Georgia, serif;
+    --body: "General Sans", -apple-system, system-ui, sans-serif;
+    --ease: cubic-bezier(0.2, 0.65, 0.3, 1);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Background atmosphere — drifting soft blobs */
+  .bg-atmosphere {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    will-change: transform;
+  }
+  .bg-blob.b1 {
+    width: 560px; height: 560px;
+    top: -140px; left: -160px;
+    background: radial-gradient(circle, rgba(31, 77, 62, 0.22), transparent 70%);
+    animation: drift-1 34s ease-in-out infinite alternate;
+  }
+  .bg-blob.b2 {
+    width: 720px; height: 720px;
+    top: 18%; right: -240px;
+    background: radial-gradient(circle, rgba(220, 195, 150, 0.38), transparent 70%);
+    animation: drift-2 42s ease-in-out infinite alternate;
+  }
+  .bg-blob.b3 {
+    width: 500px; height: 500px;
+    bottom: -160px; left: 28%;
+    background: radial-gradient(circle, rgba(46, 125, 91, 0.22), transparent 70%);
+    animation: drift-3 30s ease-in-out infinite alternate;
+  }
+  @keyframes drift-1 {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(90px, 70px) scale(1.08); }
+  }
+  @keyframes drift-2 {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-70px, 50px) scale(1.04); }
+  }
+  @keyframes drift-3 {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, -60px) scale(1.07); }
+  }
+  nav.nav, .scroll-cue {
+    position: relative;
+    z-index: 1;
+  }
+  section.case-studies {
+    position: relative;
+  }
+
+  /* Spotlight backdrop — blurs everything except the hovered showcase card */
+  .spotlight-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(246, 241, 232, 0.35);
+    backdrop-filter: blur(14px) saturate(0.85);
+    -webkit-backdrop-filter: blur(14px) saturate(0.85);
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 540ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @media (hover: hover) {
+    body:has(.case.showcase:hover) .spotlight-backdrop {
+      opacity: 1;
+    }
+  }
+
+  /* Nav */
+  nav.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 48px;
+  }
+  .wordmark {
+    font-family: var(--body);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.005em;
+    transition: color 220ms var(--ease);
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* Hero — chips + one-liner, nothing else */
+  main.hero {
+    min-height: calc(100vh - 96px);
+    padding: 18vh 48px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Chip rail */
+  .chip-rail {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 28px;
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadein 720ms var(--ease) 120ms forwards;
+  }
+  .chip {
+    appearance: none;
+    background: transparent;
+    border: none;
+    padding: 0;
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    cursor: pointer;
+    transition: color 320ms var(--ease), font-weight 320ms var(--ease);
+    position: relative;
+  }
+  .chip:hover { color: var(--ink-soft); }
+  .chip::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -8px;
+    height: 1px;
+    background: var(--green-strong);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 360ms var(--ease);
+  }
+  .chip[aria-selected="true"] {
+    color: var(--green-strong);
+    font-weight: 600;
+  }
+  .chip[aria-selected="true"]::after {
+    transform: scaleX(1);
+  }
+  .chip:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 6px;
+    border-radius: 2px;
+  }
+
+  /* One-liner stage */
+  .lens-stage {
+    position: relative;
+    width: 100%;
+    max-width: 820px;
+    min-height: 3em;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadein 900ms var(--ease) 280ms forwards;
+  }
+  .lens-line {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    font-family: var(--display);
+    font-weight: 350;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.18;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 60;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 220ms var(--ease), transform 320ms var(--ease);
+    pointer-events: none;
+  }
+  .lens-line[data-active="true"] {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    transition-delay: 80ms;
+  }
+
+  /* Scroll cue */
+  .scroll-cue {
+    position: fixed;
+    right: 48px;
+    bottom: 32px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: lowercase;
+    color: var(--ink-mute);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 240ms var(--ease);
+    opacity: 0;
+    animation: fadein 900ms var(--ease) 520ms forwards;
+  }
+  .scroll-cue:hover { color: var(--ink); }
+  .scroll-cue .arrow {
+    display: inline-block;
+    animation: bob 2.6s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+  }
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Greeting at the bottom of hero */
+  .greeting {
+    margin-top: auto;
+    padding-top: 10vh;
+    text-align: center;
+    opacity: 0;
+    animation: greeting-in 800ms var(--ease) 1.1s forwards;
+  }
+  .greeting-inner {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: float 6s ease-in-out infinite;
+  }
+  .greeting p {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 350;
+    font-size: clamp(18px, 1.9vw, 22px);
+    line-height: 1.2;
+    color: var(--ink-soft);
+    letter-spacing: -0.005em;
+    margin: 0;
+    font-variation-settings: "opsz" 36;
+  }
+  .greeting .wavy {
+    color: var(--green-strong);
+    opacity: 0.7;
+  }
+  .greeting .wavy path {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: draw 1400ms var(--ease) 1.7s forwards;
+  }
+  @keyframes greeting-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-4px); }
+  }
+
+  /* Case studies — full-width vertical cards in a single column */
+  section.case-studies {
+    padding: 40px 48px 120px;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+  }
+
+  /* Section headline */
+  .section-head {
+    text-align: center;
+    margin-bottom: 8px;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .section-head h2 {
+    font-family: var(--display);
+    font-weight: 350;
+    font-size: clamp(40px, 5.4vw, 64px);
+    line-height: 1.04;
+    letter-spacing: -0.028em;
+    margin: 0 0 16px;
+    color: var(--ink);
+    font-variation-settings: "opsz" 96;
+  }
+  .section-head h2 em {
+    font-style: italic;
+    color: var(--green-strong);
+    font-variation-settings: "opsz" 96;
+  }
+  .section-head p {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 350;
+    font-size: clamp(16px, 1.6vw, 19px);
+    color: var(--ink-soft);
+    margin: 0;
+    letter-spacing: -0.005em;
+    font-variation-settings: "opsz" 24;
+  }
+
+  .case {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+    text-align: left;
+    max-width: 960px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .case-visual { order: 1; }
+  .case-content { order: 2; }
+  .case-content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  .case-tags span {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-mute);
+  }
+  .case-title {
+    font-family: var(--display);
+    font-weight: 350;
+    font-size: clamp(20px, 1.7vw, 24px);
+    line-height: 1.3;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    margin: 0;
+    font-variation-settings: "opsz" 36;
+  }
+  .case-meta {
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+  }
+  .case-meta strong {
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .case-visual {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #F5F2EC;
+    border: 1px solid var(--line);
+    transition: transform 280ms var(--ease), box-shadow 280ms var(--ease);
+  }
+  .case-visual img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .case-visual .placeholder {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 22px;
+    background: linear-gradient(135deg, #F4F1EB 0%, #ECE7DD 100%);
+    color: var(--ink-mute);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .case:hover .case-visual {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(23, 23, 23, 0.08);
+  }
+  .case:hover .case-title {
+    color: var(--green-strong);
+  }
+  .case-title {
+    transition: color 240ms var(--ease);
+  }
+
+  /* Showcase variant — card 1 hover treatment */
+  /* Elegant ease used across all showcase transitions */
+  /*   var(--ease-elegant) */
+  .case.showcase {
+    position: relative;
+    z-index: 6;
+    transition: z-index 0ms 540ms;
+  }
+  .case.showcase:hover,
+  .case.showcase:focus-visible {
+    z-index: 12;
+    transition: z-index 0ms;
+  }
+  .case.showcase .case-visual {
+    height: clamp(240px, 27vw, 330px);
+    width: 100%;
+    background:
+      radial-gradient(circle, rgba(31, 77, 62, 0.10) 1px, transparent 1.5px) 0 0 / 18px 18px,
+      rgba(31, 77, 62, 0.10);
+    border: none;
+    border-radius: 22px;
+    padding: clamp(18px, 2.4vw, 28px) clamp(28px, 4.5vw, 56px);
+    overflow: visible;
+    transition:
+      height 720ms cubic-bezier(0.16, 1, 0.3, 1),
+      padding 720ms cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 540ms cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+  }
+  .case.showcase:hover .case-visual,
+  .case.showcase:focus-visible .case-visual {
+    height: clamp(420px, 42vw, 540px);
+    padding: clamp(24px, 3vw, 36px) clamp(28px, 4.5vw, 56px);
+    background:
+      radial-gradient(circle, rgba(31, 77, 62, 0.10) 1px, transparent 1.5px) 0 0 / 18px 18px,
+      rgba(31, 77, 62, 0.18);
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Editorial number badge — committed big */
+  .case-num {
+    position: absolute;
+    top: 8px;
+    left: 18px;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 1;
+    color: var(--green-strong);
+    opacity: 0.30;
+    letter-spacing: -0.02em;
+    z-index: 2;
+    transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+    font-variation-settings: "opsz" 48;
+    pointer-events: none;
+  }
+  .case.showcase:hover .case-num {
+    opacity: 0.55;
+    transform: translateX(3px);
+  }
+
+  /* Persistent status pill — top-right of tile */
+  .status-pill {
+    position: absolute;
+    top: 14px;
+    right: 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    z-index: 3;
+    box-shadow: 0 4px 16px rgba(31, 77, 62, 0.10);
+    pointer-events: none;
+  }
+
+  /* Image container — starts smaller, pops up on hover */
+  .case-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #FFFFFF;
+    box-shadow: 0 12px 32px rgba(31, 77, 62, 0.10);
+    transform: scale(0.94);
+    transition: transform 680ms cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 680ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .case.showcase:hover .case-image,
+  .case.showcase:focus-visible .case-image {
+    transform: scale(1.04);
+    box-shadow: 0 34px 64px rgba(31, 77, 62, 0.22);
+  }
+  .case-image img,
+  .case-image .placeholder {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+    background: #FFFFFF;
+    filter: saturate(0.92) brightness(0.97);
+    transition: filter 680ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .case.showcase:hover .case-image img,
+  .case.showcase:hover .case-image .placeholder {
+    filter: saturate(1) brightness(1);
+  }
+  .case-image .placeholder {
+    background: linear-gradient(135deg, #FAF8F3 0%, #ECE6D9 100%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 22px;
+    color: var(--ink-mute);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* Static tag row below title — visible in rest state, fades out on hover */
+  .case.showcase .case-tags {
+    transition: opacity 480ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 540ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .case.showcase .case-tags span {
+    color: var(--green-strong);
+    opacity: 0.7;
+  }
+  .case.showcase:hover .case-tags,
+  .case.showcase:focus-visible .case-tags {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  /* Floating tag chips — hidden at rest, rise up + rotate into position on hover */
+  .float-chip {
+    position: absolute;
+    font-family: var(--body);
+    font-size: 11.5px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: rgba(31, 77, 62, 0.92);
+    color: #F6F1E8;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(22px) scale(0.84) rotate(0deg);
+    transition: opacity 540ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 680ms cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    box-shadow: 0 10px 26px rgba(31, 77, 62, 0.24);
+    z-index: 4;
+  }
+  /* Anchor each chip partially OUTSIDE the sage tile */
+  .float-chip.f1 { top: -18px;     left:  18%;     --rot: -7deg; }
+  .float-chip.f2 { top:  44%;      left: -44px;    --rot:  6deg; }
+  .float-chip.f3 { top:  12%;      right: -36px;   --rot:  9deg; }
+  .float-chip.f4 { bottom: -18px;  right: 22%;     --rot: -8deg; }
+
+  .case.showcase:hover .float-chip,
+  .case.showcase:focus-visible .float-chip {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(var(--rot));
+    box-shadow: 0 14px 32px rgba(31, 77, 62, 0.30);
+  }
+  /* Staggered entrance — opposite corners arrive together for diagonal rhythm */
+  .case.showcase:hover .float-chip.f1 { transition-delay:  60ms; }
+  .case.showcase:hover .float-chip.f4 { transition-delay: 120ms; }
+  .case.showcase:hover .float-chip.f3 { transition-delay: 180ms; }
+  .case.showcase:hover .float-chip.f2 { transition-delay: 240ms; }
+
+  /* View case study CTA — softer entrance with scale */
+  .view-cta {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) translateY(14px) scale(0.92);
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 13px 24px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #FFFFFF;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 520ms cubic-bezier(0.16, 1, 0.3, 1) 280ms,
+                transform 620ms cubic-bezier(0.16, 1, 0.3, 1) 280ms;
+    pointer-events: none;
+    box-shadow: 0 16px 40px rgba(23, 23, 23, 0.26);
+    z-index: 5;
+  }
+  .view-cta::after {
+    content: "→";
+    margin-left: 10px;
+    display: inline-block;
+    transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .case.showcase:hover .view-cta,
+  .case.showcase:focus-visible .view-cta {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0) scale(1);
+  }
+  .case.showcase:hover .view-cta::after {
+    transform: translateX(4px);
+  }
+
+  /* ───────────────────────────────────────────────
+     AI chat dock — "Ask the Workbench"
+     Static demo. Backend wiring comes later.
+  ─────────────────────────────────────────────── */
+  .ai-dock {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(540px, calc(100vw - 48px));
+    z-index: 20;
+  }
+  .ai-dock-inner {
+    background: rgba(252, 250, 245, 0.98);
+    backdrop-filter: blur(24px) saturate(1.15);
+    -webkit-backdrop-filter: blur(24px) saturate(1.15);
+    border: 1px solid rgba(23, 23, 23, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgba(23, 23, 23, 0.04),
+                0 8px 24px rgba(31, 77, 62, 0.10),
+                0 24px 56px rgba(31, 77, 62, 0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: min(620px, calc(100vh - 48px));
+  }
+
+  /* Header */
+  .ai-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 18px 14px;
+    border-bottom: 1px solid rgba(23, 23, 23, 0.06);
+  }
+  .ai-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+  .ai-header-text h3 {
+    font-family: var(--body);
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.2;
+    letter-spacing: -0.008em;
+    margin: 0;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .ai-spark {
+    color: var(--green-strong);
+    flex-shrink: 0;
+    animation: spark-rotate 4.8s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes spark-rotate {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50%      { transform: rotate(180deg) scale(1.08); }
+  }
+  .ai-header-text p {
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--ink-mute);
+    margin: 0;
+    letter-spacing: 0.005em;
+  }
+
+  /* Recruiter toggle + collapse */
+  .ai-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .ai-mode-label {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .ai-toggle {
+    appearance: none;
+    width: 34px;
+    height: 19px;
+    background: rgba(23, 23, 23, 0.12);
+    border: none;
+    border-radius: 999px;
+    position: relative;
+    cursor: pointer;
+    transition: background 280ms cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 0;
+  }
+  .ai-toggle[aria-checked="true"] {
+    background: var(--green-strong);
+  }
+  .ai-toggle .ai-toggle-thumb {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 15px; height: 15px;
+    background: #FFFFFF;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(23, 23, 23, 0.22);
+    transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .ai-toggle[aria-checked="true"] .ai-toggle-thumb {
+    transform: translateX(15px);
+  }
+  .ai-collapse {
+    appearance: none;
+    background: transparent;
+    border: none;
+    width: 28px; height: 28px;
+    color: var(--ink-mute);
+    cursor: pointer;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 220ms ease, color 220ms ease;
+  }
+  .ai-collapse:hover {
+    background: rgba(23, 23, 23, 0.05);
+    color: var(--ink);
+  }
+
+  /* Conversation area */
+  .ai-convo {
+    padding: 20px 20px 18px;
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .ai-msg-user {
+    align-self: flex-end;
+    max-width: 86%;
+    text-align: right;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    letter-spacing: -0.002em;
+    padding: 8px 14px;
+    background: rgba(23, 23, 23, 0.04);
+    border-radius: 12px;
+    border-top-right-radius: 4px;
+  }
+  /* Bot response — no bubble, sage left rule, clean prose */
+  .ai-msg-bot {
+    padding: 4px 0 4px 16px;
+    border-left: 2px solid rgba(31, 77, 62, 0.30);
+    font-family: var(--body);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink);
+    letter-spacing: 0;
+  }
+  .ai-msg-bot p {
+    margin: 0 0 10px;
+    opacity: 0;
+    animation: para-in 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .ai-msg-bot p:nth-child(1) { animation-delay:   0ms; }
+  .ai-msg-bot p:nth-child(2) { animation-delay: 280ms; }
+  .ai-msg-bot p:nth-child(3) { animation-delay: 560ms; }
+  .ai-msg-bot p:nth-child(4) { animation-delay: 840ms; }
+  .ai-msg-bot p:last-child { margin-bottom: 0; }
+  @keyframes para-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  /* Highlighted terms — editorial underline, not pill chips */
+  .ai-msg-bot mark {
+    background: transparent;
+    color: var(--green-strong);
+    font-weight: 500;
+    border-bottom: 1px dotted var(--green-strong);
+    padding: 0 1px 1px;
+  }
+
+  /* Suggested follow-ups */
+  .ai-followups {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .ai-followup-label {
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 0;
+  }
+  .ai-followup-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .ai-followup {
+    appearance: none;
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(23, 23, 23, 0.10);
+    color: var(--ink-soft);
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 400;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 220ms cubic-bezier(0.16, 1, 0.3, 1),
+                color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: left;
+  }
+  .ai-followup:hover {
+    background: rgba(31, 77, 62, 0.06);
+    color: var(--green-strong);
+    border-color: rgba(31, 77, 62, 0.30);
+    transform: translateY(-1px);
+  }
+
+  /* Input row — clean modern */
+  .ai-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px 12px;
+    border-top: 1px solid rgba(23, 23, 23, 0.06);
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .ai-input input {
+    flex: 1;
+    appearance: none;
+    background: #FFFFFF;
+    border: 1px solid rgba(23, 23, 23, 0.10);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-family: var(--body);
+    font-size: 13.5px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 220ms ease, box-shadow 220ms ease;
+  }
+  .ai-input input::placeholder {
+    color: var(--ink-mute);
+  }
+  .ai-input input:focus {
+    border-color: var(--green-strong);
+    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.10);
+  }
+  .ai-send {
+    appearance: none;
+    background: var(--ink);
+    color: #FFFFFF;
+    border: none;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 220ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+  }
+  .ai-send:hover {
+    background: var(--green-strong);
+    transform: translateY(-1px);
+  }
+  .ai-send svg {
+    width: 16px; height: 16px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+
+  /* Powered by footer */
+  .ai-foot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 0 9px;
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+    background: rgba(23, 23, 23, 0.015);
+    border-top: 1px solid rgba(23, 23, 23, 0.04);
+  }
+  .ai-foot strong {
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  /* Typing indicator while AI "thinks" */
+  .ai-typing {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 16px 20px;
+    background: rgba(31, 77, 62, 0.05);
+    border: 1px solid rgba(31, 77, 62, 0.08);
+    border-radius: 14px;
+  }
+  .ai-typing span {
+    width: 7px; height: 7px;
+    background: var(--green-strong);
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: typing-bounce 1.2s ease-in-out infinite;
+  }
+  .ai-typing span:nth-child(2) { animation-delay: 0.15s; }
+  .ai-typing span:nth-child(3) { animation-delay: 0.30s; }
+  @keyframes typing-bounce {
+    0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+    30%           { opacity: 1;   transform: translateY(-4px); }
+  }
+
+  /* New-message entrance */
+  .ai-msg-user, .ai-msg-bot, .ai-typing {
+    animation: msg-in 380ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  @keyframes msg-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Collapsed state */
+  .ai-collapse svg { transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1); }
+  .ai-dock.collapsed .ai-convo,
+  .ai-dock.collapsed .ai-input { display: none; }
+  .ai-dock.collapsed .ai-header { border-bottom: none; }
+  .ai-dock.collapsed .ai-collapse svg { transform: rotate(180deg); }
+
+  @media (max-width: 720px) {
+    .ai-dock {
+      bottom: 16px;
+      right: 16px;
+      left: 16px;
+      transform: none;
+      width: auto;
+    }
+    .ai-dock-inner {
+      max-height: calc(100vh - 32px);
+    }
+    .ai-msg-bot { font-size: 14.5px; padding: 16px 18px; }
+  }
+
+  /* Responsive */
+  @media (max-width: 720px) {
+    nav.nav { padding: 24px 24px; }
+    main.hero { padding: 12vh 24px 60px; }
+    .chip-rail { gap: 20px; }
+    .chip { font-size: 12px; }
+    .lens-stage { min-height: 5em; }
+    .scroll-cue { right: 24px; bottom: 20px; }
+    section.case-studies { padding: 80px 24px 100px; gap: 80px; }
+    .case { gap: 22px; }
+    .case-content { gap: 16px; }
+    .case-tags { gap: 14px; }
+    .float-chip { display: none; }
+    .case.showcase .case-visual { padding: 20px; }
+    .case.showcase .case-image { box-shadow: 0 8px 20px rgba(31, 77, 62, 0.10); }
+    .view-cta { font-size: 12px; padding: 11px 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="bg-atmosphere" aria-hidden="true">
+    <div class="bg-blob b1"></div>
+    <div class="bg-blob b2"></div>
+    <div class="bg-blob b3"></div>
+  </div>
+
+  <div class="spotlight-backdrop" aria-hidden="true"></div>
+
+  <nav class="nav">
+    <a href="/" class="wordmark">Dinesh Baller</a>
+    <ul class="nav-links">
+      <li><a href="#work">work</a></li>
+      <li><a href="#story">story</a></li>
+      <li><a href="/resume.pdf" target="_blank" rel="noopener">résumé</a></li>
+      <li><a href="mailto:dineshballer@gmail.com">email</a></li>
+    </ul>
+  </nav>
+
+  <main class="hero">
+
+    <div class="chip-rail" role="tablist" aria-label="Choose a lens">
+      <button class="chip" role="tab" aria-selected="true"  aria-controls="lens-work"      data-lens="work"      tabindex="0">The Work</button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-operators" data-lens="operators" tabindex="-1">The Operators</button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-approach"  data-lens="approach"  tabindex="-1">The Approach</button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-backstory" data-lens="backstory" tabindex="-1">The Backstory</button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-now"       data-lens="now"       tabindex="-1">Right Now</button>
+    </div>
+
+    <div class="lens-stage" aria-live="polite">
+      <p class="lens-line" id="lens-work"      data-lens="work"      data-active="true">Product designer building operational software for financial operations teams.</p>
+      <p class="lens-line" id="lens-operators" data-lens="operators">Designs for the analysts, AMs, and ops teams who actually live inside the tools.</p>
+      <p class="lens-line" id="lens-approach"  data-lens="approach">Research-led, structure-first. Progress over pixels.</p>
+      <p class="lens-line" id="lens-backstory" data-lens="backstory">Now at Onity. Previously Dell, Red Hat. About a decade in operational software.</p>
+      <p class="lens-line" id="lens-now"       data-lens="now">Designing mortgage servicing portals and release pipelines.</p>
+    </div>
+
+    <div class="greeting">
+      <div class="greeting-inner">
+        <p>Hi, I'm Dinesh.</p>
+        <svg class="wavy" width="92" height="12" viewBox="0 0 92 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M 3 7 Q 12 2 22 7 T 44 7 T 66 7 T 89 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+  </main>
+
+  <a href="#work" class="scroll-cue">selected work <span class="arrow" aria-hidden="true">↓</span></a>
+
+  <!-- ───────────────────────────────────────────────
+       AI chat dock (static demo — backend wiring next)
+  ─────────────────────────────────────────────── -->
+  <aside class="ai-dock" aria-label="Chat with Dinesh's portfolio">
+    <div class="ai-dock-inner">
+
+      <header class="ai-header">
+        <div class="ai-header-text">
+          <h3>
+            <svg class="ai-spark" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M12 2 L13.4 9.4 L20.8 10.8 L13.4 12.2 L12 19.6 L10.6 12.2 L3.2 10.8 L10.6 9.4 Z" fill="currentColor"/>
+              <path d="M18 3.5 L18.6 5.4 L20.5 6 L18.6 6.6 L18 8.5 L17.4 6.6 L15.5 6 L17.4 5.4 Z" fill="currentColor" opacity="0.7"/>
+            </svg>
+            Dinesh's AI
+          </h3>
+          <p>Projects, approach, role fit — ask anything.</p>
+        </div>
+        <div class="ai-controls">
+          <span class="ai-mode-label">Recruiter</span>
+          <button class="ai-toggle" role="switch" aria-checked="false" aria-label="Toggle recruiter mode">
+            <span class="ai-toggle-thumb"></span>
+          </button>
+          <button class="ai-collapse" aria-label="Minimize chat">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 5l4 4 4-4"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="ai-convo">
+
+        <p class="ai-msg-user">What kind of work do you focus on?</p>
+
+        <div class="ai-msg-bot">
+          <p>Dinesh designs <mark>operational software</mark> for the people running <mark>financial operations</mark>. Most recently at <mark>Onity Group</mark>, building <mark>real-time client portals</mark> and release pipelines for mortgage servicing — work that cut case resolution by <mark>62%</mark> and gave account managers six hours of their week back.</p>
+          <p>Before that, <mark>AI sales tooling</mark> at Dell and operational design at Red Hat. About a decade quietly making the systems that keep teams moving.</p>
+        </div>
+
+        <div class="ai-followups">
+          <p class="ai-followup-label">Ask me more</p>
+          <div class="ai-followup-chips">
+            <button class="ai-followup">Tell me about the loan deboarding work</button>
+            <button class="ai-followup">How do you approach AI features?</button>
+            <button class="ai-followup">Paste a job description</button>
+          </div>
+        </div>
+
+      </div>
+
+      <form class="ai-input" onsubmit="event.preventDefault();">
+        <input type="text" placeholder="Ask Dinesh's AI anything…" />
+        <button type="submit" class="ai-send" aria-label="Send message">
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+      </form>
+
+      <div class="ai-foot" aria-hidden="true">
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.4 9.4 L20.8 10.8 L13.4 12.2 L12 19.6 L10.6 12.2 L3.2 10.8 L10.6 9.4 Z"/></svg>
+        powered by <strong>Claude Haiku</strong>
+      </div>
+
+    </div>
+  </aside>
+
+  <section class="case-studies" id="work" aria-label="Selected work">
+
+    <div class="section-head">
+      <h2>Quieter <em>workflows</em>.</h2>
+      <p>Four tools shipped, four teams a little quieter.</p>
+    </div>
+
+    <!-- Card 1 — Real-Time Inquiry Portal · Onity (showcase variant) -->
+    <a href="./realtime-inquiry-case-study.html" class="case showcase">
+      <div class="case-visual">
+        <span class="case-num" aria-hidden="true">01</span>
+        <span class="status-pill" aria-label="Live in production since 2025">
+          <span class="status-dot" aria-hidden="true"></span>
+          Live · 2025
+        </span>
+        <span class="float-chip f1" aria-hidden="true">Enterprise SaaS</span>
+        <span class="float-chip f2" aria-hidden="true">Interaction Design</span>
+        <span class="float-chip f3" aria-hidden="true">Mortgage Servicing</span>
+        <span class="float-chip f4" aria-hidden="true">Shipped</span>
+        <span class="view-cta" aria-hidden="true">the full story</span>
+        <div class="case-image">
+          <img src="./sol1-screen-1.png" alt="Real-time inquiry portal dashboard preview" />
+        </div>
+      </div>
+      <div class="case-content">
+        <h2 class="case-title">
+          I designed a real-time portal that replaces email threads with live inquiry status — cutting case resolution by 62%.
+        </h2>
+        <div class="case-tags">
+          <span>Enterprise SaaS</span>
+          <span>Interaction Design</span>
+          <span>Mortgage Servicing</span>
+          <span>Shipped</span>
+        </div>
+        <p class="case-meta">
+          <strong>Real-Time Inquiry Portal</strong> · Onity Group · 2025
+        </p>
+      </div>
+    </a>
+
+    <!-- Card 2 — Loan Deboarding Portal · Onity -->
+    <a href="./loan-deboarding-case-study.html" class="case flip">
+      <div class="case-content">
+        <div class="case-tags">
+          <span>Enterprise SaaS</span>
+          <span>Research-led</span>
+          <span>0 to 1</span>
+          <span>Mortgage Servicing</span>
+          <span>Shipped</span>
+        </div>
+        <h2 class="case-title">
+          I rebuilt the loan release pipeline so analysts can ship from one record instead of five spreadsheets.
+        </h2>
+        <p class="case-meta">
+          <strong>Loan Deboarding Portal</strong> · Onity Group · 2025
+        </p>
+      </div>
+      <div class="case-visual">
+        <img src="./sol2-screen-1.png" alt="Loan deboarding release record screen" />
+      </div>
+    </a>
+
+    <!-- Card 3 — Dell AI Sales Platform (merged: AI Sales Enablement + Intelliassist) -->
+    <a href="#" class="case">
+      <div class="case-content">
+        <div class="case-tags">
+          <span>AI Tools</span>
+          <span>Conversational UI</span>
+          <span>Enterprise SaaS</span>
+          <span>Shipped</span>
+        </div>
+        <h2 class="case-title">
+          I redesigned Dell's AI sales chat that folds six tools into one — landing 92% task completion.
+        </h2>
+        <p class="case-meta">
+          <strong>Intelliassist — AI Sales Enablement</strong> · Dell · 2023
+        </p>
+      </div>
+      <div class="case-visual">
+        <div class="placeholder">Intelliassist — screenshot</div>
+      </div>
+    </a>
+
+    <!-- Card 4 — Information Architecture · Dell INC -->
+    <a href="#" class="case flip">
+      <div class="case-content">
+        <div class="case-tags">
+          <span>IA</span>
+          <span>Design Systems</span>
+          <span>Research</span>
+          <span>Shipped</span>
+        </div>
+        <h2 class="case-title">
+          I rebuilt Dell's Information Network Center to lift findability by 40% for designers and researchers.
+        </h2>
+        <p class="case-meta">
+          <strong>Information Architecture</strong> · Dell INC · 2022
+        </p>
+      </div>
+      <div class="case-visual">
+        <div class="placeholder">Dell INC — screenshot</div>
+      </div>
+    </a>
+
+  </section>
+
+<script>
+/* ───────────────────────────────────────────────
+   AI chat dock — interactive demo
+─────────────────────────────────────────────── */
+(() => {
+  const dock = document.querySelector(".ai-dock");
+  if (!dock) return;
+  const convo = dock.querySelector(".ai-convo");
+  const followupsSection = dock.querySelector(".ai-followups");
+  const chipsContainer = dock.querySelector(".ai-followup-chips");
+
+  const responses = {
+    "Tell me about the loan deboarding work": {
+      answer: `<p>Onity's <mark>mortgage servicing team</mark> takes loans off the platform when clients close out — and every client prepares the data differently. Different LOS systems, different reports, different exception lists. The receiving team was absorbing all of that as side conversations and parallel spreadsheets.</p><p>I designed <mark>one release record</mark> that absorbs <mark>five client workflows</mark> into a single structure. Analysts validate at the door, exceptions move through an audit-tracked lane, and reconciliation stitches to the record. In prototype testing, <mark>9 of 9 users</mark> found release status without help — analysts projected <mark>~6 hours saved</mark> per week.</p>`,
+      followups: [
+        "What was the hardest exception to absorb?",
+        "How did you run the research?",
+        "Paste a job description"
+      ]
+    },
+    "How do you approach AI features?": {
+      answer: `<p>I treat AI as a feature inside a workflow, not as the workflow itself. The question I keep asking: what would this operator have had to do without it? If the answer is "open three other tools and copy-paste between them," there's something real to design for.</p><p>At <mark>Dell</mark>, that meant folding <mark>six scattered sales tools</mark> into one conversational interface. The AI handled lookup and summarization; the design handled context, attribution, and what to show when the AI was wrong. <mark>92% task completion</mark>.</p>`,
+      followups: [
+        "What happens when the AI is wrong?",
+        "Tell me about the loan deboarding work",
+        "Paste a job description"
+      ]
+    },
+    "Paste a job description": {
+      answer: `<p>Drop the JD in the input below and I'll walk through where Dinesh's work overlaps — <mark>operations</mark>, <mark>mortgage servicing</mark>, <mark>AI tooling</mark>, <mark>enterprise SaaS</mark> — and where it doesn't. I'll be honest about the gaps too.</p><p>Best context to include: the team's tools, the operator type (analysts? account managers? sales? back-office?), and what shipping looks like in your org.</p>`,
+      followups: [
+        "Tell me about the loan deboarding work",
+        "How do you approach AI features?",
+        "What's his strongest fit?"
+      ]
+    },
+    "What was the hardest exception to absorb?": {
+      answer: `<p>Cross-investor splits — one loan pool getting partially sold to investor A and the rest held by investor B, but recorded across two spreadsheets in two formats. The receiving team would catch it three days later when the reconciliation numbers didn't match.</p><p>The fix wasn't in the data; it was in the model. I rebuilt the release record around <mark>investor segments</mark> as a first-class field, so a single submission could carry multiple segments without leaving the pipeline.</p>`,
+      followups: [
+        "How did you run the research?",
+        "Tell me about another project",
+        "Paste a job description"
+      ]
+    },
+    "How did you run the research?": {
+      answer: `<p>Three representative client orgs, each shadowing a different LOS system. Two-hour sessions: half observing how they actually prepared a release, half walking through a clickable prototype.</p><p>The most useful artifact came out of the observation half — a <mark>variation map</mark> showing where each client's process diverged from the others. That map drove which fields became flexible in the release record and which stayed rigid.</p>`,
+      followups: [
+        "Tell me about the loan deboarding work",
+        "How do you approach AI features?",
+        "Paste a job description"
+      ]
+    },
+    "What happens when the AI is wrong?": {
+      answer: `<p>This is the part most AI features ignore. At Dell, every AI response carried <mark>attribution</mark> — the source document, the section, the confidence. If the sales rep saw a suspicious answer, they could click straight through to verify, then flag the response with one tap. Flags fed back into retraining.</p><p>The design rule: <mark>never hide the seams</mark>. Show where the AI is sourcing from, what it's unsure about, and how to push back.</p>`,
+      followups: [
+        "How do you approach AI features?",
+        "Tell me about the loan deboarding work",
+        "What's his strongest fit?"
+      ]
+    },
+    "What's his strongest fit?": {
+      answer: `<p>Operations-adjacent SaaS at companies where the design org is small or absent, and the operators using the product are highly trained but underserved. Mortgage, claims, supply chain, B2B fintech, internal AI tooling.</p><p>Less strong fit: consumer apps, design-system-first orgs with mature teams, marketing surfaces. Strongest when the work is <mark>research-led</mark>, <mark>structure-first</mark>, and the metric is "the operator's day got quieter."</p>`,
+      followups: [
+        "Tell me about the loan deboarding work",
+        "How do you approach AI features?",
+        "Paste a job description"
+      ]
+    }
+  };
+
+  function scrollDown() {
+    convo.scrollTop = convo.scrollHeight;
+  }
+
+  function appendExchange(question) {
+    const data = responses[question];
+
+    // 1. User message
+    const userMsg = document.createElement("p");
+    userMsg.className = "ai-msg-user";
+    userMsg.textContent = question;
+    convo.insertBefore(userMsg, followupsSection);
+    scrollDown();
+
+    // 2. Typing indicator
+    const typing = document.createElement("div");
+    typing.className = "ai-typing";
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    convo.insertBefore(typing, followupsSection);
+    scrollDown();
+
+    // 3. Response after delay
+    setTimeout(() => {
+      typing.remove();
+
+      const botMsg = document.createElement("div");
+      botMsg.className = "ai-msg-bot";
+      botMsg.innerHTML = data
+        ? data.answer
+        : '<p>That one’s coming once the backend is wired up. For now, try one of the suggested prompts.</p>';
+      convo.insertBefore(botMsg, followupsSection);
+
+      // 4. Refresh follow-up chips
+      if (data && data.followups) {
+        chipsContainer.innerHTML = "";
+        data.followups.forEach((text) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "ai-followup";
+          btn.textContent = text;
+          chipsContainer.appendChild(btn);
+        });
+      }
+      scrollDown();
+    }, 1100);
+  }
+
+  // Event delegation — works for replaced chips too
+  convo.addEventListener("click", (e) => {
+    const chip = e.target.closest(".ai-followup");
+    if (!chip) return;
+    e.preventDefault();
+    appendExchange(chip.textContent.trim());
+  });
+
+  // Recruiter toggle
+  const toggle = dock.querySelector(".ai-toggle");
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const next = toggle.getAttribute("aria-checked") !== "true";
+      toggle.setAttribute("aria-checked", String(next));
+    });
+  }
+
+  // Collapse / expand
+  const collapseBtn = dock.querySelector(".ai-collapse");
+  if (collapseBtn) {
+    collapseBtn.addEventListener("click", () => {
+      dock.classList.toggle("collapsed");
+    });
+  }
+
+  // Input submit — sends as a user message; mock response for now
+  const form = dock.querySelector(".ai-input");
+  const input = form.querySelector("input");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const value = input.value.trim();
+    if (!value) return;
+    appendExchange(value);
+    input.value = "";
+  });
+})();
+
+/* ───────────────────────────────────────────────
+   Hero chip rail
+─────────────────────────────────────────────── */
+(() => {
+  const chips = Array.from(document.querySelectorAll(".chip"));
+  const lines = Array.from(document.querySelectorAll(".lens-line"));
+
+  function activate(lens) {
+    chips.forEach(c => {
+      const on = c.dataset.lens === lens;
+      c.setAttribute("aria-selected", on ? "true" : "false");
+      c.setAttribute("tabindex", on ? "0" : "-1");
+    });
+    lines.forEach(l => {
+      l.dataset.active = (l.dataset.lens === lens) ? "true" : "false";
+    });
+  }
+
+  chips.forEach(c => c.addEventListener("click", () => activate(c.dataset.lens)));
+
+  document.querySelector(".chip-rail").addEventListener("keydown", e => {
+    const i = chips.findIndex(c => c.getAttribute("aria-selected") === "true");
+    let n = i;
+    if (e.key === "ArrowRight") n = (i + 1) % chips.length;
+    else if (e.key === "ArrowLeft") n = (i - 1 + chips.length) % chips.length;
+    else return;
+    e.preventDefault();
+    activate(chips[n].dataset.lens);
+    chips[n].focus();
+  });
+})();
+</script>
+
+</body>
+</html>

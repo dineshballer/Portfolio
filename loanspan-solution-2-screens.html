@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoanSpan — Solution 2 screens</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,-50..200" rel="stylesheet" />
+<style>
+  :root {
+    --blue-50:   #ebf8ff;
+    --blue-100:  #d6f0ff;
+    --blue-1100: #2f20ef;
+    --blue-1200: #2519c6;
+
+    --gray-50:   #f4f4f4;
+    --gray-100:  #ededed;
+    --gray-200:  #e5e5e5;
+    --gray-300:  #dedede;
+    --gray-500:  #c7c7c7;
+    --gray-700:  #a9a9a9;
+    --gray-900:  #6b6b6b;
+    --gray-1100: #4c4c4c;
+    --gray-1300: #2c2c2c;
+    --gray-1400: #1f1f1f;
+
+    --success-50:  #e8f8e8;
+    --success-100: #d4f5d2;
+    --success-500: #138a36;
+    --success-700: #0a6d2b;
+
+    --warning-50:  #fff8e6;
+    --warning-100: #fff0c2;
+    --warning-500: #d97706;
+    --warning-700: #92400e;
+
+    --error-50:  #fde7e7;
+    --error-100: #fecaca;
+    --error-500: #d5363e;
+    --error-700: #b91c1c;
+
+    --purple: #6b46c1;
+    --teal: #0a8a8a;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+    color: var(--gray-1400);
+    background: #fafafa;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.45;
+    font-size: 14px;
+  }
+
+  /* Material Symbols */
+  .material-symbols-rounded {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    font-size: 18px;
+    line-height: 1;
+    vertical-align: middle;
+    user-select: none;
+  }
+  .ms-sm { font-size: 16px; font-variation-settings: 'wght' 400, 'opsz' 20; }
+  .ms-md { font-size: 18px; font-variation-settings: 'wght' 400, 'opsz' 24; }
+  .ms-lg { font-size: 22px; font-variation-settings: 'wght' 400, 'opsz' 24; }
+  .ms-xl { font-size: 32px; font-variation-settings: 'wght' 500, 'opsz' 40; }
+  .ms-fill { font-variation-settings: 'FILL' 1; }
+  .ms-medium { font-variation-settings: 'wght' 500; }
+
+  /* Page layout */
+  .page-wrap { padding: 32px 24px 64px; }
+  .design-stack { display: flex; flex-direction: column; gap: 32px; max-width: 1480px; margin: 0 auto; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+
+  /* Frame chrome */
+  .frame {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(15, 8, 104, 0.04);
+  }
+
+  /* === TOP NAV === */
+  .topnav {
+    height: 64px;
+    background: white;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex; align-items: center;
+    padding: 0 32px;
+    gap: 14px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    margin-right: 22px;
+  }
+  .nav-logo .badge {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--blue-1100), var(--blue-1200));
+    color: white;
+    font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo .name { font-size: 16px; font-weight: 700; color: var(--gray-1400); line-height: 1.1; }
+  .nav-logo .sub {
+    font-size: 9px; font-weight: 600;
+    text-transform: uppercase;
+    color: var(--gray-900);
+    letter-spacing: 0.12em;
+    margin-top: 3px;
+  }
+  .nav-tabs { display: flex; gap: 4px; align-items: center; }
+  .nav-tab {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px; font-weight: 500;
+    color: var(--gray-1100);
+    cursor: pointer;
+  }
+  .nav-tab:hover { background: var(--gray-50); }
+  .nav-tab.active {
+    background: var(--blue-50);
+    color: var(--blue-1100);
+    font-weight: 600;
+  }
+  .nav-spacer { flex: 1; }
+  .nav-org {
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray-900);
+    margin-right: 18px;
+  }
+  .nav-bell {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gray-1100);
+    position: relative;
+  }
+  .nav-bell::after {
+    content: '3';
+    position: absolute;
+    top: 4px; right: 4px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--error-500);
+    color: white;
+    font-size: 10px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-user {
+    display: flex; align-items: center; gap: 10px;
+    padding: 4px 10px 4px 4px;
+    border-radius: 8px;
+  }
+  .nav-user .avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--blue-1100);
+    color: white;
+    font-size: 12px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-user .name { font-size: 14px; font-weight: 500; color: var(--gray-1400); }
+  .nav-user .caret { color: var(--gray-700); }
+
+  /* === BODY === */
+  .body { padding: 32px 40px 48px; min-height: 600px; background: #fafafa; }
+  .breadcrumb {
+    font-size: 13px;
+    color: var(--gray-900);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .breadcrumb a {
+    color: var(--gray-900); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .breadcrumb b { color: var(--gray-1400); font-weight: 500; }
+  .breadcrumb .sep { color: var(--gray-500); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    border: 1px solid transparent;
+    cursor: pointer;
+    line-height: 1;
+    font-family: inherit;
+  }
+  .btn-primary { background: var(--blue-1100); color: white; }
+  .btn-primary:hover { background: var(--blue-1200); }
+  .btn-secondary {
+    background: white; color: var(--gray-1400);
+    border-color: var(--gray-300);
+  }
+  .btn-secondary:hover { background: var(--gray-50); }
+  .btn-ghost { background: transparent; color: var(--gray-900); }
+  .btn-ghost:hover { background: var(--gray-100); }
+  .btn-sm { padding: 7px 14px; font-size: 13px; }
+
+  /* === DASHBOARD === */
+  .page-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 28px;
+  }
+  .page-title {
+    font-size: 26px; font-weight: 700; color: var(--gray-1400);
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .page-meta { font-size: 13px; color: var(--gray-900); }
+
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+  .kpi {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 20px 22px;
+    position: relative;
+  }
+  .kpi .label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gray-900);
+    margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .kpi .icon-circle {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--gray-50);
+    color: var(--gray-900);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .kpi .icon-circle.blue { background: var(--blue-50); color: var(--blue-1100); }
+  .kpi .icon-circle.red { background: var(--error-50); color: var(--error-500); }
+  .kpi .icon-circle.green { background: var(--success-50); color: var(--success-500); }
+  .kpi .num {
+    font-size: 30px; font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--gray-1400);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .kpi .num.red { color: var(--error-500); }
+  .kpi .num.blue { color: var(--blue-1100); }
+  .kpi .num.green { color: var(--success-500); }
+  .kpi .sub { font-size: 12px; color: var(--gray-900); }
+
+  /* Filter bar */
+  .filter-bar {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 14px;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+  .filter-icon {
+    color: var(--gray-700);
+    width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .search-input {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 7px 10px 7px 32px;
+    font-size: 13px;
+    color: var(--gray-1400);
+    width: 260px;
+    font-family: inherit;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23a9a9a9'%3E%3Cpath d='M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5 1.5-1.5-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 14px;
+  }
+  .filter-select {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 6px;
+    padding: 7px 28px 7px 12px;
+    font-size: 13px;
+    color: var(--gray-1100);
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--gray-700) 50%), linear-gradient(135deg, var(--gray-700) 50%, transparent 50%);
+    background-position: calc(100% - 12px) center, calc(100% - 7px) center;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    font-family: inherit;
+  }
+  .toggle-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--error-50);
+    color: var(--error-700);
+    border: 1px solid var(--error-100);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px; font-weight: 500;
+  }
+  .filter-spacer { flex: 1; }
+  .filter-count {
+    color: var(--gray-900);
+    font-size: 12px;
+  }
+
+  /* Table */
+  .table-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .table thead th {
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-900);
+  }
+  .table tbody td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+    color: var(--gray-1400);
+    vertical-align: middle;
+  }
+  .table tbody tr:last-child td { border-bottom: none; }
+  .table tbody tr:hover td { background: #fafafa; }
+  .table tbody tr.at-risk td { background: rgba(213, 54, 62, 0.03); }
+  .table tbody tr.at-risk td:first-child {
+    box-shadow: inset 3px 0 0 var(--error-500);
+  }
+
+  .id-pill {
+    display: inline-flex; align-items: center;
+    background: var(--blue-50);
+    color: var(--blue-1100);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px; font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  .type-chip {
+    display: inline-flex; align-items: center;
+    background: var(--gray-100);
+    color: var(--gray-1100);
+    font-size: 11px; font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 4px;
+  }
+  .owner-cell {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .av {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    color: white;
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .av.purple { background: var(--purple); }
+  .av.teal { background: var(--teal); }
+  .av.blue { background: var(--blue-1100); }
+  .av.green { background: var(--success-500); }
+  .av.gray { background: var(--gray-700); }
+  .av-lg { width: 40px; height: 40px; font-size: 14px; }
+  .unassigned {
+    display: inline-flex; align-items: center;
+    background: var(--warning-50);
+    color: var(--warning-700);
+    border: 1px dashed var(--warning-100);
+    font-size: 12px; font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px; font-weight: 500;
+  }
+  .status-pill .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .status-pill.received { background: var(--gray-100); color: var(--gray-1100); }
+  .status-pill.received .dot { background: var(--gray-700); }
+  .status-pill.tagged { background: var(--blue-50); color: var(--blue-1100); }
+  .status-pill.tagged .dot { background: var(--blue-1100); }
+  .status-pill.scheduled { background: var(--warning-50); color: var(--warning-700); }
+  .status-pill.scheduled .dot { background: var(--warning-500); }
+  .status-pill.released { background: var(--success-50); color: var(--success-700); }
+  .status-pill.released .dot { background: var(--success-500); }
+  .status-pill.atrisk { background: var(--error-50); color: var(--error-700); }
+  .status-pill.atrisk .dot { background: var(--error-500); }
+  .status-pill.reconciled { background: var(--success-50); color: var(--success-700); }
+  .status-pill.reconciled .dot { background: var(--success-500); }
+  .sla-cell {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 500;
+  }
+  .sla-cell.overdue { color: var(--error-500); }
+  .sla-cell.warning { color: var(--warning-700); }
+  .sla-cell.ontime { color: var(--success-700); }
+  .sla-cell.none { color: var(--gray-700); }
+  .sla-bar {
+    width: 60px; height: 4px;
+    background: var(--gray-100);
+    border-radius: 2px;
+    margin-top: 4px;
+    overflow: hidden;
+  }
+  .sla-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+  }
+  .sla-bar-fill.overdue { background: var(--error-500); }
+  .sla-bar-fill.warning { background: var(--warning-500); }
+  .sla-bar-fill.ontime { background: var(--success-500); }
+  .row-arrow { color: var(--gray-500); }
+
+  /* === RELEASE DETAIL === */
+  .detail-hero {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 24px 28px;
+    display: flex; gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+  .detail-hero.at-risk { border-left: 3px solid var(--error-500); }
+  .detail-doc-icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    background: var(--blue-50);
+    color: var(--blue-1100);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .detail-text { flex: 1; }
+  .detail-title-row {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 6px;
+  }
+  .detail-title {
+    font-size: 26px; font-weight: 800;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    letter-spacing: -0.01em;
+    color: var(--gray-1400);
+  }
+  .detail-investor {
+    font-size: 14px;
+    color: var(--gray-900);
+    margin-bottom: 16px;
+  }
+  .hero-kpi-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    padding-top: 14px;
+    border-top: 1px solid var(--gray-100);
+  }
+  .hero-kpi .lbl {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gray-900);
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .hero-kpi .lbl .ic {
+    color: var(--gray-700);
+    font-size: 14px;
+  }
+  .hero-kpi .val {
+    font-size: 16px; font-weight: 600;
+    color: var(--gray-1400);
+  }
+  .assigned-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 10px 14px;
+  }
+  .assigned-pill .info { font-size: 12px; line-height: 1.3; }
+  .assigned-pill .info .role { color: var(--gray-900); font-size: 11px; }
+  .assigned-pill .info .name { color: var(--gray-1400); font-weight: 600; font-size: 13px; }
+
+  /* Next step banner */
+  .next-banner {
+    border-radius: 10px;
+    padding: 16px 22px;
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-bottom: 18px;
+  }
+  .next-banner.info {
+    background: var(--blue-50);
+    border: 1px solid var(--blue-100);
+    color: var(--blue-1100);
+  }
+  .next-banner.error {
+    background: var(--error-50);
+    border: 1px solid var(--error-100);
+    color: var(--error-700);
+  }
+  .next-banner .icon { flex-shrink: 0; padding-top: 2px; }
+  .next-banner .lbl {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .next-banner .msg { font-size: 14px; line-height: 1.45; color: var(--gray-1400); }
+  .next-banner.error .msg { color: var(--gray-1400); }
+  .next-banner .action-btn {
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  /* 3-col layout */
+  .detail-cols {
+    display: grid;
+    grid-template-columns: 240px 1fr 240px;
+    gap: 18px;
+  }
+  .side-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .side-title {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gray-900);
+    margin-bottom: 14px;
+  }
+
+  /* SLA timer */
+  .sla-row { margin-bottom: 14px; }
+  .sla-row:last-child { margin-bottom: 0; }
+  .sla-row-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 6px;
+  }
+  .sla-row .name { font-size: 13px; font-weight: 500; color: var(--gray-1400); }
+  .sla-row .status {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 12px; font-weight: 600;
+  }
+  .sla-row .status.done { color: var(--success-700); }
+  .sla-row .status.overdue { color: var(--error-500); }
+  .sla-row .status.left { color: var(--blue-1100); }
+  .sla-bar-thick {
+    width: 100%; height: 6px;
+    background: var(--gray-100);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  /* Hide SLA bar for completed timers — the "Done" pill conveys it */
+  .sla-bar-thick:has(.fill.done) { display: none; }
+  .sla-bar-thick .fill { height: 100%; border-radius: 3px; }
+  .sla-bar-thick .fill.overdue { background: var(--error-500); width: 100%; }
+  .sla-bar-thick .fill.left { background: var(--blue-1100); width: 60%; }
+  .sla-row .meta { font-size: 11px; color: var(--gray-900); margin-top: 4px; }
+
+  /* Document tile in side */
+  .doc-tile {
+    display: flex; align-items: center; gap: 10px;
+    background: transparent;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+    cursor: pointer;
+  }
+  .doc-tile:first-child { padding-top: 0; }
+  .doc-tile:last-child { border-bottom: none; padding-bottom: 0; }
+  .doc-tile:hover .name { color: var(--blue-1100); }
+  .doc-tile .ic {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .doc-tile .ic.xls { background: var(--success-100); color: var(--success-700); }
+  .doc-tile .ic.zip { background: #ffe3d6; color: #b34800; }
+  .doc-tile .ic.pdf { background: #ffe0e0; color: #b91c1c; }
+  .doc-tile .info { flex: 1; min-width: 0; }
+  .doc-tile .name { font-size: 12px; font-weight: 500; color: var(--gray-1400); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .doc-tile .meta { font-size: 11px; color: var(--gray-900); margin-top: 1px; }
+  .doc-tile .dl { color: var(--gray-700); cursor: pointer; }
+
+  /* Active exception */
+  .exception-card {
+    background: white;
+    border: 1px solid var(--error-100);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+  .exception-card-head {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--error-700);
+    margin-bottom: 10px;
+  }
+  .exception-item {
+    background: var(--error-50);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .exception-item .row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 6px;
+  }
+  .exception-item .ttl { font-size: 13px; font-weight: 600; color: var(--gray-1400); }
+  .exception-item .open-pill {
+    background: white; color: var(--error-700);
+    border: 1px solid var(--error-100);
+    font-size: 10px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px;
+  }
+  .exception-item .desc { font-size: 12px; color: var(--gray-1100); margin-bottom: 6px; line-height: 1.4; }
+  .exception-item .action-line { font-size: 12px; color: var(--error-700); }
+  .exception-item .action-line b { font-weight: 600; }
+  .exception-item .raised { font-size: 11px; color: var(--gray-900); margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(213,54,62,0.15); }
+
+  /* Center col tabs + timeline */
+  .center-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .tabs-row {
+    display: flex;
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 22px;
+  }
+  .tabs-row .tab {
+    padding: 14px 4px;
+    margin-right: 22px;
+    font-size: 14px;
+    color: var(--gray-900);
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .tabs-row .tab.active {
+    color: var(--gray-1400);
+    border-bottom-color: var(--blue-1100);
+    font-weight: 600;
+  }
+  .tabs-row .tab.locked {
+    color: var(--gray-500);
+    cursor: not-allowed;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .tabs-row .tab.locked .material-symbols-rounded { color: var(--gray-500); }
+  .tabs-row .tab.unlocked-new {
+    color: var(--blue-1100);
+    font-weight: 600;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .tabs-row .tab.unlocked-new .new-pill {
+    background: var(--blue-1100);
+    color: white;
+    font-size: 9px; font-weight: 700;
+    padding: 2px 6px; border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+  .tab-body { padding: 22px; }
+  .tab-section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gray-900);
+    margin-bottom: 18px;
+  }
+
+  /* Vertical timeline */
+  .vtimeline {
+    position: relative;
+    padding-left: 8px;
+  }
+  .vt-item {
+    display: flex; gap: 14px;
+    position: relative;
+    padding-bottom: 22px;
+  }
+  .vt-item:last-child { padding-bottom: 0; }
+  .vt-item::before {
+    content: '';
+    position: absolute;
+    left: 11px; top: 24px;
+    width: 2px;
+    height: calc(100% - 24px);
+    background: var(--gray-200);
+  }
+  .vt-item:last-child::before { display: none; }
+  .vt-item.done::before { background: var(--success-500); }
+  .vt-marker {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+    font-size: 11px;
+  }
+  .vt-marker.done { background: var(--success-500); color: white; }
+  .vt-marker.current { background: var(--blue-1100); color: white; box-shadow: 0 0 0 4px var(--blue-50); }
+  .vt-marker.warning { background: var(--warning-500); color: white; box-shadow: 0 0 0 4px var(--warning-50); }
+  .vt-marker.pending {
+    background: white;
+    border: 2px solid var(--gray-300);
+  }
+  .vt-content { flex: 1; min-width: 0; padding-top: 1px; }
+  .vt-row1 {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 2px;
+  }
+  .vt-name { font-size: 14px; font-weight: 600; color: var(--gray-1400); }
+  .vt-name.warning { color: var(--warning-700); }
+  .vt-name.current { color: var(--blue-1100); }
+  .vt-name.pending { color: var(--gray-700); font-weight: 500; }
+  .vt-time { font-size: 12px; color: var(--gray-900); white-space: nowrap; margin-left: 10px; }
+  .vt-by { font-size: 12px; color: var(--gray-900); }
+  .vt-progress {
+    margin-top: 10px;
+    background: var(--blue-50);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--blue-1100);
+    font-style: italic;
+  }
+  .vt-warning-msg {
+    margin-top: 10px;
+    background: var(--warning-50);
+    border: 1px solid var(--warning-100);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--warning-700);
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .vt-warning-msg .ic { flex-shrink: 0; }
+
+  /* Loan progress — bar shown only when actively in progress */
+  .loan-progress {
+    margin-top: 8px;
+    display: flex; align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--gray-900);
+  }
+  .loan-progress .count {
+    font-weight: 500; color: var(--gray-900);
+    white-space: nowrap;
+  }
+  .loan-progress .bar {
+    flex: 1;
+    height: 4px;
+    background: var(--gray-100);
+    border-radius: 3px;
+    overflow: hidden;
+    display: flex;
+  }
+  /* Hide bar when complete (done) or empty (pending) — they don't add info */
+  .loan-progress .bar:has(.fill.done),
+  .loan-progress .bar:not(:has(.fill)) {
+    display: none;
+  }
+  .loan-progress .bar .fill { height: 100%; }
+  .loan-progress .bar .fill.warn { background: var(--warning-500); }
+  .loan-progress .bar .fill.error { background: var(--error-500); }
+  .loan-progress .bar .fill.current { background: var(--blue-1100); }
+  /* Done state — fade the count text since check icon is primary cue */
+  .loan-progress:has(.fill.done) .count { color: var(--gray-700); font-weight: 400; }
+  .loan-progress .blocked-tag {
+    background: var(--warning-50); color: var(--warning-700);
+    font-size: 10px; font-weight: 600;
+    padding: 2px 7px; border-radius: 3px;
+    display: inline-flex; align-items: center; gap: 3px;
+    white-space: nowrap;
+  }
+
+  /* Loan-level view — compact table below timeline */
+  .loans-section {
+    margin-top: 22px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-100);
+  }
+  .loans-section .head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .loans-section .ttl {
+    font-size: 13px; font-weight: 600; color: var(--gray-1400);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .loans-section .count-pill {
+    background: var(--gray-100); color: var(--gray-1100);
+    font-size: 11px; font-weight: 600;
+    padding: 1px 7px; border-radius: 10px;
+  }
+  .loans-table { width: 100%; border-collapse: collapse; }
+  .loans-table thead th {
+    text-align: left;
+    padding: 8px 12px;
+    font-size: 11px; font-weight: 600; color: var(--gray-900);
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .loans-table tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 12px;
+    color: var(--gray-1400);
+  }
+  .loans-table tbody tr:last-child td { border-bottom: none; }
+  .loans-table tbody td .loan-num {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12px;
+  }
+  .stage-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px; font-weight: 500;
+  }
+  .stage-pill .dot { width: 5px; height: 5px; border-radius: 50%; }
+  .stage-pill.tagged { background: var(--success-50); color: var(--success-700); }
+  .stage-pill.tagged .dot { background: var(--success-500); }
+  .stage-pill.letter { background: var(--blue-50); color: var(--blue-1100); }
+  .stage-pill.letter .dot { background: var(--blue-1100); }
+  .stage-pill.blocked { background: var(--warning-50); color: var(--warning-700); }
+  .stage-pill.blocked .dot { background: var(--warning-500); }
+  .days-cell { color: var(--gray-900); font-size: 11px; }
+  .days-cell.warn { color: var(--warning-700); font-weight: 600; }
+  .days-cell.error { color: var(--error-500); font-weight: 600; }
+
+  /* Submission details — horizontal compact pattern for fast scanning */
+  .field-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 14px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .field-row:first-child { padding-top: 0; }
+  .field-row:last-child { padding-bottom: 0; border-bottom: none; }
+  .field-row .lbl {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--gray-900);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+  .field-row .val {
+    font-size: 13px;
+    color: var(--gray-1400);
+    font-weight: 600;
+    text-align: right;
+  }
+
+  /* Action buttons stack */
+  .action-stack { display: flex; flex-direction: column; gap: 8px; }
+  .action-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--gray-1400);
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .action-btn:hover { background: var(--gray-50); }
+  .action-btn.danger { color: var(--error-700); }
+  .action-btn .ic { color: var(--gray-700); }
+  .action-btn.danger .ic { color: var(--error-500); }
+
+  /* === RECONCILIATION === */
+  /* Unified snapshot card — status header + KPIs in one container */
+  .recon-snapshot {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    overflow: hidden;
+  }
+  .recon-snapshot-status {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 24px;
+    align-items: center;
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .recon-snapshot-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .recon-snapshot-kpi {
+    padding: 18px 24px;
+    border-right: 1px solid var(--gray-100);
+  }
+  .recon-snapshot-kpi:last-child { border-right: none; }
+  .recon-snapshot-kpi .lbl {
+    font-size: 11px; font-weight: 500;
+    color: var(--gray-900);
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .recon-snapshot-kpi .num {
+    font-size: 22px; font-weight: 700;
+    color: var(--gray-1400);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .recon-snapshot-kpi .num.green { color: var(--success-700); }
+  .recon-snapshot-kpi .num.warn { color: var(--warning-700); }
+  .recon-snapshot-kpi .num.red { color: var(--error-700); }
+  .recon-snapshot-kpi .sub { font-size: 12px; color: var(--gray-900); }
+
+  /* Unified side card — multiple sections inside one container */
+  .recon-side {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .recon-side-section {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .recon-side-section:last-child { border-bottom: none; }
+  .recon-side-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-1400);
+    margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  /* Legacy styles kept for compatibility (deprecated) */
+  .recon-status-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 22px 28px;
+    margin-bottom: 18px;
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+  .recon-status-icon {
+    width: 60px; height: 60px;
+    border-radius: 14px;
+    background: var(--success-50);
+    color: var(--success-500);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .recon-status-text .top {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gray-900);
+    margin-bottom: 4px;
+  }
+  .recon-status-text .ttl {
+    font-size: 18px; font-weight: 700; color: var(--gray-1400);
+    margin-bottom: 4px;
+  }
+  .recon-status-text .desc {
+    font-size: 13px; color: var(--gray-900);
+  }
+  .recon-progress-circle {
+    display: flex; align-items: center; gap: 16px;
+  }
+  .recon-progress-num {
+    text-align: right;
+  }
+  .recon-progress-num .big {
+    font-size: 28px; font-weight: 700;
+    color: var(--success-700);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .recon-progress-num .lbl {
+    font-size: 11px; color: var(--gray-900); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+
+  /* Recon KPI grid */
+  .recon-kpi-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .recon-kpi {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .recon-kpi .lbl {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--gray-900);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .recon-kpi .num {
+    font-size: 22px; font-weight: 700;
+    color: var(--gray-1400);
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .recon-kpi .num.green { color: var(--success-700); }
+  .recon-kpi .num.warn { color: var(--warning-700); }
+  .recon-kpi .num.red { color: var(--error-700); }
+  .recon-kpi .sub { font-size: 12px; color: var(--gray-900); }
+
+  /* Recon main: 2 col */
+  .recon-main {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 18px;
+  }
+  .recon-tab-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .recon-tab-card .recon-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 22px;
+  }
+
+  /* Transactions table */
+  .recon-trans-table { width: 100%; border-collapse: collapse; }
+  .recon-trans-table thead th {
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 11px 18px;
+    text-align: left;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-900);
+  }
+  .recon-trans-table tbody td {
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+    color: var(--gray-1400);
+    vertical-align: middle;
+  }
+  .recon-trans-table tbody tr:last-child td { border-bottom: none; }
+  .trans-type {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .trans-type .ic {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .trans-type .ic.wire { background: var(--blue-50); color: var(--blue-1100); }
+  .trans-type .ic.escrow { background: var(--success-50); color: var(--success-700); }
+  .trans-type .ic.adj { background: var(--warning-50); color: var(--warning-700); }
+  .trans-type .ic.unfund { background: var(--error-50); color: var(--error-500); }
+  .trans-type .name { font-size: 13px; font-weight: 500; }
+  .ref-cell {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--gray-900);
+  }
+  .amt-cell {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 13px; font-weight: 600;
+    color: var(--gray-1400);
+  }
+  .match-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px; font-weight: 600;
+  }
+  .match-pill.matched { background: var(--success-50); color: var(--success-700); }
+  .match-pill.unmatched { background: var(--warning-50); color: var(--warning-700); }
+  .match-pill.review { background: var(--error-50); color: var(--error-500); }
+
+  /* Recon side */
+  .recon-summary {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .summary-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 13px;
+  }
+  .summary-row:first-child { padding-top: 0; }
+  .summary-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .summary-row .label { color: var(--gray-900); }
+  .summary-row .value {
+    color: var(--gray-1400); font-weight: 600;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+  }
+  .summary-row.total { padding-top: 14px; border-top: 2px solid var(--gray-200); margin-top: 6px; }
+  .summary-row.total .label { color: var(--gray-1400); font-weight: 600; }
+  .summary-row.total .value { font-size: 15px; }
+  .summary-row.total .value.green { color: var(--success-700); }
+
+  /* Recon notes side */
+  .note-card {
+    background: var(--gray-50);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .note-card .top {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 6px;
+  }
+  .note-card .name { font-size: 12px; font-weight: 600; color: var(--gray-1400); }
+  .note-card .when { font-size: 11px; color: var(--gray-900); margin-left: auto; }
+  .note-card .body { font-size: 12px; color: var(--gray-1100); line-height: 1.5; }
+
+  .complete-banner {
+    background: var(--success-50);
+    border: 1px solid #c6e8c6;
+    border-radius: 12px;
+    padding: 14px 18px;
+    display: flex; gap: 12px; align-items: center;
+    margin-bottom: 18px;
+  }
+  .complete-banner .ic {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--success-500);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .complete-banner .text { flex: 1; }
+  .complete-banner .ttl { font-size: 13px; font-weight: 600; color: var(--success-700); }
+  .complete-banner .sub { font-size: 12px; color: var(--success-700); opacity: 0.85; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+<div class="design-stack">
+
+<!-- ============================================================ -->
+<!-- SCREEN 1 — PIPELINE DASHBOARD                                  -->
+<!-- ============================================================ -->
+<div class="frame" id="screen-1">
+  <div class="topnav">
+    <div class="nav-logo">
+      <div class="badge">LS</div>
+      <div>
+        <div class="name">LoanSpan</div>
+        <div class="sub">Deboarding Portal</div>
+      </div>
+    </div>
+    <div class="nav-tabs">
+      <div class="nav-tab active"><span class="material-symbols-rounded ms-md">grid_view</span> Dashboard</div>
+      <div class="nav-tab"><span class="material-symbols-rounded ms-md">add_circle</span> New Submission</div>
+      <div class="nav-tab"><span class="material-symbols-rounded ms-md">monitoring</span> Reports</div>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-org">PHH / Onity Interim Servicing</div>
+    <div class="nav-bell"><span class="material-symbols-rounded ms-lg">notifications</span></div>
+    <div class="nav-user">
+      <div class="avatar">DK</div>
+      <span class="name">Dinesh Kumar</span>
+      <span class="caret material-symbols-rounded ms-sm">expand_more</span>
+    </div>
+  </div>
+
+  <div class="body">
+    <!-- Page header -->
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Release Dashboard</h1>
+        <div class="page-meta">5 active submissions · Last updated Feb 20, 2026 · 2:43 PM</div>
+      </div>
+      <button class="btn btn-primary"><span class="material-symbols-rounded ms-md">add</span> New Submission</button>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi">
+        <div class="label">Total Submissions <span class="icon-circle"><span class="material-symbols-rounded ms-sm">description</span></span></div>
+        <div class="num">5</div>
+        <div class="sub">all records</div>
+      </div>
+      <div class="kpi">
+        <div class="label">At Risk <span class="icon-circle red"><span class="material-symbols-rounded ms-sm">warning</span></span></div>
+        <div class="num red">1</div>
+        <div class="sub">SLA breach · needs action</div>
+      </div>
+      <div class="kpi">
+        <div class="label">In Progress <span class="icon-circle blue"><span class="material-symbols-rounded ms-sm">trending_up</span></span></div>
+        <div class="num blue">3</div>
+        <div class="sub">tagged or scheduled</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Released <span class="icon-circle green"><span class="material-symbols-rounded ms-sm">check_circle</span></span></div>
+        <div class="num green">1</div>
+        <div class="sub">$17,440,000 total UPB</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <span class="filter-icon material-symbols-rounded ms-md">filter_list</span>
+      <input class="search-input" placeholder="Search by ID or investor..."/>
+      <select class="filter-select"><option>All status</option></select>
+      <select class="filter-select"><option>All investors</option></select>
+      <select class="filter-select"><option>All owners</option></select>
+      <span class="toggle-pill"><span class="material-symbols-rounded ms-sm">warning</span> At Risk only</span>
+      <div class="filter-spacer"></div>
+      <span class="filter-count">5 of 5</span>
+      <button class="btn btn-secondary btn-sm"><span class="material-symbols-rounded ms-sm">download</span> Export</button>
+    </div>
+
+    <!-- Table -->
+    <div class="table-card">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Release ID</th>
+            <th>Investor</th>
+            <th>Type</th>
+            <th>Loans</th>
+            <th>UPB</th>
+            <th>Submitted</th>
+            <th>Owner</th>
+            <th>Status</th>
+            <th>SLA</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="at-risk">
+            <td><span class="id-pill">REL-2026-0041</span></td>
+            <td>Zillow Home Loans</td>
+            <td><span class="type-chip">15-Day</span></td>
+            <td>8</td>
+            <td>$2,450,000</td>
+            <td>2026-02-10</td>
+            <td><div class="owner-cell"><span class="av purple">SC</span> Sarah Chen</div></td>
+            <td><span class="status-pill atrisk"><span class="dot"></span>At Risk</span></td>
+            <td>
+              <div class="sla-cell overdue"><span class="material-symbols-rounded ms-sm">schedule</span> Overdue · 8d</div>
+              <div class="sla-bar"><div class="sla-bar-fill overdue" style="width:100%"></div></div>
+            </td>
+            <td><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+          </tr>
+          <tr>
+            <td><span class="id-pill">REL-2026-0042</span></td>
+            <td>CFPB Federal</td>
+            <td><span class="type-chip">Standard</span></td>
+            <td>14</td>
+            <td>$5,120,000</td>
+            <td>2026-02-13</td>
+            <td><div class="owner-cell"><span class="av teal">MW</span> Marcus Webb</div></td>
+            <td><span class="status-pill tagged"><span class="dot"></span>Tagged</span></td>
+            <td>
+              <div class="sla-cell warning"><span class="material-symbols-rounded ms-sm">schedule</span> 2d left</div>
+              <div class="sla-bar"><div class="sla-bar-fill warning" style="width:60%"></div></div>
+            </td>
+            <td><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+          </tr>
+          <tr>
+            <td><span class="id-pill">REL-2026-0043</span></td>
+            <td>Ameritrust Capital</td>
+            <td><span class="type-chip">15-Day</span></td>
+            <td>11</td>
+            <td>$3,780,000</td>
+            <td>2026-02-14</td>
+            <td><div class="owner-cell"><span class="av purple">SC</span> Sarah Chen</div></td>
+            <td><span class="status-pill scheduled"><span class="dot"></span>Scheduled</span></td>
+            <td>
+              <div class="sla-cell ontime"><span class="material-symbols-rounded ms-sm">check_circle</span> On time</div>
+              <div class="sla-bar"><div class="sla-bar-fill ontime" style="width:35%"></div></div>
+            </td>
+            <td><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+          </tr>
+          <tr>
+            <td><span class="id-pill">REL-2026-0044</span></td>
+            <td>Zillow Home Loans</td>
+            <td><span class="type-chip">Standard</span></td>
+            <td>6</td>
+            <td>$1,890,000</td>
+            <td>2026-02-03</td>
+            <td><div class="owner-cell"><span class="av teal">MW</span> Marcus Webb</div></td>
+            <td><span class="status-pill released"><span class="dot"></span>Released</span></td>
+            <td>
+              <div class="sla-cell ontime"><span class="material-symbols-rounded ms-sm">check_circle</span> On time</div>
+              <div class="sla-bar"><div class="sla-bar-fill ontime" style="width:100%"></div></div>
+            </td>
+            <td><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+          </tr>
+          <tr>
+            <td><span class="id-pill">REL-2026-0045</span></td>
+            <td>CFPB Federal</td>
+            <td><span class="type-chip">15-Day</span></td>
+            <td>16</td>
+            <td>$4,200,000</td>
+            <td>2026-02-20</td>
+            <td><span class="unassigned">Unassigned</span></td>
+            <td><span class="status-pill received"><span class="dot"></span>Received</span></td>
+            <td><div class="sla-cell none">—</div></td>
+            <td><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SCREEN 2 — RELEASE DETAIL (HAPPY PATH)                         -->
+<!-- ============================================================ -->
+<div class="frame" id="screen-2">
+  <div class="topnav">
+    <div class="nav-logo">
+      <div class="badge">LS</div>
+      <div>
+        <div class="name">LoanSpan</div>
+        <div class="sub">Deboarding Portal</div>
+      </div>
+    </div>
+    <div class="nav-tabs">
+      <div class="nav-tab active"><span class="material-symbols-rounded ms-md">grid_view</span> Dashboard</div>
+      <div class="nav-tab"><span class="material-symbols-rounded ms-md">add_circle</span> New Submission</div>
+      <div class="nav-tab"><span class="material-symbols-rounded ms-md">monitoring</span> Reports</div>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-org">PHH / Onity Interim Servicing</div>
+    <div class="nav-bell"><span class="material-symbols-rounded ms-lg">notifications</span></div>
+    <div class="nav-user">
+      <div class="avatar">DK</div>
+      <span class="name">Dinesh Kumar</span>
+      <span class="caret material-symbols-rounded ms-sm">expand_more</span>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="breadcrumb">
+      <a href="#"><span class="material-symbols-rounded ms-sm">chevron_left</span> Dashboard</a>
+      <span class="sep">/</span>
+      <b>REL-2026-0042</b>
+    </div>
+
+    <!-- Hero -->
+    <div class="detail-hero">
+      <div class="detail-doc-icon"><span class="material-symbols-rounded ms-lg">description</span></div>
+      <div class="detail-text">
+        <div class="detail-title-row">
+          <div class="detail-title">REL-2026-0042</div>
+          <span class="status-pill tagged"><span class="dot"></span>Tagged</span>
+        </div>
+        <div class="detail-investor">CFPB Federal · Standard Release</div>
+        <div class="hero-kpi-row">
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">payments</span>UPB / Principal</div>
+            <div class="val">$5,120,000</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">tag</span>Loan Count</div>
+            <div class="val">14 loans</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">event</span>Submitted</div>
+            <div class="val">2026-02-13</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">event_available</span>Scheduled Release</div>
+            <div class="val">2026-02-28</div>
+          </div>
+        </div>
+      </div>
+      <div class="assigned-pill">
+        <span class="av av-lg teal">MW</span>
+        <div class="info">
+          <div class="role">Assigned to</div>
+          <div class="name">Marcus Webb</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next step (info) -->
+    <div class="next-banner info">
+      <span class="icon material-symbols-rounded ms-md">info</span>
+      <div>
+        <div class="lbl">Next Step</div>
+        <div class="msg">Goodbye letter drafting in progress. Expected completion: <b>Feb 21, 2026</b>. No action needed from you.</div>
+      </div>
+    </div>
+
+    <!-- 3-col content -->
+    <div class="detail-cols">
+      <!-- LEFT: SLA timers + Documents -->
+      <div>
+        <div class="side-card">
+          <div class="side-title">SLA Timers</div>
+          <div class="sla-row">
+            <div class="sla-row-top">
+              <span class="name">Acknowledge</span>
+              <span class="status done"><span class="material-symbols-rounded ms-sm">check_circle</span>Done</span>
+            </div>
+            <div class="sla-bar-thick"><div class="fill done"></div></div>
+            <div class="meta">Target: 1 business day · Elapsed: 1d</div>
+          </div>
+          <div class="sla-row">
+            <div class="sla-row-top">
+              <span class="name">Tag</span>
+              <span class="status done"><span class="material-symbols-rounded ms-sm">check_circle</span>Done</span>
+            </div>
+            <div class="sla-bar-thick"><div class="fill done"></div></div>
+            <div class="meta">Target: 3 business days · Elapsed: 2d</div>
+          </div>
+          <div class="sla-row">
+            <div class="sla-row-top">
+              <span class="name">Schedule</span>
+              <span class="status left"><span class="material-symbols-rounded ms-sm">schedule</span>2d left</span>
+            </div>
+            <div class="sla-bar-thick"><div class="fill left"></div></div>
+            <div class="meta">Target: 5 business days · Elapsed: 3d</div>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <div class="side-title">Documents</div>
+          <div class="doc-tile">
+            <div class="ic xls">XLS</div>
+            <div class="info">
+              <div class="name">CFPB_Release_2026-02-13.xlsx</div>
+              <div class="meta">Excel · 112 KB</div>
+            </div>
+            <span class="dl material-symbols-rounded ms-sm">download</span>
+          </div>
+          <div class="doc-tile">
+            <div class="ic zip">ZIP</div>
+            <div class="info">
+              <div class="name">PA_Bundle_CFPB_0042.zip</div>
+              <div class="meta">PA Bundle · 7.8 MB</div>
+            </div>
+            <span class="dl material-symbols-rounded ms-sm">download</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER: Tabs + Vertical Timeline -->
+      <div class="center-card">
+        <div class="tabs-row">
+          <div class="tab active">Milestone Timeline</div>
+          <div class="tab">Status History</div>
+          <div class="tab">Activity Log</div>
+          <div class="tab locked" title="Available once this release is Released">Reconciliation <span class="material-symbols-rounded ms-sm">lock</span></div>
+        </div>
+        <div class="tab-body">
+          <div class="tab-section-label">Release Progress</div>
+          <div class="vtimeline">
+            <div class="vt-item done">
+              <div class="vt-marker done"><span class="material-symbols-rounded ms-sm">check</span></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name">Received</span><span class="vt-time">2026-02-13 · 08:45</span></div>
+                <div class="vt-by">by System</div>
+                <div class="loan-progress">
+                  <span class="count">14 / 14 loans</span>
+                  <div class="bar"><div class="fill done" style="width:100%;"></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item done">
+              <div class="vt-marker done"><span class="material-symbols-rounded ms-sm">check</span></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name">Assigned</span><span class="vt-time">2026-02-13 · 10:00</span></div>
+                <div class="vt-by">by Marcus Webb</div>
+                <div class="loan-progress">
+                  <span class="count">14 / 14 loans</span>
+                  <div class="bar"><div class="fill done" style="width:100%;"></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item done">
+              <div class="vt-marker done"><span class="material-symbols-rounded ms-sm">check</span></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name">Tagged</span><span class="vt-time">2026-02-15 · 14:30</span></div>
+                <div class="vt-by">by Marcus Webb · all loans tagged in servicing system</div>
+                <div class="loan-progress">
+                  <span class="count">14 / 14 loans</span>
+                  <div class="bar"><div class="fill done" style="width:100%;"></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item">
+              <div class="vt-marker current"><span class="material-symbols-rounded ms-sm">edit_note</span></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name current">Goodbye Letter Sent</span><span class="vt-time">In progress</span></div>
+                <div class="vt-by">Drafting letters for borrowers · ETA Feb 21</div>
+                <div class="loan-progress">
+                  <span class="count">7 / 14 sent</span>
+                  <div class="bar"><div class="fill current" style="width:50%;"></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item">
+              <div class="vt-marker pending"></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name pending">Scheduled Release</span><span class="vt-time">Pending</span></div>
+                <div class="loan-progress">
+                  <span class="count">0 / 14 loans</span>
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item">
+              <div class="vt-marker pending"></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name pending">Released</span><span class="vt-time">Pending</span></div>
+                <div class="loan-progress">
+                  <span class="count">0 / 14 loans</span>
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item">
+              <div class="vt-marker pending"></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name pending">Reconciliation</span><span class="vt-time">Pending</span></div>
+                <div class="loan-progress">
+                  <span class="count">0 / 14 loans</span>
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Loan-level view (drill-in for individual loans) -->
+          <div class="loans-section">
+            <div class="head">
+              <div class="ttl">Loan-level view <span class="count-pill">14</span></div>
+              <button class="btn btn-ghost btn-sm" style="padding:4px 10px; font-size:12px;"><span class="material-symbols-rounded ms-sm">filter_list</span>Filter by stage</button>
+            </div>
+            <table class="loans-table">
+              <thead>
+                <tr>
+                  <th>Loan #</th>
+                  <th>Current stage</th>
+                  <th>Days in stage</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="loan-num">8472003991</span></td>
+                  <td><span class="stage-pill letter"><span class="dot"></span>Letter Sent</span></td>
+                  <td><span class="days-cell">2d</span></td>
+                  <td style="text-align:right;"><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+                </tr>
+                <tr>
+                  <td><span class="loan-num">8472003992</span></td>
+                  <td><span class="stage-pill letter"><span class="dot"></span>Letter Sent</span></td>
+                  <td><span class="days-cell">2d</span></td>
+                  <td style="text-align:right;"><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+                </tr>
+                <tr>
+                  <td><span class="loan-num">8472003993</span></td>
+                  <td><span class="stage-pill tagged"><span class="dot"></span>Tagged</span></td>
+                  <td><span class="days-cell">3d</span></td>
+                  <td style="text-align:right;"><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="text-align:center; padding:12px; color:var(--gray-900); font-size:12px;">
+                    <a href="#" style="color:var(--blue-1100); text-decoration:none; font-weight:500;">View all 14 loans →</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Submission Details + Actions -->
+      <div>
+        <div class="side-card">
+          <div class="side-title">Submission Details</div>
+          <div class="field-row"><div class="lbl">Submitted by</div><div class="val">Ivan Camarena</div></div>
+          <div class="field-row"><div class="lbl">Release Type</div><div class="val">Standard</div></div>
+          <div class="field-row"><div class="lbl">Investor</div><div class="val">CFPB Federal</div></div>
+          <div class="field-row"><div class="lbl">Loan Count</div><div class="val">14</div></div>
+          <div class="field-row"><div class="lbl">UPB</div><div class="val">$5,120,000</div></div>
+          <div class="field-row"><div class="lbl">Sched. Release</div><div class="val">2026-02-28</div></div>
+        </div>
+        <div class="side-card">
+          <div class="side-title">Actions</div>
+          <div class="action-stack">
+            <button class="action-btn"><span class="ic material-symbols-rounded ms-sm">flag</span>Raise Exception</button>
+            <button class="action-btn"><span class="ic material-symbols-rounded ms-sm">supervisor_account</span>Escalate to Manager</button>
+            <button class="action-btn"><span class="ic material-symbols-rounded ms-sm">file_download</span>Export Record</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SCREEN 3 — RELEASE DETAIL (AT-RISK PATH)                       -->
+<!-- ============================================================ -->
+<div class="frame" id="screen-3">
+  <div class="topnav">
+    <div class="nav-logo">
+      <div class="badge">LS</div>
+      <div>
+        <div class="name">LoanSpan</div>
+        <div class="sub">Deboarding Portal</div>
+      </div>
+    </div>
+    <div class="nav-tabs">
+      <div class="nav-tab active"><span class="material-symbols-rounded ms-md">grid_view</span> Dashboard</div>
+      <div class="nav-tab"><span class="material-symbols-rounded ms-md">add_circle</span> New Submission</div>
+      <div class="nav-tab"><span class="material-symbols-rounded ms-md">monitoring</span> Reports</div>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-org">PHH / Onity Interim Servicing</div>
+    <div class="nav-bell"><span class="material-symbols-rounded ms-lg">notifications</span></div>
+    <div class="nav-user">
+      <div class="avatar">DK</div>
+      <span class="name">Dinesh Kumar</span>
+      <span class="caret material-symbols-rounded ms-sm">expand_more</span>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="breadcrumb">
+      <a href="#"><span class="material-symbols-rounded ms-sm">chevron_left</span> Dashboard</a>
+      <span class="sep">/</span>
+      <b>REL-2026-0041</b>
+    </div>
+
+    <!-- Hero (at-risk) -->
+    <div class="detail-hero at-risk">
+      <div class="detail-doc-icon"><span class="material-symbols-rounded ms-lg">description</span></div>
+      <div class="detail-text">
+        <div class="detail-title-row">
+          <div class="detail-title">REL-2026-0041</div>
+          <span class="status-pill atrisk"><span class="dot"></span>At Risk</span>
+        </div>
+        <div class="detail-investor">Zillow Home Loans · 15-Day Release</div>
+        <div class="hero-kpi-row">
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">payments</span>UPB / Principal</div>
+            <div class="val">$2,450,000</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">tag</span>Loan Count</div>
+            <div class="val">8 loans</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">event</span>Submitted</div>
+            <div class="val">2026-02-10</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">event_available</span>Scheduled Release</div>
+            <div class="val">2026-02-25</div>
+          </div>
+        </div>
+      </div>
+      <div class="assigned-pill">
+        <span class="av av-lg purple">SC</span>
+        <div class="info">
+          <div class="role">Assigned to</div>
+          <div class="name">Sarah Chen</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next step (error) -->
+    <div class="next-banner error">
+      <span class="icon material-symbols-rounded ms-md">error</span>
+      <div style="flex:1">
+        <div class="lbl">Next Step · Action needed</div>
+        <div class="msg">Awaiting investor confirmation for tagging. <b>SLA exceeded by 8 days.</b> Escalation recommended.</div>
+      </div>
+      <button class="btn btn-primary action-btn-end" style="background:var(--error-500);"><span class="material-symbols-rounded ms-md">bolt</span> Escalate now</button>
+    </div>
+
+    <!-- 3-col content -->
+    <div class="detail-cols">
+      <!-- LEFT: SLA + Documents + Active Exceptions -->
+      <div>
+        <div class="side-card">
+          <div class="side-title">SLA Timers</div>
+          <div class="sla-row">
+            <div class="sla-row-top">
+              <span class="name">Acknowledge</span>
+              <span class="status done"><span class="material-symbols-rounded ms-sm">check_circle</span>Done</span>
+            </div>
+            <div class="sla-bar-thick"><div class="fill done"></div></div>
+            <div class="meta">Target: 1 business day · Elapsed: 1d</div>
+          </div>
+          <div class="sla-row">
+            <div class="sla-row-top">
+              <span class="name">Tag</span>
+              <span class="status overdue"><span class="material-symbols-rounded ms-sm">warning</span>Overdue</span>
+            </div>
+            <div class="sla-bar-thick"><div class="fill overdue"></div></div>
+            <div class="meta">Target: 3 business days · Elapsed: 8d</div>
+          </div>
+          <div class="sla-row">
+            <div class="sla-row-top">
+              <span class="name">Schedule</span>
+              <span class="status overdue"><span class="material-symbols-rounded ms-sm">warning</span>Overdue</span>
+            </div>
+            <div class="sla-bar-thick"><div class="fill overdue"></div></div>
+            <div class="meta">Target: 5 business days · Elapsed: 14d</div>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <div class="side-title">Documents</div>
+          <div class="doc-tile">
+            <div class="ic xls">XLS</div>
+            <div class="info">
+              <div class="name">Zillow_Release_2026-02-10.xlsx</div>
+              <div class="meta">Excel · 48 KB</div>
+            </div>
+            <span class="dl material-symbols-rounded ms-sm">download</span>
+          </div>
+          <div class="doc-tile">
+            <div class="ic zip">ZIP</div>
+            <div class="info">
+              <div class="name">PA_Bundle_Zillow_0041.zip</div>
+              <div class="meta">PA Bundle · 3.2 MB</div>
+            </div>
+            <span class="dl material-symbols-rounded ms-sm">download</span>
+          </div>
+        </div>
+
+        <div class="exception-card">
+          <div class="exception-card-head"><span class="material-symbols-rounded ms-sm">error</span> Active Exceptions</div>
+          <div class="exception-item">
+            <div class="row">
+              <span class="ttl">Investor Delay</span>
+              <span class="open-pill">Open</span>
+            </div>
+            <div class="desc">Tag step blocked — release cannot proceed until investor confirms purchase date.</div>
+            <div class="action-line"><b>Action:</b> Await investor confirmation of purchase date</div>
+            <div class="raised">Raised 2026-02-14 by Sarah Chen</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER: Tabs + Vertical Timeline (with warning state) -->
+      <div class="center-card">
+        <div class="tabs-row">
+          <div class="tab active">Milestone Timeline</div>
+          <div class="tab">Status History</div>
+          <div class="tab">Activity Log</div>
+          <div class="tab locked" title="Available once this release is Released">Reconciliation <span class="material-symbols-rounded ms-sm">lock</span></div>
+        </div>
+        <div class="tab-body">
+          <div class="tab-section-label">Release Progress</div>
+          <div class="vtimeline">
+            <div class="vt-item done">
+              <div class="vt-marker done"><span class="material-symbols-rounded ms-sm">check</span></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name">Received</span><span class="vt-time">2026-02-10 · 09:14</span></div>
+                <div class="vt-by">by System</div>
+                <div class="loan-progress">
+                  <span class="count">8 / 8 loans</span>
+                  <div class="bar"><div class="fill done" style="width:100%;"></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item done">
+              <div class="vt-marker done"><span class="material-symbols-rounded ms-sm">check</span></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name">Assigned</span><span class="vt-time">2026-02-10 · 11:30</span></div>
+                <div class="vt-by">by Sarah Chen</div>
+                <div class="loan-progress">
+                  <span class="count">8 / 8 loans</span>
+                  <div class="bar"><div class="fill done" style="width:100%;"></div></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item">
+              <div class="vt-marker warning"><span class="material-symbols-rounded ms-sm">priority_high</span></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name warning">Tagged</span><span class="vt-time">Partially blocked · Day 8</span></div>
+                <div class="vt-by">6 of 8 tagged · 2 awaiting investor confirmation</div>
+                <div class="loan-progress">
+                  <span class="count">6 / 8 tagged</span>
+                  <div class="bar"><div class="fill done" style="width:75%;"></div></div>
+                  <span class="blocked-tag"><span class="material-symbols-rounded ms-sm">warning</span>2 blocked</span>
+                </div>
+                <div class="vt-warning-msg">
+                  <span class="ic material-symbols-rounded ms-sm">error</span>
+                  <div>2 loans awaiting investor confirmation — contacted <b>2/12, 2/14, 2/18</b>. SLA exceeded 8 days.</div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item">
+              <div class="vt-marker pending"></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name pending">Goodbye Letter Sent</span><span class="vt-time">Pending</span></div>
+                <div class="loan-progress">
+                  <span class="count">0 / 8 loans</span>
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item">
+              <div class="vt-marker pending"></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name pending">Scheduled Release</span><span class="vt-time">Pending</span></div>
+                <div class="loan-progress">
+                  <span class="count">0 / 8 loans</span>
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item">
+              <div class="vt-marker pending"></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name pending">Released</span><span class="vt-time">Pending</span></div>
+                <div class="loan-progress">
+                  <span class="count">0 / 8 loans</span>
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </div>
+            <div class="vt-item">
+              <div class="vt-marker pending"></div>
+              <div class="vt-content">
+                <div class="vt-row1"><span class="vt-name pending">Reconciliation</span><span class="vt-time">Pending</span></div>
+                <div class="loan-progress">
+                  <span class="count">0 / 8 loans</span>
+                  <div class="bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Loan-level view — at-risk loans surfaced first -->
+          <div class="loans-section">
+            <div class="head">
+              <div class="ttl">Loan-level view <span class="count-pill">8</span> <span style="color:var(--error-500); font-size:11px; font-weight:600; margin-left:4px;">· 2 need attention</span></div>
+              <button class="btn btn-ghost btn-sm" style="padding:4px 10px; font-size:12px;"><span class="material-symbols-rounded ms-sm">filter_list</span>Filter by stage</button>
+            </div>
+            <table class="loans-table">
+              <thead>
+                <tr>
+                  <th>Loan #</th>
+                  <th>Current stage</th>
+                  <th>Days in stage</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: rgba(213,54,62,0.03);">
+                  <td><span class="loan-num">9823412</span></td>
+                  <td><span class="stage-pill blocked"><span class="dot"></span>Tagging blocked</span></td>
+                  <td><span class="days-cell error">8d · overdue</span></td>
+                  <td style="text-align:right;"><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+                </tr>
+                <tr style="background: rgba(213,54,62,0.03);">
+                  <td><span class="loan-num">9823418</span></td>
+                  <td><span class="stage-pill blocked"><span class="dot"></span>Tagging blocked</span></td>
+                  <td><span class="days-cell error">8d · overdue</span></td>
+                  <td style="text-align:right;"><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+                </tr>
+                <tr>
+                  <td><span class="loan-num">9823401</span></td>
+                  <td><span class="stage-pill tagged"><span class="dot"></span>Tagged</span></td>
+                  <td><span class="days-cell">5d</span></td>
+                  <td style="text-align:right;"><span class="row-arrow material-symbols-rounded ms-sm">chevron_right</span></td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="text-align:center; padding:12px; color:var(--gray-900); font-size:12px;">
+                    <a href="#" style="color:var(--blue-1100); text-decoration:none; font-weight:500;">View all 8 loans →</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div>
+        <div class="side-card">
+          <div class="side-title">Submission Details</div>
+          <div class="field-row"><div class="lbl">Submitted by</div><div class="val">Patrick Hernandez</div></div>
+          <div class="field-row"><div class="lbl">Release Type</div><div class="val">15-Day</div></div>
+          <div class="field-row"><div class="lbl">Investor</div><div class="val">Zillow Home Loans</div></div>
+          <div class="field-row"><div class="lbl">Loan Count</div><div class="val">8</div></div>
+          <div class="field-row"><div class="lbl">UPB</div><div class="val">$2,450,000</div></div>
+          <div class="field-row"><div class="lbl">Sched. Release</div><div class="val">2026-02-25</div></div>
+        </div>
+        <div class="side-card">
+          <div class="side-title">Actions</div>
+          <div class="action-stack">
+            <button class="action-btn danger"><span class="ic material-symbols-rounded ms-sm">bolt</span>Escalate to Manager</button>
+            <button class="action-btn"><span class="ic material-symbols-rounded ms-sm">flag</span>Raise New Exception</button>
+            <button class="action-btn"><span class="ic material-symbols-rounded ms-sm">forward_to_inbox</span>Send Investor Reminder</button>
+            <button class="action-btn"><span class="ic material-symbols-rounded ms-sm">file_download</span>Export Record</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SCREEN 4 — RECONCILIATION SNAPSHOT                             -->
+<!-- ============================================================ -->
+<div class="frame" id="screen-4">
+  <div class="topnav">
+    <div class="nav-logo">
+      <div class="badge">LS</div>
+      <div>
+        <div class="name">LoanSpan</div>
+        <div class="sub">Deboarding Portal</div>
+      </div>
+    </div>
+    <div class="nav-tabs">
+      <div class="nav-tab active"><span class="material-symbols-rounded ms-md">grid_view</span> Dashboard</div>
+      <div class="nav-tab"><span class="material-symbols-rounded ms-md">add_circle</span> New Submission</div>
+      <div class="nav-tab"><span class="material-symbols-rounded ms-md">monitoring</span> Reports</div>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="nav-org">PHH / Onity Interim Servicing</div>
+    <div class="nav-bell"><span class="material-symbols-rounded ms-lg">notifications</span></div>
+    <div class="nav-user">
+      <div class="avatar">DK</div>
+      <span class="name">Dinesh Kumar</span>
+      <span class="caret material-symbols-rounded ms-sm">expand_more</span>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="breadcrumb">
+      <a href="#"><span class="material-symbols-rounded ms-sm">chevron_left</span> Dashboard</a>
+      <span class="sep">/</span>
+      <b>REL-2026-0044</b>
+    </div>
+
+    <!-- Hero -->
+    <div class="detail-hero" style="margin-bottom:14px;">
+      <div class="detail-doc-icon" style="background:var(--success-50); color:var(--success-500);"><span class="material-symbols-rounded ms-lg ms-fill">check_circle</span></div>
+      <div class="detail-text">
+        <div class="detail-title-row">
+          <div class="detail-title">REL-2026-0044</div>
+          <span class="status-pill released"><span class="dot"></span>Released</span>
+          <span class="status-pill reconciled"><span class="dot"></span>Reconciliation in progress</span>
+        </div>
+        <div class="detail-investor">Zillow Home Loans · Standard Release · Released 2026-02-19</div>
+        <div class="hero-kpi-row">
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">payments</span>UPB at release</div>
+            <div class="val">$1,890,000</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">account_balance</span>Funds returned</div>
+            <div class="val">$1,847,253.40</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">tag</span>Loans</div>
+            <div class="val">6 loans</div>
+          </div>
+          <div class="hero-kpi">
+            <div class="lbl"><span class="ic material-symbols-rounded ms-sm">event_available</span>Released on</div>
+            <div class="val">2026-02-19</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-col body — matches Release Detail layout for consistency -->
+    <div class="detail-cols">
+
+      <!-- LEFT: Key Dates + Documents -->
+      <div>
+        <div class="side-card">
+          <div class="side-title">Key Dates</div>
+          <div class="field-row">
+            <span class="lbl">Released</span>
+            <span class="val">Feb 19</span>
+          </div>
+          <div class="field-row">
+            <span class="lbl">Funds received</span>
+            <span class="val">Feb 20</span>
+          </div>
+          <div class="field-row">
+            <span class="lbl">Close target</span>
+            <span class="val" style="color:var(--blue-1100);">Feb 28 · 3d</span>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <div class="side-title" style="display: flex; justify-content: space-between; align-items: baseline;">
+            <span>Documents &amp; Manifests</span>
+            <span style="font-size:11px; color:var(--gray-700); font-weight:500;">3</span>
+          </div>
+          <div class="doc-tile">
+            <div class="ic xls">XLS</div>
+            <div class="info">
+              <div class="name">Manifest_REL-0044.xlsx</div>
+              <div class="meta">Release manifest · 28 KB</div>
+            </div>
+            <span class="dl material-symbols-rounded ms-sm">download</span>
+          </div>
+          <div class="doc-tile">
+            <div class="ic pdf">PDF</div>
+            <div class="info">
+              <div class="name">Wire_Confirmations.pdf</div>
+              <div class="meta">3 wire receipts · 412 KB</div>
+            </div>
+            <span class="dl material-symbols-rounded ms-sm">download</span>
+          </div>
+          <div class="doc-tile">
+            <div class="ic pdf">PDF</div>
+            <div class="info">
+              <div class="name">Escrow_Statement.pdf</div>
+              <div class="meta">Escrow return · 88 KB</div>
+            </div>
+            <span class="dl material-symbols-rounded ms-sm">download</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER: One card with record tabs + snapshot + sub-tabs + transactions -->
+      <div class="center-card">
+        <!-- Record tabs (matches Screens 2/3 pattern) -->
+        <div class="tabs-row">
+          <div class="tab">Milestone Timeline</div>
+          <div class="tab">Status History</div>
+          <div class="tab">Activity Log</div>
+          <div class="tab active">Reconciliation</div>
+        </div>
+
+        <!-- Inline snapshot — status header + KPIs as a strip -->
+        <div class="recon-snapshot-status">
+          <div class="recon-status-icon"><span class="material-symbols-rounded ms-xl">balance</span></div>
+          <div class="recon-status-text">
+            <div class="top">Reconciliation Status</div>
+            <div class="ttl">5 of 6 transactions matched · 1 pending review</div>
+            <div class="desc">Manifest, escrow returns, and unfunding adjustments stitched to this release. Accounting can close out once the unmatched item is resolved.</div>
+          </div>
+          <div class="recon-progress-num">
+            <div class="big">83%</div>
+            <div class="lbl">complete</div>
+          </div>
+        </div>
+        <div class="recon-snapshot-kpis" style="border-bottom: 1px solid var(--gray-100);">
+          <div class="recon-snapshot-kpi">
+            <div class="lbl"><span class="material-symbols-rounded ms-sm" style="color:var(--success-500);">arrow_downward</span>Funds Returned</div>
+            <div class="num green">$1,847,253</div>
+            <div class="sub">4 wires + escrow</div>
+          </div>
+          <div class="recon-snapshot-kpi">
+            <div class="lbl"><span class="material-symbols-rounded ms-sm" style="color:var(--blue-1100);">savings</span>Escrow</div>
+            <div class="num">$42,180</div>
+            <div class="sub">to lender</div>
+          </div>
+          <div class="recon-snapshot-kpi">
+            <div class="lbl"><span class="material-symbols-rounded ms-sm" style="color:var(--warning-500);">tune</span>Adjustments</div>
+            <div class="num warn">−$1,247</div>
+            <div class="sub">curtailment</div>
+          </div>
+          <div class="recon-snapshot-kpi">
+            <div class="lbl"><span class="material-symbols-rounded ms-sm" style="color:var(--error-500);">help</span>Unmatched</div>
+            <div class="num red">$1,320</div>
+            <div class="sub">needs review</div>
+          </div>
+        </div>
+
+        <!-- Section heading (replaces nested tabs — Transactions is the primary view) -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 14px 22px; border-bottom: 1px solid var(--gray-200);">
+          <div style="font-size: 13px; font-weight: 600; color: var(--gray-1400);">Transactions
+            <span style="background:var(--gray-100); color:var(--gray-1100); font-size:11px; font-weight:600; padding:1px 7px; border-radius:10px; margin-left:6px;">6</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <span style="font-size: 12px; color: var(--gray-900);">Sorted by date</span>
+            <button class="btn btn-ghost btn-sm" style="padding:4px 10px; font-size:12px;"><span class="material-symbols-rounded ms-sm">filter_list</span>Filter</button>
+          </div>
+        </div>
+
+        <!-- Transactions table inline (inside the center card) -->
+        <table class="recon-trans-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Reference</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2026-02-19</td>
+              <td>
+                <div class="trans-type">
+                  <span class="ic wire"><span class="material-symbols-rounded ms-sm">account_balance</span></span>
+                  <span class="name">Wire transfer</span>
+                </div>
+              </td>
+              <td><span class="ref-cell">WIRE-202602-118</span></td>
+              <td><span class="amt-cell">$1,650,000.00</span></td>
+              <td><span class="match-pill matched"><span class="material-symbols-rounded ms-sm">check</span>Matched</span></td>
+            </tr>
+            <tr>
+              <td>2026-02-19</td>
+              <td>
+                <div class="trans-type">
+                  <span class="ic escrow"><span class="material-symbols-rounded ms-sm">savings</span></span>
+                  <span class="name">Escrow return</span>
+                </div>
+              </td>
+              <td><span class="ref-cell">ESC-2026-0044-A</span></td>
+              <td><span class="amt-cell">$42,180.00</span></td>
+              <td><span class="match-pill matched"><span class="material-symbols-rounded ms-sm">check</span>Matched</span></td>
+            </tr>
+            <tr>
+              <td>2026-02-20</td>
+              <td>
+                <div class="trans-type">
+                  <span class="ic wire"><span class="material-symbols-rounded ms-sm">account_balance</span></span>
+                  <span class="name">Wire transfer</span>
+                </div>
+              </td>
+              <td><span class="ref-cell">WIRE-202602-127</span></td>
+              <td><span class="amt-cell">$155,073.40</span></td>
+              <td><span class="match-pill matched"><span class="material-symbols-rounded ms-sm">check</span>Matched</span></td>
+            </tr>
+            <tr>
+              <td>2026-02-20</td>
+              <td>
+                <div class="trans-type">
+                  <span class="ic adj"><span class="material-symbols-rounded ms-sm">tune</span></span>
+                  <span class="name">Curtailment adj.</span>
+                </div>
+              </td>
+              <td><span class="ref-cell">ADJ-2026-0044-C1</span></td>
+              <td><span class="amt-cell">−$847.00</span></td>
+              <td><span class="match-pill matched"><span class="material-symbols-rounded ms-sm">check</span>Matched</span></td>
+            </tr>
+            <tr>
+              <td>2026-02-21</td>
+              <td>
+                <div class="trans-type">
+                  <span class="ic unfund"><span class="material-symbols-rounded ms-sm">redo</span></span>
+                  <span class="name">Unfunding</span>
+                </div>
+              </td>
+              <td><span class="ref-cell">UNF-2026-0044-X</span></td>
+              <td><span class="amt-cell">−$400.00</span></td>
+              <td><span class="match-pill matched"><span class="material-symbols-rounded ms-sm">check</span>Matched</span></td>
+            </tr>
+            <tr style="background: rgba(213,54,62,0.03);">
+              <td>2026-02-22</td>
+              <td>
+                <div class="trans-type">
+                  <span class="ic wire"><span class="material-symbols-rounded ms-sm">account_balance</span></span>
+                  <span class="name">Wire transfer</span>
+                </div>
+              </td>
+              <td><span class="ref-cell">WIRE-202602-141</span></td>
+              <td><span class="amt-cell">$1,320.00</span></td>
+              <td><span class="match-pill review"><span class="material-symbols-rounded ms-sm">help</span>Needs review</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 22px; border-top:1px solid var(--gray-200); background:#fbfbfb;">
+          <span style="font-size:12px; color:var(--gray-900);">Showing 6 of 6 transactions</span>
+          <button class="btn btn-secondary btn-sm"><span class="material-symbols-rounded ms-sm">download</span> Export</button>
+        </div>
+
+      </div>
+      <!-- /center column -->
+
+      <!-- RIGHT: Cash Flow Summary + Actions (Notes lives inside the center sub-tab now) -->
+      <div>
+        <div class="side-card">
+          <div class="side-title">Cash Flow Summary</div>
+          <div class="summary-row">
+            <span class="label">Expected at release</span>
+            <span class="value">$1,890,000</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Wires received (3)</span>
+            <span class="value" style="color:var(--success-700);">+$1,805,073</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Escrow returned</span>
+            <span class="value" style="color:var(--success-700);">+$42,180</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Adjustments (2)</span>
+            <span class="value" style="color:var(--warning-700);">−$1,247</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Pending review</span>
+            <span class="value" style="color:var(--error-500);">$1,320</span>
+          </div>
+          <div class="summary-row total">
+            <span class="label">Reconciled total</span>
+            <span class="value green">$1,847,253</span>
+          </div>
+        </div>
+
+        <div class="side-card">
+          <div class="side-title" style="display: flex; justify-content: space-between; align-items: baseline;">
+            <span>Recent notes</span>
+            <span style="font-size:11px; color:var(--gray-700); font-weight:500;">2</span>
+          </div>
+          <div class="note-card" style="background: var(--gray-50); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px;">
+            <div class="top">
+              <span class="av purple" style="width:18px; height:18px; font-size:9px;">SC</span>
+              <span class="name" style="font-size: 12px;">Sarah Chen</span>
+              <span class="when" style="font-size: 11px;">2h</span>
+            </div>
+            <div class="body" style="font-size: 12px;">Wire <b>WIRE-202602-141</b> doesn't match any expected loan — checking with investor.</div>
+          </div>
+          <a href="#" style="font-size: 12px; color: var(--blue-1100); text-decoration: none; font-weight: 500;">View all notes →</a>
+        </div>
+
+        <div class="side-card">
+          <div class="side-title">Actions</div>
+          <div class="action-stack">
+            <button class="action-btn"><span class="ic material-symbols-rounded ms-sm">flag</span>Flag for review</button>
+            <button class="action-btn"><span class="ic material-symbols-rounded ms-sm">file_download</span>Download manifest</button>
+            <button class="action-btn"><span class="ic material-symbols-rounded ms-sm">done_all</span>Mark reconciled</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /detail-cols -->
+  </div>
+</div>
+
+</div>
+</div>
+
+</body>
+</html>
