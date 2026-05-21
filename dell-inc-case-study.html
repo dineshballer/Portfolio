@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redesigning Dell's INC, Case Study</title>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-mute: #757575;
+    --line: #ececec;
+    --accent: #1f4d3e;
+    --accent-soft: #e8f1ed;
+    --warn: #fff3e0;
+    --warn-ink: #8a4b00;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; margin: 0; color: var(--ink); }
+  h1, h2, h3, h4, h5, p, blockquote, cite, div, span, a, button, input, textarea, select, li, ul {
+    font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  h1 { font-size: 56px; line-height: 1.05; }
+  h2 { font-size: 36px; line-height: 1.15; }
+  h3 { font-size: 22px; line-height: 1.3; }
+  h4 { font-size: 16px; }
+  p { margin: 0; color: var(--ink-soft); }
+  ul { margin: 0; padding: 0; list-style: none; }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-mute);
+    margin-bottom: 14px;
+  }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+
+  /* Hero */
+  .hero { padding: 90px 0 60px; }
+  .hero h1 { max-width: 820px; margin-bottom: 36px; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-top: 32px;
+  }
+  .hero-grid p { font-size: 17px; }
+
+  /* Stats row */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding: 56px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-top: 56px;
+  }
+  .stat .num {
+    font-size: 56px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .stat .lbl { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+  .stat .sub { font-size: 13px; color: var(--ink-mute); }
+
+  /* Hero showcase image */
+  .hero-showcase {
+    margin-top: 64px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 14px 44px rgba(15, 8, 104, 0.08);
+    background: white;
+  }
+  .hero-showcase img { display: block; width: 100%; height: auto; }
+  .hero-showcase-cap {
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-top: 14px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Confidentiality notice */
+  .confidential {
+    margin: 32px 0 0;
+    padding: 14px 18px;
+    background: var(--warn);
+    color: var(--warn-ink);
+    border-radius: 10px;
+    font-size: 13px;
+    letter-spacing: 0.01em;
+  }
+
+  /* Pull quote */
+  .pullquote { padding: 80px 0; text-align: center; }
+  .pullquote blockquote {
+    font-size: 30px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    max-width: 800px;
+    margin: 0 auto 24px;
+  }
+  .pullquote cite {
+    display: block;
+    font-style: normal;
+    color: var(--ink-mute);
+    font-size: 14px;
+  }
+  .pullquote cite strong { color: var(--ink); font-weight: 500; }
+
+  /* Section base */
+  section { padding: 60px 0; }
+  .sec-head-aside {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    margin-bottom: 40px;
+  }
+  .sec-head-aside h2 { margin-bottom: 14px; }
+  .sec-head-aside p { font-size: 16px; }
+
+  /* Business goals + Priorities list */
+  .goal-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .goal-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px 18px;
+    text-align: left;
+  }
+  .goal-card .ico {
+    font-size: 22px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .goal-card h4 { font-size: 14px; font-weight: 600; line-height: 1.35; }
+
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .priority-card {
+    background: var(--accent-soft);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .priority-card .ico { font-size: 22px; display: block; margin-bottom: 10px; }
+  .priority-card h4 { font-size: 14px; color: var(--accent); font-weight: 600; line-height: 1.35; }
+
+  /* Research method block */
+  .method-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 18px;
+    padding: 48px 40px;
+    margin-bottom: 48px;
+  }
+  .method-stats .stat .num { color: #7fd6b3; font-size: 52px; }
+  .method-stats .stat .lbl { color: #fff; }
+  .method-stats .stat .sub { color: rgba(255,255,255,0.55); }
+
+  .method-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 36px;
+    margin-bottom: 28px;
+  }
+  .method-block .mtag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .method-block h3 { margin-bottom: 12px; }
+  .method-block .lede { font-size: 16px; color: var(--ink-soft); margin-bottom: 22px; }
+  .method-block blockquote {
+    margin: 22px 0;
+    padding: 18px 22px;
+    background: var(--bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .method-block blockquote cite {
+    display: block;
+    margin-top: 8px;
+    font-style: normal;
+    font-size: 12px;
+    color: var(--ink-mute);
+  }
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .insight {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .insight .ico { font-size: 22px; display: block; margin-bottom: 10px; }
+  .insight h5 { font-size: 13px; font-weight: 600; color: var(--ink); margin: 0 0 6px; letter-spacing: -0.005em; }
+  .insight p { font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
+
+  /* Synthesis section */
+  .synthesis {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 48px;
+    margin-top: 24px;
+  }
+  .synthesis-tools {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .synth-pill {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .root-causes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 24px;
+  }
+  .root-cause {
+    background: var(--bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 24px 26px;
+  }
+  .root-cause h4 { font-size: 17px; margin-bottom: 8px; color: var(--accent); }
+  .root-cause p { font-size: 14px; }
+
+  /* Problem cards */
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 36px;
+    margin-bottom: 24px;
+  }
+  .problem-card .ptag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #fff3e0;
+    color: #8a4b00;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .problem-card h3 { margin-bottom: 14px; }
+  .problem-card p { font-size: 15px; margin-bottom: 12px; }
+  .problem-card blockquote {
+    margin: 20px 0 0;
+    padding: 18px 22px;
+    background: var(--bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .problem-card blockquote cite {
+    display: block;
+    margin-top: 10px;
+    font-style: normal;
+    font-size: 13px;
+    color: var(--ink-mute);
+  }
+  .problem-card blockquote cite strong { color: var(--ink); font-weight: 500; }
+
+  /* Solution layout */
+  .solution { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); }
+  .solution > .eyebrow { color: var(--accent); margin-bottom: 8px; }
+  .solution h3 { color: var(--ink); margin-bottom: 24px; font-size: 26px; letter-spacing: -0.02em; }
+  .solution-detail {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 36px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .solution-detail .sol-num {
+    width: 32px; height: 32px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .solution-detail h4 { font-size: 20px; margin-bottom: 12px; }
+  .solution-detail p { font-size: 15px; line-height: 1.55; }
+  .solution-detail .sol-img {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #f4f4ef;
+    padding: 28px;
+    border: 1px solid var(--line);
+    text-align: center;
+  }
+  .solution-detail .sol-img img { display: block; width: 100%; height: auto; max-width: 100%; }
+  .solution-detail .sol-img.side-by-side {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    align-items: center;
+    padding: 18px;
+  }
+  .solution-detail .sol-img.side-by-side img:first-child { max-width: 60px; }
+  @media (max-width: 880px) {
+    .solution-detail { grid-template-columns: 1fr; padding: 24px; gap: 24px; }
+  }
+
+  /* Final design gallery */
+  .final-design-gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 28px;
+  }
+  .final-design-gallery .gallery-item {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #fff;
+    box-shadow: 0 10px 32px rgba(15, 8, 104, 0.06);
+  }
+  .final-design-gallery .gallery-item img { display: block; width: 100%; height: auto; }
+  .final-design-gallery .gallery-cap {
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Figure */
+  .figure {
+    margin: 36px 0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .figure img { display: block; width: 100%; height: auto; }
+  .figure-cap {
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Accessibility chips */
+  .a11y-chips {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .a11y-chip {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* Outcomes, final results */
+  .outcomes-final {
+    background: #0f1f1a;
+    color: #fff;
+    border-radius: 18px;
+    padding: 56px 48px;
+    margin-top: 24px;
+  }
+  .outcomes-final .eyebrow { color: rgba(255,255,255,0.55); }
+  .outcomes-final h2 { color: #fff; margin-bottom: 36px; }
+  .outcomes-final .stats {
+    border: none;
+    padding: 0;
+    margin-top: 0;
+  }
+  .outcomes-final .stat .num { color: #7fd6b3; }
+  .outcomes-final .stat .lbl { color: #fff; }
+  .outcomes-final .stat .sub { color: rgba(255,255,255,0.55); }
+
+  /* Scroll spy, floating left side */
+  .scroll-spy {
+    position: fixed;
+    left: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px 18px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(15, 8, 104, 0.06);
+  }
+  .scroll-spy a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-mute);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    transition: color 220ms ease;
+  }
+  .scroll-spy a:hover { color: var(--ink); }
+  .scroll-spy a::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.4;
+    transition: opacity 240ms ease, transform 240ms ease, background 240ms ease;
+    flex-shrink: 0;
+  }
+  .scroll-spy a.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .scroll-spy a.active::before {
+    opacity: 1;
+    transform: scale(1.5);
+    background: var(--accent);
+  }
+  @media (max-width: 1280px) {
+    .scroll-spy { display: none; }
+  }
+
+  /* Footer nav */
+  .footer-nav {
+    padding: 80px 0 100px;
+    border-top: 1px solid var(--line);
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .footer-nav a:hover { color: var(--accent); }
+
+  @media (max-width: 880px) {
+    h1 { font-size: 38px; }
+    h2 { font-size: 28px; }
+    .hero-grid, .stats, .solution-grid, .sec-head-aside,
+    .goal-grid, .priority-grid, .method-stats, .insights-grid, .root-causes {
+      grid-template-columns: 1fr;
+    }
+    .hero-showcase { margin-top: 40px; }
+    .outcomes-final .stats { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .method-block, .problem-card, .synthesis { padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SCROLL SPY -->
+<nav class="scroll-spy" aria-label="Jump to section">
+  <a href="#context">Context</a>
+  <a href="#ask">The Ask</a>
+  <a href="#research">Research</a>
+  <a href="#synthesis">Synthesis</a>
+  <a href="#click-fatigue">Click Fatigue</a>
+  <a href="#visual-dissonance">Visual Dissonance</a>
+  <a href="#accessibility">Accessibility</a>
+  <a href="#final-design">Final Design</a>
+  <a href="#outcomes">Outcomes</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Case Study · Dell INC · 2022</div>
+    <h1>Redesigning Dell's INC to Cut Search Time by 40%</h1>
+
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow" style="margin-bottom:10px;">The Challenge</div>
+        <p>Dell's Intelligence Nerve Center, an internal platform for 30,000+ employees, had grown cluttered. Navigation forced too many clicks, the visual language felt dated, and employees relied on memorized routes to reach reports they used every day.</p>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:10px;">The Solution</div>
+        <p>A full IA rearchitecture as the sole UX designer on the project. Three structural moves cut click fatigue, a visual refresh aligned the platform with Dell's brand, and accessibility checks were baked into the design process, all grounded in three rounds of research.</p>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="num">90%</div>
+        <div class="lbl">User satisfaction</div>
+        <div class="sub">post-launch survey</div>
+      </div>
+      <div class="stat">
+        <div class="num">40%</div>
+        <div class="lbl">Findability lift</div>
+        <div class="sub">time to locate reports</div>
+      </div>
+      <div class="stat">
+        <div class="num">20%</div>
+        <div class="lbl">Adoption increase</div>
+        <div class="sub">monthly active users</div>
+      </div>
+      <div class="stat">
+        <div class="num">50%</div>
+        <div class="lbl">Fewer misclicks</div>
+        <div class="sub">on navigation menus</div>
+      </div>
+    </div>
+
+    <!-- Hero showcase image -->
+    <div class="hero-showcase">
+      <img src="https://framerusercontent.com/images/0EWg972ZiOGE0cZdl3w4OUwlul0.png" alt="Dell INC home dashboard after redesign, tile-based navigation with color-coded categories" />
+    </div>
+    <div class="hero-showcase-cap">After, tile-based navigation, color-coded categories, integrated Favorites</div>
+
+    <div class="confidential">
+      Note: names, workflow details, and screen interfaces have been modified to maintain Dell's confidentiality.
+    </div>
+  </div>
+</section>
+
+<!-- CONTEXT -->
+<section id="context">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Context</div>
+        <h2>What is INC.</h2>
+      </div>
+      <div>
+        <p>Dell INC is an internal portal used by over 30,000 employees worldwide, a central hub for sales tools, operational reports, and analytics dashboards. Sales reps track performance metrics, supply chain managers monitor inventory, and analysts pull reports from it daily. When it slows down, everyone's day slows down.</p>
+      </div>
+    </div>
+
+    <div class="figure">
+      <img src="https://framerusercontent.com/images/lUS1OsKKAolPCON1kovMXtFVfg.png" alt="Before, Dell INC's original interface showing cluttered navigation and dated visual treatment" />
+    </div>
+    <div class="figure-cap">Before, cluttered nav, image-heavy background, no surfaced shortcuts</div>
+  </div>
+</section>
+
+<!-- THE ASK -->
+<section id="ask">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">The Ask</div>
+        <h2>A comprehensive redesign, solo</h2>
+      </div>
+      <div>
+        <p>I was the sole UX designer on the project. The brief: modernize the look and feel, make the platform scalable for future growth, and most importantly, make it easier for employees to access the tools and reports they need every day.</p>
+      </div>
+    </div>
+
+    <div class="goal-grid">
+      <div class="goal-card"><span class="ico">🎨</span><h4>Revamp the website</h4></div>
+      <div class="goal-card"><span class="ico">📈</span><h4>Make it scalable</h4></div>
+      <div class="goal-card"><span class="ico">💙</span><h4>Adhere to Dell branding</h4></div>
+      <div class="goal-card"><span class="ico">✋</span><h4>Fix usability issues</h4></div>
+      <div class="goal-card"><span class="ico">➕</span><h4>Add/remove features</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- MY PRIORITIES -->
+<section style="padding-top: 24px;">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">My Priorities</div>
+        <h2>What I held myself to</h2>
+      </div>
+      <div>
+        <p>Beyond the business brief, I set four priorities for myself going into the project, to keep the redesign honest about user needs, not just stakeholder asks.</p>
+      </div>
+    </div>
+
+    <div class="priority-grid">
+      <div class="priority-card"><span class="ico">✅</span><h4>Fulfill business goals</h4></div>
+      <div class="priority-card"><span class="ico">🎯</span><h4>Find and solve pain points</h4></div>
+      <div class="priority-card"><span class="ico">🔍</span><h4>Identify user needs and frustrations</h4></div>
+      <div class="priority-card"><span class="ico">✨</span><h4>Enhance the overall experience</h4></div>
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE, kicks off research -->
+<section class="pullquote">
+  <div class="wrap">
+    <blockquote>"Honestly, it's like finding a needle in a haystack trying to find the right report. It's beyond frustrating."</blockquote>
+    <cite>participant, user interview</cite>
+  </div>
+</section>
+
+<!-- USER RESEARCH -->
+<section id="research">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Research</div>
+        <h2>Three methods, ten+ insights</h2>
+      </div>
+      <div>
+        <p>To understand what was actually breaking for users, I ran three rounds of research, qualitative depth (interviews + contextual inquiry) and quantitative validation (a wide survey). Triangulating across methods kept the synthesis honest.</p>
+      </div>
+    </div>
+
+    <!-- Research stats -->
+    <div class="method-stats">
+      <div class="stat">
+        <div class="num">3</div>
+        <div class="lbl">Research methods</div>
+        <div class="sub">interviews · contextual inquiry · survey</div>
+      </div>
+      <div class="stat">
+        <div class="num">10+</div>
+        <div class="lbl">Key insights</div>
+        <div class="sub">surfaced across all three methods</div>
+      </div>
+      <div class="stat">
+        <div class="num">2</div>
+        <div class="lbl">Root causes</div>
+        <div class="sub">click fatigue · visual dissonance</div>
+      </div>
+    </div>
+
+    <!-- Method 1 -->
+    <div class="method-block">
+      <span class="mtag">Method 1 · Qualitative</span>
+      <h3>User Interviews, going deep with 9 employees</h3>
+      <p class="lede">In-depth interviews with nine individuals across roles and experience levels. The goal: get specific pain points, desired features, and the actual perception of INC from people who used it daily.</p>
+
+      <blockquote>
+        "Honestly, it's like finding a needle in a haystack trying to find the right report. It's beyond frustrating."
+        <cite>participant, user interview</cite>
+      </blockquote>
+
+      <h4 style="margin-top:24px; font-size:14px; color:var(--ink-mute); letter-spacing:0.08em; text-transform:uppercase;">Key insights</h4>
+      <div class="insights-grid">
+        <div class="insight">
+          <span class="ico">😖</span>
+          <h5>Information overload</h5>
+          <p>Volume of information without clear organization. Users felt buried.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">🔍</span>
+          <h5>Hard to find anything</h5>
+          <p>Locating specific reports or tools was the most-cited pain point.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">🪟</span>
+          <h5>Outdated design</h5>
+          <p>The visual language was perceived as dated, created a poor first impression.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">⚙️</span>
+          <h5>Limited customization</h5>
+          <p>People wanted dashboards and views tailored to their actual roles.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Method 2 -->
+    <div class="method-block">
+      <span class="mtag">Method 2 · Qualitative</span>
+      <h3>Contextual Inquiry, watching the work happen</h3>
+      <p class="lede">Beyond interviews, I observed users in their natural work environments. Watching the actual click paths exposed friction patterns that interviews alone couldn't surface, the workarounds users had built without realizing it.</p>
+
+      <h4 style="margin-top:24px; font-size:14px; color:var(--ink-mute); letter-spacing:0.08em; text-transform:uppercase;">Key insights</h4>
+      <div class="insights-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="insight">
+          <span class="ico">🧭</span>
+          <h5>Inefficient workflows</h5>
+          <p>Multiple clicks and detours just to complete the most common tasks.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">🚧</span>
+          <h5>Reliance on workarounds</h5>
+          <p>Users had built their own systems to bypass the platform's limitations.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">🤷</span>
+          <h5>No contextual relevance</h5>
+          <p>The info shown wasn't always relevant to the user's role or current task.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Method 3 -->
+    <div class="method-block">
+      <span class="mtag">Method 3 · Quantitative</span>
+      <h3>Survey, validating at scale</h3>
+      <p class="lede">After the qualitative phase, I ran a survey reaching thousands of INC users, to validate the patterns I'd seen in the small-sample work, and to surface anything that only showed up at scale.</p>
+
+      <h4 style="margin-top:24px; font-size:14px; color:var(--ink-mute); letter-spacing:0.08em; text-transform:uppercase;">Key insights</h4>
+      <div class="insights-grid">
+        <div class="insight">
+          <span class="ico">🏷️</span>
+          <h5>Outdated labels</h5>
+          <p>A significant portion found tool and report labels confusing or stale.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">📑</span>
+          <h5>Duplicate content</h5>
+          <p>Confirmed redundant reports and tools, created unnecessary confusion.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">⏳</span>
+          <h5>Slow loading times</h5>
+          <p>Slow pages and reports were directly impacting productivity.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">📊</span>
+          <h5>Weak analytics</h5>
+          <p>Available analytics tools were insufficient for many users' needs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FROM INSIGHTS TO ACTION -->
+<section id="synthesis">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Synthesis</div>
+        <h2>From insights to action</h2>
+      </div>
+      <div>
+        <p>Ten-plus insights, three methods. I ran the findings through an Ishikawa diagram and a prioritization matrix to identify what was actually causing the most pain, versus what just felt loud. Two root causes emerged.</p>
+      </div>
+    </div>
+
+    <div class="synthesis">
+      <div class="synthesis-tools">
+        <span class="synth-pill">Ishikawa Diagram</span>
+        <span class="synth-pill">Prioritization Matrix</span>
+      </div>
+      <p style="font-size:15px; color:var(--ink-soft);">Most user frustrations traced back to two root causes, both structural, both addressable through redesign:</p>
+
+      <div class="root-causes">
+        <div class="root-cause">
+          <h4>Click fatigue</h4>
+          <p>The excessive number of clicks required to navigate and access information made every task feel cumbersome and slow, even for experienced users.</p>
+        </div>
+        <div class="root-cause">
+          <h4>Visual dissonance</h4>
+          <p>The outdated visual design, weak hierarchy, and inconsistent layout left users disoriented and undermined the platform's credibility.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM 1 -->
+<section id="click-fatigue">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Problem 1</div>
+        <h2>Click fatigue</h2>
+      </div>
+      <div>
+        <p>Employees needed quick access to a small set of reports they used every day. The platform forced them through three to five clicks to reach each one, every time. Familiarity didn't help because the structure itself was the problem.</p>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <span class="ptag">Insight</span>
+      <h3>The shortest path to a report shouldn't be a memorized route</h3>
+      <p>Sales reps and analysts knew where their reports lived but still had to walk through the same nested menus daily. The interface treated every report as equal weight, surfaced nothing based on what people actually used.</p>
+      <blockquote>
+        "The number of clicks needed to reach the report slows me down. It disrupts my workflow and feels inefficient, even though I'm familiar with the site."
+        <cite><strong>Matt</strong>, Data Engineer, Dell</cite>
+      </blockquote>
+    </div>
+
+    <div class="solution">
+      <div class="eyebrow">The Solution</div>
+      <h3>A three-pronged approach</h3>
+
+      <div class="solution-detail">
+        <div>
+          <span class="sol-num">01</span>
+          <h4>Favorites on the home screen</h4>
+          <p>Users mark frequently-used reports and tools as favorites. The home tiles then surface those favorites as one-click destinations, bypassing the menu entirely. Workflow efficiency improves because the steps required to reach critical information drop dramatically.</p>
+        </div>
+        <div class="sol-img">
+          <img src="https://framerusercontent.com/images/WHCRWG9hhenD0eH6KyHaUsNwU.png" alt="Sales Performance Hub tile with Reports and Favourites dropdowns expanded, showing Favorite tool and Favorite webpage options" />
+        </div>
+      </div>
+
+      <div class="solution-detail">
+        <div>
+          <span class="sol-num">02</span>
+          <h4>Reports dropdown inside each tile</h4>
+          <p>Beyond Favorites, each home tile gained a Reports dropdown that exposes the underlying reports list. Users jump straight to a specific report from the home screen, no need to open the full Reports page first. Fewer clicks, less context switching.</p>
+        </div>
+        <div class="sol-img">
+          <img src="https://framerusercontent.com/images/hky0JC3kUVAV92BuVIOat2OJY.png" alt="Home tile dropdown showing list of reports, Report 1, Report 2, Report 3, accessible directly from the tile" />
+        </div>
+      </div>
+
+      <div class="solution-detail">
+        <div>
+          <span class="sol-num">03</span>
+          <h4>Universal side navigation</h4>
+          <p>A persistent side nav lets users move to any section from any page in two states, a compact icon-only rail (default) and an expanded view with full category names and sub-items. No more backtracking through breadcrumbs to switch context.</p>
+        </div>
+        <div class="sol-img side-by-side">
+          <img src="https://framerusercontent.com/images/YWcRPzTeRmsScSCK7vwsomaqcEg.png" alt="Collapsed icon-only side navigation rail" />
+          <img src="https://framerusercontent.com/images/5oLGuexvE9L7MCcL7CkeBiJJm0.png" alt="Expanded side navigation showing categories, Sales Support Modernization with sub-items like Operations, Reporting, PAG Operations, COD/DA, Customer Financial Services, Partner Operations, Analytics, Global Backlog Orders, Services Finance, Infrastructure Solution Group, BES, SDS, SSC" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM 2 -->
+<section id="visual-dissonance">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Problem 2</div>
+        <h2>Visual dissonance</h2>
+      </div>
+      <div>
+        <p>The platform's visual language was a generation behind Dell's brand. An image-heavy background fought with the foreground content. Tiles all looked the same, no visual cues for which category you were in. Employees felt the platform was beneath the company.</p>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <span class="ptag">Insight</span>
+      <h3>An internal product still represents the company to its own people</h3>
+      <p>Internal tools often get the leftover budget for visual care. But the people using them every day form an opinion about how seriously the org takes their work, and the INC interface was telling employees the answer was "not very."</p>
+      <blockquote>
+        "This UI needs a modern refresh that reflects our brand and showcases our capabilities, with intuitive navigation that can grow with us."
+        <cite><strong>Gayathri</strong>, Director, Dell</cite>
+      </blockquote>
+    </div>
+
+    <div class="solution">
+      <div class="eyebrow">The Solution</div>
+      <h3>A focused visual refresh</h3>
+
+      <div class="solution-detail">
+        <div>
+          <span class="sol-num">01</span>
+          <h4>Background removal</h4>
+          <p>Stripped the image-based background that was competing with foreground content. Replaced it with a clean, neutral surface so essential info becomes the focus. Background images often fight with what's in front of them, removing it sharpens the entire visual hierarchy.</p>
+        </div>
+        <div class="sol-img">
+          <img src="https://framerusercontent.com/images/0EWg972ZiOGE0cZdl3w4OUwlul0.png" alt="After background removal, clean neutral surface with foreground tiles and clear navigation" />
+        </div>
+      </div>
+
+      <div class="solution-detail">
+        <div>
+          <span class="sol-num">02</span>
+          <h4>Color-coded tiles + icons</h4>
+          <p>Replaced the uniform layout with a tile-based system where each sub-organization gets a unique tile color and category icon. Users now identify their section at a glance, Customer Financial Services in one accent, Operations in another, and so on. Visual distinction without extra labeling.</p>
+        </div>
+        <div class="sol-img">
+          <img src="https://framerusercontent.com/images/bAQO85GgXtjldgwCF1zJ5T5SNA.png" alt="Three example tiles, Customer Financial Services, Operations, Report Name, each with a unique color accent and icon" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESSIBILITY -->
+<section id="accessibility">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Accessibility</div>
+        <h2>Baked into the process</h2>
+      </div>
+      <div>
+        <p>Accessibility wasn't a final-stage check. It lived inside the iteration loop. Every design pass went through contrast, keyboard, and screen reader scrutiny. The blue color used for some interactive states didn't pass contrast on the first iteration; I adjusted before it ever reached engineering.</p>
+      </div>
+    </div>
+
+    <div class="a11y-chips">
+      <span class="a11y-chip">Contrast checks</span>
+      <span class="a11y-chip">Keyboard navigation</span>
+      <span class="a11y-chip">Screen reader compatibility</span>
+      <span class="a11y-chip">Iterative refinement</span>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL DESIGN GALLERY -->
+<section id="final-design">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Final design</div>
+        <h2>Putting it all together</h2>
+      </div>
+      <div>
+        <p>The pieces (Favorites, Reports dropdown, side navigation, refreshed visual language) assembled into a cohesive product. Three views from the shipped redesign showing how the structural and visual changes work together in practice.</p>
+      </div>
+    </div>
+
+    <div class="final-design-gallery">
+      <div class="gallery-item">
+        <img src="https://framerusercontent.com/images/gJEuKSKCrwT788TBH6eAQNWtNI.png" alt="Final design, home dashboard with color-coded tiles, surfaced favorites, and side navigation" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://framerusercontent.com/images/eOqrGLIbo8rRSl47JJoEt32xk.png" alt="Final design, interior view with expanded side nav and tile content" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://framerusercontent.com/images/4zzZu0ILQH2TeKZsqMu6TxhqGYg.png" alt="Final design, reports view with the new visual treatment" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY OUTCOMES -->
+<section id="outcomes">
+  <div class="wrap">
+    <div class="outcomes-final">
+      <div class="eyebrow">Key outcomes</div>
+      <h2>Measured against the pre-redesign baseline</h2>
+      <div class="stats">
+        <div class="stat">
+          <div class="num">90%</div>
+          <div class="lbl">User satisfaction</div>
+          <div class="sub">post-launch survey</div>
+        </div>
+        <div class="stat">
+          <div class="num">40%</div>
+          <div class="lbl">Findability lift</div>
+          <div class="sub">time to locate reports</div>
+        </div>
+        <div class="stat">
+          <div class="num">20%</div>
+          <div class="lbl">Adoption increase</div>
+          <div class="sub">monthly active users</div>
+        </div>
+        <div class="stat">
+          <div class="num">50%</div>
+          <div class="lbl">Fewer misclicks</div>
+          <div class="sub">on navigation menus</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer nav -->
+    <div class="footer-nav">
+      <a href="./index.html">← Back to all work</a>
+      <a href="./realtime-inquiry-case-study.html">Next: Real-Time Inquiry Portal →</a>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(() => {
+  const spy = document.querySelector('.scroll-spy');
+  if (!spy) return;
+  const links = Array.from(spy.querySelectorAll('a'));
+  const sections = links
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  function update() {
+    const scrollPos = window.scrollY + 180;
+    let currentIdx = 0;
+    for (let i = 0; i < sections.length; i++) {
+      if (sections[i].offsetTop <= scrollPos) {
+        currentIdx = i;
+      }
+    }
+    links.forEach((a, i) => {
+      a.classList.toggle('active', i === currentIdx);
+    });
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update, { passive: true });
+  update();
+
+  // Smooth scroll on click
+  links.forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        window.scrollTo({
+          top: target.offsetTop - 40,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
