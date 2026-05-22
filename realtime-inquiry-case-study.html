@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>From Email Threads to Real-Time Visibility — Case Study</title>
+<title>From Email Threads to Real-Time Visibility, Real-Time Inquiry Portal, Case Study</title>
 <link rel="preconnect" href="https://api.fontshare.com">
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
 <style>
@@ -29,7 +29,7 @@
     -webkit-font-smoothing: antialiased;
   }
   h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.02em; margin: 0; color: var(--ink); }
-  h1, h2, h3, h4, h5, p, blockquote, cite, div, span, a, button, input, textarea, select, li {
+  h1, h2, h3, h4, h5, p, blockquote, cite, div, span, a, button, input, textarea, select, li, ul {
     font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, sans-serif;
   }
   h1 { font-size: 56px; line-height: 1.05; }
@@ -37,6 +37,7 @@
   h3 { font-size: 22px; line-height: 1.3; }
   h4 { font-size: 16px; }
   p { margin: 0; color: var(--ink-soft); }
+  ul { margin: 0; padding: 0; list-style: none; }
   .eyebrow {
     text-transform: uppercase;
     letter-spacing: 0.14em;
@@ -46,10 +47,18 @@
     margin-bottom: 14px;
   }
 
-  /* Hero */
   .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+
+  /* Hero */
   .hero { padding: 90px 0 60px; }
-  .hero h1 { max-width: 820px; margin-bottom: 36px; }
+  .hero h1 { max-width: 820px; margin-bottom: 24px; }
+  .hero .lede {
+    max-width: 760px;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+  }
   .hero-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -58,6 +67,7 @@
   }
   .hero-grid p { font-size: 17px; }
 
+  /* Stats row */
   .stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -68,15 +78,15 @@
     margin-top: 56px;
   }
   .stat .num {
-    font-size: 64px;
+    font-size: 56px;
     font-weight: 600;
     letter-spacing: -0.03em;
     color: var(--accent);
     line-height: 1;
     margin-bottom: 12px;
   }
-  .stat .lbl { font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
-  .stat .sub { font-size: 14px; color: var(--ink-mute); }
+  .stat .lbl { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+  .stat .sub { font-size: 13px; color: var(--ink-mute); }
 
   /* Hero showcase image */
   .hero-showcase {
@@ -86,8 +96,19 @@
     border: 1px solid var(--line);
     box-shadow: 0 14px 44px rgba(15, 8, 104, 0.08);
     background: white;
+    max-height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .hero-showcase img { display: block; width: 100%; height: auto; }
+  .hero-showcase img {
+    display: block;
+    max-width: 100%;
+    max-height: 560px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
   .hero-showcase-cap {
     text-align: center;
     font-size: 13px;
@@ -96,16 +117,27 @@
     letter-spacing: 0.02em;
   }
 
+  /* Confidentiality notice */
+  .confidential {
+    margin: 32px 0 0;
+    padding: 14px 18px;
+    background: var(--warn);
+    color: var(--warn-ink);
+    border-radius: 10px;
+    font-size: 13px;
+    letter-spacing: 0.01em;
+  }
+
   /* Pull quote */
-  .pullquote { padding: 80px 0; text-align: center; }
+  .pullquote { padding: 60px 0 40px; text-align: center; }
   .pullquote blockquote {
-    font-size: 32px;
+    font-size: 28px;
     line-height: 1.3;
     font-weight: 500;
     color: var(--ink);
     letter-spacing: -0.015em;
     max-width: 800px;
-    margin: 0 auto 24px;
+    margin: 0 auto 18px;
   }
   .pullquote cite {
     display: block;
@@ -115,314 +147,592 @@
   }
   .pullquote cite strong { color: var(--ink); font-weight: 500; }
 
+  /* Section base */
   section { padding: 60px 0; }
-
-  /* Overview cards */
-  .overview-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-top: 36px;
-  }
-  .ov-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    padding: 24px;
-    border-radius: 12px;
-  }
-  .ov-card h4 { font-size: 13px; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
-  .ov-card p { font-size: 14px; }
-  .disclaimer {
-    margin-top: 28px;
-    font-size: 13px;
-    color: var(--ink-mute);
-    font-style: italic;
-  }
-
-  /* Section heads */
-  .sec-head { margin-bottom: 44px; }
-  .sec-head h2 { margin-bottom: 16px; }
-  .sec-head p { font-size: 17px; }
-
-  /* Section head with pull-quote aside (used for Solution + Feature block intros) */
   .sec-head-aside {
     display: grid;
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-    gap: 56px;
-    align-items: start;
-    margin-bottom: 44px;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    margin-bottom: 40px;
   }
-  .sec-head-aside .sec-head,
-  .sec-head-aside .fb-intro {
-    max-width: none;
-    margin-bottom: 0;
+  .sec-head-aside h2 { margin-bottom: 14px; }
+  .sec-head-aside p { font-size: 16px; }
+
+  /* WHAT / WHY / WHO / WHERE cards */
+  .ww-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 24px;
   }
-  .aside-quote {
-    border-left: 3px solid var(--accent);
-    padding: 8px 0 8px 24px;
+  .ww-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px 20px;
   }
-  .aside-quote blockquote {
-    margin: 0 0 14px;
-    font-size: 22px; line-height: 1.35;
-    font-weight: 500; letter-spacing: -0.01em;
+  .ww-card h4 {
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .ww-card p { font-size: 14px; line-height: 1.55; color: var(--ink); }
+
+  /* Pain points (insights) */
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .pain-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+  }
+  .pain-card .ico { font-size: 24px; display: block; margin-bottom: 14px; }
+  .pain-card h4 { font-size: 17px; margin-bottom: 10px; }
+  .pain-card p { font-size: 14px; line-height: 1.55; }
+
+  /* Quote pair */
+  .quotes-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 36px;
+    padding: 36px;
+    background: var(--accent-soft);
+    border-radius: 16px;
+  }
+  .quotes-pair blockquote {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
     color: var(--ink);
     font-style: italic;
   }
-  .aside-quote cite {
-    font-style: normal;
+  .quotes-pair cite {
     display: block;
-    font-size: 13px; color: var(--ink-mute);
+    margin-top: 12px;
+    font-style: normal;
+    font-size: 13px;
+    color: var(--ink-mute);
   }
-  .aside-quote cite strong { color: var(--ink); font-weight: 600; }
+  .quotes-pair cite strong { color: var(--ink); font-weight: 600; }
 
-  /* Problem cards */
-  .three {
+  /* Synthesis paragraph */
+  .synthesis-note {
+    margin-top: 28px;
+    padding: 24px 28px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  /* Goal cards */
+  .principle-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
+    margin-top: 32px;
   }
-  .prob-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 16px;
+  .principle-card {
+    border-radius: 14px;
     padding: 28px;
-  }
-  .prob-card h3 { font-size: 19px; margin-bottom: 12px; }
-  .prob-card p { font-size: 15px; }
-
-  /* Quotes block */
-  .quotes {
+    border: 1px solid var(--accent);
     background: var(--accent-soft);
-    border-radius: 16px;
-    padding: 48px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 36px;
   }
-  .quotes blockquote {
-    font-size: 18px;
-    line-height: 1.45;
-    color: var(--ink);
-    margin: 0 0 14px;
-    font-weight: 500;
+  .principle-card .opt-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    background: var(--accent);
+    color: #fff;
   }
-  .quotes cite { font-size: 13px; color: var(--ink-mute); font-style: normal; }
-  .quotes-context {
-    margin-top: 28px;
-    font-size: 16px;
-    color: var(--ink-soft);
-    max-width: 880px;
-  }
-
-  /* Design goals dark card */
-  .goals { background: var(--ink); color: #fff; border-radius: 20px; padding: 64px 56px; }
-  .goals .eyebrow { color: rgba(255,255,255,0.55); }
-  .goals h2 { color: #fff; margin-bottom: 36px; }
-  .goals .three { gap: 32px; }
-  .goal {
-    border-top: 1px solid rgba(255,255,255,0.18);
-    padding-top: 20px;
-  }
-  .goal h3 { color: #fff; font-size: 20px; margin-bottom: 12px; }
-  .goal p { color: rgba(255,255,255,0.72); font-size: 15px; }
+  .principle-card h4 { font-size: 20px; margin-bottom: 14px; letter-spacing: -0.02em; }
+  .principle-card p { font-size: 14px; line-height: 1.55; color: var(--ink); }
 
   /* Solution feature blocks */
-  .feature-block { padding-top: 60px; }
-  .feature-block + .feature-block { padding-top: 30px; }
-  .fb-intro { margin-bottom: 40px; }
-  .fb-intro h2 { margin-bottom: 18px; }
-  .fb-intro p { font-size: 17px; }
-
-  /* Lightweight section divider used between Solution intro and feature lists */
-  .fb-divider {
-    padding-bottom: 14px;
-    margin-bottom: 28px;
-    border-bottom: 1px solid var(--line);
+  .solution { margin-top: 8px; }
+  .solution > .eyebrow { color: var(--accent); margin-bottom: 8px; }
+  .sol-quote {
+    border-left: 3px solid var(--accent);
+    padding: 6px 0 6px 20px;
+    margin: 8px 0 32px;
   }
-  .fb-divider .eyebrow { margin-bottom: 0; }
-
-  /* Stacked layout — text on top, image full-width below */
-  .feature {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    margin-bottom: 80px;
+  .sol-quote blockquote {
+    margin: 0 0 8px;
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--ink);
+    font-style: italic;
+    max-width: 780px;
   }
-  .feature:last-child { margin-bottom: 0; }
-  .f-text { max-width: 740px; }
+  .sol-quote cite {
+    font-style: normal;
+    font-size: 13px;
+    color: var(--ink-mute);
+    display: block;
+  }
+  .sol-quote cite strong { color: var(--ink); font-weight: 600; }
 
-  .f-img {
-    background: white;
+  .solution-detail {
+    background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 16px;
+    border-radius: 14px;
+    padding: 36px;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  .solution-detail .sol-num {
+    width: 32px; height: 32px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .solution-detail h4 { font-size: 20px; margin-bottom: 12px; }
+  .solution-detail p { font-size: 15px; line-height: 1.55; margin-bottom: 12px; }
+  .solution-detail .sol-tag {
+    margin-top: 18px;
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .solution-detail .sol-img {
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 14px 44px rgba(15, 8, 104, 0.09);
-    aspect-ratio: 16/10;
+    background: #f4f4ef;
+    padding: 28px;
+    border: 1px solid var(--line);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--ink-mute);
-    font-size: 14px;
-    text-align: center;
-    padding: 20px;
+    max-height: 440px;
   }
-  .f-img img { display: block; width: 100%; height: auto; }
-  .f-num {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--accent);
-    margin-bottom: 8px;
+  .solution-detail .sol-img img {
+    display: block;
+    max-width: 100%;
+    max-height: 380px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
   }
-  .f-text h3 { margin-bottom: 10px; }
-  .f-tag {
-    font-size: 12px;
-    color: var(--ink-mute);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 18px;
-  }
-  .f-text p { font-size: 15px; margin-bottom: 14px; }
-  .f-text p.outcome { color: var(--ink); }
 
-  /* Callout */
-  .callout {
-    background: var(--warn);
-    border-radius: 12px;
-    padding: 20px 24px;
-    color: var(--warn-ink);
-    font-size: 14px;
-    margin: 24px 0 8px;
+  /* Stacked variant for wide images */
+  .solution-detail.stacked {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 32px;
   }
-  .callout strong { display: block; margin-bottom: 4px; }
+  .solution-detail.stacked .sol-img {
+    max-height: none;
+    padding: 18px;
+    width: 100%;
+  }
+  .solution-detail.stacked .sol-img img {
+    max-height: none;
+    max-width: 100%;
+    width: 100%;
+  }
 
-  /* Results */
-  .results {
+  /* Carousel inside a sol-img — used for Unified messaging */
+  .sol-carousel {
+    position: relative;
+    width: 100%;
+  }
+  .sol-carousel .slides {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    /* Stack slides so container takes the tallest height; arrows stay anchored */
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 36px;
+    grid-template-areas: "stack";
   }
-  .res {
+  .sol-carousel .slide {
+    grid-area: stack;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 240ms ease;
+  }
+  .sol-carousel .slide.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .sol-carousel .slide img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .sol-carousel .car-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    color: var(--ink);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: background 180ms ease, transform 180ms ease;
+  }
+  .sol-carousel .car-btn:hover { background: #fff; transform: translateY(-50%) scale(1.05); }
+  .sol-carousel .car-btn:disabled { opacity: 0.35; cursor: default; }
+  .sol-carousel .car-btn.prev { left: 14px; }
+  .sol-carousel .car-btn.next { right: 14px; }
+  .sol-carousel .dots {
+    position: absolute;
+    bottom: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.85);
+    border-radius: 999px;
+    z-index: 2;
+  }
+  .sol-carousel .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ink-mute);
+    opacity: 0.4;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 180ms ease, background 180ms ease, transform 180ms ease;
+  }
+  .sol-carousel .dot.active {
+    opacity: 1;
+    background: var(--accent);
+    transform: scale(1.2);
+  }
+
+  /* Final design tab gallery */
+  .shipped-gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-top: 32px;
+  }
+  .shipped-shot {
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 16px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 28px rgba(15, 8, 104, 0.06);
+  }
+  .shipped-shot .shot-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 600;
+  }
+  .shipped-shot .shot-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+  .shipped-shot .shot-body {
+    padding: 20px;
+    background: #f4f4ef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shipped-shot .shot-body img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Zoomable images */
+  img.zoomable {
+    cursor: zoom-in;
+    transition: opacity 180ms ease;
+  }
+  img.zoomable:hover { opacity: 0.92; }
+
+  /* Lightbox overlay */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 14, 12, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 40px;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  .lightbox.open {
+    display: flex;
+    opacity: 1;
+  }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    object-fit: contain;
+    cursor: default;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 180ms ease, transform 180ms ease;
+  }
+  .lightbox-close:hover {
+    background: rgba(255,255,255,0.22);
+    transform: scale(1.05);
+  }
+  .lightbox-cap {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  body.lightbox-open { overflow: hidden; }
+
+  /* Validation metric cards */
+  .eval-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 32px;
+  }
+  .eval-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
     padding: 28px;
   }
-  .res .big {
-    font-size: 48px;
+  .eval-card .eval-result {
+    font-size: 44px;
     font-weight: 600;
     color: var(--accent);
     letter-spacing: -0.025em;
-    line-height: 1;
-    margin-bottom: 14px;
+    line-height: 1.05;
+    margin-bottom: 10px;
   }
-  .res h4 { font-size: 16px; margin-bottom: 8px; }
-  .res p { font-size: 14px; }
+  .eval-card h4 { font-size: 17px; margin-bottom: 12px; }
+  .eval-card p { font-size: 14px; line-height: 1.55; }
 
-  /* Monitor */
+  /* Post-launch monitor cards */
   .monitor-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 36px;
+    gap: 20px;
+    margin-top: 24px;
   }
-  .mon {
+  .monitor-card {
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 28px;
+    border-radius: 12px;
+    padding: 26px 24px;
   }
-  .mon .icon { font-size: 28px; margin-bottom: 16px; }
-  .mon h4 { font-size: 16px; margin-bottom: 8px; }
-  .mon p { font-size: 14px; }
+  .monitor-card .ico { font-size: 26px; display: block; margin-bottom: 14px; }
+  .monitor-card h4 { font-size: 16px; margin-bottom: 8px; }
+  .monitor-card p { font-size: 14px; line-height: 1.55; }
 
-  footer {
-    padding: 60px 0 80px;
-    text-align: center;
-    color: var(--ink-mute);
-    font-size: 13px;
-    border-top: 1px solid var(--line);
-    margin-top: 40px;
-  }
-
-  /* Responsive */
-  @media (max-width: 880px) {
-    h1 { font-size: 40px; }
-    h2 { font-size: 28px; }
-    .hero-grid, .three, .results, .monitor-grid, .quotes, .sec-head-aside { grid-template-columns: 1fr; }
-    .sec-head-aside { gap: 32px; }
-    .stats { grid-template-columns: 1fr; gap: 36px; }
-    .overview-grid { grid-template-columns: 1fr 1fr; }
-    .goals { padding: 40px 28px; }
-  }
-
-  /* ─── Redesigned Solution section ─── */
-  .solution-redo { padding: 80px 0; }
-  .solution-redo .lead-h2 { max-width: 580px; margin-bottom: 16px; }
-  .solution-redo .lead-body {
-    font-size: 16px; color: var(--ink-soft); line-height: 1.55;
-    max-width: 580px; margin: 0;
-  }
-  .solution-redo .sub-divider {
-    display: grid; grid-template-columns: auto 1fr;
-    align-items: center; gap: 18px;
-    margin: 56px 0 28px;
-  }
-  .solution-redo .sub-divider .label {
-    font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--accent);
-    display: inline-flex; align-items: baseline; gap: 10px;
-  }
-  .solution-redo .sub-divider .label .num {
-    font-family: ui-monospace, "SF Mono", monospace;
-    font-size: 11px; color: var(--ink-mute); letter-spacing: 0.04em;
-  }
-  .solution-redo .sub-divider .line { height: 0.5px; background: var(--line); }
-  .solution-redo .sub {
-    display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px;
-  }
-  .solution-redo .sub h3 {
-    font-size: 24px; line-height: 1.2; font-weight: 600;
-    letter-spacing: -0.02em; margin: 0 0 12px; color: var(--ink);
-  }
-  .solution-redo .sub p {
-    font-size: 15.5px; color: var(--ink-soft); line-height: 1.6; margin: 0;
-  }
-  .solution-redo .features {
-    margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px;
-  }
-  .solution-redo .features span {
-    padding: 3px 10px; border: 1px solid var(--line);
-    border-radius: 999px; font-size: 11.5px; color: var(--ink-soft);
+  /* Figure */
+  .figure {
+    margin: 36px 0 0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
     background: var(--surface);
+    max-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
   }
-  .solution-redo blockquote {
-    margin: 0;
-    padding: 4px 0 4px 16px;
-    border-left: 1.5px solid var(--accent);
-    font-size: 15.5px; line-height: 1.4;
-    font-style: italic; color: var(--ink);
+  .figure img {
+    display: block;
+    max-width: 100%;
+    max-height: 560px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  .figure-cap {
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Scroll spy */
+  .scroll-spy {
+    position: fixed;
+    left: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 20px 18px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(15, 8, 104, 0.06);
+  }
+  .scroll-spy a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-mute);
+    text-decoration: none;
+    font-size: 12px;
     font-weight: 500;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    transition: color 220ms ease;
   }
-  .solution-redo blockquote cite {
-    display: block; margin-top: 10px;
-    font-style: normal; font-weight: 400;
-    font-size: 12px; color: var(--ink-mute);
+  .scroll-spy a:hover { color: var(--ink); }
+  .scroll-spy a::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.4;
+    transition: opacity 240ms ease, transform 240ms ease, background 240ms ease;
+    flex-shrink: 0;
   }
-  .solution-redo blockquote cite strong { color: var(--ink); font-weight: 500; }
+  .scroll-spy a.active {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .scroll-spy a.active::before {
+    opacity: 1;
+    transform: scale(1.5);
+    background: var(--accent);
+  }
+  @media (max-width: 1280px) {
+    .scroll-spy { display: none; }
+  }
+
+  /* Footer nav */
+  .footer-nav {
+    padding: 80px 0 100px;
+    border-top: 1px solid var(--line);
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .footer-nav a:hover { color: var(--accent); }
+
   @media (max-width: 880px) {
-    .solution-redo .sub { grid-template-columns: 1fr; gap: 28px; }
+    h1 { font-size: 38px; }
+    h2 { font-size: 28px; }
+    .hero-grid, .stats, .ww-grid, .insights-grid, .quotes-pair, .principle-grid,
+    .solution-detail, .eval-grid, .monitor-grid, .sec-head-aside {
+      grid-template-columns: 1fr;
+    }
+    .solution-detail { padding: 24px; gap: 24px; }
+    .quotes-pair { padding: 24px; }
   }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero">
+<!-- SCROLL SPY -->
+<nav class="scroll-spy" aria-label="Jump to section">
+  <a href="#overview">Overview</a>
+  <a href="#problem">Problem area</a>
+  <a href="#goals">Design goals</a>
+  <a href="#solution">Solution</a>
+  <a href="#dashboard">Dashboard view</a>
+<a href="#case-detail">Case detail</a>
+  <a href="#final-design">Final design</a>
+  <a href="#validation">Validation</a>
+  <a href="#post-launch">Post-launch</a>
+</nav>
+
+<!-- HERO / OVERVIEW -->
+<section class="hero" id="overview">
   <div class="wrap">
-    <div class="eyebrow">Case Study · Real-Time Inquiry Portal</div>
-    <h1>From Email Threads to Real-Time Visibility</h1>
+    <div class="eyebrow">Case Study · Real-Time Inquiry Portal · 2026</div>
+    <h1>From email threads to real-time visibility.</h1>
+    <p class="lede">A single workspace where mortgage clients can track every inquiry as it happens. The "where is my case?" emails stopped, status meetings became unnecessary, and account managers got hours back every week.</p>
 
     <div class="hero-grid">
       <div>
@@ -431,7 +741,7 @@
       </div>
       <div>
         <div class="eyebrow" style="margin-bottom:10px;">The Solution</div>
-        <p>A single workspace where clients could track every inquiry in real time — see exactly who's handling it, message teams inline, and share documents without ever opening their inbox.</p>
+        <p>A single workspace where clients could track every inquiry in real time. They see exactly who's handling it, message teams inline, and share documents without ever opening their inbox.</p>
       </div>
     </div>
 
@@ -439,7 +749,7 @@
       <div class="stat">
         <div class="num">62%</div>
         <div class="lbl">Faster avg. case resolution</div>
-        <div class="sub">docs, messages, and status all in one place</div>
+        <div class="sub">docs, messages, and status in one place</div>
       </div>
       <div class="stat">
         <div class="num">6 hrs</div>
@@ -453,187 +763,350 @@
       </div>
     </div>
 
-    <!-- Hero showcase image (placeholder — drop your screenshot here) -->
-    <div class="hero-showcase" style="aspect-ratio: 16/9;">
-      <div style="display:flex; align-items:center; justify-content:center; height:100%; color:var(--ink-mute); font-size:14px;">
-        [ Hero screenshot — drop your dashboard image here ]
-      </div>
+    <div class="hero-showcase">
+      <img class="zoomable" src="https://framerusercontent.com/images/y1fWoZGx4dIFWwaLyXVyJWoKM.png" alt="Real-Time Inquiry Portal dashboard, a central hub showing every loan inquiry in one organized, live view" />
     </div>
-    <div class="hero-showcase-cap">A central hub — every loan inquiry in one organized, live view</div>
-  </div>
-</section>
+    <div class="hero-showcase-cap">A central hub, every loan inquiry in one organized, live view</div>
 
-
-<!-- PULL QUOTE -->
-<section class="pullquote">
-  <div class="wrap">
-    <blockquote>"Give me the visibility to see where we sit. Show me if I'm 20% or 80% done."</blockquote>
-    <cite><strong>Ivan Camarena</strong> — Client Account Manager</cite>
-  </div>
-</section>
-
-
-<!-- OVERVIEW -->
-<section>
-  <div class="wrap">
-    <div class="overview-grid">
-      <div class="ov-card">
+    <div class="ww-grid">
+      <div class="ww-card">
         <h4>What</h4>
         <p>A complete case management workspace where clients can track progress, view documents, and message teams directly in one place.</p>
       </div>
-      <div class="ov-card">
+      <div class="ww-card">
         <h4>Why</h4>
         <p>After creating a case, clients had no way to see details, find files, or get updates without digging through fragmented email threads.</p>
       </div>
-      <div class="ov-card">
+      <div class="ww-card">
         <h4>Who</h4>
         <p>Mortgage companies and Client Account Managers who need to oversee every case submitted by their organization and run high-level reports.</p>
       </div>
-      <div class="ov-card">
+      <div class="ww-card">
         <h4>Where</h4>
         <p>A secure digital dashboard that serves as the main command center for daily case management and company-wide reporting.</p>
       </div>
     </div>
-    <p class="disclaimer">Details, such as names, workflows, and interfaces, have been modified to maintain confidentiality.</p>
+
+    <div class="confidential">
+      Note: names, workflow details, and interfaces have been modified to maintain confidentiality.
+    </div>
   </div>
 </section>
 
-
 <!-- PROBLEM AREA -->
-<section>
+<section id="problem">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Problem area</div>
-      <h2>Lost in the back-and-forth</h2>
-      <p>Mortgage companies and subserviced clients currently lack a way to manage their loan inquiries after the initial request is sent. Because there is no central place to track progress, exchange documents, or message teams, clients are forced to dig through hundreds of emails to find specific case details or files. This lack of visibility leaves client account managers "in the dark," making it impossible for them to oversee their company's full workload or generate accurate reports.</p>
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Problem area</div>
+        <h2>Lost in the back-and-forth.</h2>
+      </div>
+      <div>
+        <p>Mortgage companies and subserviced clients had no way to manage their loan inquiries after the initial request was sent. With no central place to track progress, exchange documents, or message teams, clients were forced to dig through hundreds of emails to find specific case details or files. This lack of visibility left client account managers "in the dark," making it impossible for them to oversee their company's full workload or generate accurate reports.</p>
+      </div>
     </div>
 
-    <div class="three">
-      <div class="prob-card">
-        <h3>Zero visibility after creation</h3>
+    <div class="insights-grid">
+      <div class="pain-card">
+        <span class="ico">🚫</span>
+        <h4>Zero visibility after creation</h4>
         <p>Once a case is opened, clients have no way to see its status or who is working on it. Without a real-time tracker, they are forced to send repetitive "just checking in" emails simply to find out if their request has moved forward.</p>
       </div>
-      <div class="prob-card">
-        <h3>Fragmented messaging and files</h3>
-        <p>Critical messages and loan documents are currently scattered across individual email threads. This makes it difficult to find the latest version of a file or follow a conversation history, often leading to confusion and missed updates.</p>
+
+      <div class="pain-card">
+        <span class="ico">🧵</span>
+        <h4>Fragmented messaging and files</h4>
+        <p>Critical messages and loan documents are scattered across individual email threads. This makes it difficult to find the latest version of a file or follow a conversation history, often leading to confusion and missed updates.</p>
       </div>
-      <div class="prob-card">
-        <h3>Meeting-heavy status management</h3>
+
+      <div class="pain-card">
+        <span class="ico">📅</span>
+        <h4>Meeting-heavy status management</h4>
         <p>Because the email process is hard to track, teams rely on manually updating Excel spreadsheets and holding bi-weekly status meetings just to stay in sync. This wastes hours every week on reporting data that is often already out of date by the time the meeting happens.</p>
       </div>
     </div>
 
-    <div class="quotes">
+    <div class="quotes-pair">
       <div>
-        <blockquote>"Give me the visibility to see where we sit. Show me if I'm 20% or 80% done — simple milestones or a small chart."</blockquote>
-        <cite>— Ivan Camarena, Client User</cite>
+        <blockquote>"Give me the visibility to see where we sit. Show me if I'm 20% or 80% done, simple milestones or a small chart."</blockquote>
+        <cite><strong>Ivan Camarena</strong> · Client User</cite>
       </div>
       <div>
-        <blockquote>"I need to see all of our open cases, not just mine — so I can cover when someone's out."</blockquote>
-        <cite>— Glenda Brue, Client Administrator</cite>
+        <blockquote>"I need to see all of our open cases, not just mine, so I can cover when someone's out."</blockquote>
+        <cite><strong>Glenda Brue</strong> · Client Administrator</cite>
       </div>
     </div>
 
-    <p class="quotes-context">Through user interviews, a clear pattern emerged: clients felt invisible after submitting a request, struggled to track shared progress, and found it impossible to manage their team's full workload. This led to a cycle of endless follow-up emails, heavy reliance on manual status meetings, and a total loss of trust in the process.</p>
+    <div class="synthesis-note">
+      Through user interviews, a clear pattern emerged: clients felt invisible after submitting a request, struggled to track shared progress, and found it impossible to manage their team's full workload. This led to a cycle of endless follow-up emails, heavy reliance on manual status meetings, and a total loss of trust in the process.
+    </div>
   </div>
 </section>
-
 
 <!-- DESIGN GOALS -->
-<section>
+<section id="goals">
   <div class="wrap">
-    <div class="goals">
-      <div class="eyebrow">Design Goals</div>
-      <h2>What I aimed to achieve</h2>
-      <div class="three">
-        <div class="goal">
-          <h3>Total transparency</h3>
-          <p>Give mortgage companies a clear view of their case status, key dates, and loan info so they never have to guess what is happening after they hit submit.</p>
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Design goals</div>
+        <h2>What I aimed to achieve.</h2>
+      </div>
+      <div>
+        <p>Three goals to fix the broken state: give companies visibility into what's happening with every case, pull communication out of email and back into the case itself, and let account managers see the full picture across their entire portfolio.</p>
+      </div>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle-card">
+        <span class="opt-tag">Goal 01</span>
+        <h4>Total transparency</h4>
+        <p>Give mortgage companies a clear view of their case status, key dates, and loan info so they never have to guess what is happening after they hit submit.</p>
+      </div>
+
+      <div class="principle-card">
+        <span class="opt-tag">Goal 02</span>
+        <h4>Centralized communication</h4>
+        <p>Move messages and files out of messy email threads and into the case itself, making it simple for teams to stay in sync and find what they need.</p>
+      </div>
+
+      <div class="principle-card">
+        <span class="opt-tag">Goal 03</span>
+        <h4>Company-wide oversight</h4>
+        <p>Allow account managers to oversee every case across their entire company and run reports, making sure they can stay in control of their full portfolio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION INTRO -->
+<section id="solution">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Solution</div>
+        <h2>A central hub for real-time oversight.</h2>
+      </div>
+      <div>
+        <p>One place where every loan inquiry lives, status, owner, key dates, updated in real time. The "where is my case?" emails stop, and clients can finally trust the system as the source of truth.</p>
+      </div>
+    </div>
+
+    <div class="pullquote" style="padding-top: 24px;">
+      <blockquote>"Give me the visibility to see where we sit. Show me if I'm 20% or 80% done."</blockquote>
+      <cite><strong>Ivan Camarena</strong> · Client Account Manager</cite>
+    </div>
+  </div>
+</section>
+
+<!-- DASHBOARD VIEW -->
+<section id="dashboard">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Dashboard view</div>
+        <h2>One screen, every case at a glance.</h2>
+      </div>
+      <div>
+        <p>The entry point. Status summary cards surface aging cases at the top; the live, filterable case table replaces the bi-weekly status meeting.</p>
+      </div>
+    </div>
+
+    <div class="solution">
+      <div class="sol-quote">
+        <blockquote>"I need to see all of our open cases, not just mine, so I can cover when someone's out."</blockquote>
+        <cite><strong>Glenda Brue</strong> · Client Administrator</cite>
+      </div>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">1</span>
+          <h4>Status summary cards</h4>
+          <p><strong>Why:</strong> Users felt ignored after sending emails because they couldn't see any progress. I added these cards so they can see the state of every case the second they log in.</p>
+          <p>It gives users peace of mind that their work is being tracked and stops them from sending constant "is this done yet?" emails.</p>
+          <div class="sol-tag">Visual Hierarchy · Fast Feedback</div>
         </div>
-        <div class="goal">
-          <h3>Centralized communication</h3>
-          <p>Move messages and files out of messy email threads and into the case itself, making it simple for teams to stay in sync and find what they need.</p>
+        <div class="sol-img">
+          <img class="zoomable" src="https://framerusercontent.com/images/yioQDdQBIHQsUmDklfttfsj8vqg.png" alt="Dashboard status summary cards row showing Open Inquiries 4, With Onity 2, Waiting on you 2, and Total Cases 6 counts" />
         </div>
-        <div class="goal">
-          <h3>Company-wide oversight</h3>
-          <p>Allow account managers to oversee every case across their entire company and run reports, making sure they can stay in control of their full portfolio.</p>
+      </div>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">2</span>
+          <h4>The live case table</h4>
+          <p><strong>Why:</strong> Teams were wasting 12 hours a week manually updating spreadsheets. I built this table to be the single "source of truth" for every inquiry.</p>
+          <p>It kills the need for boring status meetings. Anyone can find an answer in seconds using filters instead of digging through old emails.</p>
+          <div class="sol-tag">Data Transparency · Recognition</div>
+        </div>
+        <div class="sol-img">
+          <img class="zoomable" src="https://framerusercontent.com/images/U9pgIvDiYWwQo0yFu6wKhLMeoyM.png" alt="Live, filterable case table with inquiry ID, subject, status chips, last update, loan number, owner, created by, create date, and days columns" />
         </div>
       </div>
     </div>
   </div>
 </section>
 
-
-<!-- SOLUTIONS — redesigned: tight intro + numbered sub-sections -->
-<section class="solution-redo">
+<!-- CASE DETAIL VIEW -->
+<section id="case-detail">
   <div class="wrap">
-    <div class="eyebrow">Solution</div>
-    <h2 class="lead-h2">A central hub for real-time oversight.</h2>
-    <p class="lead-body">One place where every loan inquiry lives — status, owner, and key dates updated in real time. The "where is my case?" emails stop, and clients can finally trust the system as the source of truth.</p>
-
-    <!-- 01 Dashboard view -->
-    <div class="sub-divider">
-      <div class="label"><span class="num">01</span> Dashboard view</div>
-      <div class="line"></div>
-    </div>
-    <div class="sub">
+    <div class="sec-head-aside">
       <div>
-        <h3>One screen, every case at a glance</h3>
-        <p>The entry point. Status summary cards surface aging cases up top; the live, filterable case table replaces the bi-weekly status meeting.</p>
-        <div class="features">
-          <span>Summary cards</span><span>Live filtering</span><span>Search</span>
-        </div>
+        <div class="eyebrow">Case detail view</div>
+        <h2>Detailed insights and interaction.</h2>
       </div>
-      <blockquote>
-        "I need to see all of our open cases, not just mine, so I can cover when someone's out."
-        <cite><strong>Glenda Brue</strong> — Client Administrator</cite>
-      </blockquote>
+      <div>
+        <p>A full-page case view that puts progress, conversation, and documents in one shared history, so clients and account managers stop hunting through email threads for the latest state.</p>
+      </div>
     </div>
 
-    <!-- 02 Case detail -->
-    <div class="sub-divider">
-      <div class="label"><span class="num">02</span> Case detail</div>
-      <div class="line"></div>
-    </div>
-    <div class="sub">
-      <div>
-        <h3>Progress, conversation, and docs in one view</h3>
-        <p>Each case opens to a live progress tracker, a unified messaging thread with attached documents, and a structured resolution + feedback flow.</p>
-        <div class="features">
-          <span>Progress tracker</span><span>Unified messaging</span><span>Resolution &amp; feedback</span>
+    <div class="solution">
+      <div class="sol-quote">
+        <blockquote>"Every case is a different email thread, finding the latest update means hoping it didn't get buried."</blockquote>
+        <cite><strong>Synthesis</strong> · across client interviews</cite>
+      </div>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">1</span>
+          <h4>Real-time progress tracker</h4>
+          <p><strong>Why:</strong> Research showed that users need to know if a case is just starting or almost finished. I put this tracker at the top so clients can see exactly where they are in the process at a glance.</p>
+          <p>This stops clients from having to email just to ask for a status update. They can see immediately if the team is working on it or if it's their turn to act.</p>
+          <div class="sol-tag">System Status · Visual Cues</div>
+        </div>
+        <div class="sol-img">
+          <img class="zoomable" src="https://framerusercontent.com/images/pWzMG4Gmm3GYXfQP8uTY0bL4ueQ.png" alt="Real-time progress tracker bar showing four stages: Submitted, Assigned To, With Onity, Resolved, each with date stamps, with tabs underneath for Overview, Conversation, Documents, and Resolution and Escalation" />
         </div>
       </div>
-      <blockquote>
-        "Give me the visibility to see where we sit. Show me if I'm 20% or 80% done."
-        <cite><strong>Ivan Camarena</strong> — Client Account Manager</cite>
-      </blockquote>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">2</span>
+          <h4>Unified messaging and files</h4>
+          <p><strong>Why:</strong> Loan documents and messages were often lost in long, cluttered email chains. I combined the chat and the document list into one view so all the context stays with the case.</p>
+          <p>This makes it much faster to find a file or read the latest message. It also helps teammates step in and help if someone else is out of the office.</p>
+          <div class="sol-tag">Information Access · Context</div>
+        </div>
+        <div class="sol-img">
+          <div class="sol-carousel" data-carousel>
+            <div class="slides">
+              <div class="slide active" data-slide="0">
+                <img class="zoomable" src="https://framerusercontent.com/images/Q6nr0jmF9GFa1A5rx6VzTKc4OI.png" alt="Unified messaging panel showing the conversation history with Onity Support and the user, with an attached payment receipt PDF, the participants list, and a how-it-works helper card" />
+              </div>
+              <div class="slide" data-slide="1">
+                <img class="zoomable" src="https://framerusercontent.com/images/RfhHxYeWyRq6ko0F7MNevpa1zn4.png" alt="Files view inside the same case showing the documents list, alternate slide of the unified messaging and files carousel" />
+              </div>
+            </div>
+            <button class="car-btn prev" type="button" aria-label="Previous slide">‹</button>
+            <button class="car-btn next" type="button" aria-label="Next slide">›</button>
+            <div class="dots" role="tablist" aria-label="Carousel slides">
+              <button class="dot active" type="button" data-dot="0" aria-label="Show slide 1"></button>
+              <button class="dot" type="button" data-dot="1" aria-label="Show slide 2"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">3</span>
+          <h4>Case resolution and feedback</h4>
+          <p><strong>Why:</strong> Clients didn't have a clear way to confirm a problem was fixed or to ask for extra help. I added a section to let users officially close a case or send it to a manager if it needs more attention.</p>
+          <p>This gives the client control over finishing their work. The rating system also lets the team know if the client is happy with the service they received.</p>
+          <div class="sol-tag">User Control · Feedback Loops</div>
+        </div>
+        <div class="sol-img">
+          <img class="zoomable" src="https://framerusercontent.com/images/I5bqZ8XjgZ66aGIkfgdNPHGqg.png" alt="Resolution and Escalation tab showing Resolution Details with an Outcome dropdown, date field, closing comment, and Escalate plus Confirm and Close action buttons, next to an About Escalation help panel" />
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- FINAL DESIGN -->
+<section id="final-design">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Final Design</div>
+        <h2>The full picture, tab by tab.</h2>
+      </div>
+      <div>
+        <p>Four states of the expanded case-detail flow as a client moves through it: opening the case to see the overview, reading the conversation, attaching documents, and finally resolving or escalating. The dashboard chrome stays constant; only the inner panel changes with the active tab.</p>
+      </div>
+    </div>
+
+    <div class="shipped-gallery">
+      <div class="shipped-shot">
+        <div class="shot-label">
+          <span class="shot-num">1</span>
+          Overview tab, case details and timeline
+        </div>
+        <div class="shot-body">
+          <img class="zoomable" src="https://framerusercontent.com/images/pWzMG4Gmm3GYXfQP8uTY0bL4ueQ.png" alt="Case detail Overview tab showing the real-time progress tracker bar with Submitted, Assigned To, With Onity, and Resolved stages" />
+        </div>
+      </div>
+
+      <div class="shipped-shot">
+        <div class="shot-label">
+          <span class="shot-num">2</span>
+          Conversation tab, threaded history with attachments
+        </div>
+        <div class="shot-body">
+          <img class="zoomable" src="https://framerusercontent.com/images/Q6nr0jmF9GFa1A5rx6VzTKc4OI.png" alt="Case detail Conversation tab showing the threaded message history between the user and Onity Support with an attached PDF" />
+        </div>
+      </div>
+
+      <div class="shipped-shot">
+        <div class="shot-label">
+          <span class="shot-num">3</span>
+          Documents tab, every file attached to the case
+        </div>
+        <div class="shot-body">
+          <img class="zoomable" src="https://framerusercontent.com/images/RfhHxYeWyRq6ko0F7MNevpa1zn4.png" alt="Case detail Documents tab showing the list of PDF files attached to this inquiry with preview and download actions" />
+        </div>
+      </div>
+
+      <div class="shipped-shot">
+        <div class="shot-label">
+          <span class="shot-num">4</span>
+          Resolution and Escalation tab, close or escalate the case
+        </div>
+        <div class="shot-body">
+          <img class="zoomable" src="https://framerusercontent.com/images/I5bqZ8XjgZ66aGIkfgdNPHGqg.png" alt="Case detail Resolution and Escalation tab with outcome dropdown, closing comment, and Escalate plus Confirm and Close buttons" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- VALIDATION -->
-<section>
+<section id="validation">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Validation</div>
-      <h2>Did it work?</h2>
-      <p>The project is currently in development, with the team using a sprint-based approach to build the MVP first. We are focusing on getting the most important tracking features ready before adding more complex tools in future updates. To make sure we were on the right path, I ran usability tests with a clickable prototype. The feedback from mortgage clients and account managers showed that these changes will have a big impact on their daily work.</p>
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Validation</div>
+        <h2>Did it work?</h2>
+      </div>
+      <div>
+        <p>The project is in development, with the team using a sprint-based approach to build the MVP first, focused on the most important tracking features before adding more complex tools in future updates. To pressure-test the direction, I ran usability tests with a clickable prototype. The feedback from mortgage clients and account managers showed these changes will have a meaningful impact on daily work.</p>
+      </div>
     </div>
 
-    <div class="results">
-      <div class="res">
-        <div class="big">90%</div>
+    <div class="eval-grid">
+      <div class="eval-card">
+        <div class="eval-result">90%</div>
         <h4>Success in status tracking</h4>
         <p>During testing, almost every user was able to find the exact stage of their case on the first try without any guidance.</p>
       </div>
-      <div class="res">
-        <div class="big">Zero</div>
+
+      <div class="eval-card">
+        <div class="eval-result">Zero</div>
         <h4>"Lost" conversations</h4>
         <p>Users reported that having the chat and files tied directly to the case made them feel more confident about the history of the request.</p>
       </div>
-      <div class="res">
-        <div class="big">12 hrs</div>
+
+      <div class="eval-card">
+        <div class="eval-result">12 hrs</div>
         <h4>Saved per analyst per week</h4>
         <p>Our tests confirmed that the portal's live data is accurate enough to replace these manual reports entirely.</p>
       </div>
@@ -641,40 +1114,150 @@
   </div>
 </section>
 
-
-<!-- POST-LAUNCH MONITOR -->
-<section>
+<!-- POST-LAUNCH -->
+<section id="post-launch">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Post-launch</div>
-      <h2>What I'll monitor after launch</h2>
-      <p>Once the MVP is live, I'll track these three areas to ensure the product is succeeding.</p>
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Post-launch</div>
+        <h2>What I'll monitor after launch.</h2>
+      </div>
+      <div>
+        <p>Once the MVP is live, I'll track these three areas to ensure the product is succeeding.</p>
+      </div>
     </div>
 
     <div class="monitor-grid">
-      <div class="mon">
-        <div class="icon">📉</div>
+      <div class="monitor-card">
+        <span class="ico">📉</span>
         <h4>Shift in communication</h4>
         <p>I'll monitor if "status update" emails decrease as portal logins increase to confirm users are trusting the dashboard for answers.</p>
       </div>
-      <div class="mon">
-        <div class="icon">📤</div>
+
+      <div class="monitor-card">
+        <span class="ico">📤</span>
         <h4>Document task completion</h4>
         <p>I'll track how quickly clients upload requested files through the portal compared to the old email-in method.</p>
       </div>
-      <div class="mon">
-        <div class="icon">📊</div>
+
+      <div class="monitor-card">
+        <span class="ico">📊</span>
         <h4>Self-serve reporting success</h4>
         <p>I'll measure how often the "Export" and "Filter" features are used to ensure account managers are successfully managing their company's full workload.</p>
       </div>
     </div>
+
+    <div class="footer-nav">
+      <a href="./index.html">← Back to all work</a>
+      <a href="./loan-deboarding-case-study.html">Next: Loan Deboarding Portal →</a>
+    </div>
   </div>
 </section>
 
+<!-- Lightbox overlay -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close preview">×</button>
+  <img id="lightbox-img" alt="" />
+  <div class="lightbox-cap" id="lightbox-cap">Press Esc or click anywhere to close</div>
+</div>
 
-<footer>
-  <div class="wrap">Case study · Dinesh Kumar · Real-Time Inquiry Portal · 2026</div>
-</footer>
+<script>
+(() => {
+  // ── Scroll spy ─────────────────────────
+  const spy = document.querySelector('.scroll-spy');
+  if (spy) {
+    const links = Array.from(spy.querySelectorAll('a'));
+    const sections = links
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
+
+    function update() {
+      const scrollPos = window.scrollY + 180;
+      let currentIdx = 0;
+      for (let i = 0; i < sections.length; i++) {
+        if (sections[i].offsetTop <= scrollPos) {
+          currentIdx = i;
+        }
+      }
+      links.forEach((a, i) => {
+        a.classList.toggle('active', i === currentIdx);
+      });
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+
+    links.forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 40,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  }
+
+  // ── Carousel(s) ────────────────────────
+  document.querySelectorAll('[data-carousel]').forEach(car => {
+    const slides = car.querySelectorAll('.slide');
+    const dots = car.querySelectorAll('.dot');
+    const prev = car.querySelector('.car-btn.prev');
+    const next = car.querySelector('.car-btn.next');
+    let idx = 0;
+    const total = slides.length;
+
+    const go = (i) => {
+      idx = (i + total) % total;
+      slides.forEach((s, n) => s.classList.toggle('active', n === idx));
+      dots.forEach((d, n) => d.classList.toggle('active', n === idx));
+    };
+
+    if (prev) prev.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); go(idx - 1); });
+    if (next) next.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); go(idx + 1); });
+    dots.forEach(d => d.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); go(parseInt(d.dataset.dot, 10)); }));
+  });
+
+  // ── Lightbox ───────────────────────────
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+  if (lightbox && lightboxImg) {
+    const open = (src, alt) => {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightbox.classList.add('open');
+      document.body.classList.add('lightbox-open');
+    };
+    const close = () => {
+      lightbox.classList.remove('open');
+      document.body.classList.remove('lightbox-open');
+      setTimeout(() => { lightboxImg.src = ''; }, 220);
+    };
+
+    document.querySelectorAll('img.zoomable').forEach(img => {
+      img.addEventListener('click', (e) => {
+        e.preventDefault();
+        open(img.currentSrc || img.src, img.alt);
+      });
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.classList.contains('lightbox-cap')) {
+        close();
+      }
+    });
+    lightboxClose.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) close();
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
