@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Dinesh Baller</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300..700;9..144,1,300..500&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --paper: #FBF7EF;
+    --ink: #171717;
+    --ink-soft: #5A5A55;
+    --ink-mute: #9A9489;
+    --line: rgba(23, 23, 23, 0.10);
+    --line-soft: rgba(23, 23, 23, 0.06);
+
+    --accent: #1F4D3E;
+    --accent-soft: rgba(31, 77, 62, 0.10);
+
+    /* Per-lens accent themes */
+    --lens-design: #1F4D3E;
+    --lens-hike:   #6B4226;
+    --lens-guide:  #B0552F;
+    --lens-play:   #4A2D6E;
+
+    --display: "Fraunces", Georgia, serif;
+    --body: "General Sans", -apple-system, system-ui, sans-serif;
+    --ease: cubic-bezier(0.2, 0.65, 0.3, 1);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--accent); color: var(--paper); }
+  a { color: inherit; }
+
+  /* Body stays white — matches index.html. Lens changes affect text accents only, not background. */
+
+  /* Background atmosphere — drifting soft blobs (matches index.html) */
+  .bg-atmosphere {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    will-change: transform;
+  }
+  .bg-blob.b1 {
+    width: 560px; height: 560px;
+    top: -140px; left: -160px;
+    background: radial-gradient(circle, rgba(31, 77, 62, 0.22), transparent 70%);
+    animation: drift-1 34s ease-in-out infinite alternate;
+  }
+  .bg-blob.b2 {
+    width: 720px; height: 720px;
+    top: 18%; right: -240px;
+    background: radial-gradient(circle, rgba(220, 195, 150, 0.38), transparent 70%);
+    animation: drift-2 42s ease-in-out infinite alternate;
+  }
+  .bg-blob.b3 {
+    width: 500px; height: 500px;
+    bottom: -160px; left: 28%;
+    background: radial-gradient(circle, rgba(46, 125, 91, 0.22), transparent 70%);
+    animation: drift-3 30s ease-in-out infinite alternate;
+  }
+  @keyframes drift-1 {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(90px, 70px) scale(1.08); }
+  }
+  @keyframes drift-2 {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-70px, 50px) scale(1.04); }
+  }
+  @keyframes drift-3 {
+    0%   { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, -60px) scale(1.07); }
+  }
+
+  /* ─────────── NAV (matches index.html) ─────────── */
+  nav.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 48px;
+    position: relative;
+    z-index: 10;
+  }
+  .wordmark {
+    font-family: var(--body);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.005em;
+    transition: color 220ms var(--ease-out);
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a.active { color: var(--accent); font-weight: 500; }
+
+  /* ─────────── LENS SELECTOR (top tabs) ─────────── */
+  .lens-selector {
+    position: relative;
+    padding: 200px 48px 40px;  /* generous top space so the sticker doesn't collide with the nav */
+    text-align: center;
+  }
+  .lens-tabs {
+    display: inline-flex;
+    gap: 32px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+  .lens-tab {
+    position: relative;
+    background: none; border: none;
+    font-family: var(--display);
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 500;
+    color: var(--ink-mute);
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    padding: 6px 0;
+    transition: color 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
+    line-height: 1;
+    text-transform: uppercase;
+    font-variation-settings: "opsz" 96;
+  }
+  .lens-tab:hover { color: var(--ink-soft); }
+  .lens-tab.active {
+    color: var(--ink);
+    font-style: italic;
+    font-weight: 600;
+  }
+
+  /* Floating sticker that appears next to active tab */
+  .lens-sticker {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out), transform 0.5s var(--ease-spring);
+    z-index: 5;
+    width: 140px; height: 140px;
+    transform: translate(-50%, -120%) scale(0.4) rotate(-12deg);
+  }
+  .lens-sticker.visible {
+    opacity: 1;
+    transform: translate(-50%, -110%) scale(1) rotate(-8deg);
+  }
+  .lens-sticker svg, .lens-sticker img {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 18px 30px rgba(0,0,0,0.18));
+  }
+
+  /* Sections sit above the drifting blob background */
+  main, .lens-selector { position: relative; z-index: 2; }
+
+  /* ─────────── HERO ─────────── */
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 48px;
+    position: relative;
+    z-index: 2;
+  }
+  .container-narrow {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero {
+    padding: 40px 0 120px;
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 72px;
+    align-items: start;
+  }
+  .hero-text { padding-top: 8px; }
+  .hero h1 {
+    font-family: var(--display);
+    font-size: clamp(36px, 4.4vw, 60px);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    margin: 0 0 36px;
+    color: var(--ink);
+    font-variation-settings: "opsz" 96;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); transition: color 0.5s var(--ease-out); }
+  body[data-lens="hike"]  .hero h1 em { color: var(--lens-hike); }
+  body[data-lens="guide"] .hero h1 em { color: var(--lens-guide); }
+  body[data-lens="play"]  .hero h1 em { color: var(--lens-play); }
+
+  .hero-intro p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+    max-width: 520px;
+  }
+  .hero-intro p .wave {
+    display: inline-block;
+    animation: wave 2.4s ease-in-out infinite;
+    transform-origin: 70% 70%;
+  }
+  @keyframes wave {
+    0%, 60%, 100% { transform: rotate(0); }
+    10% { transform: rotate(14deg); }
+    20% { transform: rotate(-8deg); }
+    30% { transform: rotate(14deg); }
+    40% { transform: rotate(-4deg); }
+    50% { transform: rotate(10deg); }
+  }
+
+  .hero-blocks {
+    margin-top: 36px;
+    display: flex; flex-direction: column;
+    gap: 28px;
+  }
+  .hero-block h3 {
+    font-family: var(--display);
+    font-size: 22px; font-weight: 500;
+    margin: 0 0 12px;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 28;
+  }
+  .hero-block h3 em { font-style: italic; color: var(--accent); }
+  .hero-block ul {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; flex-direction: column;
+    gap: 8px;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .hero-block li {
+    display: flex; align-items: center; gap: 12px;
+    line-height: 1.5;
+  }
+  .hero-block li .emoji {
+    font-size: 18px;
+    width: 28px; text-align: center;
+    display: inline-block;
+  }
+  .hero-block.things-i-love ul {
+    flex-direction: row; flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+  .hero-block.things-i-love li {
+    padding: 6px 14px 6px 10px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 14px;
+    transition: transform 0.3s var(--ease-spring), background 0.3s var(--ease-out);
+    cursor: default;
+  }
+  .hero-block.things-i-love li:hover {
+    transform: translateY(-2px) rotate(-2deg);
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  /* Hero visual — image stack with swap */
+  .hero-visual {
+    position: sticky;
+    top: 32px;
+    align-self: start;
+    justify-self: center;
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 4/5;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--paper);
+    box-shadow:
+      0 24px 50px -24px rgba(20, 20, 20, 0.28),
+      0 10px 24px -12px rgba(20, 20, 20, 0.18);
+    perspective: 1200px;
+    transform-style: preserve-3d;
+  }
+  .hero-visual-layer {
+    position: absolute; inset: 0;
+    opacity: 0;
+    transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out);
+    transform: scale(1.04);
+  }
+  .hero-visual-layer.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .hero-visual-layer img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;  /* keep heads in frame */
+    display: block;
+  }
+  /* Per-image fine-tune so each subject stays centered and uncropped */
+  .hero-visual-layer[data-lens="design"] img { object-position: center center; }
+  .hero-visual-layer[data-lens="hike"]   img { object-position: center 22%; }
+  .hero-visual-layer[data-lens="guide"]  img { object-position: center 25%; }
+  .hero-visual-layer[data-lens="play"]   img { object-position: center 18%; }
+
+  /* Caption badge inside hero */
+  .hero-caption {
+    position: absolute;
+    bottom: 24px; left: 24px;
+    z-index: 3;
+    padding: 10px 16px;
+    background: rgba(20, 20, 20, 0.72);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--paper);
+    border-radius: 999px;
+    font-size: 13px; font-weight: 500;
+    display: flex; align-items: center; gap: 10px;
+    transition: opacity 0.4s var(--ease-out);
+  }
+  .hero-caption .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #28a868;
+    box-shadow: 0 0 0 3px rgba(40, 168, 104, 0.25);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    50% { box-shadow: 0 0 0 6px rgba(40, 168, 104, 0); }
+  }
+
+  /* ─────────── STATS ─────────── */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin: 0 0 120px;
+  }
+  .stat {
+    padding: 56px 24px;
+    text-align: center;
+    border-right: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--display);
+    font-size: clamp(56px, 7vw, 96px);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 144;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+    display: inline-block;
+  }
+  .stat-num em { font-style: italic; font-weight: 500; }
+  .stat-label {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    max-width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .stat::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 2px;
+    background: var(--accent);
+    transition: width 0.6s var(--ease-out);
+  }
+  .stat:hover::before { width: 50%; }
+
+  /* ─────────── GALLERY CAROUSEL ─────────── */
+  .gallery {
+    margin: 0 auto 120px;
+    max-width: 880px;
+  }
+  .gallery-stage {
+    position: relative;
+    aspect-ratio: 16/10;
+    border-radius: 20px;
+    overflow: hidden;
+    background: var(--paper);
+    box-shadow: 0 22px 44px -22px rgba(20, 20, 20, 0.24);
+  }
+  .gallery-slide:nth-child(1) img { object-position: center 25%; } /* Kilimanjaro sign */
+  .gallery-slide:nth-child(2) img { object-position: center 35%; } /* misty mountain */
+  .gallery-slide:nth-child(3) img { object-position: center 22%; } /* snow hike */
+  .gallery-slide:nth-child(4) img { object-position: center 18%; } /* basketball */
+  .gallery-slide:nth-child(5) img { object-position: center 30%; } /* graduation Fenway */
+  .gallery-slide {
+    position: absolute; inset: 0;
+    opacity: 0;
+    transform: scale(1.04);
+    transition: opacity 0.7s var(--ease-out), transform 0.9s var(--ease-out);
+  }
+  .gallery-slide.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .gallery-slide img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-caption {
+    position: absolute;
+    bottom: 24px; left: 24px;
+    padding: 8px 14px;
+    background: rgba(20, 20, 20, 0.78);
+    color: var(--paper);
+    border-radius: 999px;
+    font-size: 13px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .gallery-thumbs {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+  .gallery-thumb {
+    flex-shrink: 0;
+    width: 96px; height: 64px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    background: none; border: 2px solid transparent;
+    padding: 0;
+    transition: border-color 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+    opacity: 0.55;
+  }
+  .gallery-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .gallery-thumb:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+  }
+  .gallery-thumb.active {
+    opacity: 1;
+    border-color: var(--accent);
+  }
+
+  /* ─────────── SECTION HEADS ─────────── */
+  .section-eyebrow {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--accent);
+  }
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(36px, 4.4vw, 56px);
+    font-weight: 400;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0;
+    font-variation-settings: "opsz" 96;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* ─────────── UX REALIZATIONS (accordion) ─────────── */
+  .realizations {
+    padding: 0 0 120px;
+  }
+  .realizations-head { margin-bottom: 48px; }
+  .realizations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .real-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 0;
+    overflow: hidden;
+    transition: border-color 0.3s var(--ease-out), background 0.3s var(--ease-out);
+    cursor: pointer;
+  }
+  .real-card:hover { border-color: var(--accent-soft); background: #FFFFFF; }
+  .real-card.open { border-color: var(--accent); }
+  .real-card-head {
+    display: flex; align-items: center; gap: 14px;
+    padding: 20px 24px;
+    user-select: none;
+  }
+  .real-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: grid; place-items: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .real-icon.r1 { background: rgba(31, 77, 62, 0.10); }
+  .real-icon.r2 { background: rgba(184, 99, 230, 0.10); }
+  .real-icon.r3 { background: rgba(206, 124, 60, 0.10); }
+  .real-icon.r4 { background: rgba(60, 124, 206, 0.10); }
+  .real-title {
+    flex: 1;
+    font-size: 16px; font-weight: 500;
+    color: var(--ink);
+  }
+  .real-plus {
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    border-radius: 8px;
+    background: rgba(23, 23, 23, 0.05);
+    transition: transform 0.4s var(--ease-spring), background 0.3s var(--ease-out);
+    font-size: 16px; line-height: 1;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+  .real-card.open .real-plus {
+    transform: rotate(45deg);
+    background: var(--accent);
+    color: var(--paper);
+  }
+  .real-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s var(--ease-out);
+  }
+  .real-card.open .real-body {
+    max-height: 400px;
+  }
+  .real-body-inner {
+    padding: 0 24px 24px 70px;
+    font-size: 15px; line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  /* ─────────── EXPERIENCE TIMELINE ─────────── */
+  .experience {
+    padding: 0 0 120px;
+  }
+  .experience-head { margin-bottom: 56px; }
+  .timeline {
+    position: relative;
+    padding-left: 56px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px; top: 12px; bottom: 12px;
+    width: 1px;
+    background: var(--line);
+  }
+  .timeline-progress {
+    position: absolute;
+    left: 15px; top: 12px;
+    width: 1px;
+    height: 0;
+    background: var(--accent);
+    transition: height 0.5s var(--ease-out);
+  }
+  .role {
+    position: relative;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line-soft);
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  }
+  .role.visible { opacity: 1; transform: translateX(0); }
+  .role:last-child { border-bottom: none; }
+  .role-marker {
+    position: absolute;
+    left: -48px; top: 36px;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--ink-mute);
+    z-index: 2;
+    transition: all 0.3s var(--ease-spring);
+  }
+  .role.current .role-marker {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 5px rgba(31, 77, 62, 0.18);
+  }
+  .role-grid {
+    display: grid;
+    grid-template-columns: 1fr 160px;
+    gap: 40px;
+    align-items: start;
+  }
+  .role-company {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 6px;
+  }
+  .role-company h4 {
+    font-family: var(--display);
+    font-size: 26px; font-weight: 500;
+    margin: 0;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 40;
+    transition: color 0.3s var(--ease-out);
+  }
+  .role:hover .role-company h4 { color: var(--accent); }
+  .now-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px 3px 8px;
+    background: rgba(40, 168, 104, 0.12);
+    color: #1d6e47;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    border-radius: 999px;
+  }
+  .now-tag .dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: #28a868;
+    box-shadow: 0 0 0 2.5px rgba(40, 168, 104, 0.20);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  .role-title-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+  .role-desc {
+    font-size: 15px; line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 580px;
+  }
+  .role-dates {
+    text-align: right;
+    font-family: var(--display);
+    font-size: 16px; font-weight: 500;
+    color: var(--ink);
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+    font-variation-settings: "opsz" 20;
+  }
+  .role-dates .span {
+    display: block;
+    font-family: var(--body);
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  /* ─────────── COMMENDATIONS ─────────── */
+  .commendations {
+    padding: 0 0 120px;
+  }
+  .commendations-head { margin-bottom: 56px; }
+  .commendations-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .commend-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 28px;
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
+    display: flex; flex-direction: column;
+    gap: 20px;
+    cursor: default;
+    position: relative;
+  }
+  .commend-card:hover {
+    transform: translateY(-6px) rotate(-0.5deg);
+    box-shadow: 0 22px 50px -22px rgba(20, 20, 20, 0.25);
+    border-color: var(--accent-soft);
+  }
+  .commend-quote-mark {
+    position: absolute;
+    top: 16px; right: 22px;
+    font-family: var(--display);
+    font-size: 64px; font-weight: 500;
+    color: var(--accent-soft);
+    line-height: 1;
+    font-style: italic;
+    user-select: none;
+  }
+  .commend-text {
+    font-family: var(--display);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin: 0;
+    font-weight: 400;
+    font-variation-settings: "opsz" 18;
+    flex: 1;
+  }
+  .commend-author {
+    display: flex; align-items: center; gap: 12px;
+    border-top: 1px solid var(--line-soft);
+    padding-top: 16px;
+  }
+  .commend-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--accent-soft);
+    flex-shrink: 0;
+  }
+  .commend-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .commend-name {
+    font-size: 14px; font-weight: 500;
+    color: var(--ink);
+  }
+  .commend-role {
+    font-size: 12px;
+    color: var(--ink-mute);
+    font-style: italic;
+  }
+
+  /* ─────────── MY STACK ─────────── */
+  .stack {
+    padding: 0 0 120px;
+  }
+  .stack-head { margin-bottom: 56px; }
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .stack-card {
+    display: flex; align-items: center; gap: 16px;
+    padding: 18px 20px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    transition: all 0.3s var(--ease-out);
+    cursor: default;
+  }
+  .stack-card:hover {
+    transform: translateY(-3px);
+    background: #FFFFFF;
+    border-color: var(--accent-soft);
+    box-shadow: 0 14px 30px -14px rgba(20, 20, 20, 0.18);
+  }
+  .stack-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: grid; place-items: center;
+    font-family: var(--display);
+    font-size: 14px; font-weight: 600;
+    color: var(--paper);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .stack-icon img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+  }
+  .stack-icon.figma   { background: linear-gradient(135deg, #f24e1e, #a259ff); }
+  .stack-icon.xd      { background: #2e001f; color: #ff61f6; }
+  .stack-icon.html    { background: #e34f26; }
+  .stack-icon.framer  { background: #0055ff; }
+  .stack-icon.css     { background: #1572b6; }
+  .stack-icon.miro    { background: #fdd835; color: #050038; }
+  .stack-icon.js      { background: #f7df1e; color: #050038; }
+  .stack-icon.hotjar  { background: #fd3a5c; }
+  .stack-icon.notion  { background: #fff; color: #000; border: 1px solid var(--line); }
+  .stack-name {
+    font-size: 15px; font-weight: 500;
+    color: var(--ink);
+  }
+  .stack-desc {
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-top: 2px;
+  }
+
+  /* ─────────── AWARDS ─────────── */
+  .awards {
+    padding: 0 0 160px;
+  }
+  .awards-head { margin-bottom: 56px; }
+  .awards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .award-card {
+    background: linear-gradient(180deg, var(--paper), var(--bg));
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
+  }
+  .award-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+  .award-card::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -20%;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(31, 77, 62, 0.10), transparent 70%);
+    filter: blur(40px);
+    transition: transform 0.6s var(--ease-out);
+  }
+  .award-card:hover::before {
+    transform: translate(-30px, 30px) scale(1.15);
+  }
+  .award-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: inline-block;
+    transition: transform 0.4s var(--ease-spring);
+  }
+  .award-card:hover .award-icon { transform: rotate(-12deg) scale(1.1); }
+  .award-name {
+    font-family: var(--display);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 8px;
+    letter-spacing: -0.014em;
+    font-variation-settings: "opsz" 36;
+    position: relative;
+  }
+  .award-name em { font-style: italic; color: var(--accent); }
+  .award-desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0;
+    position: relative;
+  }
+
+  /* ─────────── Animations ─────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─────────── Responsive ─────────── */
+  @media (max-width: 980px) {
+    nav.nav { padding: 24px 28px; }
+    .nav-links { gap: 20px; }
+    .container, .container-narrow { padding: 0 28px; }
+    .lens-selector { padding: 140px 28px 32px; }
+    .lens-tabs { gap: 18px; }
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    .hero-visual {
+      position: relative;
+      top: auto;
+      max-width: 320px;
+    }
+    .stats { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--line); padding: 32px 24px; }
+    .stat:last-child { border-bottom: none; }
+    .realizations-grid { grid-template-columns: 1fr; }
+    .commendations-grid { grid-template-columns: 1fr; }
+    .stack-grid { grid-template-columns: repeat(2, 1fr); }
+    .awards-grid { grid-template-columns: 1fr; }
+    .role-grid { grid-template-columns: 1fr; gap: 8px; }
+    .role-dates { text-align: left; }
+  }
+</style>
+</head>
+<body data-lens="design">
+
+  <div class="bg-atmosphere" aria-hidden="true">
+    <div class="bg-blob b1"></div>
+    <div class="bg-blob b2"></div>
+    <div class="bg-blob b3"></div>
+  </div>
+
+  <!-- ─────────── NAV (matches index.html) ─────────── -->
+  <nav class="nav">
+    <a href="./index.html" class="wordmark">Dinesh Baller</a>
+    <ul class="nav-links">
+      <li><a href="./index.html#work">work</a></li>
+      <li><a href="./about.html" class="active">story</a></li>
+      <li><a href="/resume.pdf" target="_blank" rel="noopener">résumé</a></li>
+      <li><a href="mailto:dineshballer@gmail.com">email</a></li>
+    </ul>
+  </nav>
+
+  <!-- ─────────── LENS SELECTOR ─────────── -->
+  <section class="lens-selector">
+    <div class="lens-tabs" role="tablist" aria-label="Choose a lens">
+      <button class="lens-tab active" role="tab" data-lens="design" aria-selected="true">Design</button>
+      <button class="lens-tab" role="tab" data-lens="hike"   aria-selected="false">Hike</button>
+      <button class="lens-tab" role="tab" data-lens="guide"  aria-selected="false">Guide</button>
+      <button class="lens-tab" role="tab" data-lens="play"   aria-selected="false">Play</button>
+
+      <!-- Sticker that floats above the active tab -->
+      <div class="lens-sticker visible" id="lensSticker" aria-hidden="true">
+        <!-- Design: figma-like flower -->
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" data-sticker="design">
+          <circle cx="80" cy="50" r="38" fill="#F2D5C7"/>
+          <circle cx="120" cy="50" r="38" fill="#F4A6A0"/>
+          <circle cx="80" cy="100" r="38" fill="#B47BE6"/>
+          <circle cx="120" cy="100" r="38" fill="#6DC1F0"/>
+          <circle cx="80" cy="150" r="38" fill="#9FD89D"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── HERO ─────────── -->
+  <main>
+  <section class="container hero">
+
+    <div class="hero-text">
+      <h1>
+        Curious by <em>nature</em> and a designer by <em>choice</em>, crafting interactions that bridge <em>logic</em> with <em>emotion</em>
+      </h1>
+
+      <div class="hero-intro">
+        <p>Hi there! <span class="wave">👋</span> I'm Dinesh, a UX Designer passionate about understanding how people interact with technology.</p>
+        <p>My journey began in code, but I was more drawn to design, where my curiosity could thrive through problem-solving and creativity.</p>
+        <p>I love crafting experiences that feel intuitive, purposeful, and just a little bit delightful.</p>
+      </div>
+
+      <div class="hero-blocks">
+        <div class="hero-block">
+          <h3>My <em>Journey</em></h3>
+          <ul>
+            <li><span class="emoji">💻</span>Computer Science Engineer → <span style="margin-left:8px;">🎓</span> UX Designer</li>
+            <li><span class="emoji">🏆</span>Won Dell's Bravo Innovation Award</li>
+            <li><span class="emoji">🏆</span>Earned the Winning Together Award</li>
+            <li><span class="emoji">📚</span>Mentoring junior designers</li>
+          </ul>
+        </div>
+
+        <div class="hero-block things-i-love">
+          <h3>Things I <em>Love</em></h3>
+          <ul>
+            <li>🏀 Shooting hoops</li>
+            <li>🥾 Hiking</li>
+            <li>🎮 Gaming</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" id="heroVisual">
+      <div class="hero-visual-layer active" data-lens="design">
+        <img src="./images/about/mentoring.jpg" alt="Dinesh mentoring junior designers in a workshop" />
+      </div>
+      <div class="hero-visual-layer" data-lens="hike">
+        <img src="./images/about/hero-mountain.jpg" alt="Dinesh standing on a misty mountain summit" />
+      </div>
+      <div class="hero-visual-layer" data-lens="guide">
+        <img src="./images/about/snow-hike.jpg" alt="Dinesh hiking in snow with poles" />
+      </div>
+      <div class="hero-visual-layer" data-lens="play">
+        <img src="./images/about/basketball.jpeg" alt="Dinesh with a basketball trophy on the court" />
+      </div>
+
+      <div class="hero-caption" id="heroCaption">
+        <span class="dot"></span>
+        <span id="heroCaptionText">Mentoring at Boston UX meetup</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─────────── STATS ─────────── -->
+  <section class="container">
+    <div class="stats">
+      <div class="stat reveal">
+        <div class="stat-num"><span class="counter" data-target="8">0</span>+</div>
+        <div class="stat-label">Years of Shaping Digital Experiences</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-num"><span class="counter" data-target="30">0</span>+</div>
+        <div class="stat-label">Transformative Projects Delivered</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-num"><span class="counter" data-target="12">0</span>+</div>
+        <div class="stat-label">Designers Mentored to Success</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── GALLERY ─────────── -->
+  <section class="container reveal">
+    <div class="gallery">
+      <div class="gallery-stage">
+        <div class="gallery-slide active" data-caption="Uhuru Peak — Mount Kilimanjaro, Tanzania">
+          <img src="./images/about/kilimanjaro.jpg" alt="Summit of Mount Kilimanjaro" />
+        </div>
+        <div class="gallery-slide" data-caption="Adirondacks, NY · Above the cloud line">
+          <img src="./images/about/hero-mountain.jpg" alt="On a misty New Hampshire summit" />
+        </div>
+        <div class="gallery-slide" data-caption="Winter ascent · White Mountains">
+          <img src="./images/about/snow-hike.jpg" alt="Winter snow hike" />
+        </div>
+        <div class="gallery-slide" data-caption="Sandal Rockets Basketball Club · 10,000₹ trophy night">
+          <img src="./images/about/basketball.jpeg" alt="Holding a basketball trophy" />
+        </div>
+        <div class="gallery-slide" data-caption="Graduation Day · Fenway Park, Boston">
+          <img src="./images/about/graduation.webp" alt="Graduation at Fenway Park" />
+        </div>
+
+        <div class="gallery-caption" id="galleryCaption">Uhuru Peak — Mount Kilimanjaro, Tanzania</div>
+      </div>
+
+      <div class="gallery-thumbs" role="tablist" aria-label="Gallery thumbnails">
+        <button class="gallery-thumb active" data-idx="0"><img src="./images/about/kilimanjaro.jpg" alt="" /></button>
+        <button class="gallery-thumb" data-idx="1"><img src="./images/about/hero-mountain.jpg" alt="" /></button>
+        <button class="gallery-thumb" data-idx="2"><img src="./images/about/snow-hike.jpg" alt="" /></button>
+        <button class="gallery-thumb" data-idx="3"><img src="./images/about/basketball.jpeg" alt="" /></button>
+        <button class="gallery-thumb" data-idx="4"><img src="./images/about/graduation.webp" alt="" /></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── UX REALIZATIONS ─────────── -->
+  <section class="container realizations">
+    <div class="realizations-head reveal">
+      <span class="section-eyebrow">UX Realizations</span>
+      <h2 class="section-title">Truths I've learned, <em>the hard way</em>.</h2>
+    </div>
+
+    <div class="realizations-grid">
+
+      <div class="real-card reveal" data-real="r1">
+        <div class="real-card-head">
+          <span class="real-icon r1">🏠</span>
+          <span class="real-title">Balancing Business Needs and User Goals</span>
+          <span class="real-plus" aria-hidden="true">+</span>
+        </div>
+        <div class="real-body">
+          <div class="real-body-inner">
+            Sometimes, business needs demand tough choices. And often, they're right. It's not about compromise, it's about aligning design with what drives real impact.
+          </div>
+        </div>
+      </div>
+
+      <div class="real-card reveal" data-real="r2">
+        <div class="real-card-head">
+          <span class="real-icon r2">🪄</span>
+          <span class="real-title">The Myth of the Perfect Design Process</span>
+          <span class="real-plus" aria-hidden="true">+</span>
+        </div>
+        <div class="real-body">
+          <div class="real-body-inner">
+            In the real world, design isn't a linear checklist or a textbook template. It's about adapting, experimenting, and doing whatever it takes to solve the problem at hand.
+          </div>
+        </div>
+      </div>
+
+      <div class="real-card reveal" data-real="r3">
+        <div class="real-card-head">
+          <span class="real-icon r3">⏱️</span>
+          <span class="real-title">Designing with Little to No Research</span>
+          <span class="real-plus" aria-hidden="true">+</span>
+        </div>
+        <div class="real-body">
+          <div class="real-body-inner">
+            Sometimes, deadlines and high demands mean designing with little to no research. It's not ideal, but it's taught me to rely on intuition, best practices, and quick feedback loops to make decisions that still deliver value.
+          </div>
+        </div>
+      </div>
+
+      <div class="real-card reveal" data-real="r4">
+        <div class="real-card-head">
+          <span class="real-icon r4">🤝</span>
+          <span class="real-title">Collaboration is the Backbone of Great Design</span>
+          <span class="real-plus" aria-hidden="true">+</span>
+        </div>
+        <div class="real-body">
+          <div class="real-body-inner">
+            Successful projects don't happen in isolation. They're built on strong collaboration with developers, product managers, project managers, and directors. Together, we turn ideas into reality.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────── EXPERIENCE ─────────── -->
+  <section class="container experience">
+    <div class="experience-head reveal">
+      <span class="section-eyebrow">My Experience</span>
+      <h2 class="section-title">Roles, in <em>rough order</em>.</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-progress" id="timelineProgress"></div>
+
+      <article class="role current" data-role-idx="0">
+        <span class="role-marker"></span>
+        <div class="role-grid">
+          <div>
+            <div class="role-company">
+              <h4>Onity Group</h4>
+              <span class="now-tag"><span class="dot"></span>Now</span>
+            </div>
+            <p class="role-title-text">Senior UX Designer</p>
+            <p class="role-desc">Building the Next-Gen Mortgage Experience. Leading UX for client-facing portals across inquiry tracking, loan deboarding, and post-release reconciliation.</p>
+          </div>
+          <div class="role-dates">
+            2025 — Present
+            <span class="span">Current</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="role" data-role-idx="1">
+        <span class="role-marker"></span>
+        <div class="role-grid">
+          <div>
+            <div class="role-company"><h4>Dell</h4></div>
+            <p class="role-title-text">UX Designer</p>
+            <p class="role-desc">I designed intuitive user experiences, developed user-centered data visualization systems, and implemented AI-powered tools to enhance productivity and user satisfaction.</p>
+          </div>
+          <div class="role-dates">
+            2022 — 2025
+            <span class="span">3 yrs</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="role" data-role-idx="2">
+        <span class="role-marker"></span>
+        <div class="role-grid">
+          <div>
+            <div class="role-company"><h4>Red Hat</h4></div>
+            <p class="role-title-text">UX Designer · UI Developer</p>
+            <p class="role-desc">I collaborated with stakeholders to gather requirements, designed user-centered interfaces, and implemented intuitive features to enhance the usability and accessibility of internal websites and tools.</p>
+          </div>
+          <div class="role-dates">
+            2021 — 2022
+            <span class="span">1 yr</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="role" data-role-idx="3">
+        <span class="role-marker"></span>
+        <div class="role-grid">
+          <div>
+            <div class="role-company"><h4>Freelancer</h4></div>
+            <p class="role-title-text">UX Designer · UI Developer</p>
+            <p class="role-desc">I designed and developed high-quality websites for small and medium enterprises, resulting in increased user engagement and positive business impact.</p>
+          </div>
+          <div class="role-dates">
+            2018 — 2019
+            <span class="span">1 yr</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ─────────── COMMENDATIONS ─────────── -->
+  <section class="container commendations">
+    <div class="commendations-head reveal">
+      <span class="section-eyebrow">Commendations from Colleagues</span>
+      <h2 class="section-title">In their <em>words</em>.</h2>
+    </div>
+
+    <div class="commendations-grid">
+
+      <div class="commend-card reveal">
+        <span class="commend-quote-mark">"</span>
+        <p class="commend-text">Dinesh has a knack for transforming product experiences, users love the changes he's made. His can-do attitude, quick thinking, and ability to turn ideas into reality make him an invaluable team player.</p>
+        <div class="commend-author">
+          <div class="commend-avatar">
+            <img src="./images/about/testimonial-gayathri.png" alt="Gayathri" />
+          </div>
+          <div>
+            <div class="commend-name">Gayathri</div>
+            <div class="commend-role">Manager</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="commend-card reveal">
+        <span class="commend-quote-mark">"</span>
+        <p class="commend-text">Dinesh's UI prototypes are a developer's dream: visually stunning, functional, and a breeze to implement. His collaborative spirit, openness to feedback, and deep understanding of development needs make him a true asset to any team.</p>
+        <div class="commend-author">
+          <div class="commend-avatar">
+            <img src="./images/about/testimonial-baylock.png" alt="Baylock" />
+          </div>
+          <div>
+            <div class="commend-name">Baylock</div>
+            <div class="commend-role">Developer</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="commend-card reveal">
+        <span class="commend-quote-mark">"</span>
+        <p class="commend-text">Dinesh's organization and proactive approach keep projects running smoothly. His clear communication ensures everyone stays aligned, making collaboration seamless and stress-free.</p>
+        <div class="commend-author">
+          <div class="commend-avatar">
+            <img src="./images/about/testimonial-veronica.png" alt="Veronica" />
+          </div>
+          <div>
+            <div class="commend-name">Veronica</div>
+            <div class="commend-role">Project Manager</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────── STACK ─────────── -->
+  <section class="container stack">
+    <div class="stack-head reveal">
+      <span class="section-eyebrow">My Stack</span>
+      <h2 class="section-title">Tools I <em>reach for</em>.</h2>
+    </div>
+
+    <div class="stack-grid">
+      <div class="stack-card reveal"><div class="stack-icon figma"><img src="./images/about/tool-figma.png" alt=""/></div><div><div class="stack-name">Figma</div><div class="stack-desc">Design & Prototyping</div></div></div>
+      <div class="stack-card reveal"><div class="stack-icon xd"><img src="./images/about/tool-adobexd.png" alt=""/></div><div><div class="stack-name">Adobe XD</div><div class="stack-desc">Design & Prototyping</div></div></div>
+      <div class="stack-card reveal"><div class="stack-icon html">5</div><div><div class="stack-name">HTML5</div><div class="stack-desc">Development</div></div></div>
+      <div class="stack-card reveal"><div class="stack-icon framer">F</div><div><div class="stack-name">Framer</div><div class="stack-desc">Design & Prototyping</div></div></div>
+      <div class="stack-card reveal"><div class="stack-icon css">3</div><div><div class="stack-name">CSS3</div><div class="stack-desc">Development</div></div></div>
+      <div class="stack-card reveal"><div class="stack-icon miro">M</div><div><div class="stack-name">Miro</div><div class="stack-desc">Collaboration</div></div></div>
+      <div class="stack-card reveal"><div class="stack-icon js">JS</div><div><div class="stack-name">JavaScript</div><div class="stack-desc">Development</div></div></div>
+      <div class="stack-card reveal"><div class="stack-icon hotjar">H</div><div><div class="stack-name">Hotjar</div><div class="stack-desc">Research & Testing</div></div></div>
+      <div class="stack-card reveal"><div class="stack-icon notion">N</div><div><div class="stack-name">Notion</div><div class="stack-desc">Collaboration</div></div></div>
+    </div>
+  </section>
+
+  <!-- ─────────── AWARDS ─────────── -->
+  <section class="container awards">
+    <div class="awards-head reveal">
+      <span class="section-eyebrow">Professional Awards</span>
+      <h2 class="section-title">A little hardware on the <em>shelf</em>.</h2>
+    </div>
+
+    <div class="awards-grid">
+      <div class="award-card reveal">
+        <div class="award-icon">🎖️</div>
+        <h3 class="award-name"><em>Bravo</em> Innovation Award</h3>
+        <p class="award-desc">Improved user experience with innovative design.</p>
+      </div>
+      <div class="award-card reveal">
+        <div class="award-icon">🏅</div>
+        <h3 class="award-name"><em>Winning Together</em> Award</h3>
+        <p class="award-desc">Precision Meds Digital Twin Demo Success.</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+<script>
+  // ─────────── LENS SWITCHING ───────────
+  (() => {
+    const tabs = Array.from(document.querySelectorAll('.lens-tab'));
+    const visuals = Array.from(document.querySelectorAll('.hero-visual-layer'));
+    const captionText = document.getElementById('heroCaptionText');
+    const sticker = document.getElementById('lensSticker');
+    const body = document.body;
+
+    const captions = {
+      design: 'Mentoring at the UX workshop',
+      hike:   'On the cloud line · White Mountains',
+      guide:  'Snow ascent · Winter trek',
+      play:   'Trophy night · Sandal Rockets BBC'
+    };
+
+    const stickerSvg = {
+      design: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="80" cy="50" r="38" fill="#F2D5C7"/>
+        <circle cx="120" cy="50" r="38" fill="#F4A6A0"/>
+        <circle cx="80" cy="100" r="38" fill="#B47BE6"/>
+        <circle cx="120" cy="100" r="38" fill="#6DC1F0"/>
+        <circle cx="80" cy="150" r="38" fill="#9FD89D"/>
+      </svg>`,
+      hike: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="80" rx="60" ry="55" fill="#E96B43"/>
+        <ellipse cx="100" cy="150" rx="55" ry="50" fill="#2D8B5F"/>
+        <ellipse cx="70" cy="120" rx="32" ry="30" fill="#8E5BD9"/>
+        <ellipse cx="135" cy="120" rx="32" ry="30" fill="#4FA8E0"/>
+      </svg>`,
+      guide: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <rect x="20" y="20"  width="40" height="40" rx="6" fill="#5BB1E0"/>
+          <rect x="70" y="20"  width="40" height="40" rx="6" fill="#FFC857"/>
+          <rect x="120" y="20" width="40" height="40" rx="6" fill="#E96B43"/>
+          <rect x="20" y="70"  width="40" height="40" rx="6" fill="#9FD89D"/>
+          <rect x="70" y="70"  width="40" height="40" rx="6" fill="#E0D7A0"/>
+          <rect x="120" y="70" width="40" height="40" rx="6" fill="#C75D7E"/>
+          <rect x="20" y="120" width="40" height="40" rx="6" fill="#F4A6A0"/>
+          <rect x="70" y="120" width="40" height="40" rx="6" fill="#6DA0E0"/>
+          <rect x="120" y="120" width="40" height="40" rx="6" fill="#5C8C5E"/>
+        </g>
+      </svg>`,
+      play: `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <g>
+          <rect x="20" y="20" width="80" height="80" rx="8" fill="#C75D7E"/>
+          <rect x="110" y="20" width="70" height="80" rx="8" fill="#3D3D3D"/>
+          <rect x="20" y="110" width="70" height="70" rx="8" fill="#E96B43"/>
+          <rect x="100" y="110" width="80" height="70" rx="8" fill="#5BB1E0"/>
+        </g>
+      </svg>`
+    };
+
+    function setLens(lens) {
+      body.dataset.lens = lens;
+      tabs.forEach(t => {
+        const isActive = t.dataset.lens === lens;
+        t.classList.toggle('active', isActive);
+        t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      visuals.forEach(v => {
+        v.classList.toggle('active', v.dataset.lens === lens);
+      });
+      captionText.textContent = captions[lens] || '';
+
+      // Position + animate sticker
+      const activeTab = tabs.find(t => t.dataset.lens === lens);
+      if (activeTab && sticker) {
+        const rect = activeTab.getBoundingClientRect();
+        const parentRect = activeTab.parentElement.getBoundingClientRect();
+        sticker.style.left = (rect.left - parentRect.left + rect.width / 2) + 'px';
+        sticker.style.top = '0';
+        sticker.classList.remove('visible');
+        sticker.innerHTML = stickerSvg[lens] || '';
+        // Force reflow then add visible
+        void sticker.offsetWidth;
+        sticker.classList.add('visible');
+      }
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => setLens(tab.dataset.lens));
+      tab.addEventListener('mouseenter', () => setLens(tab.dataset.lens));
+    });
+
+    // Initial sticker position
+    setTimeout(() => setLens('design'), 100);
+    window.addEventListener('resize', () => setLens(body.dataset.lens || 'design'));
+  })();
+
+  // ─────────── HERO IMAGE TILT ───────────
+  (() => {
+    const visual = document.getElementById('heroVisual');
+    if (!visual) return;
+    let raf;
+    visual.addEventListener('mousemove', (e) => {
+      const rect = visual.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        visual.style.transform = `rotateY(${x * 5}deg) rotateX(${-y * 4}deg)`;
+      });
+    });
+    visual.addEventListener('mouseleave', () => {
+      visual.style.transform = '';
+    });
+  })();
+
+  // ─────────── GALLERY ───────────
+  (() => {
+    const slides = Array.from(document.querySelectorAll('.gallery-slide'));
+    const thumbs = Array.from(document.querySelectorAll('.gallery-thumb'));
+    const caption = document.getElementById('galleryCaption');
+    if (!slides.length) return;
+
+    function go(idx) {
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      thumbs.forEach((t, i) => t.classList.toggle('active', i === idx));
+      const cap = slides[idx]?.dataset.caption;
+      if (cap) caption.textContent = cap;
+    }
+
+    thumbs.forEach((t, i) => t.addEventListener('click', () => go(i)));
+
+    // Autoplay every 5s, pause on hover
+    let timer = setInterval(() => {
+      const idx = slides.findIndex(s => s.classList.contains('active'));
+      go((idx + 1) % slides.length);
+    }, 5000);
+    document.querySelector('.gallery-stage')?.addEventListener('mouseenter', () => clearInterval(timer));
+    document.querySelector('.gallery-stage')?.addEventListener('mouseleave', () => {
+      timer = setInterval(() => {
+        const idx = slides.findIndex(s => s.classList.contains('active'));
+        go((idx + 1) % slides.length);
+      }, 5000);
+    });
+  })();
+
+  // ─────────── STAT COUNTERS ───────────
+  (() => {
+    const counters = Array.from(document.querySelectorAll('.counter'));
+    const animate = (el) => {
+      const target = parseInt(el.dataset.target, 10);
+      const dur = 1400;
+      const start = performance.now();
+      const tick = (now) => {
+        const t = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(target * eased);
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          animate(en.target);
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => io.observe(c));
+  })();
+
+  // ─────────── REALIZATION ACCORDION ───────────
+  (() => {
+    const cards = Array.from(document.querySelectorAll('.real-card'));
+    cards.forEach(card => {
+      card.querySelector('.real-card-head').addEventListener('click', () => {
+        const wasOpen = card.classList.contains('open');
+        // Allow multiple open OR close others — pick: close others for cleaner UX
+        cards.forEach(c => c.classList.remove('open'));
+        if (!wasOpen) card.classList.add('open');
+      });
+    });
+  })();
+
+  // ─────────── TIMELINE REVEAL ───────────
+  (() => {
+    const roles = Array.from(document.querySelectorAll('.role'));
+    const progress = document.getElementById('timelineProgress');
+    if (!roles.length) return;
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          const idx = parseInt(entry.target.dataset.roleIdx, 10);
+          if (progress) {
+            const pct = ((idx + 1) / roles.length) * 100;
+            progress.style.height = pct + '%';
+          }
+        }
+      });
+    }, { threshold: 0.3 });
+    roles.forEach((r, i) => setTimeout(() => io.observe(r), i * 60));
+  })();
+
+  // ─────────── REVEAL ON SCROLL ───────────
+  (() => {
+    const items = Array.from(document.querySelectorAll('.reveal'));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add('visible');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    items.forEach(i => io.observe(i));
+  })();
+</script>
+
+</body>
+</html>
