@@ -2016,10 +2016,19 @@
   // Snap the convo's internal scroll so the TOP of the bot response
   // sits at the top of the chat container. Used the moment a new bot
   // message lands so the reader starts at the beginning of the answer.
+  // Uses getBoundingClientRect (not offsetTop) because .ai-convo isn't
+  // the offsetParent — offsetTop would give a huge wrong number that
+  // clamps to max-scroll (i.e. snaps to bottom). rAF ensures layout
+  // has settled before we measure.
   function snapBotToTop(botEl) {
     if (!botEl) return;
-    convo.scrollTop = Math.max(0, botEl.offsetTop - 8);
-    keepInView();
+    requestAnimationFrame(() => {
+      const botRect   = botEl.getBoundingClientRect();
+      const convoRect = convo.getBoundingClientRect();
+      const target    = botRect.top - convoRect.top + convo.scrollTop;
+      convo.scrollTop = Math.max(0, target - 8);
+      keepInView();
+    });
   }
 
   // Smooth-scroll the PAGE so the bottom of the chat surface stays in view.
