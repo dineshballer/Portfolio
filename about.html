@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>About — Dinesh Baller</title>
+<title>Story — Dinesh Baller (sandbox)</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -474,6 +474,163 @@
   }
   .section-title em { font-style: italic; color: var(--accent); }
 
+  /* ─────────── HOW I WORK (principles strip) ─────────── */
+  .principles {
+    padding: 0 0 120px;
+  }
+  .principles-head { margin-bottom: 48px; }
+  .principles-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .principle {
+    padding: 36px 28px;
+    border-right: 1px solid var(--line);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s var(--ease-out);
+  }
+  .principle:last-child { border-right: none; }
+  .principle:hover { background: var(--paper); }
+  .p-word {
+    font-family: var(--display);
+    font-size: clamp(28px, 3.2vw, 40px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 12px;
+    font-variation-settings: "opsz" 56;
+  }
+  .p-word em { font-style: italic; color: var(--accent); }
+  .p-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-bottom: 16px;
+    font-variation-settings: "opsz" 14;
+    display: block;
+  }
+  .p-body {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s var(--ease-out), max-height 0.5s var(--ease-out), margin-top 0.4s var(--ease-out);
+  }
+  .principle:hover .p-body {
+    opacity: 1;
+    max-height: 200px;
+    margin-top: 4px;
+  }
+
+  /* ─────────── NOW CARD ─────────── */
+  .now-section {
+    padding: 0 0 120px;
+  }
+  .now-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 40px 44px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 56px;
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+  }
+  .now-card::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -10%;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(31, 77, 62, 0.10), transparent 70%);
+    filter: blur(50px);
+    pointer-events: none;
+  }
+  .now-head {
+    position: relative;
+    z-index: 2;
+  }
+  .now-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 5px 12px 5px 10px;
+    background: rgba(40, 168, 104, 0.12);
+    color: #1d6e47;
+    border-radius: 999px;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.10em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .now-eyebrow .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #28a868;
+    box-shadow: 0 0 0 3px rgba(40, 168, 104, 0.20);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  .now-title {
+    font-family: var(--display);
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.018em;
+    margin: 0;
+    color: var(--ink);
+    font-variation-settings: "opsz" 48;
+  }
+  .now-title em { font-style: italic; color: var(--accent); }
+  .now-rows {
+    list-style: none;
+    margin: 0; padding: 0;
+    display: flex; flex-direction: column;
+    position: relative;
+    z-index: 2;
+  }
+  .now-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+  }
+  .now-row:last-child { border-bottom: none; }
+  .nr-label {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--accent);
+    font-variation-settings: "opsz" 18;
+  }
+  .nr-value {
+    font-family: var(--display);
+    font-size: 19px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.4;
+    font-variation-settings: "opsz" 24;
+  }
+  .nr-value em { font-style: italic; color: var(--ink-soft); font-weight: 350; }
+  .nr-meta {
+    display: block;
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--ink-mute);
+    font-style: normal;
+    margin-top: 2px;
+  }
+
   /* ─────────── UX REALIZATIONS (accordion) ─────────── */
   .realizations {
     padding: 0 0 120px;
@@ -483,6 +640,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
+    align-items: start;  /* keeps each card its own height — closed cards don't stretch when a neighbor opens */
   }
   .real-card {
     background: var(--paper);
@@ -658,6 +816,70 @@
     margin-top: 4px;
     font-weight: 400;
   }
+
+  /* ─────────── HERO QUOTE (elevated commendation) ─────────── */
+  .hero-quote {
+    background: linear-gradient(160deg, var(--paper), var(--bg) 70%);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    padding: 56px 64px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-quote::before {
+    content: '\201C';
+    position: absolute;
+    top: 12px; left: 36px;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 200px;
+    line-height: 1;
+    color: var(--accent-soft);
+    user-select: none;
+    font-variation-settings: "opsz" 144;
+  }
+  .hero-quote-text {
+    position: relative; z-index: 2;
+    font-family: var(--display);
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: -0.012em;
+    color: var(--ink);
+    margin: 0 0 28px;
+    font-variation-settings: "opsz" 36;
+    max-width: 760px;
+  }
+  .hero-quote-text em { font-style: italic; color: var(--accent); }
+  .hero-quote-author {
+    position: relative; z-index: 2;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .hero-quote-author .commend-avatar {
+    width: 48px; height: 48px;
+  }
+  .hero-quote-name {
+    font-size: 15px; font-weight: 500;
+    color: var(--ink);
+  }
+  .hero-quote-role {
+    font-size: 13px; color: var(--ink-mute); font-style: italic;
+  }
+
+  /* Recommendation link inside commend card */
+  .rec-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 12px;
+    font-size: 12px; font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    transition: gap 0.24s var(--ease-out);
+  }
+  .rec-link:hover { gap: 10px; }
+  .rec-link svg { transition: transform 0.3s var(--ease-out); }
+  .rec-link:hover svg { transform: translateX(2px) rotate(-2deg); }
 
   /* ─────────── COMMENDATIONS ─────────── */
   .commendations {
@@ -884,6 +1106,13 @@
     .wg-words { gap: 10px; }
     .wg-word { padding: 10px 18px; font-size: 12px; }
     .wg-card { width: 200px; }
+    .principles-row { grid-template-columns: repeat(2, 1fr); }
+    .principle:nth-child(2) { border-right: none; }
+    .principle:nth-child(1), .principle:nth-child(2) { border-bottom: 1px solid var(--line); }
+    .now-card { grid-template-columns: 1fr; gap: 32px; padding: 32px 28px; }
+    .now-row { grid-template-columns: 100px 1fr; gap: 16px; }
+    .hero-quote { padding: 40px 32px; }
+    .hero-quote::before { font-size: 140px; left: 20px; }
     .role-dates { text-align: left; }
   }
 </style>
@@ -1002,7 +1231,7 @@
       </button>
 
       <button class="wg-word" data-idx="3">
-        Hoops Night
+        Hoops
         <span class="wg-card" data-img="hoops" aria-hidden="true">
           <img src="./images/about/basketball.jpeg" alt="Holding a basketball trophy" />
           <span class="wg-card-caption">Sandal Rockets · ₹10,000 trophy</span>
@@ -1020,67 +1249,138 @@
     </div>
   </section>
 
-  <!-- ─────────── UX REALIZATIONS ─────────── -->
+  <!-- ─────────── HOW I WORK (principles strip) — NEW -->
+  <section class="container principles">
+    <div class="principles-head reveal">
+      <span class="section-eyebrow">How I Work</span>
+      <h2 class="section-title">Four words, one <em>operating manual</em>.</h2>
+    </div>
+
+    <div class="principles-row">
+      <div class="principle reveal">
+        <span class="p-num">01</span>
+        <h3 class="p-word"><em>Curious</em></h3>
+        <p class="p-body">I'd rather ask one more question than ship one extra screen. The problem usually hides behind the second "why."</p>
+      </div>
+      <div class="principle reveal">
+        <span class="p-num">02</span>
+        <h3 class="p-word"><em>Calm</em></h3>
+        <p class="p-body">Operational software should make a Tuesday quieter, not louder. Restraint is a design decision.</p>
+      </div>
+      <div class="principle reveal">
+        <span class="p-num">03</span>
+        <h3 class="p-word"><em>Specific</em></h3>
+        <p class="p-body">Generic insights belong in textbooks. I aim for the smallest true sentence the team needs to act on.</p>
+      </div>
+      <div class="principle reveal">
+        <span class="p-num">04</span>
+        <h3 class="p-word"><em>Useful</em></h3>
+        <p class="p-body">Beauty without use is decoration. The win is when an analyst tells me their Tuesday got quieter, not when a screenshot lands on Dribbble.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────── UX REALIZATIONS (manifesto) ─────────── -->
   <section class="container realizations">
     <div class="realizations-head reveal">
-      <span class="section-eyebrow">UX Realizations</span>
-      <h2 class="section-title">Truths I've learned, <em>the hard way</em>.</h2>
+      <span class="section-eyebrow">My Manifesto</span>
+      <h2 class="section-title">Beliefs I keep <em>coming back to</em>.</h2>
     </div>
 
     <div class="realizations-grid">
 
       <div class="real-card reveal" data-real="r1">
         <div class="real-card-head">
-          <span class="real-icon r1">🏠</span>
-          <span class="real-title">Balancing Business Needs and User Goals</span>
+          <span class="real-icon r1">🪜</span>
+          <span class="real-title">Structure first, pretty second.</span>
           <span class="real-plus" aria-hidden="true">+</span>
         </div>
         <div class="real-body">
           <div class="real-body-inner">
-            Sometimes, business needs demand tough choices. And often, they're right. It's not about compromise, it's about aligning design with what drives real impact.
+            Years of graphic design taught me the visual is the easy part. The hard part is what has to be true before the visual is allowed to land. If the information architecture is wrong, no font choice fixes it. So I start with the spine, then dress it up.
           </div>
         </div>
       </div>
 
       <div class="real-card reveal" data-real="r2">
         <div class="real-card-head">
-          <span class="real-icon r2">🪄</span>
-          <span class="real-title">The Myth of the Perfect Design Process</span>
+          <span class="real-icon r2">🕯️</span>
+          <span class="real-title">I design for quieter workflows.</span>
           <span class="real-plus" aria-hidden="true">+</span>
         </div>
         <div class="real-body">
           <div class="real-body-inner">
-            In the real world, design isn't a linear checklist or a textbook template. It's about adapting, experimenting, and doing whatever it takes to solve the problem at hand.
+            The win in enterprise UX isn't a delightful moment, it's a 4pm escalation email that didn't get sent. Calm interactions, signal density, and small wins that compound over a quarter. That's the work.
           </div>
         </div>
       </div>
 
       <div class="real-card reveal" data-real="r3">
         <div class="real-card-head">
-          <span class="real-icon r3">⏱️</span>
-          <span class="real-title">Designing with Little to No Research</span>
+          <span class="real-icon r3">👀</span>
+          <span class="real-title">Watch them work.</span>
           <span class="real-plus" aria-hidden="true">+</span>
         </div>
         <div class="real-body">
           <div class="real-body-inner">
-            Sometimes, deadlines and high demands mean designing with little to no research. It's not ideal, but it's taught me to rely on intuition, best practices, and quick feedback loops to make decisions that still deliver value.
+            Most insight lives in the actual moment someone tries to do their job. I'd rather sit next to an analyst at 9am when she opens her spreadsheet than read about it in a research transcript at 4pm. The real interface is the workaround they already built.
           </div>
         </div>
       </div>
 
       <div class="real-card reveal" data-real="r4">
         <div class="real-card-head">
-          <span class="real-icon r4">🤝</span>
-          <span class="real-title">Collaboration is the Backbone of Great Design</span>
+          <span class="real-icon r4">📈</span>
+          <span class="real-title">Progress over pixels.</span>
           <span class="real-plus" aria-hidden="true">+</span>
         </div>
         <div class="real-body">
           <div class="real-body-inner">
-            Successful projects don't happen in isolation. They're built on strong collaboration with developers, product managers, project managers, and directors. Together, we turn ideas into reality.
+            If a sketchy lo-fi gets the team unblocked, that beats a polished mockup that ships next quarter. Momentum is the most underrated design system. I optimize for the next decision, not the next reel.
           </div>
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ─────────── NOW CARD — NEW -->
+  <section class="container now-section">
+    <div class="now-card reveal">
+      <div class="now-head">
+        <span class="now-eyebrow"><span class="dot"></span>Now</span>
+        <h2 class="now-title">What I'm <em>up to</em><br>this week.</h2>
+      </div>
+      <ul class="now-rows">
+        <li class="now-row">
+          <span class="nr-label">Designing</span>
+          <span class="nr-value">
+            Mortgage release pipelines at <em>Onity Group</em>
+            <span class="nr-meta">Bulk validation, reconciliation, real-time inquiry portal</span>
+          </span>
+        </li>
+        <li class="now-row">
+          <span class="nr-label">Reading</span>
+          <span class="nr-value">
+            <em>Storyworthy</em> by Matthew Dicks
+            <span class="nr-meta">For sharper case studies, sharper standups</span>
+          </span>
+        </li>
+        <li class="now-row">
+          <span class="nr-label">Listening</span>
+          <span class="nr-value">
+            <em>Dive Club</em> + the occasional Lo-fi mix
+            <span class="nr-meta">Focus loops while I'm in Figma</span>
+          </span>
+        </li>
+        <li class="now-row">
+          <span class="nr-label">Open to</span>
+          <span class="nr-value">
+            <em>Senior product roles</em> in enterprise UX, AI tooling, or fintech
+            <span class="nr-meta">Atlanta, hybrid or remote. <a href="mailto:dineshballer@gmail.com" style="color: var(--accent); text-decoration: underline;">Say hi.</a></span>
+          </span>
+        </li>
+      </ul>
     </div>
   </section>
 
@@ -1159,28 +1459,29 @@
     </div>
   </section>
 
-  <!-- ─────────── COMMENDATIONS ─────────── -->
+  <!-- ─────────── COMMENDATIONS (with elevated hero quote) ─────────── -->
   <section class="container commendations">
     <div class="commendations-head reveal">
-      <span class="section-eyebrow">Commendations from Colleagues</span>
-      <h2 class="section-title">In their <em>words</em>.</h2>
+      <span class="section-eyebrow">In Their Words</span>
+      <h2 class="section-title">What collaborators <em>say</em>.</h2>
     </div>
 
-    <div class="commendations-grid">
-
-      <div class="commend-card reveal">
-        <span class="commend-quote-mark">"</span>
-        <p class="commend-text">Dinesh has a knack for transforming product experiences, users love the changes he's made. His can-do attitude, quick thinking, and ability to turn ideas into reality make him an invaluable team player.</p>
-        <div class="commend-author">
-          <div class="commend-avatar">
-            <img src="./images/about/testimonial-gayathri.png" alt="Gayathri" />
-          </div>
-          <div>
-            <div class="commend-name">Gayathri</div>
-            <div class="commend-role">Manager</div>
-          </div>
+    <!-- Elevated hero quote — the most senior voice gets its own stage -->
+    <div class="hero-quote reveal">
+      <p class="hero-quote-text">Dinesh has a knack for <em>transforming product experiences</em>. Users love the changes he's made. His can-do attitude, quick thinking, and ability to turn ideas into reality make him an invaluable team player.</p>
+      <div class="hero-quote-author">
+        <div class="commend-avatar">
+          <img src="./images/about/testimonial-gayathri.png" alt="Gayathri" />
+        </div>
+        <div>
+          <div class="hero-quote-name">Gayathri</div>
+          <div class="hero-quote-role">Manager · Dell</div>
         </div>
       </div>
+    </div>
+
+    <!-- Two supporting quotes -->
+    <div class="commendations-grid" style="grid-template-columns: 1fr 1fr;">
 
       <div class="commend-card reveal">
         <span class="commend-quote-mark">"</span>
@@ -1194,6 +1495,10 @@
             <div class="commend-role">Developer</div>
           </div>
         </div>
+        <a href="https://www.linkedin.com/in/dineshballer/" target="_blank" rel="noopener" class="rec-link">
+          Read full recommendation
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
       </div>
 
       <div class="commend-card reveal">
@@ -1208,6 +1513,10 @@
             <div class="commend-role">Project Manager</div>
           </div>
         </div>
+        <a href="https://www.linkedin.com/in/dineshballer/" target="_blank" rel="noopener" class="rec-link">
+          Read full recommendation
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
       </div>
 
     </div>
@@ -1233,23 +1542,28 @@
     </div>
   </section>
 
-  <!-- ─────────── AWARDS ─────────── -->
+  <!-- ─────────── RECOGNITION ─────────── -->
   <section class="container awards">
     <div class="awards-head reveal">
-      <span class="section-eyebrow">Professional Awards</span>
-      <h2 class="section-title">A little hardware on the <em>shelf</em>.</h2>
+      <span class="section-eyebrow">Recognition</span>
+      <h2 class="section-title">A little <em>hardware on the shelf</em>, and a few good rooms.</h2>
     </div>
 
-    <div class="awards-grid">
+    <div class="awards-grid" style="grid-template-columns: repeat(3, 1fr);">
       <div class="award-card reveal">
         <div class="award-icon">🎖️</div>
         <h3 class="award-name"><em>Bravo</em> Innovation Award</h3>
-        <p class="award-desc">Improved user experience with innovative design.</p>
+        <p class="award-desc">Dell. Improved user experience with innovative design across the AI sales platform.</p>
       </div>
       <div class="award-card reveal">
         <div class="award-icon">🏅</div>
         <h3 class="award-name"><em>Winning Together</em> Award</h3>
-        <p class="award-desc">Precision Meds Digital Twin Demo Success.</p>
+        <p class="award-desc">Dell. Precision Meds Digital Twin demo, shipped on a tight cross-functional timeline.</p>
+      </div>
+      <div class="award-card reveal">
+        <div class="award-icon">📚</div>
+        <h3 class="award-name"><em>Mentoring</em> &amp; community</h3>
+        <p class="award-desc">12+ junior designers mentored through 1:1s and design workshops. Occasional speaker on enterprise UX.</p>
       </div>
     </div>
   </section>
