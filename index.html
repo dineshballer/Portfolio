@@ -2013,6 +2013,15 @@
     keepInView();
   }
 
+  // Snap the convo's internal scroll so the TOP of the bot response
+  // sits at the top of the chat container. Used the moment a new bot
+  // message lands so the reader starts at the beginning of the answer.
+  function snapBotToTop(botEl) {
+    if (!botEl) return;
+    convo.scrollTop = Math.max(0, botEl.offsetTop - 8);
+    keepInView();
+  }
+
   // Smooth-scroll the PAGE so the bottom of the chat surface stays in view.
   // Inline-morph chats expand the document; without this, new messages
   // drop off the bottom of the viewport and the user has to chase them.
@@ -2397,6 +2406,8 @@
       convo.insertBefore(botMsg, followupsSection);
       // Folio: pulse the avatar while streaming
       dock.classList.add("is-speaking");
+      // Snap the convo so the TOP of this response is at the top of the chat container
+      snapBotToTop(botMsg);
 
       // Parse Anthropic SSE stream
       const reader = res.body.getReader();
@@ -2426,7 +2437,10 @@
             ) {
               accumulated += evt.delta.text;
               renderBot(botMsg, accumulated);
-              scrollDown();
+              // Only keep the page (browser viewport) in view as the message grows.
+              // Do NOT auto-scroll the convo — the response stays anchored at the top
+              // so the user reads from the beginning without the text running away.
+              keepInView();
             }
           } catch {
             /* ignore JSON parse errors from partial chunks */
@@ -2456,11 +2470,15 @@
           err.message || "unknown error"
         )}</em>. Try again in a moment.</p>`;
       convo.insertBefore(errMsg, followupsSection);
+      // Snap the error message to the top of the convo as well, so it's read first
+      snapBotToTop(errMsg);
       // Roll back the user message from history so retries don't poison context
       history.pop();
     } finally {
       input.disabled = false;
-      scrollDown();
+      // Note: no convo scroll here. The bot/error message stays anchored at the top
+      // (set by snapBotToTop) so the reader starts from the beginning of the answer.
+      keepInView();
     }
   }
 
