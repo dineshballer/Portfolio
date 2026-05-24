@@ -905,6 +905,23 @@
     min-height: 0;
   }
 
+  /* Reset text alignment inside the dock — main.hero applies center,
+     which would bleed into bot messages, welcome, chips, signature, etc. */
+  .ai-dock-inner { text-align: left; }
+  .ai-convo,
+  .ai-convo p,
+  .ai-msg-bot,
+  .ai-msg-bot p,
+  .ai-signature,
+  .ai-welcome,
+  .ai-welcome-text,
+  .ai-followup-label,
+  .ai-header-text h3,
+  .ai-header-text p,
+  .ai-input input { text-align: left; }
+  /* User messages stay right-aligned (chat-bubble convention) */
+  .ai-msg-user { text-align: right; }
+
   /* Header */
   .ai-header {
     display: flex;
@@ -1432,15 +1449,15 @@
   }
   /* Hide the welcome once any real message is in the conversation */
   .ai-convo.has-messages .ai-welcome,
-  .ai-convo.has-messages .ai-followups,
-  .ai-convo.has-messages .ai-idle-nudge {
+  .ai-convo.has-messages .ai-followups {
     display: none;
   }
 
-  /* ───────── Folio: recruiter-mode toast ───────── */
+  /* ───────── Folio: recruiter-mode toast ─────────
+     Default state is HIDDEN. JS adds .is-visible to show it. */
   .ai-mode-toast {
+    display: none;
     align-self: flex-start;
-    display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 8px 14px;
@@ -1452,6 +1469,9 @@
     font-weight: 500;
     color: var(--green-strong);
     letter-spacing: 0.01em;
+  }
+  .ai-mode-toast.is-visible {
+    display: inline-flex;
     animation: toast-in 320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .ai-mode-toast-icon {
@@ -1468,49 +1488,6 @@
   }
   @keyframes toast-in {
     from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ───────── Folio: idle nudge ───────── */
-  .ai-idle-nudge {
-    align-self: stretch;
-    padding: 16px 18px;
-    background: linear-gradient(135deg, rgba(31, 77, 62, 0.04), rgba(31, 77, 62, 0.09));
-    border: 1px dashed rgba(31, 77, 62, 0.28);
-    border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    animation: nudge-in 420ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .ai-idle-nudge p {
-    margin: 0;
-    font-family: var(--display);
-    font-style: italic;
-    font-weight: 350;
-    font-size: 15px;
-    color: var(--ink-soft);
-    line-height: 1.4;
-    font-variation-settings: "opsz" 36;
-  }
-  .ai-nudge-btn {
-    align-self: flex-start;
-    appearance: none;
-    background: var(--green-strong);
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-family: var(--body);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    transition: background 220ms, transform 220ms;
-  }
-  .ai-nudge-btn:hover { background: #163829; transform: translateY(-1px); }
-  @keyframes nudge-in {
-    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
@@ -1773,15 +1750,9 @@
           </div>
 
           <!-- Recruiter-mode toast — slides in when JD is auto-detected -->
-          <div class="ai-mode-toast" data-mode-toast hidden>
+          <div class="ai-mode-toast" data-mode-toast>
             <span class="ai-mode-toast-icon" aria-hidden="true">↗</span>
             <span class="ai-mode-toast-text">Switched to recruiter mode</span>
-          </div>
-
-          <!-- Idle nudge — appears after ~25s of no activity -->
-          <div class="ai-idle-nudge" data-idle-nudge hidden>
-            <p>Want me to walk you through his most impressive project?</p>
-            <button type="button" class="ai-nudge-btn" data-nudge-action>Yes, show me</button>
           </div>
 
         </div>
@@ -1983,8 +1954,6 @@
   const welcomeTypedEl = convo.querySelector("[data-welcome-typed]");
   const welcomeCaretEl = welcomeSlot ? welcomeSlot.querySelector(".ai-welcome-caret") : null;
   const modeToast      = convo.querySelector("[data-mode-toast]");
-  const idleNudge      = convo.querySelector("[data-idle-nudge]");
-  const nudgeBtn       = idleNudge ? idleNudge.querySelector("[data-nudge-action]") : null;
 
   // ─── Inline morph open/close ───
   function openDock(opts = {}) {
@@ -2004,9 +1973,8 @@
     // Two passes: one as the morph starts, one after it settles (~440ms transition).
     requestAnimationFrame(keepInView);
     setTimeout(keepInView, 460);
-    // Folio: type the welcome message and arm the idle nudge timer
+    // Folio: type the welcome message
     setTimeout(typeWelcome, 260);
-    startIdleTimer();
   }
 
   function closeDock() {
@@ -2192,25 +2160,8 @@
   }
   function showModeToast() {
     if (!modeToast) return;
-    modeToast.removeAttribute("hidden");
-    setTimeout(() => modeToast.setAttribute("hidden", ""), 3200);
-  }
-
-  // 4. Idle nudge — appears after 25s of no activity (only in empty state)
-  let idleTimer = null;
-  const IDLE_MS = 25000;
-  function startIdleTimer() {
-    clearIdleTimer();
-    idleTimer = setTimeout(() => {
-      if (convo.classList.contains("has-messages")) return;
-      if (!idleNudge) return;
-      idleNudge.removeAttribute("hidden");
-      keepInView();
-    }, IDLE_MS);
-  }
-  function clearIdleTimer() {
-    if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
-    if (idleNudge) idleNudge.setAttribute("hidden", "");
+    modeToast.classList.add("is-visible");
+    setTimeout(() => modeToast.classList.remove("is-visible"), 3200);
   }
 
   // 5. Inline case-study cards — pattern-match project mentions
@@ -2286,12 +2237,17 @@
     return sig;
   }
 
-  // 8. Augment the bot message after streaming — adds case cards, CTAs, signature
+  // 8. Augment the bot message after streaming.
+  // Order matters: signature wave goes immediately after the text,
+  // then rich case-study cards, then contextual CTAs at the bottom.
   function augmentBotMessage(botMsg, responseText, userQuestion, turnCount) {
     if (!botMsg) return;
     const responseLower = (responseText || "").toLowerCase();
     const questionLower = (userQuestion || "").toLowerCase();
     const combined = responseLower + " " + questionLower;
+
+    // Signature wave — lands right under the text, before any cards or CTAs
+    botMsg.appendChild(renderSignature());
 
     // Rich case-study cards (at most 2 per response so it stays scannable)
     const matched = [];
@@ -2303,11 +2259,11 @@
     }
     matched.forEach((cs) => botMsg.appendChild(renderCaseCard(cs)));
 
-    // Contextual CTAs
+    // Contextual CTAs (bottom of the card)
     const ctas = [];
-    const wantsContact   = /\b(email|contact|reach\s*out|hire|interview|fit\s+for|role|opportunity)\b/.test(combined);
-    const wantsResume    = /\b(resume|résumé|cv|experience|background|work\s+history)\b/.test(combined);
-    const longConvo      = (turnCount || 0) >= 3;
+    const wantsContact = /\b(email|contact|reach\s*out|hire|interview|fit\s+for|role|opportunity)\b/.test(combined);
+    const wantsResume  = /\b(resume|résumé|cv|experience|background|work\s+history)\b/.test(combined);
+    const longConvo    = (turnCount || 0) >= 3;
 
     if (wantsContact) {
       ctas.push({
@@ -2337,9 +2293,6 @@
       });
     }
     if (ctas.length > 0) botMsg.appendChild(renderCTARow(ctas));
-
-    // Signature line — always present, gives every response a consistent close
-    botMsg.appendChild(renderSignature());
   }
 
   async function ask(question) {
@@ -2348,9 +2301,8 @@
     dock.classList.remove("collapsed");
     clearDemo();
     input.disabled = true;
-    // Folio: hide welcome + chips + idle nudge once the conversation starts
+    // Folio: hide welcome + chips once the conversation starts
     convo.classList.add("has-messages");
-    clearIdleTimer();
 
     // Add user message to UI + history
     const userMsg = document.createElement("p");
@@ -2400,6 +2352,18 @@
     convo.insertBefore(typing, followupsSection);
     scrollDown();
 
+    // Folio: keep the loading animation visible for at least 2s — enough for the
+    // file-rack figure to complete a near-full cycle. Stops the loader from
+    // flashing away when the API responds fast.
+    const typingStart = Date.now();
+    const MIN_TYPING_MS = 2000;
+    async function ensureMinTyping() {
+      const elapsed = Date.now() - typingStart;
+      if (elapsed < MIN_TYPING_MS) {
+        await new Promise((r) => setTimeout(r, MIN_TYPING_MS - elapsed));
+      }
+    }
+
     const mode = getMode();
     let accumulated = "";
     let botMsg;
@@ -2422,6 +2386,9 @@
         } catch {}
         throw new Error(detail);
       }
+
+      // Hold the loader for its minimum display time before revealing the response
+      await ensureMinTyping();
 
       // Swap typing indicator for the bot message container
       typing.remove();
@@ -2478,6 +2445,8 @@
       // Pull suggested follow-ups out of the response and refresh the chips
       refreshFollowups(extractFollowups(accumulated));
     } catch (err) {
+      // Hold the loader for its minimum display time before showing the error too
+      await ensureMinTyping();
       if (typing.parentNode) typing.remove();
       dock.classList.remove("is-speaking");
       const errMsg = document.createElement("div");
@@ -2515,14 +2484,6 @@
   // Close button in modal header
   if (collapseBtn) {
     collapseBtn.addEventListener("click", closeDock);
-  }
-
-  // Idle nudge button → asks Folio for the strongest case study
-  if (nudgeBtn) {
-    nudgeBtn.addEventListener("click", () => {
-      clearIdleTimer();
-      ask("Show me his strongest case study");
-    });
   }
 
   // Free-form input submit
