@@ -597,10 +597,55 @@
     color: var(--green-strong);
     opacity: 0.7;
   }
-  .case.showcase:hover .case-tags,
-  .case.showcase:focus-visible .case-tags {
+  .case.showcase:not(.expand-reveal):hover .case-tags,
+  .case.showcase:not(.expand-reveal):focus-visible .case-tags {
     opacity: 0;
     transform: translateY(6px);
+  }
+
+  /* ───────────────────────────────────────────────
+     Expand-reveal pattern — title visible at rest,
+     description + tags + meta expand on hover.
+  ─────────────────────────────────────────────── */
+  .case.showcase.expand-reveal .case-reveal {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    overflow: hidden;
+    transition: max-height 620ms cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 360ms cubic-bezier(0.16, 1, 0.3, 1),
+                margin-top 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .case.showcase.expand-reveal:hover .case-reveal,
+  .case.showcase.expand-reveal:focus-visible .case-reveal {
+    max-height: 360px;
+    opacity: 1;
+    margin-top: 18px;
+    transition: max-height 620ms cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 480ms cubic-bezier(0.16, 1, 0.3, 1) 120ms,
+                margin-top 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .case-divider {
+    height: 1px;
+    width: 100%;
+    background: rgba(23, 23, 23, 0.10);
+  }
+  .case-description {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: -0.002em;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  /* Keep tags in their normal reveal-state styling, don't fade them out */
+  .case.showcase.expand-reveal .case-tags {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* Floating tag chips — hidden at rest, rise up + rotate into position on hover */
@@ -678,41 +723,176 @@
   }
 
   /* ───────────────────────────────────────────────
-     AI chat dock — embedded below the lens line
-     Solid surface, ChatGPT/Claude-style input card.
+     AI chat — Inline morph pattern
+     Resting state: refined input-shaped trigger pill in hero.
+     Active state:  the trigger morphs in place into the
+                    conversation surface. Page below reflows.
   ─────────────────────────────────────────────── */
-  .ai-dock {
+
+  /* The slot holds BOTH the trigger and the surface in the same spot.
+     We swap which one is visible. Width animates smoothly between the two. */
+  .ai-morph-slot {
+    position: relative;
     width: 100%;
-    max-width: 640px;
-    margin: 104px auto 0;
+    max-width: 520px;
+    margin: 112px auto 0;
+    display: flex;
+    justify-content: center;
     opacity: 0;
     animation: fadein 900ms var(--ease) 460ms forwards;
+    transition: max-width 480ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  /* Whole dock is one continuous card — header, conversation, and input share the same surface */
+  .ai-morph-slot.is-open {
+    max-width: 680px;
+  }
+
+  /* Trigger — looks like an input pill */
+  .ai-trigger {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 14px 22px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(31, 77, 62, 0.14);
+    border-radius: 999px;
+    box-shadow:
+      0 1px 2px rgba(23, 23, 23, 0.03),
+      0 6px 18px rgba(31, 77, 62, 0.06),
+      0 18px 40px rgba(31, 77, 62, 0.04);
+    cursor: pointer;
+    font: inherit;
+    color: var(--ink);
+    text-align: left;
+    transition:
+      transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 280ms cubic-bezier(0.16, 1, 0.3, 1),
+      background 280ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 280ms cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .ai-trigger:hover,
+  .ai-trigger:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgba(31, 77, 62, 0.28);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow:
+      0 1px 2px rgba(23, 23, 23, 0.04),
+      0 10px 28px rgba(31, 77, 62, 0.12),
+      0 28px 56px rgba(31, 77, 62, 0.08);
+    outline: none;
+  }
+  .ai-trigger-spark {
+    display: inline-flex;
+    color: var(--green-strong);
+    flex-shrink: 0;
+    animation: spark-rotate 4.8s ease-in-out infinite;
+    transform-origin: center;
+  }
+  .ai-trigger-text {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink-mute);
+    letter-spacing: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .ai-trigger-text::after {
+    content: "▎";
+    margin-left: 1px;
+    color: var(--green-strong);
+    opacity: 0.6;
+    animation: caret-blink 1.1s steps(1) infinite;
+  }
+  @keyframes caret-blink {
+    0%, 49%   { opacity: 0.6; }
+    50%, 100% { opacity: 0; }
+  }
+  .ai-trigger-kbd {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+    padding: 5px 9px;
+    background: rgba(31, 77, 62, 0.06);
+    border: 1px solid rgba(31, 77, 62, 0.14);
+    border-radius: 8px;
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--green-strong);
+    letter-spacing: 0.04em;
+  }
+  .ai-trigger-kbd kbd {
+    font-family: inherit;
+    font-size: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  /* Inline conversation surface — sits in the morph slot */
+  .ai-dock {
+    width: 100%;
+    transform-origin: top center;
+    transition:
+      opacity 320ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  /* CLOSED state — trigger visible, surface visually hidden but kept in the slot
+     so the surface's height doesn't reserve space. */
+  .ai-morph-slot:not(.is-open) .ai-dock {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.96);
+    pointer-events: none;
+    position: absolute;
+    inset: 0 0 auto 0;
+    visibility: hidden;
+  }
+  /* OPEN state — trigger fades/scales out, surface fades/scales in */
+  .ai-morph-slot.is-open .ai-trigger {
+    opacity: 0;
+    transform: scale(0.96);
+    pointer-events: none;
+    position: absolute;
+    inset: 0 0 auto 0;
+    visibility: hidden;
+  }
+
+  /* The card itself */
   .ai-dock-inner {
     position: relative;
     display: flex;
     flex-direction: column;
     background: #FFFFFF;
-    border: 1px solid rgba(23, 23, 23, 0.08);
-    border-radius: 20px;
-    box-shadow: 0 1px 2px rgba(23, 23, 23, 0.04),
-                0 8px 24px rgba(31, 77, 62, 0.08),
-                0 24px 48px rgba(31, 77, 62, 0.06);
+    border: 1px solid rgba(23, 23, 23, 0.06);
+    border-radius: 22px;
+    box-shadow:
+      0 2px 4px rgba(23, 23, 23, 0.04),
+      0 18px 48px rgba(31, 77, 62, 0.10),
+      0 36px 80px rgba(31, 77, 62, 0.08);
     overflow: hidden;
-    max-height: min(440px, calc(100vh - 48px));
+    max-height: min(520px, calc(100vh - 200px));
     transition: border-color 280ms cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .ai-dock-inner:focus-within {
-    border-color: rgba(31, 77, 62, 0.30);
-    box-shadow: 0 1px 2px rgba(23, 23, 23, 0.05),
-                0 12px 32px rgba(31, 77, 62, 0.12),
-                0 24px 56px rgba(31, 77, 62, 0.10),
-                0 0 0 4px rgba(31, 77, 62, 0.06);
+    border-color: rgba(31, 77, 62, 0.22);
+    box-shadow:
+      0 2px 4px rgba(23, 23, 23, 0.04),
+      0 22px 56px rgba(31, 77, 62, 0.14),
+      0 40px 96px rgba(31, 77, 62, 0.10),
+      0 0 0 4px rgba(31, 77, 62, 0.06);
   }
 
-  /* Panel now just structural — sits inline above input within the card */
+  /* Panel — structural wrapper for header + conversation */
   .ai-panel {
     position: static;
     display: flex;
@@ -722,6 +902,7 @@
     border-radius: 0;
     box-shadow: none;
     overflow: hidden;
+    min-height: 0;
   }
 
   /* Header */
@@ -1089,46 +1270,77 @@
     font-weight: 500;
   }
 
-  /* Typing indicator — pixelated 3x3 grid pulsing in a wave */
+  /* Typing indicator — 2D stick figure pulling folders from a filing rack.
+     The figure stands beside the rack, the right arm reaches up, a folder
+     pops out of the rack and flies to the figure, then fades (delivered).
+     Loops indefinitely while the model is thinking. */
   .ai-typing {
     align-self: flex-start;
     display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 18px;
+    gap: 14px;
+    padding: 12px 18px 12px 14px;
     background: linear-gradient(135deg, rgba(31, 77, 62, 0.045), rgba(31, 77, 62, 0.08));
     border: 1px solid rgba(31, 77, 62, 0.12);
     border-radius: 14px;
   }
-  .ai-typing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 5px);
-    grid-template-rows: repeat(3, 5px);
-    gap: 3px;
+  .ai-typing-anim {
+    flex-shrink: 0;
+    color: var(--green-strong);
+    overflow: visible;
   }
-  .ai-typing-grid span {
-    width: 5px;
-    height: 5px;
-    background: var(--green-strong);
-    border-radius: 1px;
-    opacity: 0.18;
-    animation: pixel-wave 1.4s ease-in-out infinite;
-    will-change: opacity, transform;
+  /* Subtle vertical bob for the whole figure — gives it life */
+  .ai-typing-anim .walker {
+    transform-origin: 38px 28px;
+    animation: walker-bob 2.8s ease-in-out infinite;
   }
-  /* Diagonal stagger — top-left → bottom-right wave */
-  .ai-typing-grid span:nth-child(1) { animation-delay:  0ms;   }
-  .ai-typing-grid span:nth-child(2) { animation-delay:  90ms;  }
-  .ai-typing-grid span:nth-child(3) { animation-delay: 180ms;  }
-  .ai-typing-grid span:nth-child(4) { animation-delay:  90ms;  }
-  .ai-typing-grid span:nth-child(5) { animation-delay: 180ms;  }
-  .ai-typing-grid span:nth-child(6) { animation-delay: 270ms;  }
-  .ai-typing-grid span:nth-child(7) { animation-delay: 180ms;  }
-  .ai-typing-grid span:nth-child(8) { animation-delay: 270ms;  }
-  .ai-typing-grid span:nth-child(9) { animation-delay: 360ms;  }
-  @keyframes pixel-wave {
-    0%, 100% { opacity: 0.18; transform: scale(1); }
-    50%      { opacity: 1;    transform: scale(1.15); }
+  @keyframes walker-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-1.5px); }
   }
+  /* The reaching arm rotates up toward the top folder, holds, then swings back */
+  .ai-typing-anim .arm-reach {
+    transform-origin: 38px 32px;
+    animation: arm-grab 2.8s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+  }
+  @keyframes arm-grab {
+    0%, 14%, 78%, 100% { transform: rotate(0deg); }
+    25%, 60%           { transform: rotate(-72deg); }
+  }
+  /* The folder being carried — fades in at the rack, arcs to the figure, vanishes */
+  .ai-typing-anim .float-folder {
+    opacity: 0;
+    animation: folder-fly 2.8s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+  }
+  @keyframes folder-fly {
+    0%, 25%   { opacity: 0; transform: translate(86px, 16px) scale(0.85); }
+    30%       { opacity: 1; transform: translate(86px, 16px) scale(1);    }
+    50%       { opacity: 1; transform: translate(56px, 24px) scale(1);    }
+    65%       { opacity: 1; transform: translate(28px, 33px) scale(1);    }
+    78%, 100% { opacity: 0; transform: translate(28px, 33px) scale(0.7);  }
+  }
+  /* Top folder in the rack dims while it's being pulled */
+  .ai-typing-anim .rf-1 {
+    transform-origin: 109px 22px;
+    animation: folder-pull 2.8s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+  }
+  @keyframes folder-pull {
+    0%, 25%   { opacity: 1;    transform: translateX(0); }
+    30%, 65%  { opacity: 0.18; transform: translateX(-2px); }
+    78%, 100% { opacity: 1;    transform: translateX(0); }
+  }
+  /* Two tiny thought dots above the head — signals "thinking" */
+  .ai-typing-anim .thought {
+    opacity: 0;
+    animation: thought-pulse 2.8s ease-in-out infinite;
+  }
+  .ai-typing-anim .thought-1 { animation-delay: 0.4s; }
+  .ai-typing-anim .thought-2 { animation-delay: 0.7s; }
+  @keyframes thought-pulse {
+    0%, 80%, 100% { opacity: 0;   transform: translateY(2px); }
+    20%, 50%      { opacity: 0.7; transform: translateY(0); }
+  }
+
   .ai-typing-text {
     font-family: var(--body);
     font-size: 12px;
@@ -1160,32 +1372,273 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Conversation area animation for expand/collapse */
-  .ai-convo {
-    transition: max-height 360ms cubic-bezier(0.16, 1, 0.3, 1),
-                padding 360ms cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 280ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  /* Collapsed = panel header still visible, conversation area hidden */
+  /* Close button in surface header */
   .ai-collapse svg { transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1); }
-  .ai-dock.collapsed .ai-convo {
-    max-height: 0 !important;
-    padding-top: 0;
-    padding-bottom: 0;
-    opacity: 0;
-    overflow: hidden;
+  .ai-collapse:hover svg { transform: rotate(90deg); }
+
+  /* ───────── Folio: avatar in header ───────── */
+  .ai-header-text h3 .ai-name { display: inline-block; }
+  .ai-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(31, 77, 62, 0.18), rgba(31, 77, 62, 0.32));
+    border: 1px solid rgba(31, 77, 62, 0.30);
+    margin-right: 8px;
+    flex-shrink: 0;
+    vertical-align: -5px;
+    position: relative;
   }
-  .ai-dock.collapsed .ai-collapse svg {
-    transform: rotate(180deg);
+  .ai-avatar-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green-strong);
+    box-shadow: 0 0 0 0 rgba(31, 77, 62, 0.32);
+  }
+  /* Pulse while Folio is "speaking" (streaming) */
+  .ai-dock.is-speaking .ai-avatar-dot {
+    animation: avatar-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes avatar-pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(31, 77, 62, 0.32); }
+    50%      { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(31, 77, 62, 0); }
   }
 
+  /* ───────── Folio: typed welcome ───────── */
+  .ai-welcome {
+    padding: 4px 2px 8px;
+  }
+  .ai-welcome-text {
+    margin: 0;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 350;
+    font-size: 17px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    letter-spacing: -0.005em;
+    font-variation-settings: "opsz" 36;
+  }
+  .ai-welcome-caret {
+    display: inline-block;
+    color: var(--green-strong);
+    opacity: 0.6;
+    margin-left: 1px;
+    animation: caret-blink 1.1s steps(1) infinite;
+  }
+  /* Hide the welcome once any real message is in the conversation */
+  .ai-convo.has-messages .ai-welcome,
+  .ai-convo.has-messages .ai-followups,
+  .ai-convo.has-messages .ai-idle-nudge {
+    display: none;
+  }
+
+  /* ───────── Folio: recruiter-mode toast ───────── */
+  .ai-mode-toast {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(31, 77, 62, 0.08);
+    border: 1px solid rgba(31, 77, 62, 0.22);
+    border-radius: 999px;
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--green-strong);
+    letter-spacing: 0.01em;
+    animation: toast-in 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .ai-mode-toast-icon {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    align-items: center;
+    justify-content: center;
+    background: var(--green-strong);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  @keyframes toast-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ───────── Folio: idle nudge ───────── */
+  .ai-idle-nudge {
+    align-self: stretch;
+    padding: 16px 18px;
+    background: linear-gradient(135deg, rgba(31, 77, 62, 0.04), rgba(31, 77, 62, 0.09));
+    border: 1px dashed rgba(31, 77, 62, 0.28);
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: nudge-in 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .ai-idle-nudge p {
+    margin: 0;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 350;
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+    font-variation-settings: "opsz" 36;
+  }
+  .ai-nudge-btn {
+    align-self: flex-start;
+    appearance: none;
+    background: var(--green-strong);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 220ms, transform 220ms;
+  }
+  .ai-nudge-btn:hover { background: #163829; transform: translateY(-1px); }
+  @keyframes nudge-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ───────── Folio: end-of-turn CTAs ───────── */
+  .ai-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed rgba(31, 77, 62, 0.18);
+  }
+  .ai-cta {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: transparent;
+    border: 1px solid rgba(31, 77, 62, 0.30);
+    border-radius: 999px;
+    color: var(--green-strong);
+    font-family: var(--body);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 220ms, border-color 220ms, transform 220ms;
+  }
+  .ai-cta:hover {
+    background: rgba(31, 77, 62, 0.08);
+    border-color: var(--green-strong);
+    transform: translateY(-1px);
+  }
+  .ai-cta.primary {
+    background: var(--green-strong);
+    color: #fff;
+    border-color: var(--green-strong);
+  }
+  .ai-cta.primary:hover { background: #163829; }
+  .ai-cta-arrow { font-size: 11px; line-height: 1; }
+
+  /* ───────── Folio: inline case-study card ───────── */
+  .ai-case-card {
+    display: flex;
+    align-items: stretch;
+    gap: 14px;
+    margin-top: 14px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(31, 77, 62, 0.18);
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 220ms, transform 220ms, background 220ms;
+  }
+  .ai-case-card:hover {
+    border-color: var(--green-strong);
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+  }
+  .ai-case-card-img {
+    flex-shrink: 0;
+    width: 96px;
+    height: 64px;
+    border-radius: 8px;
+    background: rgba(31, 77, 62, 0.06);
+    overflow: hidden;
+    display: block;
+  }
+  .ai-case-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .ai-case-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+  }
+  .ai-case-card-eyebrow {
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-mute);
+    margin: 0;
+  }
+  .ai-case-card-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.008em;
+  }
+  .ai-case-card-cta {
+    font-family: var(--body);
+    font-size: 11px;
+    color: var(--green-strong);
+    margin: 2px 0 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* ───────── Folio: signature wavy line after each bot response ───────── */
+  .ai-signature {
+    display: block;
+    margin-top: 10px;
+    color: var(--green-strong);
+    opacity: 0.55;
+  }
+
+  /* Mobile — keep the inline morph but fill width and tighten padding */
   @media (max-width: 720px) {
-    .ai-dock {
-      max-width: 100%;
-      margin-top: 72px;
-    }
-    .ai-msg-bot { font-size: 14.5px; padding: 4px 0 4px 14px; }
+    .ai-morph-slot { max-width: 100%; margin-top: 80px; }
+    .ai-morph-slot.is-open { max-width: 100%; }
+    .ai-trigger { padding: 12px 6px 12px 14px; }
+    .ai-trigger-text { font-size: 13.5px; }
+    .ai-trigger-kbd { display: none; }
+    .ai-dock-inner { max-height: min(520px, calc(100vh - 160px)); }
+    .ai-msg-bot { font-size: 14.5px; padding: 14px 16px; }
   }
 
   /* Responsive */
@@ -1262,27 +1715,44 @@
     </div>
 
     <!-- ───────────────────────────────────────────────
-         AI chat dock — embedded in hero flow below the lens line
+         AI chat — Inline morph
+         Trigger and surface share a slot. Click trigger to morph in place.
     ─────────────────────────────────────────────── -->
-    <aside class="ai-dock collapsed" aria-label="Chat with Dinesh's portfolio">
-    <div class="ai-dock-inner">
+    <div class="ai-morph-slot">
 
-      <!-- Conversation panel — slides up above the input pill when expanded -->
+      <button class="ai-trigger" type="button" aria-expanded="false" aria-controls="ai-dock" aria-label="Open Folio, Dinesh's portfolio assistant">
+        <span class="ai-trigger-spark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path d="M12 2 L13.4 9.4 L20.8 10.8 L13.4 12.2 L12 19.6 L10.6 12.2 L3.2 10.8 L10.6 9.4 Z" fill="currentColor"/>
+            <path d="M18 3.5 L18.6 5.4 L20.5 6 L18.6 6.6 L18 8.5 L17.4 6.6 L15.5 6 L17.4 5.4 Z" fill="currentColor" opacity="0.7"/>
+          </svg>
+        </span>
+        <span class="ai-trigger-text" data-trigger-text>Ask Folio anything</span>
+      </button>
+
+      <aside class="ai-dock" id="ai-dock" aria-labelledby="ai-dock-title" aria-hidden="true">
+        <div class="ai-dock-inner">
+
       <div class="ai-panel">
 
         <header class="ai-header">
           <div class="ai-header-text">
-            <h3>Dinesh's AI</h3>
-            <p>Projects, approach, role fit. Ask anything.</p>
+            <h3 id="ai-dock-title">
+              <span class="ai-avatar" aria-hidden="true">
+                <span class="ai-avatar-dot"></span>
+              </span>
+              <span class="ai-name">Folio</span>
+            </h3>
+            <p class="ai-subtitle">Trained on 4 case studies, the résumé, and a decade of project notes.</p>
           </div>
           <div class="ai-controls">
             <span class="ai-mode-label">Recruiter</span>
             <button class="ai-toggle" role="switch" aria-checked="false" aria-label="Toggle recruiter mode">
               <span class="ai-toggle-thumb"></span>
             </button>
-            <button class="ai-collapse" aria-label="Minimize chat">
+            <button class="ai-collapse" aria-label="Close chat">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 5l4 4 4-4"/>
+                <path d="M3 3l8 8M11 3l-8 8"/>
               </svg>
             </button>
           </div>
@@ -1290,14 +1760,28 @@
 
         <div class="ai-convo">
 
+          <!-- Typed welcome — Folio's self-introduction, animates on first open of the session -->
+          <div class="ai-welcome" data-welcome>
+            <p class="ai-welcome-text"><span data-welcome-typed></span><span class="ai-welcome-caret">▎</span></p>
+          </div>
+
           <div class="ai-followups">
             <p class="ai-followup-label">Try asking</p>
-            <div class="ai-followup-chips">
-              <button class="ai-followup">What are his skills?</button>
-              <button class="ai-followup">What are his hobbies?</button>
-              <button class="ai-followup">Why hire Dinesh?</button>
-              <button class="ai-followup">Paste a job description</button>
+            <div class="ai-followup-chips" data-chip-container>
+              <!-- chips are populated by JS based on recruiter mode -->
             </div>
+          </div>
+
+          <!-- Recruiter-mode toast — slides in when JD is auto-detected -->
+          <div class="ai-mode-toast" data-mode-toast hidden>
+            <span class="ai-mode-toast-icon" aria-hidden="true">↗</span>
+            <span class="ai-mode-toast-text">Switched to recruiter mode</span>
+          </div>
+
+          <!-- Idle nudge — appears after ~25s of no activity -->
+          <div class="ai-idle-nudge" data-idle-nudge hidden>
+            <p>Want me to walk you through his most impressive project?</p>
+            <button type="button" class="ai-nudge-btn" data-nudge-action>Yes, show me</button>
           </div>
 
         </div>
@@ -1312,15 +1796,17 @@
             <path d="M18 3.5 L18.6 5.4 L20.5 6 L18.6 6.6 L18 8.5 L17.4 6.6 L15.5 6 L17.4 5.4 Z" fill="currentColor" opacity="0.7"/>
           </svg>
         </span>
-        <input type="text" placeholder="" aria-label="Ask Dinesh's AI anything" />
+        <input type="text" placeholder="" aria-label="Ask Folio anything" />
         <button type="submit" class="ai-send" aria-label="Press Enter to send">
           <span class="ai-send-label">Press</span>
           <span class="ai-send-kbd" aria-hidden="true">↵</span>
         </button>
       </form>
 
-    </div>
-  </aside>
+        </div>
+      </aside>
+
+    </div><!-- /.ai-morph-slot -->
 
   </main>
 
@@ -1333,18 +1819,14 @@
       <p>Four tools shipped, four teams a little quieter.</p>
     </div>
 
-    <!-- Card 1 — Real-Time Inquiry Portal · Onity (showcase) -->
-    <a href="./realtime-inquiry-case-study.html" class="case showcase">
+    <!-- Card 1 — Real-Time Inquiry Portal · Onity (showcase, expand-reveal pattern) -->
+    <a href="./realtime-inquiry-case-study.html" class="case showcase expand-reveal">
       <div class="case-visual">
         <span class="case-num" aria-hidden="true">01</span>
         <span class="status-pill" aria-label="In development, 2026">
           <span class="status-dot" aria-hidden="true"></span>
           In development · 2026
         </span>
-        <span class="float-chip f1" aria-hidden="true">Enterprise SaaS</span>
-        <span class="float-chip f2" aria-hidden="true">Interaction Design</span>
-        <span class="float-chip f3" aria-hidden="true">Mortgage Servicing</span>
-        <span class="float-chip f4" aria-hidden="true">Shipped</span>
         <span class="view-cta" aria-hidden="true">the full story</span>
         <div class="case-image">
           <img src="./images/rti-final-overview.png" alt="Inquiry Dashboard with an expanded case row showing the real-time progress tracker, Overview tab with case details and timeline, and the live filterable case table beneath" />
@@ -1354,30 +1836,32 @@
         <h2 class="case-title">
           I built a real-time portal that replaces email threads with live inquiry visibility, cutting case resolution by 62% and saving managers 6 hours a week.
         </h2>
-        <div class="case-tags">
-          <span>Enterprise SaaS</span>
-          <span>Interaction Design</span>
-          <span>Mortgage Servicing</span>
-          <span>Shipped</span>
+        <div class="case-reveal">
+          <div class="case-divider" aria-hidden="true"></div>
+          <p class="case-description">
+            A live case workspace where every inquiry has one shared record. Progress, conversation, and documents stay together, no more digging through email threads to find the latest update.
+          </p>
+          <div class="case-tags">
+            <span>Mortgage Servicing</span>
+            <span>B2B Portal</span>
+            <span>Workflow Design</span>
+            <span>Research-led</span>
+          </div>
+          <p class="case-meta">
+            <strong>Real-Time Inquiry Portal</strong> · Onity Group · 2026
+          </p>
         </div>
-        <p class="case-meta">
-          <strong>Real-Time Inquiry Portal</strong> · Onity Group · 2026
-        </p>
       </div>
     </a>
 
     <!-- Card 2 — Loan Deboarding Portal · Onity (showcase) -->
-    <a href="./loan-deboarding-case-study.html" class="case showcase">
+    <a href="./loan-deboarding-case-study.html" class="case showcase expand-reveal">
       <div class="case-visual">
         <span class="case-num" aria-hidden="true">02</span>
         <span class="status-pill" aria-label="In development, 2026">
           <span class="status-dot" aria-hidden="true"></span>
           In development · 2026
         </span>
-        <span class="float-chip f1" aria-hidden="true">Enterprise SaaS</span>
-        <span class="float-chip f2" aria-hidden="true">Research-led</span>
-        <span class="float-chip f3" aria-hidden="true">0 to 1</span>
-        <span class="float-chip f4" aria-hidden="true">Shipped</span>
         <span class="view-cta" aria-hidden="true">the full story</span>
         <div class="case-image">
           <img src="./images/loan-hero-release-dashboard.png" alt="Loan Deboarding Portal Release Dashboard showing active submissions with status chips, SLA indicators, and aging signals" />
@@ -1385,32 +1869,34 @@
       </div>
       <div class="case-content">
         <h2 class="case-title">
-          I designed one release pipeline that absorbs how each client prepares its data, so analysts can validate, reconcile, and ship a loan release from a single record.
+          I designed one release pipeline that handles how each client prepares its data, so analysts can validate, reconcile, and ship a loan release from a single record.
         </h2>
-        <div class="case-tags">
-          <span>Enterprise SaaS</span>
-          <span>Research-led</span>
-          <span>0 to 1</span>
-          <span>Shipped</span>
+        <div class="case-reveal">
+          <div class="case-divider" aria-hidden="true"></div>
+          <p class="case-description">
+            A submission and tracking portal that handles how each client prepares loan releases and gives the receiving team one shared structure downstream. Validation moves to the door, exceptions get a defined lane, and reconciliation finally ties back to the release record.
+          </p>
+          <div class="case-tags">
+            <span>Mortgage Servicing</span>
+            <span>Workflow Design</span>
+            <span>0 to 1</span>
+            <span>Research-led</span>
+          </div>
+          <p class="case-meta">
+            <strong>Loan Deboarding Portal</strong> · Onity Group · 2026
+          </p>
         </div>
-        <p class="case-meta">
-          <strong>Loan Deboarding Portal</strong> · Onity Group · 2026
-        </p>
       </div>
     </a>
 
     <!-- Card 3 — Dell IntelliAssist 2.0, From Cramped Chaos to Clarity (showcase) -->
-    <a href="./chaos-to-clarity-case-study.html" class="case showcase">
+    <a href="./chaos-to-clarity-case-study.html" class="case showcase expand-reveal">
       <div class="case-visual">
         <span class="case-num" aria-hidden="true">03</span>
         <span class="status-pill" aria-label="Shipped, 2024">
           <span class="status-dot" aria-hidden="true"></span>
           Shipped · 2024
         </span>
-        <span class="float-chip f1" aria-hidden="true">AI Tools</span>
-        <span class="float-chip f2" aria-hidden="true">Conversational UI</span>
-        <span class="float-chip f3" aria-hidden="true">Enterprise SaaS</span>
-        <span class="float-chip f4" aria-hidden="true">Shipped</span>
         <span class="view-cta" aria-hidden="true">the full story</span>
         <div class="case-image">
           <img src="./images/chaos-shipped-landing.png" alt="IntelliAssist 2.0 full-screen AI workspace, the redesigned Dell sales assistant" />
@@ -1420,30 +1906,32 @@
         <h2 class="case-title">
           I rebuilt Dell's AI workspace into a full-screen sales assistant, cutting ticket volume by 55% and pushing self-serve adoption to 92%.
         </h2>
-        <div class="case-tags">
-          <span>AI Tools</span>
-          <span>Conversational UI</span>
-          <span>Enterprise SaaS</span>
-          <span>Shipped</span>
+        <div class="case-reveal">
+          <div class="case-divider" aria-hidden="true"></div>
+          <p class="case-description">
+            A full-screen AI workspace that replaces Dell's cramped legacy chatbot. Source-tagged answers, role-aware prompts, and the sales portal's tools sit underneath the conversation, so reps trust what the AI says instead of pinging a teammate.
+          </p>
+          <div class="case-tags">
+            <span>AI / Conversational UX</span>
+            <span>Internal Tools</span>
+            <span>Trust &amp; Transparency</span>
+            <span>Information Architecture</span>
+          </div>
+          <p class="case-meta">
+            <strong>IntelliAssist 2.0, From Cramped Chaos to Clarity</strong> · Dell · 2024
+          </p>
         </div>
-        <p class="case-meta">
-          <strong>IntelliAssist 2.0, From Cramped Chaos to Clarity</strong> · Dell · 2024
-        </p>
       </div>
     </a>
 
     <!-- Card 4 — Information Architecture · Dell INC (showcase) -->
-    <a href="./dell-inc-case-study.html" class="case showcase">
+    <a href="./dell-inc-case-study.html" class="case showcase expand-reveal">
       <div class="case-visual">
         <span class="case-num" aria-hidden="true">04</span>
         <span class="status-pill" aria-label="Shipped, 2022">
           <span class="status-dot" aria-hidden="true"></span>
           Shipped · 2022
         </span>
-        <span class="float-chip f1" aria-hidden="true">IA</span>
-        <span class="float-chip f2" aria-hidden="true">Design Systems</span>
-        <span class="float-chip f3" aria-hidden="true">Research</span>
-        <span class="float-chip f4" aria-hidden="true">Shipped</span>
         <span class="view-cta" aria-hidden="true">the full story</span>
         <div class="case-image">
           <img src="./images/dellinc-hero-after.png" alt="Dell INC home dashboard after redesign with tile-based navigation and color-coded categories" />
@@ -1453,15 +1941,21 @@
         <h2 class="case-title">
           I rebuilt Dell's Information Network Center to lift findability by 40% for designers and researchers.
         </h2>
-        <div class="case-tags">
-          <span>IA</span>
-          <span>Design Systems</span>
-          <span>Research</span>
-          <span>Shipped</span>
+        <div class="case-reveal">
+          <div class="case-divider" aria-hidden="true"></div>
+          <p class="case-description">
+            A full IA rearchitecture of Dell's 30,000-employee internal portal. Favorites, in-tile report dropdowns, and a persistent side nav replace the memorized routes employees were walking through every day to reach the reports they actually use.
+          </p>
+          <div class="case-tags">
+            <span>Information Architecture</span>
+            <span>Internal Tools</span>
+            <span>Findability</span>
+            <span>Research-led</span>
+          </div>
+          <p class="case-meta">
+            <strong>Information Architecture</strong> · Dell INC · 2022
+          </p>
         </div>
-        <p class="case-meta">
-          <strong>Information Architecture</strong> · Dell INC · 2022
-        </p>
       </div>
     </a>
 
@@ -1472,8 +1966,11 @@
    AI chat dock — live streaming to /api/chat
 ─────────────────────────────────────────────── */
 (() => {
+  const slot = document.querySelector(".ai-morph-slot");
   const dock = document.querySelector(".ai-dock");
-  if (!dock) return;
+  if (!dock || !slot) return;
+  const trigger = slot.querySelector(".ai-trigger");
+  const triggerText = trigger ? trigger.querySelector("[data-trigger-text]") : null;
   const convo = dock.querySelector(".ai-convo");
   const followupsSection = dock.querySelector(".ai-followups");
   const chipsContainer = followupsSection.querySelector(".ai-followup-chips");
@@ -1481,6 +1978,62 @@
   const collapseBtn = dock.querySelector(".ai-collapse");
   const form = dock.querySelector(".ai-input");
   const input = form.querySelector("input");
+  // Folio additions
+  const welcomeSlot    = convo.querySelector("[data-welcome]");
+  const welcomeTypedEl = convo.querySelector("[data-welcome-typed]");
+  const welcomeCaretEl = welcomeSlot ? welcomeSlot.querySelector(".ai-welcome-caret") : null;
+  const modeToast      = convo.querySelector("[data-mode-toast]");
+  const idleNudge      = convo.querySelector("[data-idle-nudge]");
+  const nudgeBtn       = idleNudge ? idleNudge.querySelector("[data-nudge-action]") : null;
+
+  // ─── Inline morph open/close ───
+  function openDock(opts = {}) {
+    if (slot.classList.contains("is-open")) return;
+    slot.classList.add("is-open");
+    dock.setAttribute("aria-hidden", "false");
+    if (trigger) trigger.setAttribute("aria-expanded", "true");
+    // Focus the input once the morph transition kicks off — feels natural
+    requestAnimationFrame(() => {
+      input.focus({ preventScroll: true });
+      if (opts.seedChar) {
+        input.value = opts.seedChar;
+        form.classList.add("has-content");
+      }
+    });
+    // Pull the page down so the surface lands fully in view.
+    // Two passes: one as the morph starts, one after it settles (~440ms transition).
+    requestAnimationFrame(keepInView);
+    setTimeout(keepInView, 460);
+    // Folio: type the welcome message and arm the idle nudge timer
+    setTimeout(typeWelcome, 260);
+    startIdleTimer();
+  }
+
+  function closeDock() {
+    if (!slot.classList.contains("is-open")) return;
+    slot.classList.remove("is-open");
+    dock.setAttribute("aria-hidden", "true");
+    if (trigger) trigger.setAttribute("aria-expanded", "false");
+    // Restore focus to the trigger so keyboard users land where they started
+    if (trigger) trigger.focus({ preventScroll: true });
+  }
+
+  if (trigger) {
+    trigger.addEventListener("click", () => openDock());
+  }
+  // ESC closes; ⌘K / Ctrl+K toggles
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && slot.classList.contains("is-open")) {
+      e.preventDefault();
+      closeDock();
+      return;
+    }
+    if ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K")) {
+      e.preventDefault();
+      if (slot.classList.contains("is-open")) closeDock();
+      else openDock();
+    }
+  });
 
   // Conversation history sent to /api/chat on each turn
   const history = [];
@@ -1489,6 +2042,21 @@
 
   function scrollDown() {
     convo.scrollTop = convo.scrollHeight;
+    keepInView();
+  }
+
+  // Smooth-scroll the PAGE so the bottom of the chat surface stays in view.
+  // Inline-morph chats expand the document; without this, new messages
+  // drop off the bottom of the viewport and the user has to chase them.
+  function keepInView() {
+    if (!slot.classList.contains("is-open")) return;
+    const rect = dock.getBoundingClientRect();
+    const viewportH = window.innerHeight;
+    const margin = 32; // breathing room below the surface
+    if (rect.bottom > viewportH - margin) {
+      const overflow = rect.bottom - (viewportH - margin);
+      window.scrollBy({ top: overflow, behavior: "smooth" });
+    }
   }
 
   function clearDemo() {
@@ -1544,12 +2112,245 @@
     })[c]);
   }
 
+  /* ───────────────────────────────────────────────
+     FOLIO additions — magical moments
+  ─────────────────────────────────────────────── */
+
+  // 1. Typed welcome on first open of session
+  const WELCOME_MESSAGE = "Hi, I'm Folio. I've read every case study and the résumé. Ask me anything.";
+  let welcomeTyped = false;
+  function typeWelcome() {
+    if (welcomeTyped || !welcomeTypedEl) return;
+    welcomeTyped = true;
+    let i = 0;
+    function step() {
+      if (i > WELCOME_MESSAGE.length) {
+        if (welcomeCaretEl) welcomeCaretEl.style.display = "none";
+        return;
+      }
+      welcomeTypedEl.textContent = WELCOME_MESSAGE.slice(0, i);
+      i++;
+      setTimeout(step, 22 + Math.random() * 18);
+    }
+    setTimeout(step, 220); // small beat before typing starts
+  }
+
+  // 2. Mode-aware starter chips
+  const RECRUITER_CHIPS = [
+    "Is he a fit for a senior IC role?",
+    "Show me his strongest case study",
+    "What outcomes has he shipped?",
+    "Paste a job description",
+  ];
+  const CURIOUS_CHIPS = [
+    "What are his skills?",
+    "How does he approach research?",
+    "Tell me about a recent project",
+    "Why hire Dinesh?",
+  ];
+  function renderStarterChips() {
+    if (!chipsContainer) return;
+    if (convo.classList.contains("has-messages")) return;
+    const mode = getMode();
+    const chips = mode === "recruiter" ? RECRUITER_CHIPS : CURIOUS_CHIPS;
+    chipsContainer.innerHTML = "";
+    chips.forEach((text) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "ai-followup";
+      btn.textContent = text;
+      chipsContainer.appendChild(btn);
+    });
+  }
+
+  // 3. JD detection + auto-switch to recruiter mode
+  function looksLikeJD(text) {
+    if (!text || text.length < 240) return false;
+    const t = text.toLowerCase();
+    const signals = [
+      "we are looking for", "we're looking for", "you will be responsible",
+      "responsibilities:", "qualifications:", "requirements:",
+      "about the role", "about you", "what you'll do", "what you will do",
+      "minimum qualifications", "preferred qualifications",
+      "years of experience", "equal opportunity", "must have",
+      "nice to have", "join our team", "we're hiring",
+      "compensation", "salary range",
+    ];
+    let hits = 0;
+    for (const s of signals) {
+      if (t.includes(s)) { hits++; if (hits >= 2) return true; }
+    }
+    return false;
+  }
+  function maybeAutoSwitchMode(text) {
+    if (!toggle) return;
+    if (toggle.getAttribute("aria-checked") === "true") return;
+    if (!looksLikeJD(text)) return;
+    toggle.setAttribute("aria-checked", "true");
+    renderStarterChips();
+    showModeToast();
+  }
+  function showModeToast() {
+    if (!modeToast) return;
+    modeToast.removeAttribute("hidden");
+    setTimeout(() => modeToast.setAttribute("hidden", ""), 3200);
+  }
+
+  // 4. Idle nudge — appears after 25s of no activity (only in empty state)
+  let idleTimer = null;
+  const IDLE_MS = 25000;
+  function startIdleTimer() {
+    clearIdleTimer();
+    idleTimer = setTimeout(() => {
+      if (convo.classList.contains("has-messages")) return;
+      if (!idleNudge) return;
+      idleNudge.removeAttribute("hidden");
+      keepInView();
+    }, IDLE_MS);
+  }
+  function clearIdleTimer() {
+    if (idleTimer) { clearTimeout(idleTimer); idleTimer = null; }
+    if (idleNudge) idleNudge.setAttribute("hidden", "");
+  }
+
+  // 5. Inline case-study cards — pattern-match project mentions
+  const CASE_STUDIES = [
+    {
+      keys: ["real-time inquiry", "inquiry portal", "inquiry dashboard", "rti"],
+      title: "Real-Time Inquiry Portal",
+      eyebrow: "Onity · 2026",
+      href: "./realtime-inquiry-case-study.html",
+      img:  "./images/rti-final-overview.png",
+    },
+    {
+      keys: ["loan deboarding", "deboarding portal", "loan offboarding"],
+      title: "Loan Deboarding Portal",
+      eyebrow: "Onity · 2025",
+      href: "./loan-deboarding-case-study.html",
+      img:  null,
+    },
+    {
+      keys: ["intelliassist", "chaos to clarity", "dell sales assistant", "sales chatbot"],
+      title: "From Cramped Chaos to Clarity",
+      eyebrow: "Dell · 2024",
+      href: "./chaos-to-clarity-case-study.html",
+      img:  "./images/chaos-shipped-landing.png",
+    },
+    {
+      keys: ["information network center", "dell inc", "information architecture"],
+      title: "Information Architecture",
+      eyebrow: "Dell INC · 2022",
+      href: "./dell-inc-case-study.html",
+      img:  "./images/dellinc-hero-after.png",
+    },
+  ];
+  function renderCaseCard(cs) {
+    const a = document.createElement("a");
+    a.href = cs.href;
+    a.className = "ai-case-card";
+    a.innerHTML = `
+      ${cs.img ? `<span class="ai-case-card-img"><img src="${cs.img}" alt=""></span>` : ""}
+      <span class="ai-case-card-body">
+        <p class="ai-case-card-eyebrow">${escapeHtml(cs.eyebrow)}</p>
+        <p class="ai-case-card-title">${escapeHtml(cs.title)}</p>
+        <p class="ai-case-card-cta">Read the full story →</p>
+      </span>
+    `;
+    return a;
+  }
+
+  // 6. End-of-turn CTA row
+  function renderCTARow(ctas) {
+    const row = document.createElement("div");
+    row.className = "ai-cta-row";
+    ctas.forEach((c) => {
+      const a = document.createElement("a");
+      a.href = c.href;
+      if (c.external) { a.target = "_blank"; a.rel = "noopener"; }
+      a.className = "ai-cta" + (c.primary ? " primary" : "");
+      a.innerHTML = `${escapeHtml(c.label)} <span class="ai-cta-arrow">${c.arrow || "→"}</span>`;
+      row.appendChild(a);
+    });
+    return row;
+  }
+
+  // 7. Signature wavy line at the end of every bot response
+  function renderSignature() {
+    const sig = document.createElement("div");
+    sig.className = "ai-signature";
+    sig.innerHTML = `
+      <svg width="68" height="8" viewBox="0 0 68 8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 2 5 Q 8 1 15 5 T 31 5 T 47 5 T 64 4" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      </svg>
+    `;
+    return sig;
+  }
+
+  // 8. Augment the bot message after streaming — adds case cards, CTAs, signature
+  function augmentBotMessage(botMsg, responseText, userQuestion, turnCount) {
+    if (!botMsg) return;
+    const responseLower = (responseText || "").toLowerCase();
+    const questionLower = (userQuestion || "").toLowerCase();
+    const combined = responseLower + " " + questionLower;
+
+    // Rich case-study cards (at most 2 per response so it stays scannable)
+    const matched = [];
+    for (const cs of CASE_STUDIES) {
+      if (cs.keys.some((k) => responseLower.includes(k))) {
+        matched.push(cs);
+        if (matched.length >= 2) break;
+      }
+    }
+    matched.forEach((cs) => botMsg.appendChild(renderCaseCard(cs)));
+
+    // Contextual CTAs
+    const ctas = [];
+    const wantsContact   = /\b(email|contact|reach\s*out|hire|interview|fit\s+for|role|opportunity)\b/.test(combined);
+    const wantsResume    = /\b(resume|résumé|cv|experience|background|work\s+history)\b/.test(combined);
+    const longConvo      = (turnCount || 0) >= 3;
+
+    if (wantsContact) {
+      ctas.push({
+        href: "mailto:dineshballer@gmail.com?subject=" + encodeURIComponent("Talking about a role"),
+        label: "Email Dinesh",
+        arrow: "→",
+        primary: true,
+        external: false,
+      });
+    }
+    if (wantsResume) {
+      ctas.push({
+        href: "/resume.pdf",
+        label: "Download résumé",
+        arrow: "↓",
+        primary: false,
+        external: true,
+      });
+    }
+    if (longConvo && !wantsContact) {
+      ctas.push({
+        href: "mailto:dineshballer@gmail.com?subject=" + encodeURIComponent("Following up after your portfolio"),
+        label: "Send Dinesh a summary",
+        arrow: "→",
+        primary: false,
+        external: false,
+      });
+    }
+    if (ctas.length > 0) botMsg.appendChild(renderCTARow(ctas));
+
+    // Signature line — always present, gives every response a consistent close
+    botMsg.appendChild(renderSignature());
+  }
+
   async function ask(question) {
     if (!question || !question.trim()) return;
     // Expand the panel if it's collapsed (e.g. user typed and hit enter from pill)
     dock.classList.remove("collapsed");
     clearDemo();
     input.disabled = true;
+    // Folio: hide welcome + chips + idle nudge once the conversation starts
+    convo.classList.add("has-messages");
+    clearIdleTimer();
 
     // Add user message to UI + history
     const userMsg = document.createElement("p");
@@ -1558,16 +2359,43 @@
     convo.insertBefore(userMsg, followupsSection);
     history.push({ role: "user", content: question });
 
-    // Typing indicator — pixel grid + label
+    // Typing indicator — stick figure pulling folders from a filing rack
     const typing = document.createElement("div");
     typing.className = "ai-typing";
     typing.innerHTML = `
-      <div class="ai-typing-grid" aria-hidden="true">
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
-        <span></span><span></span><span></span>
-      </div>
-      <span class="ai-typing-text">Thinking</span>
+      <svg class="ai-typing-anim" viewBox="0 0 140 70" width="84" height="42" aria-hidden="true">
+        <!-- Thought dots above the head -->
+        <circle class="thought thought-1" cx="50" cy="10" r="1.3" fill="currentColor"/>
+        <circle class="thought thought-2" cx="56"  cy="5"  r="0.9" fill="currentColor"/>
+
+        <!-- Filing rack (right side) -->
+        <g class="rack" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="84" y="14" width="50" height="50" rx="3"/>
+          <line x1="84" y1="32" x2="134" y2="32"/>
+          <line x1="84" y1="48" x2="134" y2="48"/>
+        </g>
+
+        <!-- Folders in rack -->
+        <g class="rack-folders">
+          <rect class="rf rf-1" x="88" y="17" width="42" height="11" rx="1.5" fill="currentColor"/>
+          <rect class="rf rf-2" x="88" y="34" width="42" height="11" rx="1.5" fill="currentColor" opacity="0.78"/>
+          <rect class="rf rf-3" x="88" y="51" width="42" height="11" rx="1.5" fill="currentColor" opacity="0.6"/>
+        </g>
+
+        <!-- Stick figure (left side) -->
+        <g class="walker" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <circle class="head" cx="38" cy="22" r="5" fill="currentColor"/>
+          <path  class="torso"     d="M38 27 L38 46"/>
+          <path  class="leg-a"     d="M38 46 L32 60"/>
+          <path  class="leg-b"     d="M38 46 L44 60"/>
+          <path  class="arm-rest"  d="M38 32 L30 40"/>
+          <path  class="arm-reach" d="M38 32 L46 40"/>
+        </g>
+
+        <!-- Folder being carried — flies from rack to figure -->
+        <rect class="float-folder" x="0" y="0" width="22" height="10" rx="1.5" fill="currentColor"/>
+      </svg>
+      <span class="ai-typing-text">Reading the files</span>
     `;
     convo.insertBefore(typing, followupsSection);
     scrollDown();
@@ -1600,6 +2428,8 @@
       botMsg = document.createElement("div");
       botMsg.className = "ai-msg-bot ai-msg-streaming";
       convo.insertBefore(botMsg, followupsSection);
+      // Folio: pulse the avatar while streaming
+      dock.classList.add("is-speaking");
 
       // Parse Anthropic SSE stream
       const reader = res.body.getReader();
@@ -1638,17 +2468,22 @@
       }
 
       botMsg.classList.remove("ai-msg-streaming");
+      dock.classList.remove("is-speaking");
       // Strip the followups section before saving to history
       const cleanForHistory = accumulated.split(/---ASK---/i)[0].trim();
       history.push({ role: "assistant", content: cleanForHistory });
+      // Folio: append rich case-study cards, contextual CTAs, and signature wavy
+      const turnCount = history.filter((m) => m.role === "user").length;
+      augmentBotMessage(botMsg, cleanForHistory, question, turnCount);
       // Pull suggested follow-ups out of the response and refresh the chips
       refreshFollowups(extractFollowups(accumulated));
     } catch (err) {
       if (typing.parentNode) typing.remove();
+      dock.classList.remove("is-speaking");
       const errMsg = document.createElement("div");
       errMsg.className = "ai-msg-bot ai-msg-error";
       errMsg.innerHTML =
-        `<p>Couldn't reach the AI right now — <em>${escapeHtml(
+        `<p>Couldn't reach Folio right now: <em>${escapeHtml(
           err.message || "unknown error"
         )}</em>. Try again in a moment.</p>`;
       convo.insertBefore(errMsg, followupsSection);
@@ -1668,18 +2503,25 @@
     ask(chip.textContent.trim());
   });
 
-  // Recruiter mode toggle
+  // Recruiter mode toggle — also refreshes the starter chips when in empty state
   if (toggle) {
     toggle.addEventListener("click", () => {
       const next = toggle.getAttribute("aria-checked") !== "true";
       toggle.setAttribute("aria-checked", String(next));
+      renderStarterChips();
     });
   }
 
-  // Collapse / expand
+  // Close button in modal header
   if (collapseBtn) {
-    collapseBtn.addEventListener("click", () => {
-      dock.classList.toggle("collapsed");
+    collapseBtn.addEventListener("click", closeDock);
+  }
+
+  // Idle nudge button → asks Folio for the strongest case study
+  if (nudgeBtn) {
+    nudgeBtn.addEventListener("click", () => {
+      clearIdleTimer();
+      ask("Show me his strongest case study");
     });
   }
 
@@ -1688,14 +2530,28 @@
     e.preventDefault();
     const value = input.value.trim();
     if (!value) return;
+    // Folio: detect a pasted job description and auto-switch to recruiter mode
+    maybeAutoSwitchMode(value);
     input.value = "";
+    form.classList.remove("has-content");
     ask(value);
   });
 
-  // ─── Auto-expand the panel when the input gets focus ───
-  input.addEventListener("focus", () => {
-    dock.classList.remove("collapsed");
-  });
+  // Folio: seed the starter chips on load so the empty state always has the right ones
+  renderStarterChips();
+
+  // Open modal if a letter key is pressed while trigger is focused (seamless typing).
+  // Bail once the modal is open so subsequent keys flow naturally to the input.
+  if (trigger) {
+    trigger.addEventListener("keydown", (e) => {
+      if (dock.classList.contains("is-open")) return;
+      if (e.key === " " || e.key === "Enter") return; // let native button activation handle these
+      if (e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey) {
+        e.preventDefault();
+        openDock({ seedChar: e.key });
+      }
+    });
+  }
 
   // ─── Toggle the send button visibility based on whether the user has typed ───
   input.addEventListener("input", () => {
@@ -1707,21 +2563,30 @@
   });
 
   // ─── Typewriter placeholder — cycles through prompts character-by-character ───
+  // Drives BOTH the trigger pill text (always visible) and the modal input placeholder.
   const placeholders = [
     "What are his skills?",
-    "What are his hobbies?",
     "Tell me about a recent project",
     "Why hire Dinesh?",
     "What's his strongest fit?",
     "Paste a job description",
+    "Show me his strongest case study",
   ];
 
   let phIdx = 0;
   let charIdx = 0;
   let deleting = false;
 
+  function writeText(text) {
+    // Modal input — uses placeholder (with blinking caret appended)
+    input.placeholder = text + "▎";
+    // Trigger pill text — show the SAME prompt so the experience reads continuously.
+    // The CSS adds its own caret via ::after, so we don't append one here.
+    if (triggerText) triggerText.textContent = text || "Ask Dinesh's AI anything";
+  }
+
   function typewriterStep() {
-    // Pause when user is interacting — their input takes priority
+    // Pause when user is interacting with the modal input — their text takes priority.
     if (document.activeElement === input || input.value.length > 0) {
       input.placeholder = "";
       setTimeout(typewriterStep, 400);
@@ -1731,7 +2596,7 @@
     const current = placeholders[phIdx];
     if (!deleting) {
       charIdx++;
-      input.placeholder = current.slice(0, charIdx) + "▎";
+      writeText(current.slice(0, charIdx));
       if (charIdx >= current.length) {
         deleting = true;
         setTimeout(typewriterStep, 1500); // hold full word
@@ -1740,7 +2605,7 @@
       setTimeout(typewriterStep, 55 + Math.random() * 45); // human-ish typing variance
     } else {
       charIdx--;
-      input.placeholder = current.slice(0, charIdx) + "▎";
+      writeText(current.slice(0, charIdx));
       if (charIdx <= 0) {
         deleting = false;
         phIdx = (phIdx + 1) % placeholders.length;
@@ -1784,6 +2649,47 @@
     e.preventDefault();
     activate(chips[n].dataset.lens);
     chips[n].focus();
+  });
+})();
+
+/* ───────────────────────────────────────────────
+   Case card hover auto-scroll
+   When a card expands on hover, smoothly scroll the page so
+   the card top aligns with the viewport top (below nav), so
+   the image, title, description, tags, and meta are all visible.
+─────────────────────────────────────────────── */
+(() => {
+  const cards = document.querySelectorAll(".case.showcase.expand-reveal");
+  if (!cards.length) return;
+
+  // Skip on touch devices and reduced-motion users
+  const isTouch = window.matchMedia("(hover: none)").matches;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (isTouch || reducedMotion) return;
+
+  const HOVER_INTENT_DELAY = 160;  // wait briefly to confirm hover intent
+  const TOP_TARGET = 96;           // distance from viewport top (nav clearance)
+  const MICRO_SCROLL_THRESHOLD = 24; // avoid jittery sub-pixel scrolls
+
+  cards.forEach(card => {
+    let hoverTimer = null;
+
+    card.addEventListener("mouseenter", () => {
+      clearTimeout(hoverTimer);
+      hoverTimer = setTimeout(() => {
+        const rect = card.getBoundingClientRect();
+        // Snap card top to TOP_TARGET so the full expansion stays in view
+        const scrollDelta = rect.top - TOP_TARGET;
+
+        if (Math.abs(scrollDelta) > MICRO_SCROLL_THRESHOLD) {
+          window.scrollBy({ top: scrollDelta, behavior: "smooth" });
+        }
+      }, HOVER_INTENT_DELAY);
+    });
+
+    card.addEventListener("mouseleave", () => {
+      clearTimeout(hoverTimer);
+    });
   });
 })();
 </script>
