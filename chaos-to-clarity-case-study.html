@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300..700;9..144,1,300..500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300..700;9..144,1,300..500&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -781,6 +781,200 @@
     }
     .solution-detail { padding: 24px; gap: 24px; }
   }
+
+  /* ── End-cap + footer ── */
+  .end-cap {
+    margin-top: 80px;
+    padding: 64px 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .end-cap .next-up {
+    display: block;
+    text-decoration: none;
+    padding: 36px 40px;
+    border-radius: 16px;
+    background: var(--ink);
+    color: #fff;
+    transition: transform 220ms cubic-bezier(0.2,0.65,0.3,1), box-shadow 220ms ease;
+    margin-bottom: 56px;
+  }
+  .end-cap .next-up:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 48px rgba(15,8,104,0.14);
+  }
+  .end-cap .next-up .next-eyebrow {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .end-cap .next-up .next-title {
+    font-family: var(--display);
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #fff;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .end-cap .next-up .arrow {
+    font-family: var(--body);
+    font-size: 22px;
+    transition: transform 220ms ease;
+    flex-shrink: 0;
+  }
+  .end-cap .next-up:hover .arrow { transform: translateX(6px); }
+  .other-work {
+    margin: 0 0 56px;
+    padding-top: 48px;
+    border-top: 1px solid var(--line);
+  }
+  .other-work-label {
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    display: block;
+    margin-bottom: 24px;
+  }
+  .other-work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .ow-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 20px;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+  }
+  .ow-item:hover {
+    background: rgba(31,77,62,0.04);
+    border-color: rgba(31,77,62,0.25);
+    transform: translateY(-2px);
+  }
+  .ow-title {
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .ow-co { font-size: 12px; color: var(--ink-mute); }
+  .ow-arrow {
+    margin-top: auto;
+    padding-top: 12px;
+    font-size: 13px;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+  .ow-item:hover .ow-arrow { opacity: 1; transform: translateX(0); }
+  .end-cap .cta-block {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: end;
+    padding-bottom: 96px;
+    border-top: 1px solid var(--line);
+    padding-top: 56px;
+  }
+  .end-cap .cta-block h3 {
+    font-family: var(--display);
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    margin: 0;
+  }
+  .end-cap .cta-block h3 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .end-cap .cta-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .end-cap .cta-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--line);
+    transition: color 220ms ease, padding-left 220ms ease;
+  }
+  .end-cap .cta-link:hover { color: var(--accent); padding-left: 6px; }
+  .end-cap .cta-link .cta-arrow {
+    font-size: 14px;
+    transition: transform 220ms ease;
+  }
+  .end-cap .cta-link:hover .cta-arrow { transform: translate(4px,-4px) rotate(-45deg); }
+  .end-cap .cta-link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 0;
+    color: var(--ink);
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--body);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: color 220ms ease, padding-left 220ms ease;
+  }
+  .end-cap .cta-link-btn:hover { color: var(--accent); padding-left: 6px; }
+  .end-cap .cta-link-btn.cs-copied { color: var(--accent); }
+  .footer-nav {
+    padding: 36px 0 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-nav a { text-decoration: none; }
+  .footer-wordmark-cs {
+    font-family: "Caveat", cursive;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.01em;
+    display: inline-block;
+    transform-origin: left center;
+    transition: transform 220ms ease;
+  }
+  .footer-wordmark-cs:hover { transform: rotate(-1.5deg) scale(1.04); }
+  .footer-legal-cs { font-size: 12px; color: var(--ink-mute); }
+  @media (max-width: 880px) {
+    .other-work-grid { grid-template-columns: 1fr; }
+    .end-cap .cta-block { grid-template-columns: 1fr; gap: 24px; padding-bottom: 64px; }
+    .end-cap .cta-block h3 { font-size: 28px; }
+    .end-cap .next-up { padding: 28px; }
+    .end-cap .next-up .next-title { font-size: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+
 </style>
 </head>
 <body>
@@ -1310,6 +1504,66 @@
   </div>
 </section>
 
+
+<!-- End cap: next case study + other work + closing CTA -->
+<section id="end-cap-section" style="padding-bottom:0;">
+  <div class="wrap">
+    <div class="end-cap">
+
+      <a href="./dell-inc-case-study.html" class="next-up">
+        <span class="next-eyebrow">Next case study</span>
+        <div class="next-title">
+          I led the redesign of Dell's Information Network Center, restructuring the IA so designers and researchers could finally find each other's work
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <div class="other-work">
+        <span class="other-work-label">More work</span>
+        <div class="other-work-grid">
+          <a href="./realtime-inquiry-case-study.html" class="ow-item">
+            <span class="ow-title">Real-Time Inquiry Portal</span>
+            <span class="ow-co">Onity</span>
+            <span class="ow-arrow">→</span>
+          </a>
+          <a href="./loan-deboarding-case-study.html" class="ow-item">
+            <span class="ow-title">Loan Deboarding Portal</span>
+            <span class="ow-co">Onity</span>
+            <span class="ow-arrow">→</span>
+          </a>
+          <a href="./dell-ai-case-study.html" class="ow-item">
+            <span class="ow-title">AI Sales Enablement</span>
+            <span class="ow-co">Dell</span>
+            <span class="ow-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="cta-block">
+        <h3>Good work starts with<br><em>a good conversation.</em></h3>
+        <div class="cta-links">
+          <button class="cta-link-btn" id="cs-copy-email" aria-label="Copy email address">
+            <span id="cs-copy-label">copy email</span>
+            <span class="cta-arrow" aria-hidden="true">↗</span>
+          </button>
+          <a href="https://linkedin.com/in/dineshkravikumar" class="cta-link" target="_blank" rel="noopener">
+            LinkedIn <span class="cta-arrow">↗</span>
+          </a>
+          <a href="/resume.pdf" class="cta-link" target="_blank" rel="noopener">
+            Résumé <span class="cta-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/" class="footer-wordmark-cs">Dinesh Kumar</a>
+        <span class="footer-legal-cs">© 2026 Dinesh Kumar</span>
+      </nav>
+
+    </div>
+  </div>
+</section>
+
 <!-- Lightbox overlay -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
   <button class="lightbox-close" id="lightbox-close" aria-label="Close preview">×</button>
@@ -1395,6 +1649,53 @@
     });
   }
 })();
+
+/* ── Hide scroll-spy when end-cap is visible ── */
+(() => {
+  const spy    = document.querySelector('.scroll-spy');
+  const endCap = document.getElementById('end-cap-section');
+  if (!spy || !endCap) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      spy.style.transition = 'opacity 300ms ease, transform 300ms ease';
+      if (e.isIntersecting) {
+        spy.style.opacity = '0';
+        spy.style.transform = 'translateY(-50%) translateX(-16px)';
+        spy.style.pointerEvents = 'none';
+      } else {
+        spy.style.opacity = '1';
+        spy.style.transform = 'translateY(-50%)';
+        spy.style.pointerEvents = '';
+      }
+    });
+  }, { threshold: 0.05 });
+  io.observe(endCap);
+})();
+
+/* ── Footer copy email ── */
+(() => {
+  const btn   = document.getElementById('cs-copy-email');
+  const label = document.getElementById('cs-copy-label');
+  if (!btn) return;
+  let timer;
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText('dineshkravikumar@gmail.com');
+    } catch (_) {
+      const ta = document.createElement('textarea');
+      ta.value = 'dineshkravikumar@gmail.com';
+      ta.style.cssText = 'position:fixed;opacity:0;';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    }
+    label.textContent = 'copied ✓';
+    btn.classList.add('cs-copied');
+    clearTimeout(timer);
+    timer = setTimeout(() => { label.textContent = 'copy email'; btn.classList.remove('cs-copied'); }, 2000);
+  });
+})();
+
 </script>
 
 </body>

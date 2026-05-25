@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://api.fontshare.com" />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300..700;9..144,1,300..500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300..700;9..144,1,300..500&family=Caveat:wght@600&display=swap" rel="stylesheet" />
 <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
 
 <style>
@@ -1014,6 +1014,121 @@
     .hero-quote::before { font-size: 140px; left: 20px; }
     .role-dates { text-align: left; }
   }
+
+  /* ── Site footer ── */
+  .site-footer {
+    background: #F6F1E8;
+    margin-top: 140px;
+    padding: 80px 48px 40px;
+  }
+  .site-footer .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .footer-top {
+    border-bottom: 1px solid rgba(23, 23, 23, 0.10);
+    padding-bottom: 56px;
+    margin-bottom: 40px;
+  }
+  .footer-headline {
+    font-family: var(--display);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 16px;
+    max-width: 660px;
+  }
+  .footer-headline em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .footer-sub {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 64px;
+  }
+  .footer-copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px;
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    background: var(--accent);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 200ms ease, transform 180ms ease;
+  }
+  .footer-copy-btn:hover { background: #163d30; transform: translateY(-1px); }
+  .footer-copy-btn:active { transform: translateY(0); }
+  .footer-copy-btn .fp-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.65);
+    flex-shrink: 0;
+    animation: pulse-dot 2.4s ease infinite;
+  }
+  @keyframes pulse-dot {
+    0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.45); }
+    60%  { box-shadow: 0 0 0 5px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  }
+  .footer-ext-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 20px;
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border: 1px solid rgba(23, 23, 23, 0.14);
+    border-radius: 999px;
+    transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  }
+  .footer-ext-link:hover { color: var(--ink); border-color: rgba(23,23,23,0.36); transform: translateY(-1px); }
+  .footer-ext-link .ext-arrow { font-size: 11px; transition: transform 180ms ease; }
+  .footer-ext-link:hover .ext-arrow { transform: translate(2px,-2px); }
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-wordmark {
+    font-family: "Caveat", cursive;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    display: inline-block;
+    transform-origin: left center;
+    transition: transform 220ms ease;
+  }
+  .footer-wordmark:hover { transform: rotate(-1.5deg) scale(1.04); }
+  .footer-legal {
+    font-size: 12px;
+    color: var(--ink-mute);
+  }
+  @media (max-width: 640px) {
+    .site-footer { padding: 56px 24px 32px; }
+    .footer-actions { gap: 8px; }
+  }
 </style>
 </head>
 <body>
@@ -1542,7 +1657,56 @@
     }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
     items.forEach(i => io.observe(i));
   })();
+
+  /* Footer copy email */
+  (() => {
+    const btn   = document.getElementById("footer-copy-email");
+    const label = document.getElementById("footer-copy-label");
+    if (!btn) return;
+    let timer;
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText("dineshkravikumar@gmail.com");
+      } catch (_) {
+        const ta = document.createElement("textarea");
+        ta.value = "dineshkravikumar@gmail.com";
+        ta.style.cssText = "position:fixed;opacity:0;";
+        document.body.appendChild(ta); ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      label.textContent = "copied ✓";
+      btn.classList.add("f-copied");
+      clearTimeout(timer);
+      timer = setTimeout(() => { label.textContent = "copy email"; btn.classList.remove("f-copied"); }, 2000);
+    });
+  })();
 </script>
+
+<footer class="site-footer" aria-label="Site footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <p class="footer-headline">Good work starts with<br><em>a good conversation.</em></p>
+      <p class="footer-sub">Open to senior product design roles. Available to talk.</p>
+    </div>
+    <div class="footer-actions">
+      <button class="footer-copy-btn" id="footer-copy-email" aria-label="Copy email address">
+        <span class="fp-dot" aria-hidden="true"></span>
+        <span id="footer-copy-label">copy email</span>
+      </button>
+      <a href="https://linkedin.com/in/dineshkravikumar" class="footer-ext-link" target="_blank" rel="noopener">
+        LinkedIn <span class="ext-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a href="/resume.pdf" class="footer-ext-link" target="_blank" rel="noopener">
+        Résumé <span class="ext-arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <div class="footer-bottom">
+      <a href="/" class="footer-wordmark" aria-label="Home">Dinesh Kumar</a>
+      <span class="footer-legal">© 2026 Dinesh Kumar. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
