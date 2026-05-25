@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Story — Dinesh Baller (sandbox)</title>
+<title>Story — Dinesh Baller</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -532,105 +532,6 @@
     margin-top: 4px;
   }
 
-  /* ─────────── NOW CARD ─────────── */
-  .now-section {
-    padding: 0 0 120px;
-  }
-  .now-card {
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    padding: 40px 44px;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 56px;
-    align-items: start;
-    position: relative;
-    overflow: hidden;
-  }
-  .now-card::before {
-    content: '';
-    position: absolute;
-    top: -40%; right: -10%;
-    width: 320px; height: 320px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(31, 77, 62, 0.10), transparent 70%);
-    filter: blur(50px);
-    pointer-events: none;
-  }
-  .now-head {
-    position: relative;
-    z-index: 2;
-  }
-  .now-eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 5px 12px 5px 10px;
-    background: rgba(40, 168, 104, 0.12);
-    color: #1d6e47;
-    border-radius: 999px;
-    font-size: 11px; font-weight: 600;
-    letter-spacing: 0.10em; text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-  .now-eyebrow .dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #28a868;
-    box-shadow: 0 0 0 3px rgba(40, 168, 104, 0.20);
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-  .now-title {
-    font-family: var(--display);
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 1.1;
-    letter-spacing: -0.018em;
-    margin: 0;
-    color: var(--ink);
-    font-variation-settings: "opsz" 48;
-  }
-  .now-title em { font-style: italic; color: var(--accent); }
-  .now-rows {
-    list-style: none;
-    margin: 0; padding: 0;
-    display: flex; flex-direction: column;
-    position: relative;
-    z-index: 2;
-  }
-  .now-row {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 24px;
-    padding: 18px 0;
-    border-bottom: 1px solid var(--line-soft);
-    align-items: baseline;
-  }
-  .now-row:last-child { border-bottom: none; }
-  .nr-label {
-    font-family: var(--display);
-    font-style: italic;
-    font-size: 14px;
-    color: var(--accent);
-    font-variation-settings: "opsz" 18;
-  }
-  .nr-value {
-    font-family: var(--display);
-    font-size: 19px;
-    font-weight: 400;
-    color: var(--ink);
-    line-height: 1.4;
-    font-variation-settings: "opsz" 24;
-  }
-  .nr-value em { font-style: italic; color: var(--ink-soft); font-weight: 350; }
-  .nr-meta {
-    display: block;
-    font-family: var(--body);
-    font-size: 13px;
-    color: var(--ink-mute);
-    font-style: normal;
-    margin-top: 2px;
-  }
-
   /* ─────────── UX REALIZATIONS (accordion) ─────────── */
   .realizations {
     padding: 0 0 120px;
@@ -1109,8 +1010,6 @@
     .principles-row { grid-template-columns: repeat(2, 1fr); }
     .principle:nth-child(2) { border-right: none; }
     .principle:nth-child(1), .principle:nth-child(2) { border-bottom: 1px solid var(--line); }
-    .now-card { grid-template-columns: 1fr; gap: 32px; padding: 32px 28px; }
-    .now-row { grid-template-columns: 100px 1fr; gap: 16px; }
     .hero-quote { padding: 40px 32px; }
     .hero-quote::before { font-size: 140px; left: 20px; }
     .role-dates { text-align: left; }
@@ -1344,45 +1243,6 @@
     </div>
   </section>
 
-  <!-- ─────────── NOW CARD — NEW -->
-  <section class="container now-section">
-    <div class="now-card reveal">
-      <div class="now-head">
-        <span class="now-eyebrow"><span class="dot"></span>Now</span>
-        <h2 class="now-title">What I'm <em>up to</em><br>this week.</h2>
-      </div>
-      <ul class="now-rows">
-        <li class="now-row">
-          <span class="nr-label">Designing</span>
-          <span class="nr-value">
-            Mortgage release pipelines at <em>Onity Group</em>
-            <span class="nr-meta">Bulk validation, reconciliation, real-time inquiry portal</span>
-          </span>
-        </li>
-        <li class="now-row">
-          <span class="nr-label">Reading</span>
-          <span class="nr-value">
-            <em>Storyworthy</em> by Matthew Dicks
-            <span class="nr-meta">For sharper case studies, sharper standups</span>
-          </span>
-        </li>
-        <li class="now-row">
-          <span class="nr-label">Listening</span>
-          <span class="nr-value">
-            <em>Dive Club</em> + the occasional Lo-fi mix
-            <span class="nr-meta">Focus loops while I'm in Figma</span>
-          </span>
-        </li>
-        <li class="now-row">
-          <span class="nr-label">Open to</span>
-          <span class="nr-value">
-            <em>Senior product roles</em> in enterprise UX, AI tooling, or fintech
-            <span class="nr-meta">Atlanta, hybrid or remote. <a href="mailto:dineshballer@gmail.com" style="color: var(--accent); text-decoration: underline;">Say hi.</a></span>
-          </span>
-        </li>
-      </ul>
-    </div>
-  </section>
 
   <!-- ─────────── EXPERIENCE ─────────── -->
   <section class="container experience">

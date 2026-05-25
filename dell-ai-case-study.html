@@ -133,6 +133,38 @@
     font-size: 12.5px;
   }
 
+  /* Snapshot, 3-paragraph TL;DR */
+  .snapshot {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 32px;
+    padding: 36px 40px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+  }
+  .snapshot .snap-col { padding-right: 32px; }
+  .snapshot .snap-col + .snap-col {
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
+  }
+  .snapshot .snap-label {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .snapshot p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
   /* Retrospective */
   .reflect-grid {
     display: grid;
@@ -640,7 +672,7 @@
     h2 { font-size: 28px; }
     .hero-grid, .stats, .what-why-grid, .insights-grid, .option-compare,
     .solution-detail, .eval-grid, .constraints-grid, .sec-head-aside,
-    .quick-facts, .reflect-grid {
+    .quick-facts, .reflect-grid, .snapshot {
       grid-template-columns: 1fr;
     }
     .quick-facts { padding: 22px; gap: 22px; }
@@ -651,6 +683,15 @@
       padding-left: 0;
       padding-top: 22px;
     }
+    .snapshot { padding: 24px; }
+    .snapshot .snap-col { padding: 0; }
+    .snapshot .snap-col + .snap-col {
+      border-left: none;
+      border-top: 1px solid var(--line);
+      padding-left: 0;
+      padding-top: 24px;
+      margin-top: 24px;
+    }
     .outcomes-final .stats { grid-template-columns: 1fr 1fr; gap: 32px; }
     .solution-detail { padding: 24px; gap: 24px; }
   }
@@ -660,6 +701,7 @@
 
 <!-- SCROLL SPY -->
 <nav class="scroll-spy" aria-label="Jump to section">
+  <a href="#snapshot">Snapshot</a>
   <a href="#context">Problem</a>
   <a href="#what-why">What &amp; Why</a>
   <a href="#research">Research</a>
@@ -692,7 +734,7 @@
       </div>
       <div>
         <div class="eyebrow" style="margin-bottom:10px;">The Solution</div>
-        <p>IntelliAssist, an AI-powered chat interface that consolidates six+ tools into one place. Users ask in natural language and get verified answers with sources attached, so they can trust what they read and move on.</p>
+        <p>IntelliAssist, a GEN-AI chat interface that consolidates six+ tools into one place. Users ask in natural language and get verified answers with sources attached, so they can trust what they read and move on.</p>
       </div>
     </div>
 
@@ -744,6 +786,36 @@
   </div>
 </section>
 
+<!-- SNAPSHOT -->
+<section id="snapshot">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Snapshot</div>
+        <h2>The short version.</h2>
+      </div>
+      <div>
+        <p>If you only read three paragraphs, read these. Problem, change, and results in about a minute.</p>
+      </div>
+    </div>
+
+    <div class="snapshot">
+      <div class="snap-col">
+        <div class="snap-label">Problem</div>
+        <p>Dell sales reps relied on at least six platforms to answer customer questions, knowledge base, order systems, support docs, internal wikis, ticketing tools, and product spec sheets. A single question often meant three or four context switches on every call.</p>
+      </div>
+      <div class="snap-col">
+        <div class="snap-label">Change</div>
+        <p>I built a GEN-AI chat interface that lets reps ask questions in plain language and get verified answers, with the underlying sources surfaced. Six platforms collapsed into one conversational surface, and the citation pattern carried the trust, not just the model.</p>
+      </div>
+      <div class="snap-col">
+        <div class="snap-label">Results</div>
+        <p>10,000+ Dell sales reps adopted the tool. Six+ platforms consolidated into one surface. The post-launch usability survey landed an 85 SUS, validating that reps could find, trust, and act on answers without leaving the chat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTEXT -->
 <section id="context">
   <div class="wrap">
@@ -768,7 +840,7 @@
         <h2>An AI chatbot to unify the answer layer.</h2>
       </div>
       <div>
-        <p>IntelliAssist is an AI-powered assistant that lets Dell employees ask questions in plain language and get verified answers, with the underlying sources surfaced for review. The why is the part most AI projects skip: this is replacing six tools, so trust is the foundation.</p>
+        <p>IntelliAssist is a GEN-AI assistant that lets Dell employees ask questions in plain language and get verified answers, with the underlying sources surfaced for review. The why is the part most AI projects skip: this is replacing six tools, so trust is the foundation.</p>
       </div>
     </div>
 

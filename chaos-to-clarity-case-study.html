@@ -133,6 +133,38 @@
     font-size: 12.5px;
   }
 
+  /* Snapshot, 3-paragraph TL;DR */
+  .snapshot {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 32px;
+    padding: 36px 40px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+  }
+  .snapshot .snap-col { padding-right: 32px; }
+  .snapshot .snap-col + .snap-col {
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
+  }
+  .snapshot .snap-label {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .snapshot p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
   /* Retrospective */
   .reflect-grid {
     display: grid;
@@ -727,7 +759,7 @@
     h2 { font-size: 28px; }
     .hero-grid, .stats, .what-why-grid, .insights-grid, .principle-grid,
     .solution-detail, .eval-grid, .constraints-grid, .sec-head-aside,
-    .quick-facts, .reflect-grid {
+    .quick-facts, .reflect-grid, .snapshot {
       grid-template-columns: 1fr;
     }
     .quick-facts { padding: 22px; gap: 22px; }
@@ -738,6 +770,15 @@
       padding-left: 0;
       padding-top: 22px;
     }
+    .snapshot { padding: 24px; }
+    .snapshot .snap-col { padding: 0; }
+    .snapshot .snap-col + .snap-col {
+      border-left: none;
+      border-top: 1px solid var(--line);
+      padding-left: 0;
+      padding-top: 24px;
+      margin-top: 24px;
+    }
     .solution-detail { padding: 24px; gap: 24px; }
   }
 </style>
@@ -746,6 +787,7 @@
 
 <!-- SCROLL SPY -->
 <nav class="scroll-spy" aria-label="Jump to section">
+  <a href="#snapshot">Snapshot</a>
   <a href="#context">Problem</a>
   <a href="#what-why">What &amp; Why</a>
   <a href="#research">Research</a>
@@ -827,6 +869,36 @@
 
     <div class="confidential">
       Note: names, workflow details, and screen interfaces have been modified to maintain Dell's confidentiality.
+    </div>
+  </div>
+</section>
+
+<!-- SNAPSHOT -->
+<section id="snapshot">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Snapshot</div>
+        <h2>The short version.</h2>
+      </div>
+      <div>
+        <p>If you only read three paragraphs, read these. Problem, change, and results in about a minute.</p>
+      </div>
+    </div>
+
+    <div class="snapshot">
+      <div class="snap-col">
+        <div class="snap-label">Problem</div>
+        <p>Dell employees worked inside a cramped chat box that surfaced shallow AI answers and hid the platform's real capabilities. Checking a single order meant opening four other tabs, then pinging a teammate. Adoption stalled and support tickets piled up.</p>
+      </div>
+      <div class="snap-col">
+        <div class="snap-label">Change</div>
+        <p>I rebuilt IntelliAssist into a full-screen AI workspace that unifies 12+ APIs, source-tagged answers, and the sales portal's tools under one conversation. Reps see where each answer came from, trust what they read, and stay inside one surface.</p>
+      </div>
+      <div class="snap-col">
+        <div class="snap-label">Results</div>
+        <p>Ticket volume dropped 55% across enterprise support. Self-serve adoption hit 92% on the new workspace. Task completion ran 78% faster vs. 52% on the legacy chat. 85% of pilot users reported easier access to critical tools.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1030,7 +1102,7 @@
         <div class="sol-text">
           <span class="sol-num">2</span>
           <h4>Familiar cards carried over from the legacy interface</h4>
-          <p>To ease adoption, I retained the familiar card layout from the legacy interface. This preserved mental-model continuity, reduced cognitive friction, and helped users feel more in control. A small but intentional decision that improved learnability and supported a smoother behavioral transition to the AI-powered workflow.</p>
+          <p>To ease adoption, I retained the familiar card layout from the legacy interface. This preserved mental-model continuity, reduced cognitive friction, and helped users feel more in control. A small but intentional decision that improved learnability and supported a smoother behavioral transition to the AI workflow.</p>
           <div class="sol-tag">Change Management · Mental Model</div>
         </div>
         <div class="sol-img">

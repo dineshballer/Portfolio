@@ -57,31 +57,16 @@
     width: 560px; height: 560px;
     top: -140px; left: -160px;
     background: radial-gradient(circle, rgba(31, 77, 62, 0.22), transparent 70%);
-    animation: drift-1 34s ease-in-out infinite alternate;
   }
   .bg-blob.b2 {
     width: 720px; height: 720px;
     top: 18%; right: -240px;
     background: radial-gradient(circle, rgba(220, 195, 150, 0.38), transparent 70%);
-    animation: drift-2 42s ease-in-out infinite alternate;
   }
   .bg-blob.b3 {
     width: 500px; height: 500px;
     bottom: -160px; left: 28%;
     background: radial-gradient(circle, rgba(46, 125, 91, 0.22), transparent 70%);
-    animation: drift-3 30s ease-in-out infinite alternate;
-  }
-  @keyframes drift-1 {
-    0%   { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(90px, 70px) scale(1.08); }
-  }
-  @keyframes drift-2 {
-    0%   { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(-70px, 50px) scale(1.04); }
-  }
-  @keyframes drift-3 {
-    0%   { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(50px, -60px) scale(1.07); }
   }
   nav.nav, .scroll-cue {
     position: relative;
@@ -190,15 +175,33 @@
     height: 1px;
     background: var(--green-strong);
     transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 360ms var(--ease);
+    transform-origin: right;
+    transition: transform 320ms var(--ease);
   }
   .chip[aria-selected="true"] {
     color: var(--green-strong);
     font-weight: 600;
   }
+  /* Active chip: the underline acts as a 4s countdown — starts full, drains to empty,
+     then the JS interval advances to the next chip. */
   .chip[aria-selected="true"]::after {
-    transform: scaleX(1);
+    transform-origin: right;
+    animation: chip-countdown 4s linear forwards;
+  }
+  /* Pause the countdown while the user is interacting with the chip rail */
+  .chip-rail:hover .chip[aria-selected="true"]::after,
+  .chip-rail:focus-within .chip[aria-selected="true"]::after {
+    animation-play-state: paused;
+  }
+  @keyframes chip-countdown {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chip[aria-selected="true"]::after {
+      animation: none;
+      transform: scaleX(1);
+    }
   }
   .chip:focus-visible {
     outline: 2px solid var(--accent);
@@ -1607,6 +1610,361 @@
     opacity: 0.55;
   }
 
+  /* ─────────────────────────────────────────
+     Folio Tier-1 features
+  ───────────────────────────────────────── */
+
+  /* Bot message needs position:relative so stamp / signature / margin notes
+     can be positioned absolutely. Also adds clearfix for floated notes. */
+  .ai-msg-bot {
+    position: relative;
+  }
+  .ai-msg-bot::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  /* ───────── 1. Source Drawer ─────────
+     Slides in from the right edge of the convo while streaming.
+     Shows tabs of files Folio is "consulting", highlighting them in turn. */
+  .ai-source-drawer {
+    position: absolute;
+    top: 50%;
+    right: -2px;
+    transform: translate(120%, -50%);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 0;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(31, 77, 62, 0.18);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    box-shadow: -4px 4px 12px rgba(31, 77, 62, 0.08);
+    transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 5;
+  }
+  .ai-source-drawer.is-open {
+    transform: translate(0, -50%);
+  }
+  .ai-source-drawer-label {
+    padding: 0 12px 4px;
+    font-family: var(--body);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    border-bottom: 1px dashed rgba(31, 77, 62, 0.18);
+    margin-bottom: 4px;
+  }
+  .ai-source-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 8px;
+    padding: 5px 10px 5px 8px;
+    background: linear-gradient(180deg, rgba(31, 77, 62, 0.04), rgba(31, 77, 62, 0.10));
+    border: 1px solid rgba(31, 77, 62, 0.18);
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    letter-spacing: 0;
+    transition: background 320ms ease, color 320ms ease, transform 320ms ease;
+  }
+  .ai-source-tab::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(31, 77, 62, 0.3);
+    transition: background 320ms ease, transform 320ms ease;
+  }
+  .ai-source-tab.is-active {
+    background: linear-gradient(180deg, rgba(31, 77, 62, 0.18), rgba(31, 77, 62, 0.28));
+    color: var(--green-strong);
+    transform: translateX(-3px);
+  }
+  .ai-source-tab.is-active::before {
+    background: var(--green-strong);
+    transform: scale(1.4);
+  }
+
+  /* ───────── 2. Margin Notes ─────────
+     Pull-quotes that float right inside the bot text, marginalia-style. */
+  .ai-margin-note {
+    float: right;
+    clear: right;
+    width: 140px;
+    margin: 0 0 10px 16px;
+    padding: 8px 10px 8px 11px;
+    background: rgba(31, 77, 62, 0.05);
+    border-left: 2px solid var(--green-strong);
+    border-radius: 0 4px 4px 0;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 350;
+    font-size: 11.5px;
+    line-height: 1.4;
+    color: var(--green-strong);
+    letter-spacing: -0.005em;
+    font-variation-settings: "opsz" 24;
+  }
+  .ai-margin-note-eyebrow {
+    display: block;
+    font-family: var(--body);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 4px;
+  }
+
+  /* ───────── 3. Filed Stamp ─────────
+     A small rubber-stamp that thunks down in the top-right corner of the bot
+     card after streaming finishes, slightly tilted, fades out. */
+  .ai-filed-stamp {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    padding: 3px 8px 4px;
+    border: 1.8px solid rgba(31, 77, 62, 0.55);
+    color: rgba(31, 77, 62, 0.62);
+    background: rgba(31, 77, 62, 0.05);
+    font-family: "Courier New", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transform: rotate(-7deg) scale(2.2);
+    transform-origin: center;
+    opacity: 0;
+    pointer-events: none;
+    animation: stamp-thunk 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  @keyframes stamp-thunk {
+    0%   { opacity: 0;    transform: rotate(-7deg) scale(2.6); }
+    18%  { opacity: 0.95; transform: rotate(-7deg) scale(0.95); }
+    28%  { opacity: 0.95; transform: rotate(-7deg) scale(1.05); }
+    40%  { opacity: 0.85; transform: rotate(-7deg) scale(1); }
+    75%  { opacity: 0.55; transform: rotate(-7deg) scale(1); }
+    100% { opacity: 0;    transform: rotate(-7deg) scale(1); }
+  }
+
+  /* ───────── 4. Receipt-style metrics ─────────
+     Hard numbers (62%, 12 hours, $X) get wrapped in a monospace receipt block
+     with a dotted perforated top edge. Reads as financial-ops vocab. */
+  .ai-receipt {
+    display: inline-block;
+    vertical-align: -1px;
+    margin: 0 2px;
+    padding: 2px 7px 3px;
+    background: rgba(255, 254, 248, 0.85);
+    border: 1px dashed rgba(31, 77, 62, 0.32);
+    border-top-style: dotted;
+    border-top-width: 1.5px;
+    border-radius: 2px;
+    font-family: "Courier New", monospace;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--green-strong);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  /* ───────── 5. Hand-drawn F signature ─────────
+     A serif F drawn via stroke animation at the top of each bot message.
+     Stays as a subtle decorative mark after it finishes drawing. */
+  .ai-folio-sig {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    width: 14px;
+    height: 18px;
+    color: var(--green-strong);
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .ai-folio-sig path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    animation: draw-f 700ms cubic-bezier(0.65, 0, 0.35, 1) 100ms forwards;
+  }
+  @keyframes draw-f { to { stroke-dashoffset: 0; } }
+  /* Push bot text right so it doesn't crash into the F signature */
+  .ai-msg-bot.has-sig { padding-left: 36px; }
+
+  /* ───────── 7. Generative response cards ───────── */
+  /* Skill card */
+  .ai-gen-card {
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: rgba(255, 254, 248, 0.9);
+    border: 1px solid rgba(31, 77, 62, 0.18);
+    border-radius: 12px;
+  }
+  .ai-gen-card-eyebrow {
+    font-family: var(--body);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green-mute);
+    margin: 0 0 10px;
+  }
+  .ai-skill-row {
+    display: grid;
+    grid-template-columns: 1fr 88px;
+    gap: 12px;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(31, 77, 62, 0.10);
+  }
+  .ai-skill-row:last-child { border-bottom: none; }
+  .ai-skill-name {
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+  }
+  .ai-skill-note {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--ink-mute);
+    margin: 2px 0 0;
+    font-variation-settings: "opsz" 24;
+  }
+  .ai-skill-bar {
+    height: 4px;
+    background: rgba(31, 77, 62, 0.10);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .ai-skill-bar-fill {
+    height: 100%;
+    background: var(--green-strong);
+    border-radius: 2px;
+    transition: width 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Timeline card */
+  .ai-timeline-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 14px;
+    padding: 8px 0 10px;
+    border-bottom: 1px dashed rgba(31, 77, 62, 0.10);
+  }
+  .ai-timeline-row:last-child { border-bottom: none; }
+  .ai-timeline-year {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--green-strong);
+    letter-spacing: -0.005em;
+    margin: 1px 0 0;
+    font-variation-settings: "opsz" 24;
+  }
+  .ai-timeline-body { min-width: 0; }
+  .ai-timeline-role {
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+  }
+  .ai-timeline-company {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--green-mute);
+    margin: 1px 0 0;
+  }
+  .ai-timeline-focus {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--ink-mute);
+    margin: 4px 0 0;
+    font-variation-settings: "opsz" 24;
+  }
+
+  /* Comparison table card (JD fit) */
+  .ai-cmp-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(31, 77, 62, 0.10);
+  }
+  .ai-cmp-row:last-child { border-bottom: none; }
+  .ai-cmp-h {
+    font-family: var(--body);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 0 0 6px;
+  }
+  .ai-cmp-cell {
+    font-family: var(--body);
+    font-size: 12.5px;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .ai-cmp-cell.bring {
+    color: var(--green-strong);
+    font-weight: 500;
+  }
+
+  /* Quote card (magazine pull-quote) */
+  .ai-quote-card {
+    margin-top: 14px;
+    padding: 22px 24px;
+    background: rgba(31, 77, 62, 0.05);
+    border-left: 3px solid var(--green-strong);
+    border-radius: 0 8px 8px 0;
+  }
+  .ai-quote-text {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 350;
+    font-size: 18px;
+    line-height: 1.35;
+    color: var(--ink);
+    letter-spacing: -0.012em;
+    margin: 0;
+    font-variation-settings: "opsz" 36;
+  }
+  .ai-quote-source {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-mute);
+    margin: 10px 0 0;
+  }
+
   /* Mobile — keep the inline morph but fill width and tighten padding */
   @media (max-width: 720px) {
     .ai-morph-slot { max-width: 100%; margin-top: 80px; }
@@ -1640,6 +1998,35 @@
     *, *::before, *::after {
       animation-duration: 0.001ms !important;
       transition-duration: 0.001ms !important;
+    }
+  }
+
+  /* ── Scroll reveal — section head and case cards ── */
+  .section-head {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .section-head.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .case {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 680ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 680ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .case.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .section-head, .case {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
     }
   }
 </style>
@@ -2255,17 +2642,292 @@
     return sig;
   }
 
+  /* ────────────────────────────────────────────
+     FOLIO Tier-1 helpers — Source Drawer,
+     Margin Notes, Filed Stamp, Receipt, Sig F,
+     Generative Cards
+  ──────────────────────────────────────────── */
+
+  // ── Source Drawer ──
+  // A floating drawer that slides in from the right of the dock during streaming,
+  // showing which files Folio is "consulting" — tabs highlight in sequence.
+  const SOURCE_TABS = [
+    "RTI case study",
+    "Loan Deboarding notes",
+    "Dell archive",
+    "Onity project journal",
+    "Résumé",
+  ];
+  let sourceDrawerEl = null;
+  let sourceCycleTimer = null;
+
+  function showSourceDrawer() {
+    if (sourceDrawerEl) return;
+    sourceDrawerEl = document.createElement("div");
+    sourceDrawerEl.className = "ai-source-drawer";
+    sourceDrawerEl.innerHTML =
+      `<p class="ai-source-drawer-label">Reading</p>` +
+      SOURCE_TABS.map((t, i) =>
+        `<span class="ai-source-tab" data-i="${i}">${escapeHtml(t)}</span>`
+      ).join("");
+    // Attach inside the dock-inner so it's positioned relative to the card
+    const dockInner = dock.querySelector(".ai-dock-inner");
+    if (!dockInner) return;
+    if (getComputedStyle(dockInner).position === "static") {
+      dockInner.style.position = "relative";
+    }
+    dockInner.appendChild(sourceDrawerEl);
+    requestAnimationFrame(() => sourceDrawerEl.classList.add("is-open"));
+    // Cycle the highlight through tabs every 500ms
+    let i = 0;
+    function tick() {
+      if (!sourceDrawerEl) return;
+      sourceDrawerEl.querySelectorAll(".ai-source-tab").forEach((el, idx) => {
+        el.classList.toggle("is-active", idx === i % SOURCE_TABS.length);
+      });
+      i++;
+      sourceCycleTimer = setTimeout(tick, 500);
+    }
+    tick();
+  }
+  function hideSourceDrawer() {
+    if (sourceCycleTimer) { clearTimeout(sourceCycleTimer); sourceCycleTimer = null; }
+    if (!sourceDrawerEl) return;
+    sourceDrawerEl.classList.remove("is-open");
+    const el = sourceDrawerEl;
+    sourceDrawerEl = null;
+    setTimeout(() => { if (el.parentNode) el.remove(); }, 380);
+  }
+
+  // ── Margin Notes ──
+  // Detect key facts in the response and pull them out as right-floated callouts.
+  function extractMarginNotes(text) {
+    const notes = [];
+    // Percentages with surrounding context word
+    const pct = text.match(/(\d+(?:\.\d+)?%)\s+([a-z]+(?:\s+[a-z]+){0,2})/gi) || [];
+    pct.slice(0, 1).forEach((m) => {
+      const parts = m.match(/(\d+(?:\.\d+)?%)\s+(.+)/i);
+      if (parts) notes.push({ eyebrow: "Outcome", text: `${parts[1]} ${parts[2]}` });
+    });
+    // Time saved
+    const hrs = text.match(/(\d+)\s+(?:hours?|hrs?)\s+(?:per\s+week|a\s+week|\/\s*week|saved)/i);
+    if (hrs) notes.push({ eyebrow: "Saved", text: `${hrs[1]} hrs/wk` });
+    // Project mentions → ties to outcome
+    const projects = [
+      { pat: /real[- ]time inquiry|rti|inquiry portal/i, eye: "Project", text: "RTI · Onity" },
+      { pat: /loan deboarding|deboarding/i,             eye: "Project", text: "Loan Deboarding · Onity" },
+      { pat: /intelliassist|chaos to clarity/i,          eye: "Project", text: "IntelliAssist 2.0 · Dell" },
+      { pat: /information network center|dell inc|information architecture/i, eye: "Project", text: "IA · Dell INC" },
+    ];
+    for (const p of projects) {
+      if (p.pat.test(text)) {
+        notes.push({ eyebrow: p.eye, text: p.text });
+        break; // at most one project note
+      }
+    }
+    return notes.slice(0, 3); // cap at 3 to keep it editorial, not cluttered
+  }
+  function renderMarginNotes(botMsg, responseText) {
+    const notes = extractMarginNotes(responseText);
+    if (notes.length === 0) return;
+    // Insert all margin notes at the very top of the bot content so floats wrap with text below
+    const frag = document.createDocumentFragment();
+    notes.forEach((n) => {
+      const div = document.createElement("div");
+      div.className = "ai-margin-note";
+      div.innerHTML = `<span class="ai-margin-note-eyebrow">${escapeHtml(n.eyebrow)}</span>${escapeHtml(n.text)}`;
+      frag.appendChild(div);
+    });
+    botMsg.insertBefore(frag, botMsg.firstChild);
+  }
+
+  // ── Filed Stamp ──
+  // After streaming + augment, drop a tilted REVIEWED/FILED stamp in the corner.
+  const STAMP_LABELS = ["REVIEWED", "FILED", "READY", "NOTED", "ON FILE"];
+  function appendFiledStamp(botMsg) {
+    const label = STAMP_LABELS[Math.floor(Math.random() * STAMP_LABELS.length)];
+    const stamp = document.createElement("div");
+    stamp.className = "ai-filed-stamp";
+    stamp.textContent = label;
+    botMsg.appendChild(stamp);
+  }
+
+  // ── Receipt-style metrics ──
+  // Wrap inline numbers/percentages/durations in a perforated monospace block.
+  // Operates on rendered HTML in botMsg paragraphs.
+  function wrapReceiptMetrics(botMsg) {
+    const targets = botMsg.querySelectorAll("p");
+    const patterns = [
+      /\b(\d+(?:\.\d+)?%)\b/g,                                                  // 62%
+      /\b(\$\s?\d+(?:\.\d+)?\s?[KMB]?)/g,                                       // $50K
+      /\b(\d+(?:\.\d+)?\s+hours?(?:\s+(?:per|\/)\s+(?:week|wk))?)\b/gi,         // 12 hours per week
+      /\b(\d+(?:\.\d+)?\s*x\s+(?:faster|slower))\b/gi,                          // 3x faster
+    ];
+    targets.forEach((p) => {
+      if (p.querySelector("mark, .ai-receipt")) {
+        // skip if already contains highlighted spans; conservative approach
+      }
+      let html = p.innerHTML;
+      patterns.forEach((re) => {
+        html = html.replace(re, (m) => `<span class="ai-receipt">${m.trim()}</span>`);
+      });
+      p.innerHTML = html;
+    });
+  }
+
+  // ── Hand-drawn Folio "F" signature ──
+  // Sits in the top-left corner of every bot message. Strokes in once.
+  function appendSignatureF(botMsg) {
+    if (botMsg.querySelector(".ai-folio-sig")) return;
+    botMsg.classList.add("has-sig");
+    const sig = document.createElement("div");
+    sig.className = "ai-folio-sig";
+    sig.innerHTML = `
+      <svg viewBox="0 0 14 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 2 17 L 2 1 L 13 1 M 2 9 L 10 9"/>
+      </svg>
+    `;
+    botMsg.insertBefore(sig, botMsg.firstChild);
+  }
+
+  // ── Generative response cards ──
+  // Detect question intent and append a structured card type.
+  const SKILL_DATA = [
+    { name: "Interaction Design",        level: 5, note: "Decade+ in operational SaaS" },
+    { name: "Information Architecture",  level: 5, note: "Dell INC, mortgage servicing IA" },
+    { name: "User Research",             level: 4, note: "Research-led, structure-first" },
+    { name: "Prototyping (Figma)",       level: 5, note: "Fast iteration" },
+    { name: "Frontend (React, HTML/CSS)",level: 4, note: "Prototypes in code when faster" },
+    { name: "AI / Conversational UX",    level: 4, note: "Dell IntelliAssist, Folio itself" },
+  ];
+  const TIMELINE_DATA = [
+    { year: "2026", role: "Senior Product Designer", company: "Onity",     focus: "Real-Time Inquiry Portal" },
+    { year: "2025", role: "Senior Product Designer", company: "Onity",     focus: "Loan Deboarding Portal" },
+    { year: "2024", role: "Senior Designer",         company: "Dell",      focus: "IntelliAssist 2.0 AI workspace" },
+    { year: "2022", role: "Senior Designer",         company: "Dell INC",  focus: "Information architecture overhaul" },
+    { year: "Prior",role: "Designer",                company: "Red Hat",   focus: "Open-source enterprise tools" },
+  ];
+  const JD_COMPARISON = [
+    { req: "Senior product design, 7+ years",      brings: "10+ years in operational SaaS" },
+    { req: "Enterprise / B2B experience",           brings: "Onity (mortgage), Dell (sales tools), Red Hat" },
+    { req: "Research-led process",                  brings: "Lives inside the workflow before drawing screens" },
+    { req: "Ship complex internal tooling",         brings: "RTI cut case resolution 62%; saved 12 hrs/wk" },
+    { req: "AI / conversational UX",                brings: "Built Dell IntelliAssist 2.0 and Folio" },
+  ];
+  const QUOTES = [
+    { text: "Research-led, structure-first. Progress over pixels.",          source: "His approach" },
+    { text: "Make the user's day quieter.",                                  source: "Folio's guiding principle" },
+    { text: "He doesn't draw screens before sitting with users.",            source: "How he works" },
+  ];
+
+  function renderSkillCard() {
+    const card = document.createElement("div");
+    card.className = "ai-gen-card";
+    card.innerHTML = `<p class="ai-gen-card-eyebrow">Skills · curated</p>` +
+      SKILL_DATA.map((s) => `
+        <div class="ai-skill-row">
+          <div>
+            <p class="ai-skill-name">${escapeHtml(s.name)}</p>
+            <p class="ai-skill-note">${escapeHtml(s.note)}</p>
+          </div>
+          <div class="ai-skill-bar"><div class="ai-skill-bar-fill" style="width:${(s.level / 5) * 100}%"></div></div>
+        </div>
+      `).join("");
+    return card;
+  }
+  function renderTimelineCard() {
+    const card = document.createElement("div");
+    card.className = "ai-gen-card";
+    card.innerHTML = `<p class="ai-gen-card-eyebrow">Career · most recent first</p>` +
+      TIMELINE_DATA.map((t) => `
+        <div class="ai-timeline-row">
+          <p class="ai-timeline-year">${escapeHtml(t.year)}</p>
+          <div class="ai-timeline-body">
+            <p class="ai-timeline-role">${escapeHtml(t.role)}</p>
+            <p class="ai-timeline-company">${escapeHtml(t.company)}</p>
+            <p class="ai-timeline-focus">${escapeHtml(t.focus)}</p>
+          </div>
+        </div>
+      `).join("");
+    return card;
+  }
+  function renderComparisonCard() {
+    const card = document.createElement("div");
+    card.className = "ai-gen-card";
+    card.innerHTML = `
+      <p class="ai-gen-card-eyebrow">Fit read · role vs. Dinesh</p>
+      <div class="ai-cmp-row">
+        <p class="ai-cmp-h">Role asks for</p>
+        <p class="ai-cmp-h">Dinesh brings</p>
+      </div>
+    ` + JD_COMPARISON.map((r) => `
+      <div class="ai-cmp-row">
+        <p class="ai-cmp-cell">${escapeHtml(r.req)}</p>
+        <p class="ai-cmp-cell bring">${escapeHtml(r.brings)}</p>
+      </div>
+    `).join("");
+    return card;
+  }
+  function renderQuoteCard() {
+    const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    const card = document.createElement("div");
+    card.className = "ai-quote-card";
+    card.innerHTML = `
+      <p class="ai-quote-text">"${escapeHtml(q.text)}"</p>
+      <p class="ai-quote-source">${escapeHtml(q.source)}</p>
+    `;
+    return card;
+  }
+
+  // Pick a generative card based on what the user asked.
+  // Returns the card element (or null if no match — text-only response).
+  function pickGenerativeCard(userQuestion, responseText) {
+    const q = (userQuestion || "").toLowerCase();
+    const r = (responseText || "").toLowerCase();
+    // JD-style paste — comparison table
+    if (looksLikeJD(userQuestion || "")) return renderComparisonCard();
+    // Skills questions
+    if (/\b(skills?|what (can|does) he do|strengths?|capabilit(?:y|ies)|stack|toolkit)\b/.test(q)) {
+      return renderSkillCard();
+    }
+    // Career / experience / timeline
+    if (/\b(career|experience|history|background|where (?:has|did) he work(?:ed)?|timeline|journey|story)\b/.test(q)) {
+      return renderTimelineCard();
+    }
+    // Philosophy / approach / "what's he like" — quote card
+    if (/\b(approach|philosophy|believes?|principles?|values?|what (?:is|are) he|how (?:does|do) he (?:work|think))\b/.test(q) ||
+        /\b(approach|philosophy|believes?|principles?)\b/.test(r)) {
+      return renderQuoteCard();
+    }
+    return null;
+  }
+
   // 8. Augment the bot message after streaming.
-  // Order matters: signature wave goes immediately after the text,
-  // then rich case-study cards, then contextual CTAs at the bottom.
+  // Order: hand-drawn F (top-left) + margin notes (floated right at top),
+  // then receipt-wrap inline metrics, then signature wave under the text,
+  // then generative card (if intent matches), case-study cards, CTAs,
+  // and finally the filed stamp in the corner.
   function augmentBotMessage(botMsg, responseText, userQuestion, turnCount) {
     if (!botMsg) return;
     const responseLower = (responseText || "").toLowerCase();
     const questionLower = (userQuestion || "").toLowerCase();
     const combined = responseLower + " " + questionLower;
 
-    // Signature wave — lands right under the text, before any cards or CTAs
+    // Hand-drawn F signature — top-left corner (idea 5)
+    appendSignatureF(botMsg);
+
+    // Margin notes — pulled facts on the right (idea 2)
+    renderMarginNotes(botMsg, responseText);
+
+    // Receipt-style inline metrics — wraps numbers in the text (idea 4)
+    wrapReceiptMetrics(botMsg);
+
+    // Signature wave — lands right under the text
     botMsg.appendChild(renderSignature());
+
+    // Generative response card — skill / timeline / comparison / quote (idea 7)
+    const genCard = pickGenerativeCard(userQuestion, responseText);
+    if (genCard) botMsg.appendChild(genCard);
 
     // Rich case-study cards (at most 2 per response so it stays scannable)
     const matched = [];
@@ -2311,6 +2973,9 @@
       });
     }
     if (ctas.length > 0) botMsg.appendChild(renderCTARow(ctas));
+
+    // Filed stamp — the rubber-stamp drop in the top-right corner (idea 3)
+    appendFiledStamp(botMsg);
   }
 
   async function ask(question) {
@@ -2369,6 +3034,9 @@
     `;
     convo.insertBefore(typing, followupsSection);
     scrollDown();
+
+    // Folio: open the Source Drawer while we're consulting files
+    showSourceDrawer();
 
     // Folio: keep the loading animation visible for at least 2s — enough for the
     // file-rack figure to complete a near-full cycle. Stops the loader from
@@ -2459,6 +3127,7 @@
 
       botMsg.classList.remove("ai-msg-streaming");
       dock.classList.remove("is-speaking");
+      hideSourceDrawer();
       // Strip the followups section before saving to history
       const cleanForHistory = accumulated.split(/---ASK---/i)[0].trim();
       history.push({ role: "assistant", content: cleanForHistory });
@@ -2472,6 +3141,7 @@
       await ensureMinTyping();
       if (typing.parentNode) typing.remove();
       dock.classList.remove("is-speaking");
+      hideSourceDrawer();
       const errMsg = document.createElement("div");
       errMsg.className = "ai-msg-bot ai-msg-error";
       errMsg.innerHTML =
@@ -2609,11 +3279,50 @@
 })();
 
 /* ───────────────────────────────────────────────
-   Hero chip rail
+   Hero chip rail — word-by-word stagger entrance
 ─────────────────────────────────────────────── */
 (() => {
   const chips = Array.from(document.querySelectorAll(".chip"));
   const lines = Array.from(document.querySelectorAll(".lens-line"));
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Store original text so we always animate from the canonical copy
+  const originals = new Map();
+  lines.forEach(l => originals.set(l.dataset.lens, l.textContent.trim()));
+
+  let cleanupTimer = null;
+
+  function animateWordsIn(el) {
+    if (cleanupTimer) clearTimeout(cleanupTimer);
+    const text = originals.get(el.dataset.lens) || el.textContent;
+    const words = text.split(" ");
+
+    // Override the CSS transition so words own the entrance
+    el.style.cssText = "opacity:1;transform:translateY(0);transition:none;";
+
+    el.innerHTML = words
+      .map((w, i) =>
+        `<span data-w style="display:inline-block;opacity:0;transform:translateY(8px);` +
+        `transition:opacity 300ms cubic-bezier(0.16,1,0.3,1) ${i * 38}ms,` +
+        `transform 400ms cubic-bezier(0.16,1,0.3,1) ${i * 38}ms">${w}</span>`
+      )
+      .join(" ");
+
+    // Two rAF to ensure browser has painted the hidden state before animating
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      el.querySelectorAll("[data-w]").forEach(s => {
+        s.style.opacity = "1";
+        s.style.transform = "translateY(0)";
+      });
+    }));
+
+    // After animation settles, swap back to plain text and restore CSS control
+    const settle = (words.length - 1) * 38 + 400 + 80;
+    cleanupTimer = setTimeout(() => {
+      el.textContent = text;
+      el.style.cssText = "";
+    }, settle);
+  }
 
   function activate(lens) {
     chips.forEach(c => {
@@ -2622,11 +3331,24 @@
       c.setAttribute("tabindex", on ? "0" : "-1");
     });
     lines.forEach(l => {
-      l.dataset.active = (l.dataset.lens === lens) ? "true" : "false";
+      const on = l.dataset.lens === lens;
+      if (on) {
+        l.dataset.active = "true";
+        if (!reduced) animateWordsIn(l);
+        else l.textContent = originals.get(lens) || l.textContent;
+      } else {
+        // Restore plain text before the CSS fade-out so it's clean
+        l.textContent = originals.get(l.dataset.lens) || l.textContent;
+        l.style.cssText = "";
+        l.dataset.active = "false";
+      }
     });
   }
 
-  chips.forEach(c => c.addEventListener("click", () => activate(c.dataset.lens)));
+  chips.forEach(c => c.addEventListener("click", () => {
+    activate(c.dataset.lens);
+    restartAutoCycle();          // give the user a fresh 5s on the chip they picked
+  }));
 
   document.querySelector(".chip-rail").addEventListener("keydown", e => {
     const i = chips.findIndex(c => c.getAttribute("aria-selected") === "true");
@@ -2637,7 +3359,100 @@
     e.preventDefault();
     activate(chips[n].dataset.lens);
     chips[n].focus();
+    restartAutoCycle();
   });
+
+  /* ─── Auto-cycle through chips every 4s, left → right, then loop.
+         Pauses on hover/focus via CSS (animation-play-state: paused).
+         JS pause via Page Visibility API so we don't burn cycles in a hidden tab. */
+  const CYCLE_MS = 4000;
+  let autoCycleTimer = null;
+
+  function advanceChip() {
+    const i = chips.findIndex(c => c.getAttribute("aria-selected") === "true");
+    const next = (i + 1) % chips.length;
+    activate(chips[next].dataset.lens);
+  }
+
+  function startAutoCycle() {
+    stopAutoCycle();
+    if (reduced) return;
+    autoCycleTimer = setInterval(advanceChip, CYCLE_MS);
+  }
+
+  function stopAutoCycle() {
+    if (autoCycleTimer) { clearInterval(autoCycleTimer); autoCycleTimer = null; }
+  }
+
+  function restartAutoCycle() { startAutoCycle(); }
+
+  const chipRailEl = document.querySelector(".chip-rail");
+  // Pause the interval when the rail is being interacted with — the CSS already
+  // pauses the countdown line, so the line + the timer stay in sync.
+  chipRailEl.addEventListener("mouseenter", stopAutoCycle);
+  chipRailEl.addEventListener("mouseleave", startAutoCycle);
+  chipRailEl.addEventListener("focusin",  stopAutoCycle);
+  chipRailEl.addEventListener("focusout", startAutoCycle);
+
+  // Pause when the tab is hidden, resume when it returns
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) stopAutoCycle(); else startAutoCycle();
+  });
+
+  // Kick-off — the first chip is already aria-selected="true" in HTML,
+  // so the CSS countdown animation begins immediately; start the JS timer in sync.
+  startAutoCycle();
+})();
+
+/* ───────────────────────────────────────────────
+   Background blob motion — slow drift + cursor parallax
+   CSS animations removed; JS drives style.transform directly
+   so drift and mouse tracking compose cleanly.
+─────────────────────────────────────────────── */
+(() => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const blobs = [
+    { el: document.querySelector(".bg-blob.b1"),
+      // drift amplitudes (px) and speed, parallax factors
+      dx: 80, dy: 60, ds: 0.00028, px: 0.030, py: 0.020 },
+    { el: document.querySelector(".bg-blob.b2"),
+      dx: -60, dy: 44, ds: 0.00020, px: -0.022, py: 0.026 },
+    { el: document.querySelector(".bg-blob.b3"),
+      dx: 48, dy: -54, ds: 0.00035, px: 0.016, py: -0.022 },
+  ];
+  if (!blobs[0].el) return;
+
+  const cur = blobs.map(() => ({ x: 0, y: 0 }));
+  const tgt = blobs.map(() => ({ x: 0, y: 0 }));
+  let mx = 0, my = 0;
+
+  window.addEventListener("mousemove", e => {
+    mx = e.clientX - window.innerWidth  / 2;
+    my = e.clientY - window.innerHeight / 2;
+  }, { passive: true });
+
+  let start = null;
+  (function tick(ts) {
+    if (!start) start = ts;
+    const t = ts - start;
+
+    blobs.forEach((b, i) => {
+      // Slow organic drift — different phase per blob
+      const driftX = Math.sin(t * b.ds + i * 1.4) * b.dx;
+      const driftY = Math.cos(t * b.ds * 0.75 + i * 0.9) * b.dy;
+
+      // Mouse parallax target
+      tgt[i].x = driftX + mx * b.px;
+      tgt[i].y = driftY + my * b.py;
+
+      // Smooth lerp toward target
+      cur[i].x += (tgt[i].x - cur[i].x) * 0.045;
+      cur[i].y += (tgt[i].y - cur[i].y) * 0.045;
+
+      b.el.style.transform = `translate(${cur[i].x.toFixed(2)}px,${cur[i].y.toFixed(2)}px)`;
+    });
+    requestAnimationFrame(tick);
+  })();
 })();
 
 /* ───────────────────────────────────────────────
@@ -2679,6 +3494,28 @@
       clearTimeout(hoverTimer);
     });
   });
+})();
+
+/* ───────────────────────────────────────────────
+   Scroll-reveal — section head + case cards
+   IntersectionObserver adds .is-revealed when each
+   element enters the viewport, triggering the CSS
+   opacity + translate transition defined above.
+─────────────────────────────────────────────── */
+(() => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const targets = document.querySelectorAll(".section-head, .case");
+  if (!targets.length) return;
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-revealed");
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: "0px 0px -48px 0px" });
+
+  targets.forEach(t => obs.observe(t));
 })();
 </script>
 

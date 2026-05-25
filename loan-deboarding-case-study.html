@@ -826,6 +826,38 @@
     .scroll-spy { display: none; }
   }
 
+  /* Snapshot, 3-paragraph TL;DR */
+  .snapshot {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 32px;
+    padding: 36px 40px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+  }
+  .snapshot .snap-col { padding-right: 32px; }
+  .snapshot .snap-col + .snap-col {
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
+  }
+  .snapshot .snap-label {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .snapshot p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
   /* Retrospective */
   .reflect-grid {
     display: grid;
@@ -890,7 +922,7 @@
     h1 { font-size: 34px; }
     h2 { font-size: 28px; }
     .hero-grid, .stats, .quick-facts, .insights-grid, .quotes-pair, .principle-grid,
-    .solution-detail, .eval-grid, .monitor-grid, .sec-head-aside, .reflect-grid {
+    .solution-detail, .eval-grid, .monitor-grid, .sec-head-aside, .reflect-grid, .snapshot {
       grid-template-columns: 1fr;
     }
     .quick-facts { padding: 22px; gap: 22px; }
@@ -900,6 +932,15 @@
       border-top: 1px solid var(--line);
       padding-left: 0;
       padding-top: 22px;
+    }
+    .snapshot { padding: 24px; }
+    .snapshot .snap-col { padding: 0; }
+    .snapshot .snap-col + .snap-col {
+      border-left: none;
+      border-top: 1px solid var(--line);
+      padding-left: 0;
+      padding-top: 24px;
+      margin-top: 24px;
     }
     .solution-detail { padding: 24px; gap: 24px; }
     .quotes-pair { padding: 24px; }
@@ -911,6 +952,7 @@
 <!-- SCROLL SPY -->
 <nav class="scroll-spy" aria-label="Jump to section">
   <a href="#overview">Overview</a>
+  <a href="#snapshot">Snapshot</a>
   <a href="#problem">Problem</a>
   <a href="#goals">Goals</a>
   <a href="#solution">Solution</a>
@@ -981,6 +1023,36 @@
 
     <div class="confidential">
       Note: names, workflow details, and interfaces have been modified to maintain confidentiality.
+    </div>
+  </div>
+</section>
+
+<!-- SNAPSHOT -->
+<section id="snapshot">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Snapshot</div>
+        <h2>The short version.</h2>
+      </div>
+      <div>
+        <p>If you only read three paragraphs, read these. Problem, change, and results in about a minute.</p>
+      </div>
+    </div>
+
+    <div class="snapshot">
+      <div class="snap-col">
+        <div class="snap-label">Problem</div>
+        <p>Mortgage clients ship loan releases to the servicing team in many different shapes. The receiving team took that variation as escalations, formatting kickbacks surfaced three days late, and accounting reconstructed reconciliation by hand across separate systems with no shared record.</p>
+      </div>
+      <div class="snap-col">
+        <div class="snap-label">Change</div>
+        <p>I designed one release pipeline that catches errors at submission, gives exceptions a defined lane with owner and SLA, and ties every package to a single release record. The receiving team gets one shared structure, regardless of upstream variation.</p>
+      </div>
+      <div class="snap-col">
+        <div class="snap-label">Results</div>
+        <p>9 of 9 prototype users found release status unaided. All three client orgs aligned on the MVP scope of secure submission plus reliable tracking. Projected weekly time saved per analyst is about six hours, validated against current follow-up and reconciliation patterns.</p>
+      </div>
     </div>
   </div>
 </section>

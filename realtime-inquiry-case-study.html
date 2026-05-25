@@ -756,6 +756,38 @@
     .scroll-spy { display: none; }
   }
 
+  /* Snapshot, 3-paragraph TL;DR */
+  .snapshot {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 32px;
+    padding: 36px 40px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+  }
+  .snapshot .snap-col { padding-right: 32px; }
+  .snapshot .snap-col + .snap-col {
+    border-left: 1px solid var(--line);
+    padding-left: 32px;
+  }
+  .snapshot .snap-label {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .snapshot p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
   /* Retrospective (what I learned) */
   .reflect-grid {
     display: grid;
@@ -940,7 +972,7 @@
     h2 { font-size: 28px; }
     .hero-grid, .stats, .quick-facts, .insights-grid, .quotes-pair, .principle-grid,
     .solution-detail, .eval-grid, .monitor-grid, .sec-head-aside, .reflect-grid,
-    .end-cap .cta-block {
+    .end-cap .cta-block, .snapshot {
       grid-template-columns: 1fr;
     }
     .quick-facts {
@@ -953,6 +985,15 @@
       border-top: 1px solid var(--line);
       padding-left: 0;
       padding-top: 22px;
+    }
+    .snapshot { padding: 24px; }
+    .snapshot .snap-col { padding: 0; }
+    .snapshot .snap-col + .snap-col {
+      border-left: none;
+      border-top: 1px solid var(--line);
+      padding-left: 0;
+      padding-top: 24px;
+      margin-top: 24px;
     }
     .solution-detail { padding: 24px; gap: 24px; }
     .quotes-pair { padding: 24px; }
@@ -968,6 +1009,7 @@
 <!-- SCROLL SPY -->
 <nav class="scroll-spy" aria-label="Jump to section">
   <a href="#overview">Overview</a>
+  <a href="#snapshot">Snapshot</a>
   <a href="#problem">Problem</a>
   <a href="#goals">Goals</a>
   <a href="#solution">Solution</a>
@@ -1038,6 +1080,36 @@
 
     <div class="confidential">
       Note: names, workflow details, and interfaces have been modified to maintain confidentiality.
+    </div>
+  </div>
+</section>
+
+<!-- SNAPSHOT -->
+<section id="snapshot">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Snapshot</div>
+        <h2>The short version.</h2>
+      </div>
+      <div>
+        <p>If you only read three paragraphs, read these. Problem, change, and results in about a minute.</p>
+      </div>
+    </div>
+
+    <div class="snapshot">
+      <div class="snap-col">
+        <div class="snap-label">Problem</div>
+        <p>Mortgage clients had no way to track loan inquiries after submission. Updates lived in scattered email threads, and account managers burned roughly 12 hours a week chasing status by hand and running bi-weekly meetings just to stay in sync.</p>
+      </div>
+      <div class="snap-col">
+        <div class="snap-label">Change</div>
+        <p>I designed one shared workspace where every inquiry has a live record: status, threaded conversation, attached documents, and a clear resolution path. Account managers oversee their full portfolio from a filterable table; clients see exactly where each case sits.</p>
+      </div>
+      <div class="snap-col">
+        <div class="snap-label">Results</div>
+        <p>In prototype testing, 90% of users located case status unaided and no conversations were lost. Projected weekly time saved per analyst is roughly 12 hours. The MVP is in development, with a sprint-based rollout focused on the most-used tracking moves.</p>
+      </div>
     </div>
   </div>
 </section>
