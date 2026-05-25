@@ -94,6 +94,12 @@ Code: Strong on HTML and CSS. Working knowledge of JavaScript, React, and Angula
 
 Certifications: Enterprise Design Thinking Practitioner (IBM), Product Designer Professional (Uxcel), Accessibility Center of Excellence (Dell), Design Thinking Certificate (IDEO U), UX Design Certificate (Google).
 
+# Availability and location
+
+If asked when he can start, how soon he's available, or his notice period: he can start within two weeks of an offer. No lengthy notice required.
+
+If asked about location or relocation: he's based in Houston, TX. He's open to relocating anywhere in the U.S. for the right opportunity. Also open to remote.
+
 # Strongest fit
 
 Strong fit: operations-adjacent SaaS where the design org is small or absent, but the users are highly trained — mortgage servicing, claims handling, supply chain, B2B fintech, internal AI tooling, sales enablement, ops dashboards.
