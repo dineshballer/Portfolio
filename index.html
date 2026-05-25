@@ -175,17 +175,18 @@
     height: 1px;
     background: var(--green-strong);
     transform: scaleX(0);
-    transform-origin: right;
+    transform-origin: center;
     transition: transform 320ms var(--ease);
   }
   .chip[aria-selected="true"] {
     color: var(--green-strong);
     font-weight: 600;
   }
-  /* Active chip: the underline acts as a 4s countdown — starts full, drains to empty,
+  /* Active chip: the underline acts as a 4s countdown — starts full and
+     contracts from both ends toward the center until it disappears,
      then the JS interval advances to the next chip. */
   .chip[aria-selected="true"]::after {
-    transform-origin: right;
+    transform-origin: center;
     animation: chip-countdown 4s linear forwards;
   }
   /* Pause the countdown while the user is interacting with the chip rail */
@@ -1074,6 +1075,106 @@
     margin: 0 0 10px;
   }
   .ai-msg-bot p:last-child { margin-bottom: 0; }
+  /* ── Resume card injected by nav click ── */
+  .ai-resume-card {
+    margin: 8px 0 4px;
+    padding: 16px 18px 18px;
+    background: var(--surface, #faf9f6);
+    border: 1px solid rgba(31, 77, 62, 0.14);
+    border-radius: 14px;
+  }
+  .ai-resume-card-hint {
+    margin: 0 0 14px;
+    font-family: var(--body);
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .ai-resume-card-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  /* Google Drive button — primary, with countdown ring */
+  .ai-resume-gdrive {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px 9px 10px;
+    background: var(--green-strong, #1f4d3e);
+    color: #fff;
+    border-radius: 24px;
+    font-family: var(--sans);
+    font-size: 0.83rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+  }
+  .ai-resume-gdrive:hover { opacity: 0.88; }
+  .ai-countdown-ring-wrap {
+    position: relative;
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+  .ai-countdown-svg {
+    width: 26px;
+    height: 26px;
+    transform: rotate(-90deg);
+  }
+  .ai-countdown-track {
+    fill: none;
+    stroke: rgba(255,255,255,0.22);
+    stroke-width: 3;
+  }
+  .ai-countdown-fill {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.05s linear;
+  }
+  .ai-resume-btn-inner {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+    gap: 1px;
+  }
+  .ai-resume-btn-label {
+    font-size: 0.83rem;
+    font-weight: 500;
+  }
+  .ai-resume-auto-label {
+    font-size: 0.70rem;
+    font-weight: 400;
+    opacity: 0.75;
+    letter-spacing: 0.015em;
+  }
+  /* Download button — secondary */
+  .ai-resume-download {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 9px 16px;
+    border: 1.5px solid rgba(31, 77, 62, 0.35);
+    color: var(--green-strong, #1f4d3e);
+    border-radius: 24px;
+    font-family: var(--sans);
+    font-size: 0.83rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+  .ai-resume-download:hover {
+    background: rgba(31, 77, 62, 0.06);
+    border-color: rgba(31, 77, 62, 0.55);
+  }
+
   /* Resume download link inside bot messages */
   .ai-msg-bot .ai-resume-link {
     display: inline-flex;
@@ -1780,33 +1881,6 @@
     white-space: nowrap;
   }
 
-  /* ───────── 5. Hand-drawn F signature ─────────
-     A serif F drawn via stroke animation at the top of each bot message.
-     Stays as a subtle decorative mark after it finishes drawing. */
-  .ai-folio-sig {
-    position: absolute;
-    top: 14px;
-    left: 16px;
-    width: 14px;
-    height: 18px;
-    color: var(--green-strong);
-    opacity: 0.45;
-    pointer-events: none;
-  }
-  .ai-folio-sig path {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 60;
-    stroke-dashoffset: 60;
-    animation: draw-f 700ms cubic-bezier(0.65, 0, 0.35, 1) 100ms forwards;
-  }
-  @keyframes draw-f { to { stroke-dashoffset: 0; } }
-  /* Push bot text right so it doesn't crash into the F signature */
-  .ai-msg-bot.has-sig { padding-left: 36px; }
-
   /* ───────── 7. Generative response cards ───────── */
   /* Skill card */
   .ai-gen-card {
@@ -2046,7 +2120,7 @@
     <ul class="nav-links">
       <li><a href="#work">work</a></li>
       <li><a href="./about.html">story</a></li>
-      <li><a href="/resume.pdf" target="_blank" rel="noopener">résumé</a></li>
+      <li><a href="/resume.pdf" id="nav-resume-link" rel="noopener">résumé</a></li>
       <li><a href="mailto:dineshballer@gmail.com">email</a></li>
     </ul>
   </nav>
@@ -2699,36 +2773,54 @@
     setTimeout(() => { if (el.parentNode) el.remove(); }, 380);
   }
 
+  // Detect whether the user's question is project/work-oriented.
+  // Used to gate case-study cards AND project-flavored margin notes,
+  // so they only appear when the answer is genuinely about a project.
+  function isProjectQuery(userQuestion) {
+    const q = (userQuestion || "").toLowerCase();
+    if (!q) return false;
+    if (/\b(skills?|capabilities|stack|toolkit|what (?:can|does) he do|strengths?)\b/.test(q)) return false;
+    if (/\b(career|experience|history|background|timeline|journey|where (?:has|did) he work)\b/.test(q)) return false;
+    if (/\b(approach|philosophy|believes?|principles?|values?|how (?:does|do) he (?:work|think))\b/.test(q)) return false;
+    return (
+      /\b(project|case stud|portfolio|recent work|show me|tell me about|impressive|strongest|favou?rite|built|shipped|did at|done at|what did he build)\b/.test(q) ||
+      /\b(rti|inquiry|deboarding|intelliassist|chaos to clarity|dell inc|information architecture)\b/.test(q)
+    );
+  }
+
   // ── Margin Notes ──
   // Detect key facts in the response and pull them out as right-floated callouts.
-  function extractMarginNotes(text) {
+  // Project-flavored notes are only added when the question is project-oriented.
+  function extractMarginNotes(text, userQuestion) {
     const notes = [];
-    // Percentages with surrounding context word
+    // Percentages with surrounding context word — always relevant
     const pct = text.match(/(\d+(?:\.\d+)?%)\s+([a-z]+(?:\s+[a-z]+){0,2})/gi) || [];
     pct.slice(0, 1).forEach((m) => {
       const parts = m.match(/(\d+(?:\.\d+)?%)\s+(.+)/i);
       if (parts) notes.push({ eyebrow: "Outcome", text: `${parts[1]} ${parts[2]}` });
     });
-    // Time saved
+    // Time saved — always relevant
     const hrs = text.match(/(\d+)\s+(?:hours?|hrs?)\s+(?:per\s+week|a\s+week|\/\s*week|saved)/i);
     if (hrs) notes.push({ eyebrow: "Saved", text: `${hrs[1]} hrs/wk` });
-    // Project mentions → ties to outcome
-    const projects = [
-      { pat: /real[- ]time inquiry|rti|inquiry portal/i, eye: "Project", text: "RTI · Onity" },
-      { pat: /loan deboarding|deboarding/i,             eye: "Project", text: "Loan Deboarding · Onity" },
-      { pat: /intelliassist|chaos to clarity/i,          eye: "Project", text: "IntelliAssist 2.0 · Dell" },
-      { pat: /information network center|dell inc|information architecture/i, eye: "Project", text: "IA · Dell INC" },
-    ];
-    for (const p of projects) {
-      if (p.pat.test(text)) {
-        notes.push({ eyebrow: p.eye, text: p.text });
-        break; // at most one project note
+    // Project mentions — only if the user actually asked about projects
+    if (isProjectQuery(userQuestion)) {
+      const projects = [
+        { pat: /real[- ]time inquiry|rti|inquiry portal/i,                         eye: "Project", text: "RTI · Onity" },
+        { pat: /loan deboarding|deboarding/i,                                       eye: "Project", text: "Loan Deboarding · Onity" },
+        { pat: /intelliassist|chaos to clarity/i,                                   eye: "Project", text: "IntelliAssist 2.0 · Dell" },
+        { pat: /information network center|dell inc|information architecture/i,     eye: "Project", text: "IA · Dell INC" },
+      ];
+      for (const p of projects) {
+        if (p.pat.test(text)) {
+          notes.push({ eyebrow: p.eye, text: p.text });
+          break; // at most one project note
+        }
       }
     }
     return notes.slice(0, 3); // cap at 3 to keep it editorial, not cluttered
   }
-  function renderMarginNotes(botMsg, responseText) {
-    const notes = extractMarginNotes(responseText);
+  function renderMarginNotes(botMsg, responseText, userQuestion) {
+    const notes = extractMarginNotes(responseText, userQuestion);
     if (notes.length === 0) return;
     // Insert all margin notes at the very top of the bot content so floats wrap with text below
     const frag = document.createDocumentFragment();
@@ -2775,20 +2867,9 @@
     });
   }
 
-  // ── Hand-drawn Folio "F" signature ──
-  // Sits in the top-left corner of every bot message. Strokes in once.
-  function appendSignatureF(botMsg) {
-    if (botMsg.querySelector(".ai-folio-sig")) return;
-    botMsg.classList.add("has-sig");
-    const sig = document.createElement("div");
-    sig.className = "ai-folio-sig";
-    sig.innerHTML = `
-      <svg viewBox="0 0 14 18" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M 2 17 L 2 1 L 13 1 M 2 9 L 10 9"/>
-      </svg>
-    `;
-    botMsg.insertBefore(sig, botMsg.firstChild);
-  }
+  // (Idea 5 — hand-drawn "F" signature removed per design feedback.
+  // It read as a stray letter without context. The signature wavy line
+  // at the bottom of each response still carries Folio's voice.)
 
   // ── Generative response cards ──
   // Detect question intent and append a structured card type.
@@ -2913,11 +2994,8 @@
     const questionLower = (userQuestion || "").toLowerCase();
     const combined = responseLower + " " + questionLower;
 
-    // Hand-drawn F signature — top-left corner (idea 5)
-    appendSignatureF(botMsg);
-
     // Margin notes — pulled facts on the right (idea 2)
-    renderMarginNotes(botMsg, responseText);
+    renderMarginNotes(botMsg, responseText, userQuestion);
 
     // Receipt-style inline metrics — wraps numbers in the text (idea 4)
     wrapReceiptMetrics(botMsg);
@@ -2929,15 +3007,19 @@
     const genCard = pickGenerativeCard(userQuestion, responseText);
     if (genCard) botMsg.appendChild(genCard);
 
-    // Rich case-study cards (at most 2 per response so it stays scannable)
-    const matched = [];
-    for (const cs of CASE_STUDIES) {
-      if (cs.keys.some((k) => responseLower.includes(k))) {
-        matched.push(cs);
-        if (matched.length >= 2) break;
+    // Rich case-study cards — ONLY when the question itself is about projects/work.
+    // Skips skills / timeline / philosophy / hire questions even if the answer
+    // happens to mention a project name in passing.
+    if (isProjectQuery(userQuestion)) {
+      const matched = [];
+      for (const cs of CASE_STUDIES) {
+        if (cs.keys.some((k) => responseLower.includes(k))) {
+          matched.push(cs);
+          if (matched.length >= 2) break;
+        }
       }
+      matched.forEach((cs) => botMsg.appendChild(renderCaseCard(cs)));
     }
-    matched.forEach((cs) => botMsg.appendChild(renderCaseCard(cs)));
 
     // Contextual CTAs (bottom of the card)
     const ctas = [];
@@ -3042,7 +3124,10 @@
     // file-rack figure to complete a near-full cycle. Stops the loader from
     // flashing away when the API responds fast.
     const typingStart = Date.now();
-    const MIN_TYPING_MS = 2000;
+    // The file-rack animation cycle is 2.8s. Hold the loader for a full cycle
+    // so the figure completes the reach + folder-fly + return before the
+    // response appears. Stops the loader from being cut off mid-motion.
+    const MIN_TYPING_MS = 2800;
     async function ensureMinTyping() {
       const elapsed = Date.now() - typingStart;
       if (elapsed < MIN_TYPING_MS) {
@@ -3276,6 +3361,104 @@
 
   // Kick off the typewriter
   typewriterStep();
+
+  // ─── Resume card — triggered by nav résumé click ───────────────────────────
+  const GDRIVE_URL = "https://drive.google.com/file/d/1ynXOCD-mvemOOnPtmSM2uM1UBMo5BMp_/view";
+  const COUNTDOWN_SECS = 5;
+
+  function showResumeCard() {
+    // Open dock first if not already open
+    if (!slot.classList.contains("is-open")) openDock();
+
+    // Clear any demo content so card is the first thing shown
+    clearDemo();
+
+    // Don't inject a second card if one's already in the convo
+    if (convo.querySelector(".ai-resume-card")) {
+      scrollDown();
+      return;
+    }
+
+    const card = document.createElement("div");
+    card.className = "ai-resume-card";
+    card.innerHTML = `
+      <p class="ai-resume-card-hint">Here's Dinesh's resume — two ways to access it.</p>
+      <div class="ai-resume-card-actions">
+        <a href="${GDRIVE_URL}" target="_blank" rel="noopener"
+           class="ai-resume-gdrive" id="ai-resume-gdrive-btn">
+          <span class="ai-countdown-ring-wrap">
+            <svg class="ai-countdown-svg" viewBox="0 0 36 36">
+              <circle class="ai-countdown-track" cx="18" cy="18" r="15"/>
+              <circle class="ai-countdown-fill" cx="18" cy="18" r="15"/>
+            </svg>
+          </span>
+          <span class="ai-resume-btn-inner">
+            <span class="ai-resume-btn-label">Open in Google Drive</span>
+            <span class="ai-resume-auto-label">auto-opens in <span class="ai-countdown-num">${COUNTDOWN_SECS}</span>s</span>
+          </span>
+        </a>
+        <a href="/resume.pdf" download class="ai-resume-download">↓ Download PDF</a>
+      </div>
+    `;
+    convo.appendChild(card);
+    scrollDown();
+
+    // ── Countdown ring setup ──────────────────────────────────────────────────
+    const fillEl   = card.querySelector(".ai-countdown-fill");
+    const numEl    = card.querySelector(".ai-countdown-num");
+    const autoLabel = card.querySelector(".ai-resume-auto-label");
+    const CIRC     = 2 * Math.PI * 15; // circumference for r=15 → ≈94.25
+    fillEl.style.strokeDasharray  = CIRC;
+    fillEl.style.strokeDashoffset = CIRC; // starts empty, fills clockwise
+
+    let cancelled   = false;
+    let lastSecShown = COUNTDOWN_SECS;
+    const startTime  = performance.now();
+
+    function cancelCountdown() {
+      if (cancelled) return;
+      cancelled = true;
+      if (autoLabel) autoLabel.textContent = "click to open";
+    }
+
+    function tick(now) {
+      if (cancelled) return;
+      const elapsed  = (now - startTime) / 1000;
+      const progress = Math.min(elapsed / COUNTDOWN_SECS, 1);
+      fillEl.style.strokeDashoffset = CIRC * (1 - progress);
+
+      const secs = Math.ceil(COUNTDOWN_SECS - elapsed);
+      if (secs !== lastSecShown && numEl) {
+        lastSecShown = secs;
+        numEl.textContent = Math.max(0, secs);
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        // Auto-open Google Drive
+        window.open(GDRIVE_URL, "_blank", "noopener");
+      }
+    }
+    requestAnimationFrame(tick);
+
+    // Cancel countdown if user interacts with the chat (types, clicks elsewhere)
+    convo.addEventListener("click", (e) => {
+      if (!e.target.closest(".ai-resume-gdrive")) cancelCountdown();
+    }, { once: true });
+    input.addEventListener("focus", cancelCountdown, { once: true });
+
+    // Clicking the Drive button itself is fine — just cancel the timer so we
+    // don't double-open after the user already clicked
+    card.querySelector(".ai-resume-gdrive").addEventListener("click", () => {
+      cancelled = true;
+    });
+  }
+
+  // Expose so the nav link and any inline script can call these
+  window._folioOpen        = openDock;
+  window._folioShowResume  = showResumeCard;
+
 })();
 
 /* ───────────────────────────────────────────────
@@ -3516,6 +3699,18 @@
   }, { threshold: 0.08, rootMargin: "0px 0px -48px 0px" });
 
   targets.forEach(t => obs.observe(t));
+})();
+
+/* ── Nav résumé link → open AI chat resume card ── */
+(() => {
+  const link = document.getElementById("nav-resume-link");
+  if (!link) return;
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (typeof window._folioShowResume === "function") {
+      window._folioShowResume();
+    }
+  });
 })();
 </script>
 
