@@ -1135,6 +1135,15 @@
     stroke: #fff;
     stroke-width: 3.5;
     stroke-linecap: round;
+    stroke-dasharray: 113.1;
+    stroke-dashoffset: 0;
+  }
+  .ai-countdown-fill.is-running {
+    animation: countdown-deplete var(--cd-dur, 5s) linear forwards;
+  }
+  @keyframes countdown-deplete {
+    from { stroke-dashoffset: 0; }
+    to   { stroke-dashoffset: 113.1; }
   }
   /* Number sits centred over the ring */
   .ai-countdown-num {
@@ -3301,6 +3310,8 @@
     if (!question || !question.trim()) return;
     // Expand the panel if it's collapsed (e.g. user typed and hit enter from pill)
     dock.classList.remove("collapsed");
+    // Dismiss resume card if visible — it shouldn't persist into a real conversation
+    convo.querySelector(".ai-resume-card")?.remove();
     clearDemo();
     input.disabled = true;
     // Folio: hide welcome + chips once the conversation starts
@@ -3649,54 +3660,51 @@
     scrollDown();
 
     // ── Countdown ring setup ──────────────────────────────────────────────────
-    const fillEl   = card.querySelector(".ai-countdown-fill");
-    const numEl    = card.querySelector(".ai-countdown-num");
+    const fillEl    = card.querySelector(".ai-countdown-fill");
+    const numEl     = card.querySelector(".ai-countdown-num");
     const autoLabel = card.querySelector(".ai-resume-auto-label");
-    const CIRC     = 2 * Math.PI * 18; // circumference for r=18 → ≈113.1
-    fillEl.style.strokeDasharray  = CIRC;
-    fillEl.style.strokeDashoffset = 0;   // starts full, depletes to CIRC
+
+    // Set the CSS variable so the animation duration matches COUNTDOWN_SECS
+    fillEl.style.setProperty("--cd-dur", COUNTDOWN_SECS + "s");
 
     let cancelled   = false;
-    let lastSecShown = COUNTDOWN_SECS;
-    const startTime  = performance.now();
+    let secsLeft    = COUNTDOWN_SECS;
 
     function cancelCountdown() {
       if (cancelled) return;
       cancelled = true;
+      clearInterval(tickInterval);
+      clearTimeout(autoOpenTimer);
+      fillEl.classList.remove("is-running"); // pause the arc where it stopped
       if (autoLabel) autoLabel.textContent = "click to open";
     }
 
-    function tick(now) {
-      if (cancelled) return;
-      const elapsed  = (now - startTime) / 1000;
-      const progress = Math.min(elapsed / COUNTDOWN_SECS, 1);
-      fillEl.style.strokeDashoffset = CIRC * progress; // full → empty as time runs out
+    // Kick off the CSS arc animation
+    fillEl.classList.add("is-running");
 
-      const secs = Math.ceil(COUNTDOWN_SECS - elapsed);
-      if (secs !== lastSecShown && numEl) {
-        lastSecShown = secs;
-        numEl.textContent = Math.max(0, secs);
-      }
+    // Tick the number every second
+    const tickInterval = setInterval(() => {
+      secsLeft--;
+      if (numEl) numEl.textContent = Math.max(0, secsLeft);
+      if (secsLeft <= 0) clearInterval(tickInterval);
+    }, 1000);
 
-      if (progress < 1) {
-        requestAnimationFrame(tick);
-      } else {
-        // Auto-open Google Drive
-        window.open(GDRIVE_URL, "_blank", "noopener");
-      }
-    }
-    requestAnimationFrame(tick);
+    // Auto-open after the full countdown
+    const autoOpenTimer = setTimeout(() => {
+      if (!cancelled) window.open(GDRIVE_URL, "_blank", "noopener");
+    }, COUNTDOWN_SECS * 1000);
 
-    // Cancel countdown if user interacts with the chat (types, clicks elsewhere)
-    convo.addEventListener("click", (e) => {
-      if (!e.target.closest(".ai-resume-gdrive")) cancelCountdown();
-    }, { once: true });
-    input.addEventListener("focus", cancelCountdown, { once: true });
+    // Cancel ONLY if user clicks somewhere in the convo that isn't the button
+    // (no focus-based cancel — it fires too eagerly on dock open)
+    setTimeout(() => {
+      convo.addEventListener("click", (e) => {
+        if (!e.target.closest(".ai-resume-gdrive")) cancelCountdown();
+      }, { once: true });
+    }, 800);
 
-    // Clicking the Drive button itself is fine — just cancel the timer so we
-    // don't double-open after the user already clicked
+    // Clicking the button: open naturally, just stop the timer to avoid double-open
     card.querySelector(".ai-resume-gdrive").addEventListener("click", () => {
-      cancelled = true;
+      cancelCountdown();
     });
   }
 
