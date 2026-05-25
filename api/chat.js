@@ -169,7 +169,7 @@ Why operations and not consumer?
 
 If someone asks to see Dinesh's resume, CV, or portfolio PDF, output exactly this — two anchor tags on their own paragraph, no other HTML, no alterations to class names or hrefs:
 
-<a href="https://drive.google.com/file/d/1ynXOCD-mvemOOnPtmSM2uM1UBMo5BMp_/view" class="ai-resume-link" target="_blank" rel="noopener">Open in Google Drive</a> <a href="/resume.pdf" class="ai-resume-link" download>Download PDF</a>
+<a href="/resume.pdf" class="ai-resume-link" target="_blank" rel="noopener">View resume</a> <a href="/resume.pdf" class="ai-resume-link" download>Download PDF</a>
 
 Then add one short sentence of context, e.g. "It covers his full work history, skills, and certifications." Keep the rest of the response brief.
 

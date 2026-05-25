@@ -1116,32 +1116,45 @@
   .ai-resume-gdrive:hover { opacity: 0.88; }
   .ai-countdown-ring-wrap {
     position: relative;
-    width: 26px;
-    height: 26px;
+    width: 42px;
+    height: 42px;
     flex-shrink: 0;
   }
   .ai-countdown-svg {
-    width: 26px;
-    height: 26px;
-    transform: rotate(-90deg);
+    width: 42px;
+    height: 42px;
+    transform: rotate(-90deg); /* start fill from top */
   }
   .ai-countdown-track {
     fill: none;
-    stroke: rgba(255,255,255,0.22);
-    stroke-width: 3;
+    stroke: rgba(255,255,255,0.20);
+    stroke-width: 3.5;
   }
   .ai-countdown-fill {
     fill: none;
     stroke: #fff;
-    stroke-width: 3;
+    stroke-width: 3.5;
     stroke-linecap: round;
-    transition: stroke-dashoffset 0.05s linear;
+  }
+  /* Number sits centred over the ring */
+  .ai-countdown-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    pointer-events: none;
+    line-height: 1;
   }
   .ai-resume-btn-inner {
     display: flex;
     flex-direction: column;
-    line-height: 1.25;
-    gap: 1px;
+    line-height: 1.3;
+    gap: 2px;
   }
   .ai-resume-btn-label {
     font-size: 0.83rem;
@@ -1150,8 +1163,8 @@
   .ai-resume-auto-label {
     font-size: 0.70rem;
     font-weight: 400;
-    opacity: 0.75;
-    letter-spacing: 0.015em;
+    opacity: 0.70;
+    letter-spacing: 0.01em;
   }
   /* Download button — secondary */
   .ai-resume-download {
@@ -2009,6 +2022,32 @@
     color: var(--green-strong);
     font-weight: 500;
   }
+
+  /* Validation flag — appears in the bottom-left corner of a bot card when the
+     response tripped one or more validation issues. Subtle for users, but
+     hovering reveals the tooltip with the count. Full details go to console. */
+  .ai-validation-flag {
+    position: absolute;
+    bottom: 10px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px 3px 6px;
+    background: rgba(180, 70, 70, 0.06);
+    border: 1px solid rgba(180, 70, 70, 0.22);
+    color: rgba(140, 50, 50, 0.78);
+    border-radius: 999px;
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: help;
+    z-index: 2;
+    opacity: 0;
+    animation: flag-in 280ms ease 200ms forwards;
+  }
+  @keyframes flag-in { to { opacity: 1; } }
 
   /* Quote card (magazine pull-quote) */
   .ai-quote-card {
@@ -2896,8 +2935,8 @@
     { req: "AI / conversational UX",                brings: "Built Dell IntelliAssist 2.0 and Folio" },
   ];
   const QUOTES = [
-    { text: "Research-led, structure-first. Progress over pixels.",          source: "His approach" },
-    { text: "Make the user's day quieter.",                                  source: "Folio's guiding principle" },
+    { text: "Research-led, structure-first. Progress over pixels.",          source: "Dinesh's approach" },
+    { text: "Make the user's day quieter.",                                  source: "His guiding principle" },
     { text: "He doesn't draw screens before sitting with users.",            source: "How he works" },
   ];
 
@@ -2962,9 +3001,11 @@
 
   // Pick a generative card based on what the user asked.
   // Returns the card element (or null if no match — text-only response).
-  function pickGenerativeCard(userQuestion, responseText) {
+  // IMPORTANT: matches the user's QUESTION only, not the response text.
+  // Matching on response text caused unrelated cards to surface (e.g. a
+  // philosophy quote card appearing on a resume question).
+  function pickGenerativeCard(userQuestion) {
     const q = (userQuestion || "").toLowerCase();
-    const r = (responseText || "").toLowerCase();
     // JD-style paste — comparison table
     if (looksLikeJD(userQuestion || "")) return renderComparisonCard();
     // Skills questions
@@ -2972,15 +3013,208 @@
       return renderSkillCard();
     }
     // Career / experience / timeline
-    if (/\b(career|experience|history|background|where (?:has|did) he work(?:ed)?|timeline|journey|story)\b/.test(q)) {
+    if (/\b(career|experience|history|background|where (?:has|did) he work(?:ed)?|timeline|journey)\b/.test(q)) {
       return renderTimelineCard();
     }
-    // Philosophy / approach / "what's he like" — quote card
-    if (/\b(approach|philosophy|believes?|principles?|values?|what (?:is|are) he|how (?:does|do) he (?:work|think))\b/.test(q) ||
-        /\b(approach|philosophy|believes?|principles?)\b/.test(r)) {
+    // Philosophy / approach / principles — quote card. Strict: must be in the question.
+    if (/\b(approach|philosophy|believe[sd]?|principles?|values?|how (?:does|do) he (?:work|think|design|approach))\b/.test(q)) {
       return renderQuoteCard();
     }
     return null;
+  }
+
+  /* ────────────────────────────────────────────
+     FOLIO VALIDATOR — sanity check responses
+     Runs after every response to catch hallucinations,
+     fabricated facts, off-tone phrases, and irrelevance.
+     Logs structured results to console for Dinesh to review.
+     Adds a subtle flag to visibly-broken responses.
+  ──────────────────────────────────────────── */
+
+  // Ground truth — the only companies/projects/metrics/years Folio should be
+  // talking about. Anything else gets flagged for review.
+  const FOLIO_FACTS = {
+    companies:    ["Onity", "Dell", "Dell INC", "Red Hat"],
+    projects:     [
+      "Real-Time Inquiry Portal", "RTI", "Inquiry Portal",
+      "Loan Deboarding Portal", "Loan Deboarding",
+      "IntelliAssist", "Chaos to Clarity",
+      "Information Architecture", "Dell INC", "INC",
+    ],
+    knownMetrics: ["62%", "55%", "92%", "40%", "12 hours", "6 hours"],
+    knownYears:   ["2020", "2021", "2022", "2023", "2024", "2025", "2026"],
+    tools:        ["Figma", "Sketch", "Adobe XD", "Framer", "React", "HTML",
+                   "CSS", "JavaScript", "Angular", "Lovable", "Claude Code",
+                   "V0", "Figma Make"],
+  };
+
+  // Patterns that often indicate hallucination or off-tone content.
+  // Each entry: pattern → severity → human-readable label.
+  const VALIDATION_PATTERNS = [
+    // Fabricated big-tech affiliations (Dinesh did NOT work at these)
+    { sev: "high",   pat: /worked\s+at\s+(Google|Facebook|Meta|Apple|Amazon|Microsoft|Netflix|Stripe|Uber|Airbnb|Twitter|LinkedIn|Salesforce|Adobe|IBM|Oracle|SAP|Spotify|Tesla|Reddit|Snap|Pinterest|TikTok|ByteDance)/i,
+      label: "fabricated company affiliation" },
+    // Fabricated senior titles he hasn't held
+    { sev: "high",   pat: /\b(VP|Vice President|Chief|Head\s+of|Principal\s+Designer)\s+(of\s+)?(Design|Product|Engineering)/i,
+      label: "fabricated senior title" },
+    // Cliché / overhyped tone
+    { sev: "medium", pat: /\b(rockstar|ninja|guru|wizard|10x\s+(engineer|designer)|passionate\s+about\s+(making|creating))\b/i,
+      label: "cliché / overhyped phrasing" },
+    // Overly formal
+    { sev: "low",    pat: /\b(delighted|honored|privileged)\s+to\b/i,
+      label: "overly formal phrasing" },
+    // Overly casual
+    { sev: "low",    pat: /\b(OMG|tbh|imo|lol|lmao)\b/i,
+      label: "overly casual phrasing" },
+    // Folio breaking persona and speaking as itself
+    { sev: "medium", pat: /\bI(?:'m|\s+am)\s+(?:Dinesh|a\s+designer|an?\s+AI)/i,
+      label: "Folio breaking persona (speaking as Dinesh or admitting AI)" },
+    // Specific dollar amounts that aren't on the site
+    { sev: "medium", pat: /\$\s?\d{1,3},\d{3}(?:\b|,)/,
+      label: "suspiciously specific dollar amount" },
+    // Em-dashes (Dinesh's voice preference — no em-dashes anywhere in his prose)
+    { sev: "low",    pat: /[—–]/,
+      label: "em-dash present (Dinesh prefers commas/periods)" },
+    // Placeholder leakage
+    { sev: "high",   pat: /\[[A-Z_]{3,}\]|\{\{[^}]+\}\}|placeholder/i,
+      label: "placeholder text leaked into response" },
+    // Code leakage
+    { sev: "high",   pat: /```[\s\S]*?```|<\/?(?:div|span|p|h\d|button)\b|console\.log|function\s*\(/i,
+      label: "code or markup leaked into response" },
+  ];
+
+  function validateFolioResponse(responseText, userQuestion) {
+    const issues = [];
+    const text = String(responseText || "").trim();
+    const tLower = text.toLowerCase();
+
+    // 1. Length sanity
+    if (text.length < 30) {
+      issues.push({ sev: "high", cat: "length", msg: "Response is too short to be useful (<30 chars)" });
+    } else if (text.length > 2200) {
+      issues.push({ sev: "low",  cat: "length", msg: `Response is very long (${text.length} chars) — recruiters skim` });
+    }
+
+    // 2. Pattern-based checks
+    VALIDATION_PATTERNS.forEach(({ sev, pat, label }) => {
+      const m = text.match(pat);
+      if (m) issues.push({ sev, cat: "pattern", msg: `${label} → "${m[0]}"` });
+    });
+
+    // 3. Unverified percentages — flag any % not in the known metrics set
+    const pctMatches = text.match(/\b\d{1,3}%/g) || [];
+    pctMatches.forEach((p) => {
+      if (!FOLIO_FACTS.knownMetrics.includes(p)) {
+        issues.push({
+          sev: "medium",
+          cat: "fact",
+          msg: `Unverified metric: ${p} (known %: ${FOLIO_FACTS.knownMetrics.filter((x) => x.endsWith("%")).join(", ")})`,
+        });
+      }
+    });
+
+    // 4. Years outside Dinesh's known timeline
+    const yearMatches = text.match(/\b(19\d{2}|20\d{2})\b/g) || [];
+    yearMatches.forEach((y) => {
+      if (!FOLIO_FACTS.knownYears.includes(y)) {
+        issues.push({
+          sev: "medium",
+          cat: "fact",
+          msg: `Year outside known timeline: ${y} (Dinesh's range: 2020–2026)`,
+        });
+      }
+    });
+
+    // 5. Unknown company mentions — flag proper-noun "at X" patterns
+    //    where X isn't in the whitelist
+    const companyMentions = text.match(/\bat\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)?)/g) || [];
+    const seen = new Set();
+    companyMentions.forEach((m) => {
+      const name = m.replace(/^at\s+/, "");
+      if (seen.has(name)) return;
+      seen.add(name);
+      const matchesKnown = FOLIO_FACTS.companies.some((c) =>
+        name === c || name.toLowerCase().startsWith(c.toLowerCase())
+      );
+      if (!matchesKnown) {
+        issues.push({ sev: "medium", cat: "fact", msg: `Possibly unknown company: "${name}"` });
+      }
+    });
+
+    // 6. Question relevance — minimal keyword overlap
+    if (userQuestion && userQuestion.length > 10) {
+      const stop = new Set([
+        "what","when","where","why","how","this","that","they","their",
+        "have","with","from","your","about","tell","show","give","does",
+        "make","would","could","should","into","really","just","like",
+        "some","more","most","also","than","then","there","were","been",
+      ]);
+      const qWords = (userQuestion.toLowerCase().match(/\b[a-z]{4,}\b/g) || [])
+        .filter((w) => !stop.has(w));
+      if (qWords.length >= 2) {
+        const overlap = qWords.filter((w) => tLower.includes(w)).length;
+        if (overlap === 0) {
+          issues.push({
+            sev: "medium",
+            cat: "relevance",
+            msg: `Response doesn't echo any keywords from the question (${qWords.slice(0, 5).join(", ")}...)`,
+          });
+        }
+      }
+    }
+
+    // Score 0–10. High issues cost 4 points each, medium 2, low 1.
+    const cost = issues.reduce((s, i) => s + (i.sev === "high" ? 4 : i.sev === "medium" ? 2 : 1), 0);
+    const score = Math.max(0, 10 - cost);
+    const valid = !issues.some((i) => i.sev === "high") && issues.filter((i) => i.sev === "medium").length < 3;
+
+    return { valid, score, issues };
+  }
+
+  // Structured console output so Dinesh can spot problem responses quickly.
+  function logValidation(validation, question) {
+    if (validation.issues.length === 0) {
+      console.log(
+        "%c✓ Folio validation: " + validation.score + "/10",
+        "color:#1F4D3E;font-weight:600"
+      );
+      return;
+    }
+    const headerColor = validation.valid ? "#A77B0E" : "#B43A3A";
+    const mark = validation.valid ? "⚠" : "✖";
+    console.groupCollapsed(
+      `%c${mark} Folio validation: ${validation.score}/10 (${validation.issues.length} issue${validation.issues.length === 1 ? "" : "s"})`,
+      `color:${headerColor};font-weight:600`
+    );
+    console.log("Question:", question);
+    validation.issues.forEach((i) => {
+      const fn = i.sev === "high" ? "warn" : "log";
+      console[fn](`  [${i.sev.toUpperCase()} · ${i.cat}] ${i.msg}`);
+    });
+    console.groupEnd();
+  }
+
+  // Adds a small "review" flag to a bot message that tripped validation.
+  // Subtle, hover for count; full breakdown is in the console.
+  function attachValidationFlag(botMsg, validation) {
+    if (validation.valid) return;
+    const flag = document.createElement("div");
+    flag.className = "ai-validation-flag";
+    const high = validation.issues.filter((i) => i.sev === "high").length;
+    const med  = validation.issues.filter((i) => i.sev === "medium").length;
+    flag.title =
+      `Folio flagged itself for review.\n` +
+      (high ? `${high} high-severity issue${high === 1 ? "" : "s"}\n` : "") +
+      (med  ? `${med} medium-severity issue${med  === 1 ? "" : "s"}\n` : "") +
+      `Open the browser console for the full breakdown.`;
+    flag.innerHTML =
+      `<svg width="11" height="11" viewBox="0 0 11 11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">` +
+      `<circle cx="5.5" cy="5.5" r="4.5" fill="none" stroke="currentColor" stroke-width="1.2"/>` +
+      `<line x1="5.5" y1="3" x2="5.5" y2="6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>` +
+      `<circle cx="5.5" cy="8" r="0.7" fill="currentColor"/>` +
+      `</svg>` +
+      `<span>review</span>`;
+    botMsg.appendChild(flag);
   }
 
   // 8. Augment the bot message after streaming.
@@ -3004,7 +3238,7 @@
     botMsg.appendChild(renderSignature());
 
     // Generative response card — skill / timeline / comparison / quote (idea 7)
-    const genCard = pickGenerativeCard(userQuestion, responseText);
+    const genCard = pickGenerativeCard(userQuestion);
     if (genCard) botMsg.appendChild(genCard);
 
     // Rich case-study cards — ONLY when the question itself is about projects/work.
@@ -3021,10 +3255,13 @@
       matched.forEach((cs) => botMsg.appendChild(renderCaseCard(cs)));
     }
 
-    // Contextual CTAs (bottom of the card)
+    // Contextual CTAs (bottom of the card).
+    // Match on the user's QUESTION only — matching response text caused CTAs
+    // to surface on irrelevant turns (e.g. resume button reappearing when the
+    // answer happened to mention "experience").
     const ctas = [];
-    const wantsContact = /\b(email|contact|reach\s*out|hire|interview|fit\s+for|role|opportunity)\b/.test(combined);
-    const wantsResume  = /\b(resume|résumé|cv|experience|background|work\s+history)\b/.test(combined);
+    const wantsContact = /\b(email|contact|reach\s*out|hire (?:him|dinesh)|interview|fit\s+for\s+(?:a|the|this)\s+role)\b/.test(questionLower);
+    const wantsResume  = /\b(resume|résumé|cv|download)\b/.test(questionLower);
     const longConvo    = (turnCount || 0) >= 3;
 
     if (wantsContact) {
@@ -3219,6 +3456,13 @@
       // Folio: append rich case-study cards, contextual CTAs, and signature wavy
       const turnCount = history.filter((m) => m.role === "user").length;
       augmentBotMessage(botMsg, cleanForHistory, question, turnCount);
+      // Folio: validate the response. Log to console for review,
+      // attach a subtle "review" flag to messages that tripped any high-severity
+      // issue (fabricated companies, code leaks, etc.) so Dinesh can iterate
+      // on the prompt without missing problem turns.
+      const validation = validateFolioResponse(cleanForHistory, question);
+      logValidation(validation, question);
+      attachValidationFlag(botMsg, validation);
       // Pull suggested follow-ups out of the response and refresh the chips
       refreshFollowups(extractFollowups(accumulated));
     } catch (err) {
@@ -3363,7 +3607,7 @@
   typewriterStep();
 
   // ─── Resume card — triggered by nav résumé click ───────────────────────────
-  const GDRIVE_URL = "https://drive.google.com/file/d/1ynXOCD-mvemOOnPtmSM2uM1UBMo5BMp_/view";
+  const GDRIVE_URL = "/resume.pdf";
   const COUNTDOWN_SECS = 5;
 
   function showResumeCard() {
@@ -3387,14 +3631,15 @@
         <a href="${GDRIVE_URL}" target="_blank" rel="noopener"
            class="ai-resume-gdrive" id="ai-resume-gdrive-btn">
           <span class="ai-countdown-ring-wrap">
-            <svg class="ai-countdown-svg" viewBox="0 0 36 36">
-              <circle class="ai-countdown-track" cx="18" cy="18" r="15"/>
-              <circle class="ai-countdown-fill" cx="18" cy="18" r="15"/>
+            <svg class="ai-countdown-svg" viewBox="0 0 44 44">
+              <circle class="ai-countdown-track" cx="22" cy="22" r="18"/>
+              <circle class="ai-countdown-fill" cx="22" cy="22" r="18"/>
             </svg>
+            <span class="ai-countdown-num">${COUNTDOWN_SECS}</span>
           </span>
           <span class="ai-resume-btn-inner">
-            <span class="ai-resume-btn-label">Open in Google Drive</span>
-            <span class="ai-resume-auto-label">auto-opens in <span class="ai-countdown-num">${COUNTDOWN_SECS}</span>s</span>
+            <span class="ai-resume-btn-label">View resume</span>
+            <span class="ai-resume-auto-label">opens in browser automatically</span>
           </span>
         </a>
         <a href="/resume.pdf" download class="ai-resume-download">↓ Download PDF</a>
@@ -3407,9 +3652,9 @@
     const fillEl   = card.querySelector(".ai-countdown-fill");
     const numEl    = card.querySelector(".ai-countdown-num");
     const autoLabel = card.querySelector(".ai-resume-auto-label");
-    const CIRC     = 2 * Math.PI * 15; // circumference for r=15 → ≈94.25
+    const CIRC     = 2 * Math.PI * 18; // circumference for r=18 → ≈113.1
     fillEl.style.strokeDasharray  = CIRC;
-    fillEl.style.strokeDashoffset = CIRC; // starts empty, fills clockwise
+    fillEl.style.strokeDashoffset = 0;   // starts full, depletes to CIRC
 
     let cancelled   = false;
     let lastSecShown = COUNTDOWN_SECS;
@@ -3425,7 +3670,7 @@
       if (cancelled) return;
       const elapsed  = (now - startTime) / 1000;
       const progress = Math.min(elapsed / COUNTDOWN_SECS, 1);
-      fillEl.style.strokeDashoffset = CIRC * (1 - progress);
+      fillEl.style.strokeDashoffset = CIRC * progress; // full → empty as time runs out
 
       const secs = Math.ceil(COUNTDOWN_SECS - elapsed);
       if (secs !== lastSecShown && numEl) {
