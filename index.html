@@ -5,6 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dinesh Baller — Product Designer</title>
 
+<!-- ── Favicon ── -->
+<link rel="icon" type="image/png" sizes="64x64" href="./favicon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="./favicon-16.png" />
+<link rel="apple-touch-icon" sizes="180x180"    href="./apple-touch-icon.png" />
+
+<!-- ── SEO ── -->
+<meta name="description" content="Dinesh Baller is a product designer building B2B products and AI-powered workflows at Onity. Case studies in mortgage servicing, AI workspaces, and financial operations tooling." />
+<meta name="author" content="Dinesh Baller" />
+
+<!-- ── Open Graph (LinkedIn, Slack, iMessage previews) ── -->
+<meta property="og:type"         content="website" />
+<meta property="og:title"        content="Dinesh Baller — Product Designer" />
+<meta property="og:description"  content="Designer building B2B products and AI-powered workflows that keep financial teams moving. Case studies at Onity, Dell, and Red Hat." />
+<meta property="og:image"        content="./images/rti-final-overview.png" />
+<meta property="og:image:width"  content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url"          content="https://dineshballer.com" />
+<meta property="og:site_name"    content="Dinesh Baller" />
+
+<!-- ── Twitter / X Card ── -->
+<meta name="twitter:card"        content="summary_large_image" />
+<meta name="twitter:title"       content="Dinesh Baller — Product Designer" />
+<meta name="twitter:description" content="Designer building B2B products and AI-powered workflows that keep financial teams moving." />
+<meta name="twitter:image"       content="./images/rti-final-overview.png" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://api.fontshare.com" />
@@ -233,16 +259,17 @@
     color: var(--green-strong);
     font-weight: 600;
   }
-  /* Active chip: the underline acts as a 4s countdown — starts full and
-     contracts from both ends toward the center until it disappears,
+  /* Active chip: the underline acts as a 3s countdown — starts full and
+     contracts toward the center until it disappears,
      then the JS interval advances to the next chip. */
   .chip[aria-selected="true"]::after {
     transform-origin: center;
-    animation: chip-countdown 4s linear forwards;
+    animation: chip-countdown 3s linear forwards;
   }
-  /* Pause the countdown while the user is interacting with the chip rail */
+  /* Pause the countdown on hover, focus, or JS-triggered click-pause */
   .chip-rail:hover .chip[aria-selected="true"]::after,
-  .chip-rail:focus-within .chip[aria-selected="true"]::after {
+  .chip-rail:focus-within .chip[aria-selected="true"]::after,
+  .chip-rail.click-paused .chip[aria-selected="true"]::after {
     animation-play-state: paused;
   }
   @keyframes chip-countdown {
@@ -2368,19 +2395,19 @@
     </div>
 
     <div class="chip-rail" role="tablist" aria-label="Choose a lens">
-      <button class="chip" role="tab" aria-selected="true"  aria-controls="lens-work"      data-lens="work"      tabindex="0">What I do</button>
+      <button class="chip" role="tab" aria-selected="true"  aria-controls="lens-work"      data-lens="work"      tabindex="0">What I build</button>
       <button class="chip" role="tab" aria-selected="false" aria-controls="lens-operators" data-lens="operators" tabindex="-1">Who it's for</button>
       <button class="chip" role="tab" aria-selected="false" aria-controls="lens-approach"  data-lens="approach"  tabindex="-1">How I work</button>
-      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-backstory" data-lens="backstory" tabindex="-1">Where I've been</button>
-      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-now"       data-lens="now"       tabindex="-1">Right Now</button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-backstory" data-lens="backstory" tabindex="-1">The path</button>
+      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-now"       data-lens="now"       tabindex="-1">Now</button>
     </div>
 
     <div class="lens-stage" aria-live="polite">
-      <p class="lens-line" id="lens-work"      data-lens="work"      data-active="true">Product designer building operational software for financial operations teams.</p>
-      <p class="lens-line" id="lens-operators" data-lens="operators">Designs for the analysts, AMs, and ops teams who actually live inside the tools.</p>
+      <p class="lens-line" id="lens-work"      data-lens="work"      data-active="true">Designer building B2B products and AI-powered workflows that keep financial teams moving.</p>
+      <p class="lens-line" id="lens-operators" data-lens="operators">Analysts, AMs, and ops teams running mortgage and lending workflows all day, every day.</p>
       <p class="lens-line" id="lens-approach"  data-lens="approach">Research-led, structure-first. Progress over pixels.</p>
-      <p class="lens-line" id="lens-backstory" data-lens="backstory">Now at Onity. Previously Dell, Red Hat. About a decade in operational software.</p>
-      <p class="lens-line" id="lens-now"       data-lens="now">Designing mortgage servicing portals and release pipelines.</p>
+      <p class="lens-line" id="lens-backstory" data-lens="backstory">Now at Onity. Dell and Red Hat before that.</p>
+      <p class="lens-line" id="lens-now"       data-lens="now">Building AI products at Onity. Mortgage portals, inquiry systems, release pipelines. Vibe-coding anything else worth shipping.</p>
     </div>
 
     <!-- ───────────────────────────────────────────────
@@ -3964,12 +3991,14 @@
     });
   }
 
+  // ─── Chip click and keyboard ───
   chips.forEach(c => c.addEventListener("click", () => {
     activate(c.dataset.lens);
-    restartAutoCycle();          // give the user a fresh 5s on the chip they picked
+    onChipClick();
   }));
 
-  document.querySelector(".chip-rail").addEventListener("keydown", e => {
+  const chipRailEl = document.querySelector(".chip-rail");
+  chipRailEl.addEventListener("keydown", e => {
     const i = chips.findIndex(c => c.getAttribute("aria-selected") === "true");
     let n = i;
     if (e.key === "ArrowRight") n = (i + 1) % chips.length;
@@ -3978,49 +4007,97 @@
     e.preventDefault();
     activate(chips[n].dataset.lens);
     chips[n].focus();
-    restartAutoCycle();
+    onChipClick();
   });
 
-  /* ─── Auto-cycle through chips every 4s, left → right, then loop.
-         Pauses on hover/focus via CSS (animation-play-state: paused).
-         JS pause via Page Visibility API so we don't burn cycles in a hidden tab. */
-  const CYCLE_MS = 4000;
-  let autoCycleTimer = null;
+  /* ─── Auto-cycle through chips every 3s.
+         Hover: pauses CSS animation + JS timer, resumes from elapsed position.
+         Click: freezes for 6s then resumes with a fresh countdown.
+         Visibility API: stops cycling in hidden tabs. */
+  const CYCLE_MS       = 3000;
+  const CLICK_PAUSE_MS = 6000;
+  let autoCycleTimer   = null;
+  let resumeTimer      = null;
+  let clickPauseTimer  = null;
+  let cycleStart       = null;
 
   function advanceChip() {
     const i = chips.findIndex(c => c.getAttribute("aria-selected") === "true");
-    const next = (i + 1) % chips.length;
-    activate(chips[next].dataset.lens);
+    activate(chips[(i + 1) % chips.length].dataset.lens);
   }
 
-  function startAutoCycle() {
-    stopAutoCycle();
+  function clearTimers() {
+    if (autoCycleTimer)  { clearInterval(autoCycleTimer); autoCycleTimer  = null; }
+    if (resumeTimer)     { clearTimeout(resumeTimer);     resumeTimer     = null; }
+    if (clickPauseTimer) { clearTimeout(clickPauseTimer); clickPauseTimer = null; }
+  }
+
+  function startFreshCycle() {
+    clearTimers();
     if (reduced) return;
-    autoCycleTimer = setInterval(advanceChip, CYCLE_MS);
+    cycleStart = Date.now();
+    autoCycleTimer = setInterval(() => {
+      cycleStart = Date.now();
+      advanceChip();
+    }, CYCLE_MS);
   }
 
-  function stopAutoCycle() {
+  // Hover in — stop JS timer (CSS :hover already pauses the animation line)
+  function onHoverIn() {
     if (autoCycleTimer) { clearInterval(autoCycleTimer); autoCycleTimer = null; }
+    if (resumeTimer)    { clearTimeout(resumeTimer);     resumeTimer    = null; }
   }
 
-  function restartAutoCycle() { startAutoCycle(); }
+  // Hover out — resume from where the cycle left off (JS + CSS stay in sync)
+  function onHoverOut() {
+    if (reduced || clickPauseTimer) return;
+    clearTimers();
+    const elapsed   = cycleStart ? (Date.now() - cycleStart) : CYCLE_MS;
+    const remaining = Math.max(80, CYCLE_MS - elapsed);
+    resumeTimer = setTimeout(() => {
+      resumeTimer = null;
+      advanceChip();
+      cycleStart = Date.now();
+      autoCycleTimer = setInterval(() => {
+        cycleStart = Date.now();
+        advanceChip();
+      }, CYCLE_MS);
+    }, remaining);
+  }
 
-  const chipRailEl = document.querySelector(".chip-rail");
-  // Pause the interval when the rail is being interacted with — the CSS already
-  // pauses the countdown line, so the line + the timer stay in sync.
-  chipRailEl.addEventListener("mouseenter", stopAutoCycle);
-  chipRailEl.addEventListener("mouseleave", startAutoCycle);
-  chipRailEl.addEventListener("focusin",  stopAutoCycle);
-  chipRailEl.addEventListener("focusout", startAutoCycle);
+  // Click — freeze countdown line for 6s, then resume with a fresh 3s countdown
+  function onChipClick() {
+    clearTimers();
+    if (reduced) return;
+    chipRailEl.classList.add("click-paused");
+    clickPauseTimer = setTimeout(() => {
+      clickPauseTimer = null;
+      chipRailEl.classList.remove("click-paused");
+      // Force animation restart on the active chip
+      const active = chips.find(c => c.getAttribute("aria-selected") === "true");
+      if (active) {
+        active.setAttribute("aria-selected", "false");
+        void active.offsetWidth; // force reflow
+        active.setAttribute("aria-selected", "true");
+      }
+      cycleStart = Date.now();
+      autoCycleTimer = setInterval(() => {
+        cycleStart = Date.now();
+        advanceChip();
+      }, CYCLE_MS);
+    }, CLICK_PAUSE_MS);
+  }
 
-  // Pause when the tab is hidden, resume when it returns
+  chipRailEl.addEventListener("mouseenter", onHoverIn);
+  chipRailEl.addEventListener("mouseleave", onHoverOut);
+  chipRailEl.addEventListener("focusin",   onHoverIn);
+  chipRailEl.addEventListener("focusout",  onHoverOut);
+
   document.addEventListener("visibilitychange", () => {
-    if (document.hidden) stopAutoCycle(); else startAutoCycle();
+    if (document.hidden) clearTimers(); else startFreshCycle();
   });
 
-  // Kick-off — the first chip is already aria-selected="true" in HTML,
-  // so the CSS countdown animation begins immediately; start the JS timer in sync.
-  startAutoCycle();
+  startFreshCycle();
 })();
 
 /* ───────────────────────────────────────────────
