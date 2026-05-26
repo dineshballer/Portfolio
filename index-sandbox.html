@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dinesh Baller — Product Designer</title>
+<title>Dinesh Baller — Product Designer (sandbox)</title>
 
 <!-- ── Favicon ── -->
 <link rel="icon" type="image/png" sizes="64x64" href="./favicon.png" />
@@ -35,7 +35,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://api.fontshare.com" />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..500&family=Caveat:wght@600&display=swap" rel="stylesheet" />
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&f[]=cabinet-grotesk@500,700,800,900&display=swap" rel="stylesheet" />
 
 <style>
   :root {
@@ -65,19 +65,22 @@
     overflow-x: hidden;
   }
 
-  /* Background atmosphere — drifting soft blobs */
+  /* Background atmosphere — matches index.html: white base with three soft
+     drifting blobs in forest green, warm cream, and mint moss. */
   .bg-atmosphere {
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 0;
     overflow: hidden;
+    background: #FFFFFF;
   }
   .bg-blob {
     position: absolute;
     border-radius: 50%;
     filter: blur(90px);
     will-change: transform;
+    display: block;
   }
   .bg-blob.b1 {
     width: 560px; height: 560px;
@@ -94,12 +97,330 @@
     bottom: -160px; left: 28%;
     background: radial-gradient(circle, rgba(46, 125, 91, 0.22), transparent 70%);
   }
-  nav.nav {
+
+  /* ═══════════════ INTERACTIVE LAYERS — cursor + magnetic + letter reveal ═══════════════ */
+
+  /* Custom cursor — small forest-green dot, scales on interactive elements */
+  @media (hover: hover) and (pointer: fine) {
+    body { cursor: none; }
+    .cursor-dot {
+      position: fixed;
+      top: 0; left: 0;
+      width: 12px; height: 12px;
+      background: var(--green-strong);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 240ms var(--ease), height 240ms var(--ease), background 240ms var(--ease), opacity 240ms var(--ease);
+      mix-blend-mode: multiply;
+      will-change: left, top;
+    }
+    .cursor-dot.is-hovering {
+      width: 44px; height: 44px;
+      background: rgba(31, 77, 62, 0.18);
+      mix-blend-mode: normal;
+    }
+    /* Restore cursor on form inputs */
+    input, textarea, button { cursor: none; }
+    .ai-input input { cursor: text; }
+  }
+
+  /* ═══════════════ POOJA-STYLE HEADER — centered photo + giant bold headline ═══════════════
+     Display: Cabinet Grotesk (Fontshare, free) — bold geometric sans, easy to read,
+     elegant, distinctive. The opposite of Inter/Roboto.  */
+  .ph {
     position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 24px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Photo at top — circular, soft shadow, fades up */
+  .ph-photo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--paper, #FBF7EF);
+    box-shadow:
+      0 16px 32px -16px rgba(20, 20, 20, 0.28),
+      0 6px 14px -6px rgba(20, 20, 20, 0.18),
+      0 0 0 4px #fff;
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: ph-rise 0.85s cubic-bezier(0.2, 0.65, 0.3, 1) 0.1s forwards;
+  }
+  .ph-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    display: block;
+  }
+
+  /* The headline — Cabinet Grotesk Bold, super large and tight */
+  .ph-headline {
+    font-family: "Cabinet Grotesk", -apple-system, system-ui, sans-serif;
+    font-weight: 800;
+    font-size: clamp(48px, 7vw, 96px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .ph-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(16px);
+    animation: ph-rise 0.85s cubic-bezier(0.2, 0.65, 0.3, 1) forwards;
+  }
+  .ph-line:nth-child(1) { animation-delay: 0.25s; }
+  .ph-line:nth-child(2) { animation-delay: 0.4s; }
+
+  /* Simple description */
+  .ph-desc {
+    font-family: var(--body);
+    font-size: clamp(16px, 1.3vw, 19px);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 560px;
+    margin: 36px auto 0;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: ph-rise 0.85s cubic-bezier(0.2, 0.65, 0.3, 1) 0.6s forwards;
+  }
+
+  /* Currently at — italic label + ink chip with brand dot */
+  .ph-now {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin: 28px 0 0;
+    font-family: var(--body);
+    font-size: 15px;
+    color: var(--ink-soft);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: ph-rise 0.85s cubic-bezier(0.2, 0.65, 0.3, 1) 0.75s forwards;
+  }
+  .ph-now em {
+    font-family: "Cabinet Grotesk", -apple-system, sans-serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .ph-now-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 12px;
+    background: #fff;
+    border: 1px solid rgba(23, 23, 23, 0.10);
+    border-radius: 999px;
+    font-family: "Cabinet Grotesk", -apple-system, sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+    box-shadow: 0 4px 12px -6px rgba(20, 20, 20, 0.10);
+  }
+  .ph-now-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--green-strong);
+    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.18);
+    animation: ph-dot-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes ph-dot-pulse {
+    50% { box-shadow: 0 0 0 6px rgba(31, 77, 62, 0); }
+  }
+
+  /* CTA — soft white pill with subtle shadow */
+  .ph-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: 16px 32px;
+    margin: 36px 0 0;
+    background: #fff;
+    color: var(--ink);
+    border-radius: 999px;
+    font-family: "Cabinet Grotesk", -apple-system, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    box-shadow:
+      0 10px 24px -10px rgba(20, 20, 20, 0.16),
+      0 4px 8px -4px rgba(20, 20, 20, 0.10),
+      0 0 0 1px rgba(23, 23, 23, 0.06);
+    transition: transform 280ms var(--ease), background 280ms var(--ease), color 280ms var(--ease), box-shadow 280ms var(--ease);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: ph-rise 0.85s cubic-bezier(0.2, 0.65, 0.3, 1) 0.9s forwards;
+  }
+  .ph-cta:hover {
+    background: var(--ink);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow:
+      0 16px 32px -12px rgba(20, 20, 20, 0.28),
+      0 0 0 1px rgba(23, 23, 23, 0.10);
+  }
+
+  /* 3D metallic stars flanking the headline */
+  .ph-star {
+    position: absolute;
+    pointer-events: none;
     z-index: 1;
+    filter: drop-shadow(0 12px 18px rgba(60, 70, 90, 0.22));
+    opacity: 0;
+    animation: ph-star-in 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s forwards,
+               ph-star-float 6s ease-in-out infinite 1.5s;
+    will-change: transform;
+  }
+  .ph-star svg { display: block; width: 100%; height: auto; }
+  .ph-star.ps1 {
+    width: clamp(60px, 7vw, 100px);
+    top: 22%;
+    left: 12%;
+    transform: rotate(-12deg);
+  }
+  .ph-star.ps2 {
+    width: clamp(72px, 8vw, 120px);
+    top: 18%;
+    right: 10%;
+    transform: rotate(18deg);
+    animation-delay: 0.7s, 1.8s;
+  }
+  @keyframes ph-star-in {
+    from { opacity: 0; transform: rotate(0deg) scale(0.3); }
+  }
+  @keyframes ph-star-float {
+    0%, 100% { transform: rotate(var(--rot, -12deg)) translateY(0); }
+    50%      { transform: rotate(calc(var(--rot, -12deg) + 4deg)) translateY(-8px); }
+  }
+  .ph-star.ps1 { --rot: -12deg; }
+  .ph-star.ps2 { --rot: 18deg; }
+
+  @keyframes ph-rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (max-width: 720px) {
+    .ph-photo { width: 88px; height: 88px; margin-bottom: 28px; }
+    .ph-star { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ph-photo, .ph-line, .ph-desc, .ph-now, .ph-cta, .ph-star {
+      opacity: 1; transform: none; animation: none;
+    }
+  }
+
+  /* Letter-by-letter reveal for greeting */
+  .greeting-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: letter-in 600ms var(--ease) forwards;
+  }
+  @keyframes letter-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Reduce-motion fallback for the cinematic stuff */
+  @media (prefers-reduced-motion: reduce) {
+    .sun-core, .sailboat, .particle, .polaroid { animation: none; }
+    .greeting-letter { opacity: 1; transform: none; }
+  }
+
+  /* ───────── (Pills removed — going for cinematic scene instead) ───────── */
+  .status-pills, .trait-pills, .status-pill, .trait-pill { display: none !important; }
+
+  /* ───────── Pills on top of hero ───────── */
+  .status-pills {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 26px;
+    opacity: 0;
+    animation: fadein 700ms var(--ease) 0.6s forwards;
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px 7px 12px;
+    border-radius: 999px;
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 14px -6px rgba(20, 20, 20, 0.10);
+    color: var(--ink);
+  }
+  .status-pill .sp-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #28a868;
+    box-shadow: 0 0 0 3px rgba(40, 168, 104, 0.22);
+    animation: pulse-dot 2.4s ease-in-out infinite;
+  }
+  .status-pill.warm  { background: rgba(255, 233, 200, 0.85); border-color: rgba(255, 200, 160, 0.6); }
+  .status-pill.warm .sp-dot { background: #c95f30; box-shadow: 0 0 0 3px rgba(201, 95, 48, 0.22); }
+  @keyframes pulse-dot {
+    50% { box-shadow: 0 0 0 6px rgba(40, 168, 104, 0); }
+  }
+
+  .trait-pills {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 44px;
+    opacity: 0;
+    animation: fadein 700ms var(--ease) 0.9s forwards;
+  }
+  .trait-pill {
+    padding: 9px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.62);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    font-family: var(--body);
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink);
+    box-shadow: 0 6px 18px -8px rgba(20, 20, 20, 0.10);
+    transition: transform 280ms var(--ease), background 280ms var(--ease);
+    cursor: default;
+  }
+  .trait-pill:hover {
+    transform: translateY(-2px);
+    background: #ffffff;
+  }
+
+  nav.nav, .scroll-cue {
+    position: relative;
+    z-index: 5;
   }
   section.case-studies {
     position: relative;
+    /* Section sits ON a white card so the sky doesn't bleed under case studies */
+    background: var(--bg);
+    border-radius: 32px 32px 0 0;
+    margin-top: 24px;
+    z-index: 2;
   }
 
   /* Spotlight backdrop — blurs everything except the hovered showcase card */
@@ -225,7 +546,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 28px;
-    margin-bottom: 36px;
+    margin-bottom: 56px;
     opacity: 0;
     animation: fadein 720ms var(--ease) 120ms forwards;
   }
@@ -287,19 +608,19 @@
     border-radius: 2px;
   }
 
-  /* Fixed-height stage — text always vertically centered, AI chat never moves */
+  /* One-liner stage — min-height sized to hold three lines of lens-line type */
   .lens-stage {
     position: relative;
     width: 100%;
     max-width: 820px;
-    height: clamp(130px, 17vw, 190px);
+    min-height: clamp(150px, 18vw, 210px);
     margin: 0 auto;
     opacity: 0;
     animation: fadein 900ms var(--ease) 280ms forwards;
   }
   .lens-line {
     position: absolute;
-    top: 35%; left: 0; right: 0;
+    top: 0; left: 0; right: 0;
     font-family: var(--display);
     font-weight: 350;
     font-size: clamp(28px, 4vw, 44px);
@@ -308,58 +629,47 @@
     color: var(--ink);
     font-variation-settings: "opsz" 60;
     opacity: 0;
-    transform: translateY(calc(-50% + 8px));
+    transform: translateY(8px);
     transition: opacity 220ms var(--ease), transform 320ms var(--ease);
     pointer-events: none;
   }
   .lens-line[data-active="true"] {
     opacity: 1;
-    transform: translateY(-50%);
+    transform: translateY(0);
     pointer-events: auto;
     transition-delay: 80ms;
   }
 
+  /* Scroll cue */
+  .scroll-cue {
+    position: fixed;
+    right: 48px;
+    bottom: 32px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: lowercase;
+    color: var(--ink-mute);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 240ms var(--ease);
+    opacity: 0;
+    animation: fadein 900ms var(--ease) 520ms forwards;
+  }
+  .scroll-cue:hover { color: var(--ink); }
+  .scroll-cue .arrow {
+    display: inline-block;
+    animation: bob 2.6s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+  }
   @keyframes fadein {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── Scroll hint arrow ── */
-  .scroll-hint {
-    position: fixed;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    opacity: 0;
-    animation: hint-arrive 1.2s cubic-bezier(0.16, 1, 0.3, 1) 2s forwards;
-    transition: opacity 600ms var(--ease);
-    pointer-events: none;
-    z-index: 5;
-  }
-  .scroll-hint.is-hidden { opacity: 0 !important; }
-  .scroll-hint-line {
-    width: 1px;
-    height: 20px;
-    background: linear-gradient(to bottom, transparent, var(--ink-mute));
-    opacity: 0.4;
-  }
-  .scroll-hint-chevron {
-    width: 10px;
-    height: 10px;
-    border-right: 1.5px solid var(--ink-mute);
-    border-bottom: 1.5px solid var(--ink-mute);
-    transform: rotate(45deg);
-    opacity: 0.35;
-    margin-top: -4px;
-  }
-  @keyframes hint-arrive {
-    0%   { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-    60%  { opacity: 1; transform: translateX(-50%) translateY(3px); }
-    100% { opacity: 1; transform: translateX(-50%) translateY(0); }
   }
 
   /* Greeting at the top of hero — sets the personal tone before chips */
@@ -406,6 +716,206 @@
   @keyframes float {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(-4px); }
+  }
+
+  /* ───────── Asymmetric hero artifact (off-center sneak peek) ───────── */
+  .hero-artifact {
+    position: absolute;
+    top: 32%;
+    right: 6%;
+    width: 240px;
+    transform: rotate(-7deg);
+    z-index: 2;
+    pointer-events: auto;
+    opacity: 0;
+    animation: artifact-in 900ms var(--ease) 1.4s forwards;
+    transition: transform 480ms var(--ease), filter 480ms var(--ease);
+  }
+  .hero-artifact:hover {
+    transform: rotate(-3deg) translateY(-6px) scale(1.04);
+    filter: drop-shadow(0 18px 28px rgba(31, 77, 62, 0.18));
+  }
+  .hero-artifact .ha-card {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(23, 23, 23, 0.06);
+    box-shadow:
+      0 22px 44px -20px rgba(20, 20, 20, 0.30),
+      0 8px 18px -10px rgba(20, 20, 20, 0.20),
+      0 0 0 6px #fff;
+  }
+  .hero-artifact .ha-card img {
+    width: 100%; height: 100%;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+  }
+  .hero-artifact .ha-label {
+    position: absolute;
+    bottom: -14px; left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 14px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 999px;
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 8px 18px -10px rgba(20, 20, 20, 0.35);
+  }
+  .hero-artifact .ha-label em {
+    color: #c8e6d4;
+    font-style: italic;
+    font-weight: 400;
+    margin-left: 4px;
+  }
+  /* A tiny annotation pinned beside the card */
+  .hero-artifact .ha-annot {
+    position: absolute;
+    top: -22px; right: -42px;
+    transform: rotate(8deg);
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--green-strong);
+    background: var(--bg);
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px dashed rgba(31, 77, 62, 0.35);
+    font-variation-settings: "opsz" 16;
+    white-space: nowrap;
+  }
+  @keyframes artifact-in {
+    from { opacity: 0; transform: rotate(-14deg) translateY(20px) scale(0.85); }
+    to   { opacity: 1; transform: rotate(-7deg) translateY(0) scale(1); }
+  }
+  @media (max-width: 980px) {
+    .hero-artifact { display: none; } /* Mobile: drop it, hero is busy enough */
+  }
+
+  /* ───────── Stats row + Companies marquee (the credibility band) ───────── */
+  .credibility-band {
+    max-width: 1240px;
+    margin: 0 auto 96px;
+    padding: 0 48px;
+    position: relative;
+    z-index: 1;
+  }
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(23, 23, 23, 0.10);
+    border-bottom: 1px solid rgba(23, 23, 23, 0.10);
+  }
+  .stat-cell {
+    padding: 36px 28px;
+    border-right: 1px solid rgba(23, 23, 23, 0.10);
+    text-align: left;
+    position: relative;
+  }
+  .stat-cell:last-child { border-right: none; }
+  .stat-cell .sc-num {
+    font-family: var(--display);
+    font-size: clamp(40px, 4.2vw, 56px);
+    font-weight: 400;
+    line-height: 1;
+    color: var(--green-strong);
+    letter-spacing: -0.022em;
+    font-variation-settings: "opsz" 96;
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .stat-cell .sc-num em {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 0.72em;
+    margin-left: 4px;
+  }
+  .stat-cell .sc-label {
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    line-height: 1.45;
+    max-width: 220px;
+  }
+
+  /* Companies marquee */
+  .companies-marquee {
+    margin-top: 0;
+    padding: 22px 0;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(23, 23, 23, 0.10);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  }
+  .companies-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 64px;
+    width: max-content;
+    animation: marquee-scroll 38s linear infinite;
+  }
+  .companies-marquee:hover .companies-track {
+    animation-play-state: paused;
+  }
+  .companies-track .cm-item {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ink-mute);
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 28;
+    transition: color 220ms var(--ease);
+  }
+  .companies-track .cm-item:hover { color: var(--green-strong); }
+  .companies-track .cm-item em {
+    font-style: italic;
+    color: var(--green-strong);
+  }
+  .companies-track .cm-divider {
+    color: var(--ink-mute);
+    opacity: 0.4;
+    font-size: 12px;
+  }
+  .companies-label {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green-strong);
+    margin: 28px 0 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .companies-label::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--green-strong);
+  }
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .companies-track { animation: none; }
+  }
+  @media (max-width: 720px) {
+    .stats-row { grid-template-columns: 1fr; }
+    .stat-cell { border-right: none; border-bottom: 1px solid rgba(23, 23, 23, 0.10); padding: 24px 0; }
+    .stat-cell:last-child { border-bottom: none; }
+    .credibility-band { padding: 0 24px; }
   }
 
   /* Case studies — full-width vertical cards in a single column */
@@ -2197,7 +2707,8 @@
     main.hero { padding: 12vh 24px 60px; }
     .chip-rail { gap: 20px; }
     .chip { font-size: 12px; }
-    .lens-stage { height: clamp(110px, 32vw, 150px); }
+    .lens-stage { min-height: 5em; }
+    .scroll-cue { right: 24px; bottom: 20px; }
     section.case-studies { padding: 80px 24px 100px; gap: 80px; }
     .case { gap: 22px; }
     .case-content { gap: 16px; }
@@ -2380,6 +2891,10 @@
     <div class="bg-blob b3"></div>
   </div>
 
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
   <div class="spotlight-backdrop" aria-hidden="true"></div>
 
   <nav class="nav">
@@ -2399,30 +2914,57 @@
 
   <main class="hero">
 
-    <div class="greeting">
-      <div class="greeting-inner">
-        <p>Hi, I'm Dinesh.</p>
-        <svg class="wavy" width="92" height="12" viewBox="0 0 92 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M 3 7 Q 12 2 22 7 T 44 7 T 66 7 T 89 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        </svg>
+    <!-- Centered editorial header — Pooja-style -->
+    <header class="ph">
+      <div class="ph-photo">
+        <img src="./images/about/avatar.png" alt="Dinesh Baller" />
       </div>
-    </div>
 
-    <div class="chip-rail" role="tablist" aria-label="Choose a lens">
-      <button class="chip" role="tab" aria-selected="true"  aria-controls="lens-work"      data-lens="work"      tabindex="0">What I do</button>
-      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-operators" data-lens="operators" tabindex="-1">Who it's for</button>
-      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-approach"  data-lens="approach"  tabindex="-1">How I work</button>
-      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-backstory" data-lens="backstory" tabindex="-1">The path</button>
-      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-now"       data-lens="now"       tabindex="-1">Now</button>
-    </div>
+      <!-- 3D metallic star decorations flanking the headline -->
+      <span class="ph-star ps1" aria-hidden="true">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="starGrad1" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#f5f6f8"/>
+              <stop offset="50%" stop-color="#a8b0bd"/>
+              <stop offset="100%" stop-color="#4d5663"/>
+            </radialGradient>
+          </defs>
+          <path d="M50 5 L58 42 L95 50 L58 58 L50 95 L42 58 L5 50 L42 42 Z" fill="url(#starGrad1)"/>
+        </svg>
+      </span>
+      <span class="ph-star ps2" aria-hidden="true">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="starGrad2" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#fafbfc"/>
+              <stop offset="55%" stop-color="#9da7b3"/>
+              <stop offset="100%" stop-color="#3d4654"/>
+            </radialGradient>
+          </defs>
+          <path d="M50 4 L62 38 L96 50 L62 62 L50 96 L38 62 L4 50 L38 38 Z" fill="url(#starGrad2)"/>
+        </svg>
+      </span>
 
-    <div class="lens-stage" aria-live="polite">
-      <p class="lens-line" id="lens-work"      data-lens="work"      data-active="true">Designer building B2B products and AI-powered workflows that keep financial teams moving.</p>
-      <p class="lens-line" id="lens-operators" data-lens="operators">Analysts, AMs, and ops teams running mortgage and lending workflows all day, every day.</p>
-      <p class="lens-line" id="lens-approach"  data-lens="approach">Research-led, structure-first. Progress over pixels.</p>
-      <p class="lens-line" id="lens-backstory" data-lens="backstory">Now at Onity. Dell and Red Hat before that.</p>
-      <p class="lens-line" id="lens-now"       data-lens="now">Building AI products at Onity. Mortgage portals, inquiry systems, release pipelines. Vibe-coding anything else worth shipping.</p>
-    </div>
+      <h1 class="ph-headline">
+        <span class="ph-line">Hi, I'm Dinesh</span>
+        <span class="ph-line">A Product Designer</span>
+      </h1>
+
+      <p class="ph-desc">
+        I design B2B products and AI tools that make complex work feel simple.
+      </p>
+
+      <p class="ph-now">
+        <em>Currently at</em>
+        <span class="ph-now-chip">
+          <span class="ph-now-dot" aria-hidden="true"></span>
+          Onity Group
+        </span>
+      </p>
+
+      <a href="mailto:dineshballer@gmail.com" class="ph-cta">Get in touch</a>
+    </header>
 
     <!-- ───────────────────────────────────────────────
          AI chat — Inline morph
@@ -2514,17 +3056,13 @@
 
   </main>
 
-  <div class="scroll-hint" aria-hidden="true">
-    <div class="scroll-hint-line"></div>
-    <div class="scroll-hint-chevron"></div>
-  </div>
-
-
+  <a href="#work" class="scroll-cue">selected work <span class="arrow" aria-hidden="true">↓</span></a>
 
   <section class="case-studies" id="work" aria-label="Selected work">
 
     <div class="section-head">
-      <h2>Selected <em>work.</em></h2>
+      <h2>Quieter <em>workflows</em>.</h2>
+      <p>Four tools shipped, four teams a little quieter.</p>
     </div>
 
     <!-- Card 1 — Real-Time Inquiry Portal · Onity (showcase, expand-reveal pattern) -->
@@ -4003,7 +4541,7 @@
     const words = text.split(" ");
 
     // Override the CSS transition so words own the entrance
-    el.style.cssText = "opacity:1;top:35%;transform:translateY(-50%);transition:none;";
+    el.style.cssText = "opacity:1;transform:translateY(0);transition:none;";
 
     el.innerHTML = words
       .map((w, i) =>
@@ -4050,7 +4588,7 @@
     });
   }
 
-  // Initial render: default chip already visible in HTML — no word animation needed
+  // Initial render: the default chip is already visible in HTML — no animation needed
   firstLoad = false;
 
   // ─── Chip click and keyboard ───
@@ -4060,6 +4598,7 @@
   }));
 
   const chipRailEl = document.querySelector(".chip-rail");
+  if (!chipRailEl) return; // chip rail removed in this layout — bail cleanly
   chipRailEl.addEventListener("keydown", e => {
     const i = chips.findIndex(c => c.getAttribute("aria-selected") === "true");
     let n = i;
@@ -4276,15 +4815,6 @@
   targets.forEach(t => obs.observe(t));
 })();
 
-/* ── Scroll hint — fades out once user starts scrolling ── */
-(() => {
-  const hint = document.querySelector(".scroll-hint");
-  if (!hint) return;
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 40) hint.classList.add("is-hidden");
-  }, { passive: true });
-})();
-
 /* ── Nav résumé link → open AI chat resume card ── */
 (() => {
   const link = document.getElementById("nav-resume-link");
@@ -4354,13 +4884,75 @@
     }, 2000);
   });
 })();
+
+/* ═══════════════ INTERACTIVE BEHAVIORS ═══════════════ */
+
+/* Custom cursor — small dot follows mouse, expands on interactive elements */
+(() => {
+  const dot = document.getElementById("cursorDot");
+  if (!dot) return;
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    dot.style.display = "none";
+    return;
+  }
+  let tx = 0, ty = 0, cx = 0, cy = 0;
+  document.addEventListener("mousemove", e => { tx = e.clientX; ty = e.clientY; });
+  function loop() {
+    cx += (tx - cx) * 0.22;
+    cy += (ty - cy) * 0.22;
+    dot.style.left = cx + "px";
+    dot.style.top  = cy + "px";
+    requestAnimationFrame(loop);
+  }
+  loop();
+  // Expand on hover over interactive elements
+  const interactive = "a, button, .chip, .case, [role='button'], [data-hover]";
+  document.querySelectorAll(interactive).forEach(el => {
+    el.addEventListener("mouseenter", () => dot.classList.add("is-hovering"));
+    el.addEventListener("mouseleave", () => dot.classList.remove("is-hovering"));
+  });
+})();
+
+/* Magnetic hover — nav links and chips drift toward the cursor */
+(() => {
+  if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const magnets = document.querySelectorAll(".nav-links a, .chip, .wordmark");
+  magnets.forEach(el => {
+    el.style.transition = "transform 280ms cubic-bezier(0.2, 0.65, 0.3, 1)";
+    el.addEventListener("mousemove", e => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width / 2);
+      const y = e.clientY - (r.top  + r.height / 2);
+      el.style.transform = `translate(${x * 0.18}px, ${y * 0.18}px)`;
+    });
+    el.addEventListener("mouseleave", () => { el.style.transform = ""; });
+  });
+})();
+
+/* Letter-by-letter reveal on [data-letter-reveal] */
+(() => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.querySelectorAll("[data-letter-reveal]").forEach(el => {
+    const text = el.textContent;
+    el.textContent = "";
+    [...text].forEach((ch, i) => {
+      const span = document.createElement("span");
+      span.className = "greeting-letter";
+      span.textContent = ch === " " ? " " : ch;
+      span.style.animationDelay = (1.0 + i * 0.05) + "s";
+      el.appendChild(span);
+    });
+  });
+})();
+
 </script>
 
 <footer class="site-footer" aria-label="Site footer">
   <div class="footer-inner">
     <div class="footer-top">
       <p class="footer-headline">Good work starts with<br><em>a good conversation.</em></p>
-      <p class="footer-sub">Open for the right opportunities. Available to talk.</p>
+      <p class="footer-sub">Open to senior product design roles. Available to talk.</p>
     </div>
     <div class="footer-actions">
       <button class="footer-copy-btn" id="footer-copy-email" aria-label="Copy email address">
