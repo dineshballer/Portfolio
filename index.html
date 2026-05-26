@@ -585,6 +585,48 @@
     box-shadow: none;
   }
 
+  /* ── Per-card dot tints ── */
+  /* Card 1: forest green (default, no override needed) */
+
+  /* Card 2: warm clay / terracotta */
+  section.case-studies a:nth-of-type(2) .case-visual {
+    background:
+      radial-gradient(circle, rgba(168, 88, 42, 0.11) 1px, transparent 1.5px) 0 0 / 18px 18px,
+      rgba(168, 88, 42, 0.08);
+  }
+  section.case-studies a:nth-of-type(2):hover .case-visual,
+  section.case-studies a:nth-of-type(2):focus-visible .case-visual {
+    background:
+      radial-gradient(circle, rgba(168, 88, 42, 0.11) 1px, transparent 1.5px) 0 0 / 18px 18px,
+      rgba(168, 88, 42, 0.16);
+  }
+
+  /* Card 3: dusty indigo — AI / tech feel */
+  section.case-studies a:nth-of-type(3) .case-visual {
+    background:
+      radial-gradient(circle, rgba(72, 82, 150, 0.11) 1px, transparent 1.5px) 0 0 / 18px 18px,
+      rgba(72, 82, 150, 0.07);
+  }
+  section.case-studies a:nth-of-type(3):hover .case-visual,
+  section.case-studies a:nth-of-type(3):focus-visible .case-visual {
+    background:
+      radial-gradient(circle, rgba(72, 82, 150, 0.11) 1px, transparent 1.5px) 0 0 / 18px 18px,
+      rgba(72, 82, 150, 0.15);
+  }
+
+  /* Card 4: dusty rose / mauve */
+  section.case-studies a:nth-of-type(4) .case-visual {
+    background:
+      radial-gradient(circle, rgba(148, 82, 95, 0.11) 1px, transparent 1.5px) 0 0 / 18px 18px,
+      rgba(148, 82, 95, 0.07);
+  }
+  section.case-studies a:nth-of-type(4):hover .case-visual,
+  section.case-studies a:nth-of-type(4):focus-visible .case-visual {
+    background:
+      radial-gradient(circle, rgba(148, 82, 95, 0.11) 1px, transparent 1.5px) 0 0 / 18px 18px,
+      rgba(148, 82, 95, 0.15);
+  }
+
   /* Editorial number badge — committed big */
   .case-num {
     position: absolute;
