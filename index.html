@@ -651,6 +651,35 @@
     transform: translateX(3px);
   }
 
+  /* Confidentiality chip — bottom-left of every case thumbnail */
+  .confidential-chip {
+    position: absolute;
+    bottom: 14px;
+    left: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(15, 15, 15, 0.48);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+    letter-spacing: 0.04em;
+    z-index: 3;
+    pointer-events: none;
+    white-space: nowrap;
+    transition: opacity 320ms var(--ease);
+  }
+  .confidential-chip::before {
+    content: "⊘";
+    font-size: 9px;
+    opacity: 0.7;
+  }
+
   /* Persistent status pill — top-right of tile */
   .status-pill {
     position: absolute;
@@ -2412,6 +2441,276 @@
     .site-footer { padding: 56px 24px 32px; }
     .footer-actions { gap: 8px; }
   }
+
+  /* ══════════════════════════════════════════════
+     Home — About strip (principles, awards, experience)
+  ══════════════════════════════════════════════ */
+  .home-about {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 48px 80px;
+  }
+  .ha-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .ha-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .ha-title {
+    font-family: var(--display);
+    font-size: clamp(22px, 2.6vw, 34px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    margin: 0;
+    font-variation-settings: "opsz" 60;
+  }
+  .ha-title em { font-style: italic; color: var(--accent); }
+
+  /* Scroll reveal for home-about items */
+  .ha-reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+                transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .ha-reveal.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ha-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+
+  /* ── Principles ── */
+  .ha-principles { margin-bottom: 72px; }
+  .ha-principles-head { margin-bottom: 32px; }
+  .ha-principles-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .ha-principle {
+    padding: 24px 20px;
+    border-right: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s var(--ease);
+    cursor: default;
+  }
+  .ha-principle:last-child { border-right: none; }
+  .ha-principle:hover { background: rgba(31, 77, 62, 0.03); }
+  .ha-p-num {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-bottom: 10px;
+    font-variation-settings: "opsz" 14;
+    display: block;
+  }
+  .ha-p-word {
+    font-family: var(--display);
+    font-size: clamp(20px, 2.2vw, 28px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.016em;
+    color: var(--ink);
+    margin: 0 0 8px;
+    font-variation-settings: "opsz" 40;
+  }
+  .ha-p-word em { font-style: italic; color: var(--accent); }
+  .ha-p-body {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s var(--ease), max-height 0.5s var(--ease);
+  }
+  .ha-principle:hover .ha-p-body {
+    opacity: 1;
+    max-height: 160px;
+  }
+
+  /* ── Awards ── */
+  .ha-awards { margin-bottom: 72px; }
+  .ha-awards-head { margin-bottom: 32px; }
+  .ha-awards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .ha-award-card {
+    background: linear-gradient(180deg, rgba(31, 77, 62, 0.03), transparent);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease), border-color 0.4s var(--ease);
+  }
+  .ha-award-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+  }
+  .ha-award-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+    display: inline-block;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .ha-award-card:hover .ha-award-icon { transform: rotate(-10deg) scale(1.08); }
+  .ha-award-name {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 6px;
+    letter-spacing: -0.012em;
+    font-variation-settings: "opsz" 24;
+  }
+  .ha-award-name em { font-style: italic; color: var(--accent); }
+  .ha-award-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* ── Experience ── */
+  .ha-experience-head { margin-bottom: 32px; }
+  .ha-timeline {
+    position: relative;
+    padding-left: 44px;
+  }
+  .ha-timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px; top: 10px; bottom: 10px;
+    width: 1px;
+    background: var(--line);
+  }
+  .ha-role {
+    position: relative;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(23, 23, 23, 0.06);
+  }
+  .ha-role:last-child { border-bottom: none; }
+  .ha-role-marker {
+    position: absolute;
+    left: -36px; top: 28px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--ink-mute);
+    z-index: 2;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .ha-role.current .ha-role-marker {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(31, 77, 62, 0.15);
+  }
+  .ha-role-grid {
+    display: grid;
+    grid-template-columns: 1fr 140px;
+    gap: 32px;
+    align-items: start;
+  }
+  .ha-role-company {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .ha-role-company h4 {
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: -0.010em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 28;
+    transition: color 0.3s var(--ease);
+  }
+  .ha-role:hover .ha-role-company h4 { color: var(--accent); }
+  .ha-now-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px 2px 6px;
+    background: rgba(40, 168, 104, 0.12);
+    color: #1d6e47;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 999px;
+  }
+  .ha-now-tag .ha-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #28a868;
+    box-shadow: 0 0 0 2px rgba(40, 168, 104, 0.20);
+    animation: pulse-ring 2.4s ease infinite;
+  }
+  .ha-role-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin: 0 0 8px;
+  }
+  .ha-role-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 520px;
+  }
+  .ha-role-dates {
+    text-align: right;
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    font-variation-settings: "opsz" 20;
+  }
+  .ha-role-dates .ha-span {
+    display: block;
+    font-family: var(--body);
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+
+  @media (max-width: 720px) {
+    .home-about { padding: 0 24px 60px; }
+    .ha-principles-row { grid-template-columns: repeat(2, 1fr); }
+    .ha-principle:nth-child(2) { border-right: none; }
+    .ha-principle:nth-child(1),
+    .ha-principle:nth-child(2) { border-bottom: 1px solid var(--line); }
+    .ha-awards-grid { grid-template-columns: 1fr; }
+    .ha-role-grid { grid-template-columns: 1fr; gap: 6px; }
+    .ha-role-dates { text-align: left; }
+  }
 </style>
 </head>
 <body>
@@ -2578,6 +2877,7 @@
           In development · 2026
         </span>
         <span class="view-cta" aria-hidden="true">the full story</span>
+        <span class="confidential-chip" aria-label="Designs modified for confidentiality">Designs modified · NDA</span>
         <div class="case-image">
           <img src="./images/rti-final-overview.png" alt="Inquiry Dashboard with an expanded case row showing the real-time progress tracker, Overview tab with case details and timeline, and the live filterable case table beneath" />
         </div>
@@ -2613,6 +2913,7 @@
           In development · 2026
         </span>
         <span class="view-cta" aria-hidden="true">the full story</span>
+        <span class="confidential-chip" aria-label="Designs modified for confidentiality">Designs modified · NDA</span>
         <div class="case-image">
           <img src="./images/loan-hero-release-dashboard.png" alt="Loan Deboarding Portal Release Dashboard showing active submissions with status chips, SLA indicators, and aging signals" />
         </div>
@@ -2648,6 +2949,7 @@
           Shipped · 2024
         </span>
         <span class="view-cta" aria-hidden="true">the full story</span>
+        <span class="confidential-chip" aria-label="Designs modified for confidentiality">Designs modified · NDA</span>
         <div class="case-image">
           <img src="./images/chaos-shipped-landing.png" alt="IntelliAssist 2.0 full-screen AI workspace, the redesigned Dell sales assistant" />
         </div>
@@ -2683,6 +2985,7 @@
           Shipped · 2022
         </span>
         <span class="view-cta" aria-hidden="true">the full story</span>
+        <span class="confidential-chip" aria-label="Designs modified for confidentiality">Designs modified · NDA</span>
         <div class="case-image">
           <img src="./images/dellinc-hero-after.png" alt="Dell INC home dashboard after redesign with tile-based navigation and color-coded categories" />
         </div>
@@ -2710,6 +3013,142 @@
     </a>
 
   </section>
+
+  <!-- ══════════════════════════════════════════════
+       Home — About strip
+  ══════════════════════════════════════════════ -->
+  <div class="home-about">
+
+    <!-- Principles -->
+    <div class="ha-principles">
+      <div class="ha-principles-head ha-reveal">
+        <span class="ha-eyebrow">How I Work</span>
+        <h2 class="ha-title">Four words, one <em>operating manual.</em></h2>
+      </div>
+      <div class="ha-principles-row">
+        <div class="ha-principle ha-reveal">
+          <span class="ha-p-num">01</span>
+          <h3 class="ha-p-word"><em>Curious</em></h3>
+          <p class="ha-p-body">I'd rather ask one more question than ship one extra screen. The problem usually hides behind the second "why."</p>
+        </div>
+        <div class="ha-principle ha-reveal">
+          <span class="ha-p-num">02</span>
+          <h3 class="ha-p-word"><em>Calm</em></h3>
+          <p class="ha-p-body">Operational software should make a Tuesday quieter, not louder. Restraint is a design decision.</p>
+        </div>
+        <div class="ha-principle ha-reveal">
+          <span class="ha-p-num">03</span>
+          <h3 class="ha-p-word"><em>Specific</em></h3>
+          <p class="ha-p-body">Generic insights belong in textbooks. I aim for the smallest true sentence the team needs to act on.</p>
+        </div>
+        <div class="ha-principle ha-reveal">
+          <span class="ha-p-num">04</span>
+          <h3 class="ha-p-word"><em>Useful</em></h3>
+          <p class="ha-p-body">Beauty without use is decoration. The win is when an analyst tells me their Tuesday got quieter.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Awards -->
+    <div class="ha-awards">
+      <div class="ha-awards-head ha-reveal">
+        <span class="ha-eyebrow">Recognition</span>
+        <h2 class="ha-title">A little <em>hardware on the shelf.</em></h2>
+      </div>
+      <div class="ha-awards-grid">
+        <div class="ha-award-card ha-reveal">
+          <div class="ha-award-icon">🎖️</div>
+          <h3 class="ha-award-name"><em>Bravo</em> Innovation Award</h3>
+          <p class="ha-award-desc">Dell. Improved user experience with innovative design across the AI sales platform.</p>
+        </div>
+        <div class="ha-award-card ha-reveal">
+          <div class="ha-award-icon">🏅</div>
+          <h3 class="ha-award-name"><em>Winning Together</em> Award</h3>
+          <p class="ha-award-desc">Dell. Precision Meds Digital Twin demo, shipped on a tight cross-functional timeline.</p>
+        </div>
+        <div class="ha-award-card ha-reveal">
+          <div class="ha-award-icon">📚</div>
+          <h3 class="ha-award-name"><em>Mentoring</em> &amp; community</h3>
+          <p class="ha-award-desc">12+ junior designers mentored through 1:1s and design workshops.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="ha-experience">
+      <div class="ha-experience-head ha-reveal">
+        <span class="ha-eyebrow">Experience</span>
+        <h2 class="ha-title">Roles, in <em>rough order.</em></h2>
+      </div>
+      <div class="ha-timeline">
+
+        <article class="ha-role current ha-reveal">
+          <span class="ha-role-marker"></span>
+          <div class="ha-role-grid">
+            <div>
+              <div class="ha-role-company">
+                <h4>Onity Group</h4>
+                <span class="ha-now-tag"><span class="ha-dot"></span>Now</span>
+              </div>
+              <p class="ha-role-title">Senior UX Designer</p>
+              <p class="ha-role-desc">Leading UX for client-facing portals across inquiry tracking, loan deboarding, and post-release reconciliation.</p>
+            </div>
+            <div class="ha-role-dates">
+              2025 — Present
+              <span class="ha-span">Current</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="ha-role ha-reveal">
+          <span class="ha-role-marker"></span>
+          <div class="ha-role-grid">
+            <div>
+              <div class="ha-role-company"><h4>Dell</h4></div>
+              <p class="ha-role-title">UX Designer</p>
+              <p class="ha-role-desc">Designed AI-powered sales tools, data visualization systems, and internal portals across a 30,000-person org.</p>
+            </div>
+            <div class="ha-role-dates">
+              2022 — 2025
+              <span class="ha-span">3 yrs</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="ha-role ha-reveal">
+          <span class="ha-role-marker"></span>
+          <div class="ha-role-grid">
+            <div>
+              <div class="ha-role-company"><h4>Red Hat</h4></div>
+              <p class="ha-role-title">UX Designer · UI Developer</p>
+              <p class="ha-role-desc">Designed and implemented interfaces for internal tools, improving usability and accessibility across teams.</p>
+            </div>
+            <div class="ha-role-dates">
+              2021 — 2022
+              <span class="ha-span">1 yr</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="ha-role ha-reveal">
+          <span class="ha-role-marker"></span>
+          <div class="ha-role-grid">
+            <div>
+              <div class="ha-role-company"><h4>Freelancer</h4></div>
+              <p class="ha-role-title">UX Designer · UI Developer</p>
+              <p class="ha-role-desc">Designed and built websites for small and medium enterprises, improving engagement and business impact.</p>
+            </div>
+            <div class="ha-role-dates">
+              2018 — 2019
+              <span class="ha-span">1 yr</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+  </div>
 
 <script>
 /* ───────────────────────────────────────────────
@@ -4304,7 +4743,7 @@
 ─────────────────────────────────────────────── */
 (() => {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const targets = document.querySelectorAll(".section-head, .case");
+  const targets = document.querySelectorAll(".section-head, .case, .ha-reveal");
   if (!targets.length) return;
 
   const obs = new IntersectionObserver(entries => {
