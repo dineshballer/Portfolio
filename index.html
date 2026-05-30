@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dinesh Baller — Product Designer</title>
+<script src="./ga.js" async></script>
 
 <!-- ── Favicon ── -->
 <link rel="icon" type="image/png" sizes="64x64" href="./favicon.png" />
@@ -190,6 +191,7 @@
     border-radius: 50%;
     background: var(--accent);
     flex-shrink: 0;
+    opacity: 0.5;
     animation: pulse-ring 2.4s ease infinite;
   }
   @keyframes pulse-ring {
@@ -205,8 +207,7 @@
 
   /* Hero — greeting, chips, one-liner, embedded AI prompt */
   main.hero {
-    min-height: calc(100vh - 96px);
-    padding: 9vh 48px 120px;
+    padding: 9vh 48px 84px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -325,42 +326,6 @@
   }
 
   /* ── Scroll hint arrow ── */
-  .scroll-hint {
-    position: fixed;
-    bottom: 36px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    opacity: 0;
-    animation: hint-arrive 1.2s cubic-bezier(0.16, 1, 0.3, 1) 2s forwards;
-    transition: opacity 600ms var(--ease);
-    pointer-events: none;
-    z-index: 5;
-  }
-  .scroll-hint.is-hidden { opacity: 0 !important; }
-  .scroll-hint-line {
-    width: 1px;
-    height: 20px;
-    background: linear-gradient(to bottom, transparent, var(--ink-mute));
-    opacity: 0.4;
-  }
-  .scroll-hint-chevron {
-    width: 10px;
-    height: 10px;
-    border-right: 1.5px solid var(--ink-mute);
-    border-bottom: 1.5px solid var(--ink-mute);
-    transform: rotate(45deg);
-    opacity: 0.35;
-    margin-top: -4px;
-  }
-  @keyframes hint-arrive {
-    0%   { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-    60%  { opacity: 1; transform: translateX(-50%) translateY(3px); }
-    100% { opacity: 1; transform: translateX(-50%) translateY(0); }
-  }
 
   /* Greeting at the top of hero — sets the personal tone before chips */
   .greeting {
@@ -374,7 +339,6 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    animation: float 6s ease-in-out infinite;
   }
   .greeting p {
     font-family: var(--display);
@@ -751,19 +715,9 @@
     font-weight: 500;
   }
 
-  /* Static tag row below title — visible in rest state, fades out on hover */
-  .case.showcase .case-tags {
-    transition: opacity 480ms cubic-bezier(0.16, 1, 0.3, 1),
-                transform 540ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
+  /* Tags always visible */
   .case.showcase .case-tags span {
-    color: var(--green-strong);
-    opacity: 0.7;
-  }
-  .case.showcase:not(.expand-reveal):hover .case-tags,
-  .case.showcase:not(.expand-reveal):focus-visible .case-tags {
-    opacity: 0;
-    transform: translateY(6px);
+    color: var(--green-mute);
   }
 
   /* ───────────────────────────────────────────────
@@ -909,21 +863,21 @@
     max-width: 680px;
   }
 
-  /* Trigger — looks like an input pill */
+  /* Trigger — solid white input pill */
   .ai-trigger {
     appearance: none;
     display: inline-flex;
     align-items: center;
     gap: 12px;
     width: 100%;
-    padding: 14px 22px;
-    background: rgba(255, 255, 255, 0.72);
-    border: 1px solid rgba(31, 77, 62, 0.14);
+    padding: 15px 24px;
+    background: #FFFFFF;
+    border: 1px solid rgba(31, 77, 62, 0.16);
     border-radius: 999px;
     box-shadow:
-      0 1px 2px rgba(23, 23, 23, 0.03),
-      0 6px 18px rgba(31, 77, 62, 0.06),
-      0 18px 40px rgba(31, 77, 62, 0.04);
+      0 2px 6px rgba(23, 23, 23, 0.06),
+      0 8px 24px rgba(31, 77, 62, 0.08),
+      0 20px 44px rgba(31, 77, 62, 0.05);
     cursor: pointer;
     font: inherit;
     color: var(--ink);
@@ -934,26 +888,57 @@
       border-color 280ms cubic-bezier(0.16, 1, 0.3, 1),
       background 280ms cubic-bezier(0.16, 1, 0.3, 1),
       opacity 280ms cubic-bezier(0.16, 1, 0.3, 1);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
   }
   .ai-trigger:hover,
   .ai-trigger:focus-visible {
-    transform: translateY(-2px);
-    border-color: rgba(31, 77, 62, 0.28);
-    background: rgba(255, 255, 255, 0.92);
+    transform: translateY(-3px);
+    border-color: rgba(31, 77, 62, 0.30);
+    background: #FFFFFF;
     box-shadow:
-      0 1px 2px rgba(23, 23, 23, 0.04),
-      0 10px 28px rgba(31, 77, 62, 0.12),
-      0 28px 56px rgba(31, 77, 62, 0.08);
+      0 4px 10px rgba(23, 23, 23, 0.07),
+      0 14px 36px rgba(31, 77, 62, 0.13),
+      0 32px 64px rgba(31, 77, 62, 0.08);
     outline: none;
+  }
+
+  /* ── Static gradient border on the AI trigger — closed state only ── */
+  .ai-morph-slot:not(.is-open) .ai-trigger {
+    border: 1.5px solid transparent;
+    background:
+      #FFFFFF padding-box,
+      linear-gradient(
+        105deg,
+        rgba(31, 77, 62, 0.70),
+        rgba(100, 178, 138, 0.85) 38%,
+        rgba(218, 190, 130, 0.72) 62%,
+        rgba(31, 77, 62, 0.55)
+      ) border-box;
+    box-shadow:
+      0 2px 6px rgba(23, 23, 23, 0.05),
+      0 10px 28px rgba(31, 77, 62, 0.10),
+      0 24px 48px rgba(31, 77, 62, 0.06);
+  }
+  .ai-morph-slot:not(.is-open) .ai-trigger:hover,
+  .ai-morph-slot:not(.is-open) .ai-trigger:focus-visible {
+    transform: translateY(-3px);
+    background:
+      #FFFFFF padding-box,
+      linear-gradient(
+        105deg,
+        rgba(31, 77, 62, 0.90),
+        rgba(100, 178, 138, 1) 38%,
+        rgba(218, 190, 130, 0.85) 62%,
+        rgba(31, 77, 62, 0.70)
+      ) border-box;
+    box-shadow:
+      0 4px 10px rgba(23, 23, 23, 0.07),
+      0 16px 40px rgba(31, 77, 62, 0.15),
+      0 36px 72px rgba(31, 77, 62, 0.08);
   }
   .ai-trigger-spark {
     display: inline-flex;
     color: var(--green-strong);
     flex-shrink: 0;
-    animation: spark-rotate 4.8s ease-in-out infinite;
-    transform-origin: center;
   }
   .ai-trigger-text {
     flex: 1;
@@ -961,7 +946,7 @@
     font-family: var(--body);
     font-size: 14px;
     font-weight: 400;
-    color: var(--ink-mute);
+    color: var(--ink-soft);
     letter-spacing: 0;
     overflow: hidden;
     white-space: nowrap;
@@ -1115,8 +1100,6 @@
   .ai-spark {
     color: var(--green-strong);
     flex-shrink: 0;
-    animation: spark-rotate 4.8s ease-in-out infinite;
-    transform-origin: center;
   }
   @keyframes spark-rotate {
     0%, 100% { transform: rotate(0deg) scale(1); }
@@ -1491,8 +1474,6 @@
     justify-content: center;
     color: var(--green-strong);
     flex-shrink: 0;
-    animation: spark-rotate 4.8s ease-in-out infinite;
-    transform-origin: center;
   }
 
   /* Small label above the input pill — identifies the chat */
@@ -2711,6 +2692,112 @@
     .ha-role-grid { grid-template-columns: 1fr; gap: 6px; }
     .ha-role-dates { text-align: left; }
   }
+
+  /* ── Role descriptor — persistent identity line above chip rail ── */
+  .role-descriptor {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 350;
+    font-size: clamp(14px, 1.5vw, 18px);
+    letter-spacing: -0.005em;
+    color: var(--ink-mute);
+    margin: -20px 0 28px;
+    opacity: 0;
+    animation: fadein 700ms var(--ease) 80ms forwards;
+    text-align: center;
+    font-variation-settings: "opsz" 24;
+  }
+
+  /* ── Case domain label — always-visible company / space tag ── */
+  .case-domain {
+    display: block;
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.55;
+    margin-bottom: 10px;
+    transition: opacity 240ms var(--ease);
+  }
+  .case:hover .case-domain { opacity: 0.9; }
+
+  /* ── Case metrics — always-visible numbers on cards ── */
+  .case-metrics {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .case-metric-num {
+    display: block;
+    font-family: var(--display);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--green-strong);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variation-settings: "opsz" 28;
+  }
+  .case-metric-label {
+    display: block;
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+    margin-top: 3px;
+  }
+
+  /* ── Homepage testimonial ── */
+  .home-testimonial {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 56px 48px 64px;
+  }
+  .home-testimonial-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .home-testimonial-quote {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 350;
+    font-size: clamp(18px, 2vw, 24px);
+    line-height: 1.55;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 24px;
+    font-variation-settings: "opsz" 36;
+  }
+  .home-testimonial-quote::before { content: "\201C"; }
+  .home-testimonial-quote::after  { content: "\201D"; }
+  .home-testimonial-byline {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--body);
+    font-size: 13px;
+    color: var(--ink-mute);
+  }
+  .home-testimonial-byline strong {
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .home-testimonial-byline::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--ink-mute);
+    opacity: 0.45;
+  }
+  @media (max-width: 720px) {
+    .home-testimonial { padding: 40px 24px 48px; }
+    .case-metrics { gap: 16px; }
+  }
 </style>
 </head>
 <body>
@@ -2748,6 +2835,8 @@
         </svg>
       </div>
     </div>
+
+    <p class="role-descriptor">Senior UX Designer &nbsp;·&nbsp; B2B Enterprise &nbsp;·&nbsp; Fintech &amp; Mortgage</p>
 
     <div class="chip-rail" role="tablist" aria-label="Choose a lens">
       <button class="chip" role="tab" aria-selected="true"  aria-controls="lens-work"      data-lens="work"      tabindex="0">What I do</button>
@@ -2855,10 +2944,6 @@
 
   </main>
 
-  <div class="scroll-hint" aria-hidden="true">
-    <div class="scroll-hint-line"></div>
-    <div class="scroll-hint-chevron"></div>
-  </div>
 
 
 
@@ -2883,20 +2968,30 @@
         </div>
       </div>
       <div class="case-content">
+        <span class="case-domain">Mortgage Servicing · Onity Group</span>
         <h2 class="case-title">
-          I designed one release pipeline that handles how each client prepares its data, so analysts can validate, reconcile, and ship a loan release from a single record.
+          I designed one release pipeline so analysts can validate, reconcile, and ship loan releases from a single record — replacing parallel spreadsheets and status follow-ups.
         </h2>
+        <div class="case-metrics">
+          <div>
+            <span class="case-metric-num">9/9</span>
+            <span class="case-metric-label">users found status unaided</span>
+          </div>
+          <div>
+            <span class="case-metric-num">~6 hrs</span>
+            <span class="case-metric-label">saved per analyst / week</span>
+          </div>
+        </div>
+        <div class="case-tags">
+          <span>Workflow Design</span>
+          <span>0 to 1</span>
+          <span>Research-led</span>
+        </div>
         <div class="case-reveal">
           <div class="case-divider" aria-hidden="true"></div>
           <p class="case-description">
             A submission and tracking portal that handles how each client prepares loan releases and gives the receiving team one shared structure downstream. Validation moves to the door, exceptions get a defined lane, and reconciliation finally ties back to the release record.
           </p>
-          <div class="case-tags">
-            <span>Mortgage Servicing</span>
-            <span>Workflow Design</span>
-            <span>0 to 1</span>
-            <span>Research-led</span>
-          </div>
           <p class="case-meta">
             <strong>Loan Deboarding Portal</strong> · Onity Group · 2026
           </p>
@@ -2919,20 +3014,20 @@
         </div>
       </div>
       <div class="case-content">
+        <span class="case-domain">B2B Portal · Onity Group</span>
         <h2 class="case-title">
           I built a real-time portal that replaces email threads with live inquiry visibility, cutting case resolution by 62% and saving managers 6 hours a week.
         </h2>
+        <div class="case-tags">
+          <span>Mortgage Servicing</span>
+          <span>Workflow Design</span>
+          <span>Research-led</span>
+        </div>
         <div class="case-reveal">
           <div class="case-divider" aria-hidden="true"></div>
           <p class="case-description">
             A live case workspace where every inquiry has one shared record. Progress, conversation, and documents stay together, no more digging through email threads to find the latest update.
           </p>
-          <div class="case-tags">
-            <span>Mortgage Servicing</span>
-            <span>B2B Portal</span>
-            <span>Workflow Design</span>
-            <span>Research-led</span>
-          </div>
           <p class="case-meta">
             <strong>Real-Time Inquiry Portal</strong> · Onity Group · 2026
           </p>
@@ -2955,20 +3050,20 @@
         </div>
       </div>
       <div class="case-content">
+        <span class="case-domain">AI Workspace · Dell Technologies</span>
         <h2 class="case-title">
           I rebuilt Dell's AI workspace into a full-screen sales assistant, cutting ticket volume by 55% and pushing self-serve adoption to 92%.
         </h2>
+        <div class="case-tags">
+          <span>AI / Conversational UX</span>
+          <span>Internal Tools</span>
+          <span>Trust &amp; Transparency</span>
+        </div>
         <div class="case-reveal">
           <div class="case-divider" aria-hidden="true"></div>
           <p class="case-description">
             A full-screen AI workspace that replaces Dell's cramped legacy chatbot. Source-tagged answers, role-aware prompts, and the sales portal's tools sit underneath the conversation, so reps trust what the AI says instead of pinging a teammate.
           </p>
-          <div class="case-tags">
-            <span>AI / Conversational UX</span>
-            <span>Internal Tools</span>
-            <span>Trust &amp; Transparency</span>
-            <span>Information Architecture</span>
-          </div>
           <p class="case-meta">
             <strong>IntelliAssist 2.0, From Cramped Chaos to Clarity</strong> · Dell · 2024
           </p>
@@ -2991,20 +3086,20 @@
         </div>
       </div>
       <div class="case-content">
+        <span class="case-domain">Information Architecture · Dell Technologies</span>
         <h2 class="case-title">
           I rebuilt Dell's Information Network Center to lift findability by 40% for designers and researchers.
         </h2>
+        <div class="case-tags">
+          <span>Information Architecture</span>
+          <span>Internal Tools</span>
+          <span>Research-led</span>
+        </div>
         <div class="case-reveal">
           <div class="case-divider" aria-hidden="true"></div>
           <p class="case-description">
             A full IA rearchitecture of Dell's 30,000-employee internal portal. Favorites, in-tile report dropdowns, and a persistent side nav replace the memorized routes employees were walking through every day to reach the reports they actually use.
           </p>
-          <div class="case-tags">
-            <span>Information Architecture</span>
-            <span>Internal Tools</span>
-            <span>Findability</span>
-            <span>Research-led</span>
-          </div>
           <p class="case-meta">
             <strong>Information Architecture</strong> · Dell INC · 2022
           </p>
@@ -3013,6 +3108,16 @@
     </a>
 
   </section>
+
+  <!-- ── Homepage testimonial ── -->
+  <div class="home-testimonial">
+    <div class="home-testimonial-inner ha-reveal">
+      <p class="home-testimonial-quote">Dinesh has a knack for transforming product experiences. Users love the changes he's made. His can-do attitude, quick thinking, and ability to turn ideas into reality make him an invaluable team player.</p>
+      <div class="home-testimonial-byline">
+        <strong>Gayathri</strong>&nbsp; Engineering Manager · Dell
+      </div>
+    </div>
+  </div>
 
   <!-- ══════════════════════════════════════════════
        Home — About strip
@@ -3179,6 +3284,8 @@
     slot.classList.add("is-open");
     dock.setAttribute("aria-hidden", "false");
     if (trigger) trigger.setAttribute("aria-expanded", "true");
+    // GA: chat opened
+    if (window.trackEvent) window.trackEvent("folio_open", { source: opts.seedChar ? "typed_into_trigger" : "click_or_shortcut" });
     // Focus the input once the morph transition kicks off — feels natural
     requestAnimationFrame(() => {
       input.focus({ preventScroll: true });
@@ -4071,6 +4178,16 @@
     convo.insertBefore(userMsg, followupsSection);
     history.push({ role: "user", content: question });
 
+    // GA: question asked
+    if (window.trackEvent) {
+      window.trackEvent("folio_question_asked", {
+        question: question.slice(0, 200),
+        question_length: question.length,
+        recruiter_mode: getMode() === "recruiter",
+        turn: history.filter((m) => m.role === "user").length,
+      });
+    }
+
     // Typing indicator — stick figure pulling folders from a filing rack
     const typing = document.createElement("div");
     typing.className = "ai-typing";
@@ -4255,7 +4372,15 @@
     const chip = e.target.closest(".ai-followup");
     if (!chip) return;
     e.preventDefault();
-    ask(chip.textContent.trim());
+    const label = chip.textContent.trim();
+    // GA: follow-up chip clicked
+    if (window.trackEvent) {
+      window.trackEvent("folio_followup_clicked", {
+        chip_label: label,
+        recruiter_mode: getMode() === "recruiter",
+      });
+    }
+    ask(label);
   });
 
   // Recruiter mode toggle — also refreshes the starter chips when in empty state
@@ -4264,6 +4389,8 @@
       const next = toggle.getAttribute("aria-checked") !== "true";
       toggle.setAttribute("aria-checked", String(next));
       renderStarterChips();
+      // GA: recruiter mode toggled
+      if (window.trackEvent) window.trackEvent("folio_recruiter_toggle", { enabled: next });
     });
   }
 
@@ -4325,15 +4452,12 @@
   let deleting = false;
 
   function writeText(text) {
-    // Modal input — uses placeholder (with blinking caret appended)
-    input.placeholder = text + "▎";
-    // Trigger pill text — show the SAME prompt so the experience reads continuously.
-    // The CSS adds its own caret via ::after, so we don't append one here.
-    if (triggerText) triggerText.textContent = text || "Ask Dinesh's AI anything";
+    input.placeholder = text ? text + "▎" : "";
+    if (triggerText) triggerText.textContent = text;
   }
 
   function typewriterStep() {
-    // Pause when user is interacting with the modal input — their text takes priority.
+    // Pause when user is interacting with the modal input
     if (document.activeElement === input || input.value.length > 0) {
       input.placeholder = "";
       setTimeout(typewriterStep, 400);
@@ -4346,20 +4470,22 @@
       writeText(current.slice(0, charIdx));
       if (charIdx >= current.length) {
         deleting = true;
-        setTimeout(typewriterStep, 1500); // hold full word
+        setTimeout(typewriterStep, 1500); // hold full phrase
         return;
       }
-      setTimeout(typewriterStep, 55 + Math.random() * 45); // human-ish typing variance
+      setTimeout(typewriterStep, 55 + Math.random() * 45);
     } else {
       charIdx--;
-      writeText(current.slice(0, charIdx));
-      if (charIdx <= 0) {
+      if (charIdx > 0) {
+        writeText(current.slice(0, charIdx));
+        setTimeout(typewriterStep, 28);
+      } else {
+        // Fully deleted — clear and immediately start next prompt, no reset text
+        writeText("");
         deleting = false;
         phIdx = (phIdx + 1) % placeholders.length;
-        setTimeout(typewriterStep, 400); // brief beat before next word
-        return;
+        setTimeout(typewriterStep, 80);
       }
-      setTimeout(typewriterStep, 28); // faster on delete
     }
   }
 
@@ -4483,30 +4609,32 @@
     const text = originals.get(el.dataset.lens) || el.textContent;
     const words = text.split(" ");
 
-    // Override the CSS transition so words own the entrance
-    el.style.cssText = "opacity:1;top:35%;transform:translateY(-50%);transition:none;";
+    // Keep CSS control for position/transform — only override opacity + transition
+    el.style.opacity = "1";
+    el.style.transition = "none";
 
+    // Use display:inline (not inline-block) so text wraps identically to plain text.
+    // Transforms require inline-block and would change line-break behaviour — opacity only.
     el.innerHTML = words
       .map((w, i) =>
-        `<span data-w style="display:inline-block;opacity:0;transform:translateY(8px);` +
-        `transition:opacity 300ms cubic-bezier(0.16,1,0.3,1) ${i * 38}ms,` +
-        `transform 400ms cubic-bezier(0.16,1,0.3,1) ${i * 38}ms">${w}</span>`
+        `<span data-w style="opacity:0;` +
+        `transition:opacity 320ms cubic-bezier(0.16,1,0.3,1) ${i * 42}ms">${w}</span>`
       )
       .join(" ");
 
-    // Two rAF to ensure browser has painted the hidden state before animating
+    // Two rAF so the browser paints the hidden state before fading in
     requestAnimationFrame(() => requestAnimationFrame(() => {
       el.querySelectorAll("[data-w]").forEach(s => {
         s.style.opacity = "1";
-        s.style.transform = "translateY(0)";
       });
     }));
 
-    // After animation settles, swap back to plain text and restore CSS control
-    const settle = (words.length - 1) * 38 + 400 + 80;
+    // After animation settles, restore plain text and hand back full CSS control
+    const settle = (words.length - 1) * 42 + 320 + 60;
     cleanupTimer = setTimeout(() => {
       el.textContent = text;
-      el.style.cssText = "";
+      el.style.opacity = "";
+      el.style.transition = "";
     }, settle);
   }
 
@@ -4538,6 +4666,8 @@
   chips.forEach(c => c.addEventListener("click", () => {
     activate(c.dataset.lens);
     onChipClick();
+    // GA: lens switched via click
+    if (window.trackEvent) window.trackEvent("chip_lens_switch", { lens: c.dataset.lens, via: "click" });
   }));
 
   const chipRailEl = document.querySelector(".chip-rail");
@@ -4757,14 +4887,6 @@
   targets.forEach(t => obs.observe(t));
 })();
 
-/* ── Scroll hint — fades out once user starts scrolling ── */
-(() => {
-  const hint = document.querySelector(".scroll-hint");
-  if (!hint) return;
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 40) hint.classList.add("is-hidden");
-  }, { passive: true });
-})();
 
 /* ── Nav résumé link → open AI chat resume card ── */
 (() => {
@@ -4786,10 +4908,10 @@
   let timer;
   btn.addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText("dineshkravikumar@gmail.com");
+      await navigator.clipboard.writeText("dineshballer@gmail.com");
     } catch (_) {
       const ta = document.createElement("textarea");
-      ta.value = "dineshkravikumar@gmail.com";
+      ta.value = "dineshballer@gmail.com";
       ta.style.cssText = "position:fixed;opacity:0;";
       document.body.appendChild(ta);
       ta.select();
@@ -4814,11 +4936,11 @@
   let timer;
   btn.addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText("dineshkravikumar@gmail.com");
+      await navigator.clipboard.writeText("dineshballer@gmail.com");
     } catch (_) {
       /* fallback for non-https */
       const ta = document.createElement("textarea");
-      ta.value = "dineshkravikumar@gmail.com";
+      ta.value = "dineshballer@gmail.com";
       ta.style.position = "fixed";
       ta.style.opacity  = "0";
       document.body.appendChild(ta);
@@ -4835,6 +4957,65 @@
     }, 2000);
   });
 })();
+
+/* ───────────────────────────────────────────────
+   GA: page-level link tracking
+   Case study clicks, resume downloads, email clicks,
+   and outbound links — wired via document-wide
+   delegation so dynamically-rendered links (the CTAs
+   inside Folio's responses, for example) are caught
+   without needing per-link listeners.
+─────────────────────────────────────────────── */
+(() => {
+  function projectFromCaseLink(href) {
+    if (/realtime-inquiry/.test(href))     return "Real-Time Inquiry Portal";
+    if (/loan-deboarding/.test(href))      return "Loan Deboarding Portal";
+    if (/chaos-to-clarity/.test(href))     return "Chaos to Clarity (IntelliAssist 2.0)";
+    if (/dell-inc/.test(href))             return "Dell INC (Information Architecture)";
+    if (/dell-ai/.test(href))              return "IntelliAssist, Dell AI Chat";
+    return "unknown";
+  }
+
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest("a[href]");
+    if (!link) return;
+    const href = link.getAttribute("href") || "";
+    if (!window.trackEvent) return;
+
+    // Case-study card click (case-study page links)
+    if (/-case-study\.html/.test(href)) {
+      window.trackEvent("case_study_click", {
+        project: projectFromCaseLink(href),
+        href,
+      });
+      return;
+    }
+
+    // Résumé download
+    if (/resume\.pdf/i.test(href)) {
+      window.trackEvent("resume_download", {
+        source: link.closest("nav") ? "nav" : link.closest(".ai-dock") ? "folio_cta" : "inline",
+      });
+      return;
+    }
+
+    // Email click
+    if (href.startsWith("mailto:")) {
+      window.trackEvent("email_click", {
+        source: link.closest("nav") ? "nav" : link.closest(".ai-dock") ? "folio_cta" : "inline",
+      });
+      return;
+    }
+
+    // Outbound link
+    try {
+      const url = new URL(href, window.location.href);
+      if (url.host && url.host !== window.location.host && /^https?:$/.test(url.protocol)) {
+        window.trackEvent("outbound_link", { destination: url.host, href });
+      }
+    } catch (_) { /* ignore parse errors on relative anchors */ }
+  });
+})();
 </script>
 
 <footer class="site-footer" aria-label="Site footer">
@@ -4848,7 +5029,7 @@
         <span class="fp-dot" aria-hidden="true"></span>
         <span id="footer-copy-label">copy email</span>
       </button>
-      <a href="https://linkedin.com/in/dineshkravikumar" class="footer-ext-link" target="_blank" rel="noopener">
+      <a href="https://linkedin.com/in/dineshballer" class="footer-ext-link" target="_blank" rel="noopener">
         LinkedIn <span class="ext-arrow" aria-hidden="true">↗</span>
       </a>
       <a href="/resume.pdf" class="footer-ext-link" target="_blank" rel="noopener">
