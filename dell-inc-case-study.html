@@ -920,6 +920,35 @@
     .end-cap .next-up .next-title { font-size: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
   }
 
+  /* ── NDA confidentiality badge — all image containers ── */
+  .hero-showcase,
+  .sol-img,
+  .figure,
+  .final-design-gallery .gallery-item { position: relative; }
+
+  .hero-showcase::before,
+  .sol-img::before,
+  .figure::before,
+  .final-design-gallery .gallery-item::before {
+    content: "⊘  Designs modified · NDA";
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgba(10, 10, 10, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-family: "General Sans", -apple-system, system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.82);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    z-index: 5;
+    pointer-events: none;
+  }
+
 </style>
 </head>
 <body>
