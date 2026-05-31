@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dinesh Kumar — Senior Product Designer</title>
+<title>Dinesh Baller — Product Designer</title>
 <script src="./ga.js" async></script>
 
 <!-- ── Favicon ── -->
@@ -14,11 +14,11 @@
 
 <!-- ── SEO ── -->
 <meta name="description" content="Dinesh Baller is a product designer building B2B products and AI-powered workflows at Onity. Case studies in mortgage servicing, AI workspaces, and financial operations tooling." />
-<meta name="author" content="Dinesh Kumar" />
+<meta name="author" content="Dinesh Baller" />
 
 <!-- ── Open Graph (LinkedIn, Slack, iMessage previews) ── -->
 <meta property="og:type"         content="website" />
-<meta property="og:title"        content="Dinesh Kumar — Senior Product Designer" />
+<meta property="og:title"        content="Dinesh Baller — Product Designer" />
 <meta property="og:description"  content="Designer building B2B products and AI-powered workflows that keep financial teams moving. Case studies at Onity, Dell, and Red Hat." />
 <meta property="og:image"        content="./images/rti-final-overview.png" />
 <meta property="og:image:width"  content="1200" />
@@ -28,7 +28,7 @@
 
 <!-- ── Twitter / X Card ── -->
 <meta name="twitter:card"        content="summary_large_image" />
-<meta name="twitter:title"       content="Dinesh Kumar — Senior Product Designer" />
+<meta name="twitter:title"       content="Dinesh Baller — Product Designer" />
 <meta name="twitter:description" content="Designer building B2B products and AI-powered workflows that keep financial teams moving." />
 <meta name="twitter:image"       content="./images/rti-final-overview.png" />
 
@@ -260,10 +260,21 @@
     color: var(--green-strong);
     font-weight: 600;
   }
-  /* Active chip: persistent underline indicator (no auto-cycle countdown) */
+  /* Active chip: the underline acts as a 3s countdown — starts full and
+     contracts toward the center until it disappears,
+     then the JS interval advances to the next chip. */
   .chip[aria-selected="true"]::after {
-    transform: scaleX(1);
-    transition: transform 320ms var(--ease);
+    transform-origin: center;
+    animation: chip-countdown 3s linear forwards;
+  }
+  /* Pause the countdown on hover or JS-triggered click-pause */
+  .chip-rail:hover .chip[aria-selected="true"]::after,
+  .chip-rail.click-paused .chip[aria-selected="true"]::after {
+    animation-play-state: paused;
+  }
+  @keyframes chip-countdown {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .chip[aria-selected="true"]::after {
@@ -2671,30 +2682,6 @@
     font-weight: 400;
   }
 
-  /* ── Tools strip ── */
-  .ha-tools-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .ha-tool {
-    display: inline-block;
-    padding: 7px 16px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    font-family: var(--body);
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-soft);
-    background: transparent;
-    transition: border-color 220ms var(--ease), color 220ms var(--ease), background 220ms var(--ease);
-  }
-  .ha-tool:hover {
-    border-color: rgba(31, 77, 62, 0.40);
-    color: var(--accent);
-    background: rgba(31, 77, 62, 0.04);
-  }
-
   @media (max-width: 720px) {
     .home-about { padding: 0 24px 60px; }
     .ha-principles-row { grid-template-columns: repeat(2, 1fr); }
@@ -2719,20 +2706,6 @@
     animation: fadein 700ms var(--ease) 80ms forwards;
     text-align: center;
     font-variation-settings: "opsz" 24;
-  }
-
-  /* ── Availability dot in role-descriptor ── */
-  .avail-dot {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: #28a868;
-    box-shadow: 0 0 0 3px rgba(40, 168, 104, 0.18);
-    margin-right: 4px;
-    animation: pulse-ring 2.4s ease infinite;
-    vertical-align: middle;
-    position: relative;
-    top: -1px;
   }
 
   /* ── Case domain label — always-visible company / space tag ── */
@@ -2777,22 +2750,18 @@
     margin-top: 3px;
   }
 
-  /* ── Homepage testimonials ── */
-  .home-testimonials {
-    max-width: 1100px;
+  /* ── Homepage testimonial ── */
+  .home-testimonial {
+    max-width: 1240px;
     margin: 0 auto;
-    padding: 40px 48px 72px;
+    padding: 56px 48px 64px;
   }
-  .home-testimonials-inner { display: flex; flex-direction: column; gap: 32px; }
-
-  /* Hero quote */
-  .ht-hero {
-    background: linear-gradient(135deg, rgba(31, 77, 62, 0.04), rgba(31, 77, 62, 0.08));
-    border: 1px solid rgba(31, 77, 62, 0.12);
-    border-radius: 20px;
-    padding: clamp(28px, 3vw, 44px) clamp(28px, 4vw, 56px);
+  .home-testimonial-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
   }
-  .ht-hero-quote {
+  .home-testimonial-quote {
     font-family: var(--display);
     font-style: italic;
     font-weight: 350;
@@ -2803,62 +2772,30 @@
     margin: 0 0 24px;
     font-variation-settings: "opsz" 36;
   }
-  .ht-hero-quote::before { content: "\201C"; }
-  .ht-hero-quote::after  { content: "\201D"; }
-
-  /* Two-col grid of smaller quotes */
-  .ht-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-  }
-  .ht-card {
-    background: var(--bg);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 28px 28px 24px;
-  }
-  .ht-card-quote {
-    font-family: var(--body);
-    font-size: 15px;
-    line-height: 1.6;
-    color: var(--ink-soft);
-    margin: 0 0 20px;
-  }
-  .ht-card-quote::before { content: "\201C"; color: var(--green-strong); font-family: var(--display); font-size: 20px; line-height: 0; vertical-align: -0.3em; margin-right: 2px; }
-
-  /* Shared byline row */
-  .ht-byline {
-    display: flex;
+  .home-testimonial-quote::before { content: "\201C"; }
+  .home-testimonial-quote::after  { content: "\201D"; }
+  .home-testimonial-byline {
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
-  }
-  .ht-avatar {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 1.5px solid var(--line);
-    flex-shrink: 0;
-  }
-  .ht-name {
-    display: block;
+    gap: 10px;
     font-family: var(--body);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .ht-role {
-    display: block;
-    font-family: var(--body);
-    font-size: 12px;
+    font-size: 13px;
     color: var(--ink-mute);
-    letter-spacing: 0.01em;
-    margin-top: 1px;
   }
-
+  .home-testimonial-byline strong {
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .home-testimonial-byline::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--ink-mute);
+    opacity: 0.45;
+  }
   @media (max-width: 720px) {
-    .home-testimonials { padding: 40px 24px 56px; }
-    .ht-grid { grid-template-columns: 1fr; }
+    .home-testimonial { padding: 40px 24px 48px; }
     .case-metrics { gap: 16px; }
   }
 </style>
@@ -2878,7 +2815,6 @@
     <ul class="nav-links">
       <li><a href="#work">work</a></li>
       <li><a href="./about.html">story</a></li>
-      <li><a href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener">LinkedIn&nbsp;↗</a></li>
       <li><a href="/resume.pdf" id="nav-resume-link" rel="noopener">résumé</a></li>
       <li>
         <button class="nav-copy-btn" id="nav-copy-email" aria-label="Copy email address">
@@ -3013,13 +2949,13 @@
 
   <section class="case-studies" id="work" aria-label="Selected work">
 
-    <!-- Card 1 — Loan Deboarding Portal · Onity -->
+    <!-- Card 1 — Loan Deboarding Portal · Onity (showcase) -->
     <a href="./loan-deboarding-case-study.html" class="case showcase expand-reveal">
       <div class="case-visual">
         <span class="case-num" aria-hidden="true">01</span>
-        <span class="status-pill" aria-label="Shipping 2026">
+        <span class="status-pill" aria-label="In development, 2026">
           <span class="status-dot" aria-hidden="true"></span>
-          Shipping 2026
+          In development · 2026
         </span>
         <span class="view-cta" aria-hidden="true">the full story</span>
         <span class="confidential-chip" aria-label="Designs modified for confidentiality">Designs modified · NDA</span>
@@ -3059,13 +2995,13 @@
       </div>
     </a>
 
-    <!-- Card 2 — Real-Time Inquiry Portal · Onity -->
+    <!-- Card 2 — Real-Time Inquiry Portal · Onity (showcase, expand-reveal pattern) -->
     <a href="./realtime-inquiry-case-study.html" class="case showcase expand-reveal">
       <div class="case-visual">
         <span class="case-num" aria-hidden="true">02</span>
-        <span class="status-pill" aria-label="Shipping 2026">
+        <span class="status-pill" aria-label="In development, 2026">
           <span class="status-dot" aria-hidden="true"></span>
-          Shipping 2026
+          In development · 2026
         </span>
         <span class="view-cta" aria-hidden="true">the full story</span>
         <span class="confidential-chip" aria-label="Designs modified for confidentiality">Designs modified · NDA</span>
@@ -3078,16 +3014,6 @@
         <h2 class="case-title">
           I built a real-time portal that replaces email threads with live inquiry visibility, cutting case resolution by 62% and saving managers 6 hours a week.
         </h2>
-        <div class="case-metrics">
-          <div>
-            <span class="case-metric-num">62%</span>
-            <span class="case-metric-label">faster case resolution</span>
-          </div>
-          <div>
-            <span class="case-metric-num">6 hrs</span>
-            <span class="case-metric-label">saved per AM / week</span>
-          </div>
-        </div>
         <div class="case-tags">
           <span>Mortgage Servicing</span>
           <span>Workflow Design</span>
@@ -3096,7 +3022,7 @@
         <div class="case-reveal">
           <div class="case-divider" aria-hidden="true"></div>
           <p class="case-description">
-            A live case workspace where every inquiry has one shared record. Progress, conversation, and documents stay together — no more digging through email threads to find the latest update.
+            A live case workspace where every inquiry has one shared record. Progress, conversation, and documents stay together, no more digging through email threads to find the latest update.
           </p>
           <p class="case-meta">
             <strong>Real-Time Inquiry Portal</strong> · Onity Group · 2026
@@ -3105,7 +3031,7 @@
       </div>
     </a>
 
-    <!-- Card 3 — Dell IntelliAssist 2.0 -->
+    <!-- Card 3 — Dell IntelliAssist 2.0, From Cramped Chaos to Clarity (showcase) -->
     <a href="./chaos-to-clarity-case-study.html" class="case showcase expand-reveal">
       <div class="case-visual">
         <span class="case-num" aria-hidden="true">03</span>
@@ -3124,16 +3050,6 @@
         <h2 class="case-title">
           I rebuilt Dell's AI workspace into a full-screen sales assistant, cutting ticket volume by 55% and pushing self-serve adoption to 92%.
         </h2>
-        <div class="case-metrics">
-          <div>
-            <span class="case-metric-num">55%</span>
-            <span class="case-metric-label">reduction in support tickets</span>
-          </div>
-          <div>
-            <span class="case-metric-num">92%</span>
-            <span class="case-metric-label">self-serve adoption rate</span>
-          </div>
-        </div>
         <div class="case-tags">
           <span>AI / Conversational UX</span>
           <span>Internal Tools</span>
@@ -3151,7 +3067,7 @@
       </div>
     </a>
 
-    <!-- Card 4 — Information Architecture · Dell INC -->
+    <!-- Card 4 — Information Architecture · Dell INC (showcase) -->
     <a href="./dell-inc-case-study.html" class="case showcase expand-reveal">
       <div class="case-visual">
         <span class="case-num" aria-hidden="true">04</span>
@@ -3170,16 +3086,6 @@
         <h2 class="case-title">
           I rebuilt Dell's Information Network Center to lift findability by 40% for designers and researchers.
         </h2>
-        <div class="case-metrics">
-          <div>
-            <span class="case-metric-num">40%</span>
-            <span class="case-metric-label">lift in findability</span>
-          </div>
-          <div>
-            <span class="case-metric-num">30k</span>
-            <span class="case-metric-label">employee portal users</span>
-          </div>
-        </div>
         <div class="case-tags">
           <span>Information Architecture</span>
           <span>Internal Tools</span>
@@ -3199,46 +3105,13 @@
 
   </section>
 
-  <!-- ── Homepage testimonials (3 voices) ── -->
-  <div class="home-testimonials">
-    <div class="home-testimonials-inner">
-
-      <!-- Primary / hero quote -->
-      <div class="ht-hero ha-reveal">
-        <p class="ht-hero-quote">Dinesh has a knack for transforming product experiences. Users love the changes he's made. His can-do attitude, quick thinking, and ability to turn ideas into reality make him an invaluable team player.</p>
-        <div class="ht-byline">
-          <img src="./images/about/testimonial-gayathri.png" alt="Gayathri" class="ht-avatar" />
-          <div>
-            <strong class="ht-name">Gayathri</strong>
-            <span class="ht-role">Engineering Manager · Dell</span>
-          </div>
-        </div>
+  <!-- ── Homepage testimonial ── -->
+  <div class="home-testimonial">
+    <div class="home-testimonial-inner ha-reveal">
+      <p class="home-testimonial-quote">Dinesh has a knack for transforming product experiences. Users love the changes he's made. His can-do attitude, quick thinking, and ability to turn ideas into reality make him an invaluable team player.</p>
+      <div class="home-testimonial-byline">
+        <strong>Gayathri</strong>&nbsp; Engineering Manager · Dell
       </div>
-
-      <!-- Two supporting quotes -->
-      <div class="ht-grid">
-        <div class="ht-card ha-reveal">
-          <p class="ht-card-quote">Dinesh's UI prototypes are a developer's dream: visually stunning, functional, and a breeze to implement. His collaborative spirit and deep understanding of development needs make him a true asset to any team.</p>
-          <div class="ht-byline">
-            <img src="./images/about/testimonial-baylock.png" alt="Baylock" class="ht-avatar" />
-            <div>
-              <strong class="ht-name">Baylock</strong>
-              <span class="ht-role">Developer · Dell</span>
-            </div>
-          </div>
-        </div>
-        <div class="ht-card ha-reveal">
-          <p class="ht-card-quote">Dinesh's organization and proactive approach keep projects running smoothly. His clear communication ensures everyone stays aligned, making collaboration seamless and stress-free.</p>
-          <div class="ht-byline">
-            <img src="./images/about/testimonial-veronica.png" alt="Veronica" class="ht-avatar" />
-            <div>
-              <strong class="ht-name">Veronica</strong>
-              <span class="ht-role">Project Manager · Dell</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
@@ -3299,25 +3172,6 @@
           <h3 class="ha-award-name"><em>Mentoring</em> &amp; community</h3>
           <p class="ha-award-desc">12+ junior designers mentored through 1:1s and design workshops.</p>
         </div>
-      </div>
-    </div>
-
-    <!-- Tools strip -->
-    <div class="ha-tools ha-reveal" style="margin-bottom:72px;">
-      <div class="ha-tools-head" style="margin-bottom:20px;">
-        <span class="ha-eyebrow">Toolkit</span>
-        <h2 class="ha-title">What I <em>reach for.</em></h2>
-      </div>
-      <div class="ha-tools-row">
-        <span class="ha-tool">Figma</span>
-        <span class="ha-tool">Miro</span>
-        <span class="ha-tool">User Interviews</span>
-        <span class="ha-tool">Usability Testing</span>
-        <span class="ha-tool">Design Systems</span>
-        <span class="ha-tool">Prototyping</span>
-        <span class="ha-tool">Journey Mapping</span>
-        <span class="ha-tool">Stakeholder Facilitation</span>
-        <span class="ha-tool">HTML / CSS</span>
       </div>
     </div>
 
@@ -4912,16 +4766,15 @@
     }
   });
 
-  // Auto-cycle disabled — chips respond to manual clicks only.
-  // Removing automatic text rotation prevents disrupting read flow for visitors.
+  if (!reduced) schedule(CYCLE_MS);
 })();
 
 /* ───────────────────────────────────────────────
-   Background blob motion — disabled (static atmosphere).
-   Removing continuous drift reduces competing motion in the hero.
+   Background blob motion — slow drift + cursor parallax
+   CSS animations removed; JS drives style.transform directly
+   so drift and mouse tracking compose cleanly.
 ─────────────────────────────────────────────── */
 (() => {
-  return; // Blob drift disabled — static atmospheric background
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const blobs = [
     { el: document.querySelector(".bg-blob.b1"),
@@ -5165,17 +5018,14 @@
   <div class="footer-inner">
     <div class="footer-top">
       <p class="footer-headline">Good work starts with<br><em>a good conversation.</em></p>
-      <p class="footer-sub">Open for the right opportunities in B2B &amp; fintech. Let's talk.</p>
+      <p class="footer-sub">Open for the right opportunities. Available to talk.</p>
     </div>
     <div class="footer-actions">
-      <a href="mailto:dineshballer@gmail.com?subject=Let%27s%20talk%20about%20a%20role" class="footer-copy-btn footer-mailto">
+      <button class="footer-copy-btn" id="footer-copy-email" aria-label="Copy email address">
         <span class="fp-dot" aria-hidden="true"></span>
-        Send an email
-      </a>
-      <button class="footer-ext-link footer-copy-ghost" id="footer-copy-email" aria-label="Copy email address" style="background:transparent;border:1px solid rgba(23,23,23,0.14);cursor:pointer;font-family:var(--body);font-size:14px;font-weight:500;color:var(--ink-soft);padding:10px 20px;border-radius:999px;transition:color 180ms,border-color 180ms,transform 180ms;text-decoration:none;">
-        <span id="footer-copy-label">copy address</span>
+        <span id="footer-copy-label">copy email</span>
       </button>
-      <a href="https://www.linkedin.com/in/dineshkravikumar/" class="footer-ext-link" target="_blank" rel="noopener">
+      <a href="https://linkedin.com/in/dineshballer" class="footer-ext-link" target="_blank" rel="noopener">
         LinkedIn <span class="ext-arrow" aria-hidden="true">↗</span>
       </a>
       <a href="/resume.pdf" class="footer-ext-link" target="_blank" rel="noopener">
