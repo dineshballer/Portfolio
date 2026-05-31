@@ -89,7 +89,7 @@ I [verb] [thing] that [outcome / who it serves].
 **Title:**
 > I designed a real-time portal where mortgage clients can track every inquiry, message teams inline, and skip the bi-weekly status meeting — cutting case resolution by 62% and giving account managers six hours of their week back.
 
-**Tags:** `Enterprise SaaS ∙ Interaction Design ∙ Mortgage Servicing ∙ Shipped`
+**Tags:** `Enterprise Software ∙ Interaction Design ∙ Mortgage Servicing ∙ Shipped`
 
 **Metrics:**
 - `62%` Faster case resolution
@@ -102,7 +102,7 @@ I [verb] [thing] that [outcome / who it serves].
 **Title:**
 > I designed one release pipeline that absorbs how each client prepares its data — so analysts can validate, reconcile, and ship a loan release from a single record instead of stitching exceptions across spreadsheets.
 
-**Tags:** `Enterprise SaaS ∙ Research-led ∙ Mortgage Servicing ∙ 0 to 1 ∙ Shipped`
+**Tags:** `Enterprise Software ∙ Research-led ∙ Mortgage Servicing ∙ 0 to 1 ∙ Shipped`
 
 **Metrics:**
 - `9/9` Prototype users found status unaided
@@ -115,7 +115,7 @@ I [verb] [thing] that [outcome / who it serves].
 **Title:**
 > I redesigned Dell's AI sales platform to fold six scattered tools into one conversational interface — lifting AI adoption by 85% and cutting support tickets by 55% across enterprise sales.
 
-**Tags:** `AI Tools ∙ Enterprise SaaS ∙ Sales Enablement ∙ Shipped`
+**Tags:** `AI Tools ∙ Enterprise Software ∙ Sales Enablement ∙ Shipped`
 
 **Metrics:**
 - `85%` AI adoption lift
@@ -128,7 +128,7 @@ I [verb] [thing] that [outcome / who it serves].
 **Title:**
 > I built a GEN-AI sales chat that pulls product info, order data, and sales playbooks into one place — landing 92% task completion and replacing six separate tools for Dell's enterprise sales teams.
 
-**Tags:** `GenAI ∙ Conversational UI ∙ Enterprise SaaS ∙ Shipped`
+**Tags:** `GenAI ∙ Conversational UI ∙ Enterprise Software ∙ Shipped`
 
 **Metrics:**
 - `92%` Task completion

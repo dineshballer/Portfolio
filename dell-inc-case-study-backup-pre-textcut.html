@@ -960,6 +960,7 @@
   <a href="#context">Problem</a>
   <a href="#ask">The Ask</a>
   <a href="#research">Research</a>
+  <a href="#synthesis">Synthesis</a>
   <a href="#click-fatigue">Click Fatigue</a>
   <a href="#visual-dissonance">Visual Dissonance</a>
   <a href="#accessibility">Accessibility</a>
@@ -1143,6 +1144,14 @@
   </div>
 </section>
 
+<!-- PULL QUOTE, kicks off research -->
+<section class="pullquote">
+  <div class="wrap">
+    <blockquote>"Honestly, it's like finding a needle in a haystack trying to find the right report. It's beyond frustrating."</blockquote>
+    <cite>participant, user interview</cite>
+  </div>
+</section>
+
 <!-- USER RESEARCH -->
 <section id="research">
   <div class="wrap">
@@ -1175,36 +1184,132 @@
       </div>
     </div>
 
-    <blockquote style="margin-top:32px;">
-      "Honestly, it's like finding a needle in a haystack trying to find the right report. It's beyond frustrating."
-      <cite>participant, user interview</cite>
-    </blockquote>
+    <!-- Method 1 -->
+    <div class="method-block">
+      <span class="mtag">Method 1 · Qualitative</span>
+      <h3>User Interviews, going deep with 9 employees</h3>
+      <p class="lede">In-depth interviews with nine individuals across roles and experience levels. The goal: get specific pain points, desired features, and the actual perception of INC from people who used it daily.</p>
 
-    <h4 style="margin-top:32px; font-size:14px; color:var(--ink-mute); letter-spacing:0.08em; text-transform:uppercase;">What kept showing up across all three methods</h4>
-    <div class="insights-grid">
-      <div class="insight">
-        <span class="ico">🔍</span>
-        <h5>Hard to find anything</h5>
-        <p>The most-cited pain. Reports and tools lived behind nested menus.</p>
-      </div>
-      <div class="insight">
-        <span class="ico">🧭</span>
-        <h5>Inefficient workflows</h5>
-        <p>Common tasks took three to five clicks. Familiarity didn't help.</p>
-      </div>
-      <div class="insight">
-        <span class="ico">🪟</span>
-        <h5>Outdated visual language</h5>
-        <p>The design read a generation behind Dell's brand.</p>
-      </div>
-      <div class="insight">
-        <span class="ico">🚧</span>
-        <h5>Personal workarounds</h5>
-        <p>Users had bookmarked their way around the platform.</p>
+      <blockquote>
+        "Honestly, it's like finding a needle in a haystack trying to find the right report. It's beyond frustrating."
+        <cite>participant, user interview</cite>
+      </blockquote>
+
+      <h4 style="margin-top:24px; font-size:14px; color:var(--ink-mute); letter-spacing:0.08em; text-transform:uppercase;">Key insights</h4>
+      <div class="insights-grid">
+        <div class="insight">
+          <span class="ico">😖</span>
+          <h5>Information overload</h5>
+          <p>Volume of information without clear organization. Users felt buried.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">🔍</span>
+          <h5>Hard to find anything</h5>
+          <p>Locating specific reports or tools was the most-cited pain point.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">🪟</span>
+          <h5>Outdated design</h5>
+          <p>The visual language was perceived as dated, created a poor first impression.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">⚙️</span>
+          <h5>Limited customization</h5>
+          <p>People wanted dashboards and views tailored to their actual roles.</p>
+        </div>
       </div>
     </div>
 
-    <p style="margin-top:32px; font-size:15px; color:var(--ink-soft);">Run through an Ishikawa diagram and prioritization matrix, ten-plus insights traced back to two structural root causes: <strong style="color:var(--ink);">click fatigue</strong> and <strong style="color:var(--ink);">visual dissonance</strong>. The next two sections are how I addressed each.</p>
+    <!-- Method 2 -->
+    <div class="method-block">
+      <span class="mtag">Method 2 · Qualitative</span>
+      <h3>Contextual Inquiry, watching the work happen</h3>
+      <p class="lede">Beyond interviews, I observed users in their natural work environments. Watching the actual click paths exposed friction patterns that interviews alone couldn't surface, the workarounds users had built without realizing it.</p>
+
+      <h4 style="margin-top:24px; font-size:14px; color:var(--ink-mute); letter-spacing:0.08em; text-transform:uppercase;">Key insights</h4>
+      <div class="insights-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="insight">
+          <span class="ico">🧭</span>
+          <h5>Inefficient workflows</h5>
+          <p>Multiple clicks and detours just to complete the most common tasks.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">🚧</span>
+          <h5>Reliance on workarounds</h5>
+          <p>Users had built their own systems to bypass the platform's limitations.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">🤷</span>
+          <h5>No contextual relevance</h5>
+          <p>The info shown wasn't always relevant to the user's role or current task.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Method 3 -->
+    <div class="method-block">
+      <span class="mtag">Method 3 · Quantitative</span>
+      <h3>Survey, validating at scale</h3>
+      <p class="lede">After the qualitative phase, I ran a survey reaching thousands of INC users, to validate the patterns I'd seen in the small-sample work, and to surface anything that only showed up at scale.</p>
+
+      <h4 style="margin-top:24px; font-size:14px; color:var(--ink-mute); letter-spacing:0.08em; text-transform:uppercase;">Key insights</h4>
+      <div class="insights-grid">
+        <div class="insight">
+          <span class="ico">🏷️</span>
+          <h5>Outdated labels</h5>
+          <p>A significant portion found tool and report labels confusing or stale.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">📑</span>
+          <h5>Duplicate content</h5>
+          <p>Confirmed redundant reports and tools, created unnecessary confusion.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">⏳</span>
+          <h5>Slow loading times</h5>
+          <p>Slow pages and reports were directly impacting productivity.</p>
+        </div>
+        <div class="insight">
+          <span class="ico">📊</span>
+          <h5>Weak analytics</h5>
+          <p>Available analytics tools were insufficient for many users' needs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FROM INSIGHTS TO ACTION -->
+<section id="synthesis">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Synthesis</div>
+        <h2>From insights to action</h2>
+      </div>
+      <div>
+        <p>Ten-plus insights, three methods. I ran the findings through an Ishikawa diagram and a prioritization matrix to identify what was actually causing the most pain, versus what just felt loud. Two root causes emerged.</p>
+      </div>
+    </div>
+
+    <div class="synthesis">
+      <div class="synthesis-tools">
+        <span class="synth-pill">Ishikawa Diagram</span>
+        <span class="synth-pill">Prioritization Matrix</span>
+      </div>
+      <p style="font-size:15px; color:var(--ink-soft);">Most user frustrations traced back to two root causes, both structural, both addressable through redesign:</p>
+
+      <div class="root-causes">
+        <div class="root-cause">
+          <h4>Click fatigue</h4>
+          <p>The excessive number of clicks required to navigate and access information made every task feel cumbersome and slow, even for experienced users.</p>
+        </div>
+        <div class="root-cause">
+          <h4>Visual dissonance</h4>
+          <p>The outdated visual design, weak hierarchy, and inconsistent layout left users disoriented and undermined the platform's credibility.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 

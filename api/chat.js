@@ -37,7 +37,7 @@ Designed a real-time portal that replaces scattered email threads with live inqu
 
 Outcomes: 62% faster average case resolution. 12 hours saved per analyst per week. Zero status meetings needed.
 
-Tags: Enterprise SaaS, Interaction Design, Mortgage Servicing, Shipped.
+Tags: Enterprise Software, Interaction Design, Mortgage Servicing, Shipped.
 
 ## 2. Loan Deboarding Portal — Onity Group · 2025 · Shipped
 Designed one release pipeline that absorbs how each mortgage client prepares their data — so analysts can validate, reconcile, and ship a loan release from a single record instead of stitching exceptions across five different spreadsheets. Different clients used different LOS systems and different report formats; the receiving team had been absorbing all the variation as side conversations and parallel reconciliation work.
@@ -48,21 +48,21 @@ Key technique: variation map built from observational research across three repr
 
 Beyond those two products, Dinesh also architected Onity's platform design system — unifying components, data visualization patterns, and interaction standards across the mortgage servicing surface. He also translated predictive analytics and LLM-assistant outputs into trustable UI patterns for non-technical operators (mortgage servicing teams who are not data scientists).
 
-Tags: Enterprise SaaS, Research-led, 0 to 1, Mortgage Servicing, Shipped.
+Tags: Enterprise Software, Research-led, 0 to 1, Mortgage Servicing, Shipped.
 
 ## 3. AI Sales Platform / Intelliassist — Dell · 2023 · Shipped
 Redesigned Dell's AI sales platform to fold six scattered enterprise sales tools into one conversational interface. The AI handled lookup and summarization; the design handled context, source attribution, what happens when the AI is wrong (visible confidence, click-through-to-verify, one-tap feedback flag), and how human and AI hand back to each other. Validated direction through high-fidelity Figma prototypes and A/B testing across enterprise sales teams.
 
 Outcomes: 92% task completion in usability testing. 55% reduction in support tickets. 85% AI adoption lift (self-service) across enterprise sales teams.
 
-Tags: AI Tools, Conversational UI, Enterprise SaaS, Shipped.
+Tags: AI Tools, Conversational UI, Enterprise Software, Shipped.
 
 ## 4. Enterprise Data Dashboards — Dell · 2022–2024 · Shipped
 Revamped complex enterprise data dashboards into user-friendly, actionable interfaces. Conducted targeted user research and data-driven design to surface what analysts actually needed — not what was easiest to surface from the data model.
 
 Outcomes: 30% reduction in task completion time.
 
-Tags: Data Visualization, Enterprise SaaS, Research, Shipped.
+Tags: Data Visualization, Enterprise Software, Research, Shipped.
 
 ## 5. Information Architecture — Dell INC · 2022 · Shipped
 Led the redesign of Dell's Information Network Center, restructuring the IA so designers and researchers could finally find each other's work across teams. Architected a scalable data visualization design system unifying 10+ tools.
@@ -102,7 +102,7 @@ If asked about location or relocation: he's based in Houston, TX. He's open to r
 
 # Strongest fit
 
-Strong fit: operations-adjacent SaaS where the design org is small or absent, but the users are highly trained — mortgage servicing, claims handling, supply chain, B2B fintech, internal AI tooling, sales enablement, ops dashboards.
+Strong fit: operations-adjacent software where the design org is small or absent, but the users are highly trained — mortgage servicing, claims handling, supply chain, B2B fintech, internal AI tooling, sales enablement, ops dashboards.
 
 Weaker fit: consumer apps, marketing surfaces, mature design-system-only orgs where most of the leverage is already in mature design process.
 

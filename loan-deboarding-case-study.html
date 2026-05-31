@@ -1217,8 +1217,6 @@
   <a href="#overview">Overview</a>
   <a href="#snapshot">Snapshot</a>
   <a href="#problem">Problem</a>
-  <a href="#stakes">Stakes</a>
-  <a href="#goals">Goals</a>
   <a href="#solution">Solution</a>
   <a href="#confirmed">Confirmed</a>
   <a href="#tracked">Tracked pipeline</a>
@@ -1237,7 +1235,7 @@
 
     <div class="chip-tags" aria-label="Project tags">
       <span class="chip-tag status"><span class="dot" aria-hidden="true"></span>In development · 2026</span>
-      <span class="chip-tag">Enterprise SaaS</span>
+      <span class="chip-tag">Enterprise Software</span>
       <span class="chip-tag">Research-led</span>
       <span class="chip-tag">Mortgage Servicing</span>
       <span class="chip-tag">0 to 1</span>
@@ -1348,19 +1346,19 @@
       <div class="pain-card">
         <span class="ico">🧩</span>
         <h4>Submissions arrive in different shapes</h4>
-        <p>Even within the three orgs we interviewed, the patterns varied widely, Encompass plus an Access database for one, a custom LOS report for another, an aggregator matrix for a third. Across the rest of the platform's clients, that variation only widens. There's no shared validation layer, so formatting issues are caught downstream, not at the door.</p>
+        <p>Encompass plus Access for one client, a custom LOS report for another, an aggregator matrix for a third. No shared validation layer, so formatting issues surface downstream.</p>
       </div>
 
       <div class="pain-card">
         <span class="ico">⚠️</span>
         <h4>Exceptions handled by escalation, not workflow</h4>
-        <p>Formatting kickbacks, MERS updates, missing scheduled dates, and investor approval delays all turn into email threads routed through a single escalation contact. There's no structured exception lane, no SLA, no owner, no audit trail.</p>
+        <p>Kickbacks, MERS updates, missing dates, investor delays all become email threads. No SLA, no owner, no audit trail.</p>
       </div>
 
       <div class="pain-card">
         <span class="ico">📊</span>
         <h4>Reconciliation reconstructed by hand</h4>
-        <p>After release, manifests, escrow returns, and unfunding adjustments arrive across separate systems. Accounting teams cross-reference by hand because nothing ties post-release activity back to the release record.</p>
+        <p>Manifests, escrow returns, and unfunding adjustments arrive across separate systems. Accounting cross-references by hand.</p>
       </div>
     </div>
 
@@ -1372,92 +1370,6 @@
       <div>
         <blockquote>"Email is risky. We want secure upload and a dashboard, not a chain of forwards."</blockquote>
         <cite><strong>Director of Client Operations</strong> · Mortgage Lender</cite>
-      </div>
-    </div>
-
-    <div class="synthesis-note">
-      A clear theme surfaced from the synthesis: clients didn't just want notifications, they wanted ownership of the pipeline. They wanted to see where each loan was, who held it, and what, if anything, was blocking it. They wanted email to step back and become a fallback, not the system of record.
-    </div>
-  </div>
-</section>
-
-<!-- USER NEEDS + BUSINESS GOALS -->
-<section id="stakes">
-  <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">User needs + business goals</div>
-        <h2>Two sides of the same problem.</h2>
-      </div>
-      <div>
-        <p>For the design to ship and last, every move had to pay back both the client doing the work and the business absorbing the cost. Here's what each side needed, and the goals below earned their place by serving both.</p>
-      </div>
-    </div>
-
-    <div class="reflect-grid">
-      <div class="reflect-card">
-        <span class="label">User needs</span>
-        <h4>Clients wanted visibility, not notifications.</h4>
-        <p>From research with three representative client orgs, a clear pattern surfaced. Clients didn't want better emails. They wanted the kind of ownership a workflow tool gives you, where every loan has a place, a state, and a name attached.</p>
-        <ul>
-          <li>One shared record per submission, with assignment and history</li>
-          <li>Secure upload instead of email threads</li>
-          <li>See where each loan sits and who's holding it</li>
-          <li>A live dashboard in place of bi-weekly status meetings</li>
-          <li>Email kept as a fallback, not the source of truth</li>
-        </ul>
-      </div>
-
-      <div class="reflect-card">
-        <span class="label">Business goals</span>
-        <h4>Onity needed a system of record that scales.</h4>
-        <p>On the receiving side, every dollar of unplanned variation had been paid in labor: side conversations, manual reconciliation, late kickbacks. The business needed a structure the team could trust, and a footprint that didn't grow linearly with new clients.</p>
-        <ul>
-          <li>Cut release cycle time, formatting kickbacks were taking three days to surface</li>
-          <li>Reduce labor on the receiving team currently absorbing client variation</li>
-          <li>Add an audit trail for exceptions with owners and SLAs</li>
-          <li>Tie post-release reconciliation back to one record for accounting</li>
-          <li>Scale across many clients without growing staff linearly</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="synthesis-note">
-      The three structural goals on the next page were each chosen because they paid back both sides. Validation at the door gives clients real-time feedback and gives the receiving team cleaner inputs. A structured exception lane gives clients clarity on what's blocking them and gives the business an audit trail. One release record gives clients live status and gives accounting a single point to reconcile against.
-    </div>
-  </div>
-</section>
-
-<!-- DESIGN GOALS -->
-<section id="goals">
-  <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">Design goals</div>
-        <h2>What I aimed to achieve.</h2>
-      </div>
-      <div>
-        <p>Three goals to fix the broken state: catch errors at the door instead of downstream, give exceptions a defined workflow with ownership and SLAs, and design a release record that takes each client's upstream shape and produces one shared structure for the receiving team.</p>
-      </div>
-    </div>
-
-    <div class="principle-grid">
-      <div class="principle-card">
-        <span class="opt-tag">Goal 01</span>
-        <h4>Move validation upstream</h4>
-        <p>Catch formatting issues, missing fields, and duplicates at the moment of submission, not three days later, downstream of the receiving team. The sender should see the error first.</p>
-      </div>
-
-      <div class="principle-card">
-        <span class="opt-tag">Goal 02</span>
-        <h4>Give exceptions a workflow</h4>
-        <p>Replace escalation-by-email with a structured exception lane: type, owner, SLA, resolution log. Make exceptions a first-class state, not a side conversation.</p>
-      </div>
-
-      <div class="principle-card">
-        <span class="opt-tag">Goal 03</span>
-        <h4>Standardize client variation in one record</h4>
-        <p>Design a release record that takes each client's upstream shape and presents one shared structure downstream, so the receiving team isn't doing manual reconciliation across many different operational realities.</p>
       </div>
     </div>
   </div>

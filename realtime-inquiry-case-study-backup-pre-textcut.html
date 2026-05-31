@@ -1187,6 +1187,7 @@
   <a href="#overview">Overview</a>
   <a href="#snapshot">Snapshot</a>
   <a href="#problem">Problem</a>
+  <a href="#goals">Goals</a>
   <a href="#solution">Solution</a>
   <a href="#dashboard">Dashboard</a>
   <a href="#case-detail">Case detail</a>
@@ -1316,19 +1317,19 @@
       <div class="pain-card">
         <span class="ico">🚫</span>
         <h4>Zero visibility after creation</h4>
-        <p>Once a case opens, clients can't see status or owner. So they email "just checking in."</p>
+        <p>Once a case is opened, clients have no way to see its status or who is working on it. Without a real-time tracker, they are forced to send repetitive "just checking in" emails simply to find out if their request has moved forward.</p>
       </div>
 
       <div class="pain-card">
         <span class="ico">🧵</span>
         <h4>Fragmented messaging and files</h4>
-        <p>Loan documents and replies scatter across email threads. Latest version, last word, both hard to find.</p>
+        <p>Critical messages and loan documents are scattered across individual email threads. This makes it difficult to find the latest version of a file or follow a conversation history, often leading to confusion and missed updates.</p>
       </div>
 
       <div class="pain-card">
         <span class="ico">📅</span>
         <h4>Meeting-heavy status management</h4>
-        <p>Account managers update spreadsheets by hand and run bi-weekly status calls to stay in sync.</p>
+        <p>Because the email process is hard to track, teams rely on manually updating Excel spreadsheets and holding bi-weekly status meetings just to stay in sync. This wastes hours every week on reporting data that is often already out of date by the time the meeting happens.</p>
       </div>
     </div>
 
@@ -1340,6 +1341,45 @@
       <div>
         <blockquote>"I need to see all of our open cases, not just mine, so I can cover when someone's out."</blockquote>
         <cite><strong>Glenda Brue</strong> · Client Administrator</cite>
+      </div>
+    </div>
+
+    <div class="synthesis-note">
+      Through user interviews, a clear pattern emerged: clients felt invisible after submitting a request, struggled to track shared progress, and found it impossible to manage their team's full workload. This led to a cycle of endless follow-up emails, heavy reliance on manual status meetings, and a total loss of trust in the process.
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN GOALS -->
+<section id="goals">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Design goals</div>
+        <h2>What I aimed to achieve.</h2>
+      </div>
+      <div>
+        <p>Three goals to fix the broken state: give companies visibility into what's happening with every case, pull communication out of email and back into the case itself, and let account managers see the full picture across their entire portfolio.</p>
+      </div>
+    </div>
+
+    <div class="principle-grid">
+      <div class="principle-card">
+        <span class="opt-tag">Goal 01</span>
+        <h4>Total transparency</h4>
+        <p>Give mortgage companies a clear view of their case status, key dates, and loan info so they never have to guess what is happening after they hit submit.</p>
+      </div>
+
+      <div class="principle-card">
+        <span class="opt-tag">Goal 02</span>
+        <h4>Centralized communication</h4>
+        <p>Move messages and files out of messy email threads and into the case itself, making it simple for teams to stay in sync and find what they need.</p>
+      </div>
+
+      <div class="principle-card">
+        <span class="opt-tag">Goal 03</span>
+        <h4>Company-wide oversight</h4>
+        <p>Allow account managers to oversee every case across their entire company and run reports, making sure they can stay in control of their full portfolio.</p>
       </div>
     </div>
   </div>
@@ -1358,6 +1398,10 @@
       </div>
     </div>
 
+    <div class="pullquote" style="padding-top: 24px;">
+      <blockquote>"Give me the visibility to see where we sit. Show me if I'm 20% or 80% done."</blockquote>
+      <cite><strong>Ivan Camarena</strong> · Client Account Manager</cite>
+    </div>
   </div>
 </section>
 
