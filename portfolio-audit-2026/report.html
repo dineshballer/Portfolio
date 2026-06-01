@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio Deep Dive: Dinesh, Senior Product Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap" rel="stylesheet" />
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#F6F1E8; --paper:#FFFDF9; --ink:#171717; --soft:#4a4a4a; --mute:#6f6a60;
+    --forest:#1F4D3E; --forest-d:#163d30; --line:#e4ddcf;
+    --crit:#a8321f; --high:#c2622b; --med:#b08714; --low:#7c776c; --win:#2f7d57;
+    --display:"Fraunces",Georgia,serif; --body:"General Sans",-apple-system,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+    font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  a{color:var(--forest);text-decoration-thickness:1px;text-underline-offset:2px}
+  h1,h2,h3,h4{font-family:var(--display);font-weight:480;line-height:1.12;letter-spacing:-0.01em}
+  .display{font-family:var(--display)}
+  .it{font-style:italic}
+  /* ---------- header ---------- */
+  header.cover{background:linear-gradient(165deg,#1F4D3E,#163d30 70%,#10271f);color:#f3efe6;padding:74px 0 60px}
+  header.cover .ey{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#9cc6b3;margin:0 0 18px}
+  header.cover h1{font-size:clamp(34px,5vw,60px);margin:0 0 18px;color:#fbf8f1;font-weight:430}
+  header.cover h1 .it{color:#bfe3d1}
+  header.cover p.lede{font-size:clamp(17px,1.7vw,20px);max-width:680px;color:#dce7df;margin:0 0 30px}
+  .metarow{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px}
+  .metacard{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 16px;min-width:150px}
+  .metacard .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#9cc6b3;margin-bottom:3px}
+  .metacard .v{font-size:14.5px;color:#f1ede4}
+  /* ---------- sticky nav ---------- */
+  nav.toc{position:sticky;top:0;z-index:30;background:rgba(246,241,232,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav.toc .inner{display:flex;gap:4px;overflow-x:auto;padding:10px 28px;max-width:1080px;margin:0 auto;scrollbar-width:none}
+  nav.toc .inner::-webkit-scrollbar{display:none}
+  nav.toc a{font-family:var(--body);font-size:13px;color:var(--soft);text-decoration:none;white-space:nowrap;
+    padding:6px 12px;border-radius:99px;transition:background .2s,color .2s}
+  nav.toc a:hover{background:#ece6d9}
+  nav.toc a.on{background:var(--forest);color:#fff}
+  /* ---------- sections ---------- */
+  section{padding:60px 0;border-bottom:1px solid var(--line)}
+  section h2.sec{font-size:clamp(26px,3.2vw,38px);margin:0 0 6px;font-weight:450}
+  .kicker{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--forest);font-weight:600;font-family:var(--body);margin:0 0 12px}
+  .sub{color:var(--mute);max-width:760px;margin:0 0 26px;font-size:16.5px}
+  h3.block{font-size:22px;margin:34px 0 12px;font-weight:500}
+  h4.mini{font-family:var(--body);font-weight:600;font-size:15px;letter-spacing:.01em;margin:20px 0 8px;text-transform:uppercase;color:var(--soft)}
+  p{margin:0 0 14px}
+  .lead{font-size:18px;color:var(--soft)}
+  /* ---------- chips ---------- */
+  .sev{display:inline-block;font-family:var(--body);font-size:11px;font-weight:600;letter-spacing:.06em;
+    text-transform:uppercase;padding:3px 9px;border-radius:99px;color:#fff;vertical-align:middle}
+  .sev.crit{background:var(--crit)} .sev.high{background:var(--high)} .sev.med{background:var(--med)}
+  .sev.low{background:var(--low)} .sev.win{background:var(--win)}
+  /* ---------- finding list ---------- */
+  .find{border:1px solid var(--line);border-radius:14px;background:var(--paper);padding:18px 20px;margin:14px 0}
+  .find .ttl{font-family:var(--body);font-weight:600;font-size:16px;margin:0 0 6px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+  .find p:last-child{margin-bottom:0}
+  .find .fix{margin-top:8px;padding-top:10px;border-top:1px dashed var(--line);font-size:15px}
+  .find .fix b{font-family:var(--body);color:var(--forest)}
+  .win-find{border-left:4px solid var(--win)}
+  /* ---------- screenshot frame ---------- */
+  .grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:30px;align-items:start}
+  @media(max-width:860px){.grid2{grid-template-columns:1fr}}
+  figure.shot{margin:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 12px 34px -22px rgba(20,40,30,.45)}
+  .bbar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#efe9dc;border-bottom:1px solid var(--line)}
+  .dot{width:10px;height:10px;border-radius:50%}
+  .dot.r{background:#e0816f}.dot.y{background:#e6c34d}.dot.g{background:#86c08a}
+  .bbar .u{margin-left:8px;font-family:var(--body);font-size:12px;color:var(--mute);background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 10px}
+  .scrollshot{max-height:600px;overflow-y:auto;background:#fff}
+  .scrollshot img{width:100%;display:block}
+  .shotcap{font-size:12.5px;color:var(--mute);margin:8px 2px 0;font-family:var(--body)}
+  .phonewrap{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px}
+  .phone{width:200px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 10px 26px -18px rgba(20,40,30,.45)}
+  .phone .scrollshot{max-height:420px}
+  /* ---------- scorecard ---------- */
+  .score{display:grid;grid-template-columns:1fr;gap:10px;margin:22px 0}
+  .srow{display:grid;grid-template-columns:210px 1fr 52px;gap:14px;align-items:center}
+  @media(max-width:620px){.srow{grid-template-columns:140px 1fr 40px}}
+  .srow .lab{font-family:var(--body);font-size:14.5px;font-weight:500}
+  .bar{height:10px;background:#e7e0d2;border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#2f7d57,#1F4D3E)}
+  .gr{font-family:var(--display);font-size:18px;text-align:right;font-weight:500}
+  /* ---------- callout numbers over shot ---------- */
+  .legend{font-family:var(--body);font-size:14px;color:var(--soft)}
+  .num{display:inline-flex;width:22px;height:22px;border-radius:50%;background:var(--forest);color:#fff;
+    font-family:var(--body);font-size:12px;font-weight:600;align-items:center;justify-content:center;margin-right:8px}
+  /* ---------- tables ---------- */
+  table{width:100%;border-collapse:collapse;font-family:var(--body);font-size:14px;margin:14px 0}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:#efe9dc;font-weight:600;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--soft)}
+  td.pass{color:var(--win);font-weight:600}td.fail{color:var(--crit);font-weight:600}td.warn{color:var(--high);font-weight:600}
+  code{background:#ece6d9;padding:1px 6px;border-radius:5px;font-size:13px;font-family:"SF Mono",ui-monospace,monospace}
+  .pill{display:inline-block;background:#ece6d9;border-radius:99px;padding:2px 10px;font-size:12.5px;font-family:var(--body);margin:2px 4px 2px 0}
+  .two{columns:2;column-gap:34px}@media(max-width:680px){.two{columns:1}}
+  ul.clean{padding-left:20px;margin:0 0 14px}ul.clean li{margin:0 0 7px}
+  .big-num{font-family:var(--display);font-size:40px;color:var(--forest);line-height:1;font-weight:500}
+  footer.end{padding:50px 0 70px;color:var(--mute);font-size:14px}
+  .toprec{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:18px}
+  .rec{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--forest);border-radius:12px;padding:16px 18px}
+  .rec .n{font-family:var(--display);font-size:26px;color:var(--forest);font-weight:500}
+  .rec .t{font-family:var(--body);font-weight:600;font-size:15.5px;margin:4px 0 6px}
+  .rec .d{font-size:14px;color:var(--soft)}
+  .note{background:#eef3ef;border:1px solid #cfe0d5;border-radius:12px;padding:14px 18px;font-size:14.5px;color:#2c4a3d;margin:18px 0}
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="wrap">
+    <p class="ey">Portfolio Deep Dive &middot; May 2026</p>
+    <h1>A senior portfolio that designers respect.<br>Now let's make recruiters <span class="it">click in and finish reading.</span></h1>
+    <p class="lede">A page by page, case study by case study teardown of dineshballer.com, benchmarked against the senior IC and big tech bar. What is genuinely strong, what is leaking credibility, and the exact order to fix it.</p>
+    <div class="metarow">
+      <div class="metacard"><div class="k">Scope</div><div class="v">Home, About, 5 case studies</div></div>
+      <div class="metacard"><div class="k">Benchmark</div><div class="v">Senior IC + Big Tech (FAANG tier)</div></div>
+      <div class="metacard"><div class="k">Reader you're aiming at</div><div class="v">Recruiters, hiring managers, senior designers</div></div>
+      <div class="metacard"><div class="k">Verdict</div><div class="v">Strong B+. Close to clearing the bar.</div></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="inner">
+    <a href="#verdict">Verdict</a>
+    <a href="#priorities">Fix first</a>
+    <a href="#method">How I judged</a>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#cases">Case studies</a>
+    <a href="#identity">Identity &amp; links</a>
+    <a href="#craft">Craft</a>
+    <a href="#a11y">Accessibility</a>
+    <a href="#perf">Performance</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#keep">Keep</a>
+    <a href="#data">Data</a>
+  </div>
+</nav>
+
+<!-- ============ VERDICT ============ -->
+<section id="verdict">
+  <div class="wrap">
+    <p class="kicker">The honest verdict</p>
+    <h2 class="sec">You are one credibility pass away from a top tier portfolio.</h2>
+    <p class="lead">The work is not the problem. Your case studies are structured better than most senior portfolios I benchmark against: snapshots, quick facts, insight led headings, real decisions, post launch sections, even "patterns the next team reused." That is a lead level signal. The thing holding you back is not depth, it is <b>trust friction and craft sprawl</b>: a name that changes between pages, LinkedIn links that point at three different places, a home page that repeats your About page, two near identical Dell AI case studies, a buzzword you told yourself to never use, and a type and color system that is 80% disciplined and 20% loose.</p>
+    <p>None of it is hard to fix. Almost all of it is copy, links, ordering, and tightening. A recruiter who scans for ninety seconds should leave certain of three things: <b>who you are, that the work shipped and moved numbers, and how to reach you.</b> Right now the first and third wobble. Fix those and the case studies, which are your real asset, finally get read.</p>
+
+    <div class="score" role="img" aria-label="Scorecard by area">
+      <div class="srow"><div class="lab">Case study quality</div><div class="bar"><i style="width:90%"></i></div><div class="gr">A-</div></div>
+      <div class="srow"><div class="lab">Copy &amp; voice</div><div class="bar"><i style="width:84%"></i></div><div class="gr">B+</div></div>
+      <div class="srow"><div class="lab">Visual craft</div><div class="bar"><i style="width:82%"></i></div><div class="gr">B+</div></div>
+      <div class="srow"><div class="lab">SEO &amp; sharing</div><div class="bar"><i style="width:80%"></i></div><div class="gr">B+</div></div>
+      <div class="srow"><div class="lab">First impression (Home)</div><div class="bar"><i style="width:74%"></i></div><div class="gr">B-</div></div>
+      <div class="srow"><div class="lab">Information architecture</div><div class="bar"><i style="width:74%"></i></div><div class="gr">B-</div></div>
+      <div class="srow"><div class="lab">Contact &amp; conversion</div><div class="bar"><i style="width:72%"></i></div><div class="gr">B-</div></div>
+      <div class="srow"><div class="lab">Accessibility</div><div class="bar"><i style="width:72%"></i></div><div class="gr">B-</div></div>
+      <div class="srow"><div class="lab">Performance</div><div class="bar"><i style="width:64%"></i></div><div class="gr">C+</div></div>
+      <div class="srow"><div class="lab">Identity consistency</div><div class="bar"><i style="width:55%"></i></div><div class="gr">C</div></div>
+    </div>
+    <p class="shotcap">Grades are relative to the senior IC + big tech bar, not to the average portfolio. Against the average, every row is higher.</p>
+  </div>
+</section>
+
+<!-- ============ PRIORITIES ============ -->
+<section id="priorities">
+  <div class="wrap">
+    <p class="kicker">If you do nothing else</p>
+    <h2 class="sec">The seven fixes that move the needle most.</h2>
+    <p class="sub">Ordered by impact per hour. The first four are credibility leaks a recruiter can hit in the first thirty seconds. The rest are what separates "respectable" from "obvious hire."</p>
+    <div class="toprec">
+      <div class="rec"><div class="n">01</div><div class="t">Pick one name, everywhere</div><div class="d">You appear as both "Dinesh Kumar" and "Dinesh Baller" across titles, nav, and meta. Choose one and sweep all 7 pages.</div></div>
+      <div class="rec"><div class="n">02</div><div class="t">Fix the LinkedIn links</div><div class="d">Links point to three destinations including a bare linkedin.com. Send every one to a single correct profile, new tab.</div></div>
+      <div class="rec"><div class="n">03</div><div class="t">Resolve the two Dell AI cases</div><div class="d">IntelliAssist v1 and 2.0 read as the same product. Merge into one evolution story, or cut v1 from the cross links.</div></div>
+      <div class="rec"><div class="n">04</div><div class="t">De-duplicate Home and About</div><div class="d">Four sections repeat verbatim on both pages. Home = pitch + work. About = the human and the career.</div></div>
+      <div class="rec"><div class="n">05</div><div class="t">Lead with shipped business metrics</div><div class="d">Re-order and re-label cards so the shipped AI work and hard numbers (55% tickets, 62% faster) hit first.</div></div>
+      <div class="rec"><div class="n">06</div><div class="t">Kill the banned words and em dashes</div><div class="d">"AI-powered" sits in your meta description, and em dashes survive in card teasers, both against your own house rules.</div></div>
+      <div class="rec"><div class="n">07</div><div class="t">Tighten type, contrast, loading</div><div class="d">~30 type sizes, two accent colors that fail AA, no lazy loading on image heavy pages. Craft polish for the FAANG bar.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHOD ============ -->
+<section id="method">
+  <div class="wrap">
+    <p class="kicker">How I judged this</p>
+    <h2 class="sec">The bar I held you to, and how I looked.</h2>
+    <div class="grid2">
+      <div>
+        <h4 class="mini">The benchmark</h4>
+        <p>Two audiences, two bars. <b>Senior IC</b> hiring managers spend roughly two minutes on a first pass and scan for one thing: "can this person solve a problem like mine." They want intentional decisions, business impact, and taste in what you chose to show. The <b>big tech / FAANG</b> bar adds a craft tax on top: a tight type system, deliberate motion, fast loads, airtight accessibility, and zero rough edges, because the portfolio itself is read as a work sample.</p>
+        <p>I also held you to the standard set by the reference designers in your own formula doc (Hanson Wu, Jessica Hsu, Sanvi Thithi for structure; Brittany Chiang and Rauno Freiberg for craft and micro interactions; Brian Lovin for the clean senior "Now" structure) and to Aneta Kmiecik's research across 500+ portfolios that informs your playbook.</p>
+      </div>
+      <div>
+        <h4 class="mini">How I looked</h4>
+        <p>I assessed your <b>local working files</b> (the newest versions, edited within the last day), not the live site. I rendered all seven pages headlessly at desktop (1440px) and mobile (390px) to capture the screenshots embedded throughout, then analyzed the underlying code: document structure and headings, every link target, the full color palette with computed WCAG contrast, the complete type scale, the motion budget, image and alt inventory, and meta tags.</p>
+        <div class="note">Every number in this report is measured from your files: hex values, contrast ratios, font sizes, link counts, heading trees. Where I make a visual judgment, the screenshot is right there so you can check me.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOME ============ -->
+<section id="home">
+  <div class="wrap">
+    <p class="kicker">Page 1 &middot; The first impression</p>
+    <h2 class="sec">Home: distinctive and warm, but it makes a recruiter work.</h2>
+    <p class="sub">Your home page has a real point of view: the chip lens hero, the Folio AI chat, the editorial type. That is rare and good. The problem is everything it asks the visitor to do before the work appears, and the credibility leaks hiding in the chrome.</p>
+    <div class="grid2">
+      <figure class="shot">
+        <div class="bbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">dineshballer.com</span></div>
+        <div class="scrollshot"><img src="./assets/index_desktop.png" alt="Full home page screenshot" loading="lazy"></div>
+        <div style="padding:6px 12px"><span class="shotcap">Full home page. Scroll inside the frame. Notice how far down the first case study sits.</span></div>
+      </figure>
+      <div>
+        <div class="find win-find"><div class="ttl"><span class="sev win">Strength</span> The hero has a genuine identity</div><p>Fraunces + General Sans + a Caveat accent, warm ivory, the chip lens mechanic, and an embedded AI chat. This does not look like a Framer template. Against the "don't look like everyone else" test, you pass. Keep this.</p></div>
+
+        <div class="find"><div class="ttl"><span class="sev high">High</span> The work sits too low</div><p>Above the fold is name, chip lens, and the Folio prompt. Strong case study teasers with real metrics exist, but a two minute scanner meets your personality before your proof. Pull one shipped, metric heavy case higher, or add a single line of hard proof near the hero.</p><div class="fix"><b>Fix:</b> One sentence of static positioning + one metric within the first viewport, then the work.</div></div>
+
+        <div class="find"><div class="ttl"><span class="sev high">High</span> "AI-powered" is in your own meta</div><p>Your meta description reads "building B2B products and AI-powered workflows." Your house rules explicitly ban "AI-powered." A recruiter who shares your link sees this exact line in the preview.</p><div class="fix"><b>Fix:</b> Rewrite the meta description and OG copy in your real voice. No "AI-powered."</div></div>
+
+        <div class="find"><div class="ttl"><span class="sev med">Medium</span> Em dashes in the card teasers</div><p>The Loan Deboarding teaser still uses an em dash ("from a single record &mdash; replacing parallel spreadsheets"). Small, but it is your one hard typographic rule, and you broke it on the most visible page.</p><div class="fix"><b>Fix:</b> Sweep visible copy for "&mdash;" and replace with a comma, period, or colon.</div></div>
+      </div>
+    </div>
+
+    <h3 class="block">Card ordering and labels</h3>
+    <p>Home features four cards in this order: <b>01 Loan Deboarding</b> (Onity), <b>02 Real-Time Inquiry</b> (Onity), <b>03 IntelliAssist 2.0</b> (Dell, "Shipped &middot; 2024"), <b>04 Dell INC</b> (Dell, "Shipped &middot; 2022"). Two issues:</p>
+    <ul class="clean">
+      <li>Your two lead cards carry a "Designs modified &middot; NDA" eyebrow instead of a recency or outcome signal, while your shipped AI work with the strongest, most 2026 relevant numbers (55% tickets cut, 92% self serve) sits third. For both the recruiter scan and big tech AI relevance, that is your strongest foot, and it is not forward.</li>
+      <li>The fifth case study (the original IntelliAssist GEN-AI chat) is not featured here at all, yet it is still live and linked from every case study footer. More on that in the case studies section.</li>
+    </ul>
+    <div class="phonewrap">
+      <div class="phone"><div class="bbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div><div class="scrollshot"><img src="./assets/index_mobile.png" alt="Home page on mobile" loading="lazy"></div></div>
+      <div style="flex:1;min-width:240px">
+        <h4 class="mini">Mobile</h4>
+        <p>The mobile render holds together, which many editorial portfolios fail at. Watch the hero stack height: on a phone the visitor scrolls noticeably before reaching the first card. The same "lift the work" fix helps here twice as much.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap">
+    <p class="kicker">Page 2 &middot; The human</p>
+    <h2 class="sec">About: warm and well stocked, but it overlaps Home and opens soft.</h2>
+    <p class="sub">This is where the person shows up, and you have the right ingredients: a journey, a beliefs section, recognition, testimonials, a "beyond the screen" gallery with summits and a graduation. The issues are duplication, a soft opener, and a couple of dated signals.</p>
+    <div class="grid2">
+      <figure class="shot">
+        <div class="bbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">dineshballer.com/about</span></div>
+        <div class="scrollshot"><img src="./assets/about_desktop.png" alt="Full about page screenshot" loading="lazy"></div>
+        <div style="padding:6px 12px"><span class="shotcap">Full About page.</span></div>
+      </figure>
+      <div>
+        <div class="find"><div class="ttl"><span class="sev high">High</span> Home and About repeat four sections</div><p>"Four words, one operating manual" (Curious / Calm / Specific / Useful), the awards strip, the tools row, and the experience timeline all appear on <b>both</b> pages. That makes Home long and strips About of a reason to exist.</p><div class="fix"><b>Fix:</b> Home keeps pitch, work, and a light contact line. About owns the story, career timeline, recognition, and testimonials. Each section lives in exactly one place.</div></div>
+
+        <div class="find"><div class="ttl"><span class="sev med">Medium</span> The opener is poetic, not positioning</div><p>The current h1, "Curious by nature and a designer by choice, crafting interactions that bridge logic with emotion," is lovely but could belong to any designer. For a senior IC it should locate you: who you design for and what you make.</p><div class="fix"><b>Fix:</b> Open with something like your "designing calm into complex systems / for the analysts, AMs, and ops teams who live inside the tools" line, then get poetic.</div></div>
+
+        <div class="find"><div class="ttl"><span class="sev med">Medium</span> Adobe XD is in your toolkit</div><p>The tools row features Adobe XD, which Adobe discontinued. To a hiring manager that reads as a stack that has not been refreshed. (The XD purple also leaks into the page's color set.)</p><div class="fix"><b>Fix:</b> Show the current stack: Figma, FigJam, and the research / handoff tools you actually use now.</div></div>
+
+        <div class="find"><div class="ttl"><span class="sev low">Low</span> Missing meta description</div><p>About has no meta description, so its link preview will be auto scraped. Your case studies all have good ones; About is the gap.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASES ============ -->
+<section id="cases">
+  <div class="wrap">
+    <p class="kicker">Pages 3 to 7 &middot; Your real asset</p>
+    <h2 class="sec">Case studies: structurally, these are senior to lead level.</h2>
+    <p class="sub">This is the strongest part of your portfolio and you should know it. Before the critiques, here is what you are doing that most portfolios, including many at big tech, do not.</p>
+
+    <div class="find win-find">
+      <div class="ttl"><span class="sev win">Strength</span> The architecture hits nearly every best practice</div>
+      <p>Across all five, you consistently ship: a sticky in page section nav (Overview, Snapshot, Problem, Solution, Final, Validation, Post launch, Retrospective), a "The short version" snapshot, a Quick Facts block (Role, Team, Timeline, Tools), an NDA confidentiality note, and most importantly <b>insight led headings</b> instead of method labels. "Lost in the back-and-forth," "The chat box was tiny. The job it had to do wasn't," "What's missing isn't visibility, it's structure." That is exactly how Aneta Kmiecik and the senior reference set say to write headings.</p>
+    </div>
+    <div class="grid2">
+      <div class="find win-find"><div class="ttl"><span class="sev win">Strength</span> You show real decisions</div><p>The MVP scoping call out, "Some reps wanted the panel back. Here's why I held the line," and "It was a harder build, and I had to make that case to engineering." Defending what did <b>not</b> get built is the clearest seniority signal there is. Keep doing this in every case.</p></div>
+      <div class="find win-find"><div class="ttl"><span class="sev win">Strength</span> Process impact, and great alt text</div><p>Each case ends with "patterns the next team reused," which is a lead level move most designers skip. And your case study images carry rich, descriptive alt text, good for both accessibility and SEO. The home and about pages do not match this standard yet.</p></div>
+    </div>
+
+    <h3 class="block">The one thing that undercuts all of it: the two Dell AI cases</h3>
+    <p><span class="sev crit">Critical</span>&nbsp; You have two live Dell IntelliAssist case studies that read as the same product:</p>
+    <table>
+      <tr><th>File</th><th>Title</th><th>Featured on home?</th><th>Headline metric</th></tr>
+      <tr><td><code>dell-ai</code></td><td>IntelliAssist, GEN-AI sales chat (v1)</td><td>No, but linked from every footer</td><td>"85 SUS" / "85% AI adoption"</td></tr>
+      <tr><td><code>chaos-to-clarity</code></td><td>IntelliAssist 2.0, full screen workspace</td><td>Yes (card 03)</td><td>55% tickets, 92% self serve</td></tr>
+    </table>
+    <p>A recruiter browsing your footers lands on two Dell AI chat studies with overlapping screens, overlapping language ("replaced six tools with one"), and the same product name. It reads as padding, and it dilutes your strongest, most current story. It also creates a metric collision: "85" appears as both an SUS score and an adoption percentage, and "92" is "task completion" in one case and "self serve adoption" in the other.</p>
+    <div class="find"><div class="ttl">Three ways out, in order of preference</div>
+      <p><b>1. Merge into one evolution story.</b> "I shipped IntelliAssist, then rebuilt it." v1 becomes the first act, 2.0 the payoff. This is the strongest narrative and removes the redundancy.<br>
+      <b>2. Keep both but differentiate hard.</b> Frame v1 as the 0 to 1 research and launch, 2.0 as the scale and redesign, and remove v1 from the "more work" footers so it is reachable only inside the story.<br>
+      <b>3. Cut v1.</b> If 2.0 already tells the whole arc, retire v1.</p>
+      <div class="fix"><b>And:</b> lock every metric to one definition. Decide what "85" and "92" each mean and use that wording everywhere.</div>
+    </div>
+
+    <h3 class="block">Per case quick read</h3>
+    <div class="grid2">
+      <div>
+        <figure class="shot"><div class="bbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">real-time-inquiry</span></div><div class="scrollshot"><img src="./assets/realtime-inquiry_desktop.png" alt="Real-Time Inquiry case study" loading="lazy"></div></figure>
+        <h4 class="mini">Real-Time Inquiry Portal &middot; Onity</h4>
+        <p>Probably your best told story. Clear problem ("the bi-weekly status call everyone dreaded"), strong business metrics (62% faster, 6 hours saved per AM), and a real architectural decision (a system of record, not just notifications). <b>Watch:</b> "In development" language appears three times; for shipped credibility, reframe to a launch or validation state. Lead the card with the business metric, not the usability one.</p>
+      </div>
+      <div>
+        <figure class="shot"><div class="bbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">loan-deboarding</span></div><div class="scrollshot"><img src="./assets/loan-deboarding_desktop.png" alt="Loan Deboarding case study" loading="lazy"></div></figure>
+        <h4 class="mini">Loan Deboarding Portal &middot; Onity</h4>
+        <p>The most "senior" framing: "absorbing variation is a design problem, not an engineering one." Excellent. Strong 0 to 1 and an explicit MVP scoping decision. <b>Watch:</b> the usability metric (9 of 9 found status) leads; pair it with a projected business outcome so non designers feel the impact.</p>
+      </div>
+    </div>
+    <div class="grid2">
+      <div>
+        <figure class="shot"><div class="bbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">intelliassist-2.0</span></div><div class="scrollshot"><img src="./assets/chaos-to-clarity_desktop.png" alt="IntelliAssist 2.0 case study" loading="lazy"></div></figure>
+        <h4 class="mini">IntelliAssist 2.0 &middot; Dell</h4>
+        <p>Your most 2026 relevant case and the most image rich (16 screens). Five intentional decisions, strong shipped metrics, "designing for AI trust is its own discipline." This should arguably be card 01. <b>Watch:</b> 16 images with no lazy loading makes this the slowest page to load.</p>
+      </div>
+      <div>
+        <figure class="shot"><div class="bbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">dell-inc</span></div><div class="scrollshot"><img src="./assets/dell-inc_desktop.png" alt="Dell INC case study" loading="lazy"></div></figure>
+        <h4 class="mini">Dell INC (IA) &middot; 2022</h4>
+        <p>Solid IA story, solo, with a nice "IA is about restoring trust, not taxonomy" landing. <b>Watch:</b> it is four years old and the most list heavy ("A full redesign, solo," "What I held myself to" as bullet stacks), which reads a touch more junior than the others. Keep it, but consider trimming the lists into prose and adding a "where it is now" line.</p>
+      </div>
+    </div>
+    <div class="find"><div class="ttl"><span class="sev med">Medium</span> Recency mix</div><p>Of five cases, two are Onity (current), three are Dell (one 2022, two AI). For a senior role in 2026 that is acceptable, but the center of gravity tilts toward Dell. As your Onity work clears NDA, weight the lineup toward the most recent, shipped, on domain work.</p></div>
+  </div>
+</section>
+
+<!-- ============ IDENTITY ============ -->
+<section id="identity">
+  <div class="wrap">
+    <p class="kicker">Cross cutting &middot; The credibility leaks</p>
+    <h2 class="sec">Identity and links: this is where you lose trust silently.</h2>
+    <p class="sub">These are not visible to you because you know who you are. To a recruiter cross referencing you against LinkedIn, they create a half second of "wait, is this the same person," and in hiring, hesitation kills momentum.</p>
+
+    <div class="find"><div class="ttl"><span class="sev crit">Critical</span> Your name changes between pages</div>
+      <p>Measured across the files:</p>
+      <ul class="clean">
+        <li>Home and About display <b>Dinesh Kumar</b> (page title, h1, nav wordmark, author meta).</li>
+        <li>All five case study page titles, the OG <code>site_name</code>, and the Home meta description say <b>Dinesh Baller</b>.</li>
+        <li>The About page nav even reads "Dinesh Baller" while its own title says "Dinesh Kumar."</li>
+        <li>Domain is dineshballer.com, email is dineshballer@gmail.com.</li>
+      </ul>
+      <div class="fix"><b>Fix:</b> Decide on one public display name. Whatever LinkedIn says, match it on every page title, h1, nav, footer, OG tag, and meta. This is a fifteen minute sweep with outsized impact.</div>
+    </div>
+
+    <div class="find"><div class="ttl"><span class="sev crit">Critical</span> LinkedIn links point to three different places</div>
+      <p>Across your pages the "LinkedIn" links resolve to:</p>
+      <table>
+        <tr><th>Destination</th><th>Times used</th><th>Problem</th></tr>
+        <tr><td><code>linkedin.com/in/dineshkravikumar</code></td><td>~17</td><td>One profile handle</td></tr>
+        <tr><td><code>linkedin.com/in/dineshballer</code></td><td>~5</td><td>A different handle</td></tr>
+        <tr><td class="fail"><code>linkedin.com</code> (bare)</td><td>~4</td><td>Goes to the LinkedIn homepage, not you</td></tr>
+      </table>
+      <div class="fix"><b>Fix:</b> One canonical profile URL, used in every nav and footer, opening in a new tab. Delete the bare links.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="find"><div class="ttl"><span class="sev low">Low</span> Gmail on a custom domain</div><p>You own dineshballer.com but contact is a gmail.com address. A <code>hello@dineshballer.com</code> reads a notch more senior and matches the brand.</p></div>
+      <div class="find win-find"><div class="ttl"><span class="sev win">Strength</span> The contact basics are there</div><p>You do have a real <code>mailto:</code> with a prefilled subject, an "open to" signal, and a one click resume link. Good. The leaks above are what undercut them.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CRAFT ============ -->
+<section id="craft">
+  <div class="wrap">
+    <p class="kicker">Cross cutting &middot; The FAANG craft tax</p>
+    <h2 class="sec">Craft: the system is 80% disciplined. Tighten the other 20%.</h2>
+    <p class="sub">Your core palette and type pairing are genuinely good. At the big tech bar, the tells are in the scale, the accent colors, and the motion budget.</p>
+
+    <div class="find"><div class="ttl"><span class="sev high">High</span> The type scale sprawls to ~30 sizes</div>
+      <p>Home alone uses roughly eighteen discrete pixel sizes (9, 10, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 16, 17, 18, 20, 22, 28, 36) plus eleven <code>clamp()</code> values. A senior type system is a deliberate ladder of six to nine steps. Several sizes (9 to 11px) are cramped microcopy below comfortable reading size.</p>
+      <div class="fix"><b>Fix:</b> Define a token scale (for example 12, 14, 16, 18, 22, 28, 38, 52) and map everything to it. Raise minimums to 12 to 13px.</div>
+    </div>
+
+    <div class="find"><div class="ttl"><span class="sev med">Medium</span> Two accent colors fail AA for normal text</div>
+      <p>Your core palette passes comfortably (see the data section). But the terracotta accent <code>#c75b39</code> on ivory is <b>3.75:1</b> and the grey <code>#888</code> is <b>3.15:1</b>, both below the 4.5:1 needed for normal text. If they appear on small labels or microcopy, that is an accessibility miss and, at the FAANG bar, a craft miss.</p>
+      <div class="fix"><b>Fix:</b> Darken the terracotta and the grey for any text use, or reserve them for large text and non text UI only.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="find"><div class="ttl"><span class="sev med">Medium</span> The motion budget is high</div><p>Durations range from 0.15s to 5s with staggered entry delays up to ~1.7s and 21 timed sequences on Home. The principle is "one orchestrated moment, then calm." You are closer to several moments. Trim ambient motion and bring total entry under ~600ms so the pitch lands fast.</p><p class="shotcap" style="margin-top:8px">Credit: you do honor <code>prefers-reduced-motion</code>, which many portfolios ignore.</p></div>
+      <div class="find win-find"><div class="ttl"><span class="sev win">Strength</span> The identity is distinctive</div><p>Fraunces display + General Sans body + Caveat accent, on warm ivory with a deep forest accent, is a real, ownable look. Do not flatten it while tightening. The goal is discipline within the voice, not a different voice.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ A11Y ============ -->
+<section id="a11y">
+  <div class="wrap">
+    <p class="kicker">Cross cutting &middot; Accessibility</p>
+    <h2 class="sec">Accessibility: strong inside case studies, leaky on Home and About.</h2>
+    <div class="grid2">
+      <div>
+        <div class="find win-find"><div class="ttl"><span class="sev win">Strength</span> Case study alt text is excellent</div><p>Every case study image carries specific, descriptive alt text. That is rare and it helps SEO too. <code>prefers-reduced-motion</code> is also handled.</p></div>
+        <div class="find"><div class="ttl"><span class="sev med">Medium</span> Empty alt on Home and About</div><p>Home has an image with empty alt; About has the Figma and Adobe XD tool logos with empty alt. Small, but it breaks the standard your case studies set.</p></div>
+      </div>
+      <div>
+        <div class="find"><div class="ttl"><span class="sev med">Medium</span> Contrast misses</div><p>See Craft: terracotta and the light greys fail AA for body text. Run a contrast pass on every label and caption color.</p></div>
+        <div class="find"><div class="ttl"><span class="sev low">Low</span> Verify focus states and tab order</div><p>The chip lens, the Folio chat, and the sticky case nav are all interactive. Confirm visible focus rings and a logical keyboard path through each. (This needs a live keyboard pass, which is the one thing a code read cannot fully confirm.)</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PERF ============ -->
+<section id="perf">
+  <div class="wrap">
+    <p class="kicker">Cross cutting &middot; Performance</p>
+    <h2 class="sec">Performance: the quietest thing hurting your first impression.</h2>
+    <div class="grid2">
+      <div class="find"><div class="ttl"><span class="sev high">High</span> No lazy loading anywhere</div><p>Not one image uses <code>loading="lazy"</code>. Your case studies carry 12 to 16 images each. Every one loads upfront, which slows the page a recruiter is deciding about in the first seconds.</p><div class="fix"><b>Fix:</b> Add <code>loading="lazy"</code> to all below the fold images. Consider WebP and a few short muted loop videos for interaction heavy screens.</div></div>
+      <div class="find"><div class="ttl"><span class="sev med">Medium</span> No width or height on images</div><p>Images have no intrinsic dimensions set, which causes layout shift (CLS) as they load. That is a measurable ding on the same Lighthouse a big tech reviewer might run.</p><div class="fix"><b>Fix:</b> Set width and height (or aspect-ratio) on every image so the layout reserves space.</div></div>
+    </div>
+    <p>None of this is visible to you on a fast connection with a warm cache. It is very visible to a recruiter on hotel wifi opening you for the first time.</p>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section id="roadmap">
+  <div class="wrap">
+    <p class="kicker">What to do, in order</p>
+    <h2 class="sec">The roadmap.</h2>
+    <h4 class="mini">This week &middot; credibility leaks (a few hours total)</h4>
+    <ul class="clean">
+      <li><span class="sev crit">Critical</span>&nbsp; One name across all 7 pages (titles, h1, nav, footer, OG, meta).</li>
+      <li><span class="sev crit">Critical</span>&nbsp; One LinkedIn URL everywhere, new tab, delete bare links.</li>
+      <li><span class="sev high">High</span>&nbsp; Rewrite the meta and OG copy. Remove "AI-powered."</li>
+      <li><span class="sev med">Medium</span>&nbsp; Sweep visible copy for em dashes.</li>
+      <li><span class="sev low">Low</span>&nbsp; Add the About meta description.</li>
+    </ul>
+    <h4 class="mini">This month &middot; structure and proof</h4>
+    <ul class="clean">
+      <li><span class="sev crit">Critical</span>&nbsp; Resolve the two Dell AI cases (merge, differentiate, or cut), and lock every metric to one definition.</li>
+      <li><span class="sev high">High</span>&nbsp; De-duplicate Home and About so each section lives in one place.</li>
+      <li><span class="sev high">High</span>&nbsp; Re-order and re-label cards so shipped business metrics lead; reframe "In development."</li>
+      <li><span class="sev med">Medium</span>&nbsp; Refresh the toolkit (drop Adobe XD), sharpen the About opener.</li>
+    </ul>
+    <h4 class="mini">This quarter &middot; the craft tax</h4>
+    <ul class="clean">
+      <li><span class="sev high">High</span>&nbsp; Consolidate the type scale to a token ladder; raise minimum sizes.</li>
+      <li><span class="sev med">Medium</span>&nbsp; Fix accent contrast; run a full WCAG AA pass and a keyboard pass.</li>
+      <li><span class="sev high">High</span>&nbsp; Add lazy loading and image dimensions; consider WebP and short loops.</li>
+      <li><span class="sev med">Medium</span>&nbsp; Trim the motion budget to one orchestrated entry moment.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ KEEP ============ -->
+<section id="keep">
+  <div class="wrap">
+    <p class="kicker">Do not touch</p>
+    <h2 class="sec">What is already working.</h2>
+    <div class="two">
+      <ul class="clean">
+        <li>The case study architecture: snapshot, quick facts, in page nav, NDA notes, insight led headings.</li>
+        <li>Real decisions on the page, including what you chose <b>not</b> to build.</li>
+        <li>"Patterns the next team reused," a lead level process impact signal.</li>
+        <li>Specific, real metrics (62% faster, 6 hrs saved, 55% tickets, 92% adoption, 40% findability).</li>
+        <li>Descriptive alt text throughout the case studies.</li>
+        <li>The distinctive type and color identity (Fraunces + General Sans + Caveat, ivory + forest).</li>
+        <li>The chip lens hero and the Folio AI chat as genuine differentiators.</li>
+        <li>Domain specialization in mortgage servicing and financial operations.</li>
+        <li>Good, specific meta descriptions on the case studies.</li>
+        <li><code>prefers-reduced-motion</code> handling and a working mobile layout.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DATA ============ -->
+<section id="data">
+  <div class="wrap">
+    <p class="kicker">Appendix</p>
+    <h2 class="sec">The measured data behind the findings.</h2>
+
+    <h4 class="mini">WCAG contrast (AA needs 4.5:1 normal, 3:1 large / UI)</h4>
+    <table>
+      <tr><th>Pair</th><th>Ratio</th><th>Result</th><th>Where</th></tr>
+      <tr><td><code>#171717</code> on <code>#f6f1e8</code></td><td>15.9:1</td><td class="pass">Pass</td><td>Primary text</td></tr>
+      <tr><td><code>#1f4d3e</code> on <code>#f6f1e8</code></td><td>8.5:1</td><td class="pass">Pass</td><td>Forest accent</td></tr>
+      <tr><td><code>#4a4a4a</code> on <code>#f6f1e8</code></td><td>7.9:1</td><td class="pass">Pass</td><td>Body</td></tr>
+      <tr><td><code>#5a5a55</code> on <code>#f6f1e8</code></td><td>6.2:1</td><td class="pass">Pass</td><td>Secondary text</td></tr>
+      <tr><td><code>#c75b39</code> on <code>#f6f1e8</code></td><td>3.75:1</td><td class="warn">Large only</td><td>Terracotta accent</td></tr>
+      <tr><td><code>#888888</code> on <code>#f6f1e8</code></td><td>3.15:1</td><td class="fail">Fail</td><td>Light grey labels</td></tr>
+    </table>
+
+    <h4 class="mini">Link audit</h4>
+    <table>
+      <tr><th>Issue</th><th>Finding</th></tr>
+      <tr><td>Name display</td><td>"Dinesh Kumar" on Home/About; "Dinesh Baller" on case study titles + OG + meta</td></tr>
+      <tr><td>LinkedIn targets</td><td>3 distinct: <code>/dineshkravikumar</code>, <code>/dineshballer</code>, and bare <code>linkedin.com</code></td></tr>
+      <tr><td>Email</td><td>gmail.com address on a custom domain</td></tr>
+      <tr><td>Dead <code>#</code> links</td><td>None found (good)</td></tr>
+      <tr><td>Placeholder links</td><td>None found (good)</td></tr>
+    </table>
+
+    <h4 class="mini">Case study structure coverage</h4>
+    <table>
+      <tr><th>Element</th><th>RTI</th><th>Loan</th><th>IA 2.0</th><th>Dell v1</th><th>Dell INC</th></tr>
+      <tr><td>Snapshot ("short version")</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td></tr>
+      <tr><td>Quick facts (Role/Team/Timeline/Tools)</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td></tr>
+      <tr><td>NDA note</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td></tr>
+      <tr><td>Decision call-out</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td></tr>
+      <tr><td>Images (with alt)</td><td>12</td><td>14</td><td>16</td><td>6</td><td>11</td></tr>
+      <tr><td>Lazy loading</td><td class="fail">No</td><td class="fail">No</td><td class="fail">No</td><td class="fail">No</td><td class="fail">No</td></tr>
+    </table>
+
+    <h4 class="mini">Type scale (Home)</h4>
+    <p><span class="pill">9px</span><span class="pill">10px</span><span class="pill">11px</span><span class="pill">11.5px</span><span class="pill">12px</span><span class="pill">12.5px</span><span class="pill">13px</span><span class="pill">13.5px</span><span class="pill">14px</span><span class="pill">14.5px</span><span class="pill">15px</span><span class="pill">16px</span><span class="pill">17px</span><span class="pill">18px</span><span class="pill">20px</span><span class="pill">22px</span><span class="pill">28px</span><span class="pill">36px</span><span class="pill">+ 11 clamp() values</span></p>
+    <p class="shotcap">A deliberate scale would be roughly a third of this.</p>
+  </div>
+</section>
+
+<footer class="end">
+  <div class="wrap">
+    <p><b>Bottom line.</b> The work clears the senior bar already. What is keeping a recruiter from reaching it is a handful of trust leaks (name, links), one structural redundancy (the two Dell cases), and a craft tightening pass. Fix the "this week" list first; it is a few hours of work for the largest jump in how seriously you are taken.</p>
+    <p style="margin-top:18px">Prepared as a deep dive of the local working files, May 2026. Benchmarks drawn from your own portfolio formula (Aneta Kmiecik's UX Portfolio research across 500+ portfolios) and the senior reference set it cites: Hanson Wu, Jessica Hsu, Sanvi Thithi, Brittany Chiang, Rauno Freiberg, Brian Lovin.</p>
+  </div>
+</footer>
+
+<script>
+  // scrollspy for the report's own nav
+  const links=[...document.querySelectorAll('nav.toc a')];
+  const map=links.map(a=>({a,el:document.querySelector(a.getAttribute('href'))})).filter(x=>x.el);
+  const obs=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){links.forEach(l=>l.classList.remove('on'));
+      const m=map.find(x=>x.el===e.target); if(m)m.a.classList.add('on');}});
+  },{rootMargin:'-45% 0px -50% 0px'});
+  map.forEach(x=>obs.observe(x.el));
+</script>
+</body>
+</html>
