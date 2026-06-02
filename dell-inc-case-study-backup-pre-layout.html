@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IntelliAssist, Dell AI Chat · Dinesh Kumar, Senior Product Designer</title>
+<title>Redesigning Dell's INC · Dinesh Kumar, Senior Product Designer</title>
 <script src="./ga.js" async></script>
-<meta name="description" content="A GEN-AI sales chat that consolidates six platforms into one verified-answer interface for Dell's 10,000+ sales reps, landing an 85 SUS post-launch.">
+<meta name="description" content="A full IA rearchitecture of Dell's Intelligence Nerve Center, an internal portal for 30,000+ employees. Findability up 40%, misclicks down 50%.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com">
@@ -73,19 +73,15 @@
   .chip-tag {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 7px;
-    height: 30px;
-    padding: 0 14px;
+    gap: 6px;
+    padding: 7px 14px;
     border-radius: 999px;
     background: var(--surface);
     border: 1px solid var(--line);
     font-size: 12px;
     font-weight: 500;
-    line-height: 1;
     color: var(--ink);
     letter-spacing: 0.02em;
-    white-space: nowrap;
   }
   .chip-tag.status {
     background: var(--accent-soft);
@@ -96,8 +92,7 @@
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.12);
-    flex-shrink: 0;
+    box-shadow: 0 0 0 4px rgba(31, 77, 62, 0.14);
   }
 
   /* Quick facts strip */
@@ -246,7 +241,7 @@
   /* Stats row */
   .stats {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
     padding: 56px 0;
     border-top: 1px solid var(--line);
@@ -272,19 +267,8 @@
     border: 1px solid var(--line);
     box-shadow: 0 14px 44px rgba(15, 8, 104, 0.08);
     background: white;
-    max-height: 560px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
-  .hero-showcase img {
-    display: block;
-    max-width: 100%;
-    max-height: 560px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-  }
+  .hero-showcase img { display: block; width: 100%; height: auto; }
   .hero-showcase-cap {
     text-align: center;
     font-size: 13px;
@@ -334,119 +318,194 @@
   .sec-head-aside h2 { margin-bottom: 14px; }
   .sec-head-aside p { font-size: 16px; }
 
-  /* Goal cards (What / Why) */
-  .what-why-grid {
+  /* Business goals + Priorities list */
+  .goal-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
     margin-top: 24px;
   }
-  .what-why-card {
+  .goal-card {
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 12px;
-    padding: 24px 22px;
+    padding: 22px 18px;
+    text-align: left;
   }
-  .what-why-card .ico { font-size: 22px; display: block; margin-bottom: 12px; }
-  .what-why-card h4 { font-size: 14px; color: var(--ink-mute); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
-  .what-why-card p { font-size: 15px; color: var(--ink); }
+  .goal-card .ico {
+    font-size: 22px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .goal-card h4 { font-size: 14px; font-weight: 600; line-height: 1.35; }
 
-  /* Pain points (insights) */
-  .insights-grid {
+  .priority-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
     margin-top: 24px;
   }
-  .pain-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 28px;
-  }
-  .pain-card .ico { font-size: 24px; display: block; margin-bottom: 14px; }
-  .pain-card h4 { font-size: 17px; margin-bottom: 10px; }
-  .pain-card p { font-size: 14px; line-height: 1.55; margin-bottom: 14px; }
-  .pain-card blockquote {
-    margin: 0;
-    padding: 14px 16px;
-    background: var(--bg);
-    border-left: 3px solid var(--accent);
-    border-radius: 0 8px 8px 0;
-    font-size: 14px;
-    font-style: italic;
-    color: var(--ink);
-    line-height: 1.45;
-  }
-  .pain-card blockquote cite {
-    display: block;
-    margin-top: 8px;
-    font-style: normal;
-    font-size: 12px;
-    color: var(--ink-mute);
-  }
-
-  /* Option comparison */
-  .option-compare {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-top: 32px;
-  }
-  .option-card {
-    border-radius: 14px;
-    padding: 28px;
-    border: 1px solid var(--line);
-    background: var(--surface);
-  }
-  .option-card.chosen {
+  .priority-card {
     background: var(--accent-soft);
-    border-color: var(--accent);
+    border-radius: 12px;
+    padding: 20px;
   }
-  .option-card .opt-tag {
+  .priority-card .ico { font-size: 22px; display: block; margin-bottom: 10px; }
+  .priority-card h4 { font-size: 14px; color: var(--accent); font-weight: 600; line-height: 1.35; }
+
+  /* Research method block */
+  .method-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 18px;
+    padding: 48px 40px;
+    margin-bottom: 48px;
+  }
+  .method-stats .stat .num { color: #7fd6b3; font-size: 52px; }
+  .method-stats .stat .lbl { color: #fff; }
+  .method-stats .stat .sub { color: rgba(255,255,255,0.55); }
+
+  .method-block {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 36px;
+    margin-bottom: 28px;
+  }
+  .method-block .mtag {
     display: inline-block;
     padding: 4px 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
     border-radius: 6px;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-bottom: 14px;
-    background: rgba(0,0,0,0.06);
+  }
+  .method-block h3 { margin-bottom: 12px; }
+  .method-block .lede { font-size: 16px; color: var(--ink-soft); margin-bottom: 22px; }
+  .method-block blockquote {
+    margin: 22px 0;
+    padding: 18px 22px;
+    background: var(--bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .method-block blockquote cite {
+    display: block;
+    margin-top: 8px;
+    font-style: normal;
+    font-size: 12px;
     color: var(--ink-mute);
   }
-  .option-card.chosen .opt-tag {
-    background: var(--accent);
-    color: #fff;
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 24px;
   }
-  .option-card h4 { font-size: 18px; margin-bottom: 16px; }
-  .option-card ul { margin: 0; padding: 0; list-style: none; }
-  .option-card li {
-    font-size: 14px;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-    color: var(--ink-soft);
+  .insight {
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px;
   }
-  .option-card li:last-child { border-bottom: none; }
-  .option-card li.pro::before { content: "+ "; color: var(--accent); font-weight: 700; }
-  .option-card li.con::before { content: "− "; color: #c44; font-weight: 700; }
+  .insight .ico { font-size: 22px; display: block; margin-bottom: 10px; }
+  .insight h5 { font-size: 13px; font-weight: 600; color: var(--ink); margin: 0 0 6px; letter-spacing: -0.005em; }
+  .insight p { font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
 
-  /* Compromise callout */
-  .compromise {
-    background: #fff8e6;
-    border: 1px solid #f0d488;
-    border-radius: 12px;
-    padding: 22px 26px;
-    margin-top: 28px;
+  /* Synthesis section */
+  .synthesis {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 48px;
+    margin-top: 24px;
   }
-  .compromise h4 { font-size: 15px; margin-bottom: 8px; }
-  .compromise p { font-size: 14px; line-height: 1.55; }
+  .synthesis-tools {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .synth-pill {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .root-causes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 24px;
+  }
+  .root-cause {
+    background: var(--bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 24px 26px;
+  }
+  .root-cause h4 { font-size: 17px; margin-bottom: 8px; color: var(--accent); }
+  .root-cause p { font-size: 14px; }
 
-  /* Solution layout (matches Dell INC pattern) */
+  /* Problem cards */
+  .problem-card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 36px;
+    margin-bottom: 24px;
+  }
+  .problem-card .ptag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #fff3e0;
+    color: #8a4b00;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .problem-card h3 { margin-bottom: 14px; }
+  .problem-card p { font-size: 15px; margin-bottom: 12px; }
+  .problem-card blockquote {
+    margin: 20px 0 0;
+    padding: 18px 22px;
+    background: var(--bg);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.45;
+  }
+  .problem-card blockquote cite {
+    display: block;
+    margin-top: 10px;
+    font-style: normal;
+    font-size: 13px;
+    color: var(--ink-mute);
+  }
+  .problem-card blockquote cite strong { color: var(--ink); font-weight: 500; }
+
+  /* Solution layout */
   .solution { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); }
   .solution > .eyebrow { color: var(--accent); margin-bottom: 8px; }
   .solution h3 { color: var(--ink); margin-bottom: 24px; font-size: 26px; letter-spacing: -0.02em; }
-
   .solution-detail {
     background: var(--surface);
     border: 1px solid var(--line);
@@ -476,81 +535,42 @@
     background: #f4f4ef;
     padding: 28px;
     border: 1px solid var(--line);
-    display: flex;
+    text-align: center;
+  }
+  .solution-detail .sol-img img { display: block; width: 100%; height: auto; max-width: 100%; }
+  .solution-detail .sol-img.side-by-side {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
     align-items: center;
-    justify-content: center;
-    max-height: 440px;
+    padding: 18px;
   }
-  .solution-detail .sol-img img {
-    display: block;
-    max-width: 100%;
-    max-height: 380px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
+  .solution-detail .sol-img.side-by-side img:first-child { max-width: 60px; }
+  @media (max-width: 880px) {
+    .solution-detail { grid-template-columns: 1fr; padding: 24px; gap: 24px; }
   }
 
-  /* Evaluation metric cards */
-  .eval-grid {
+  /* Final design gallery */
+  .final-design-gallery {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-top: 32px;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 28px;
   }
-  .eval-card {
-    background: var(--surface);
+  .final-design-gallery .gallery-item {
+    border-radius: 16px;
+    overflow: hidden;
     border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 28px;
+    background: #fff;
+    box-shadow: 0 10px 32px rgba(15, 8, 104, 0.06);
   }
-  .eval-card .eval-method {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 12px;
-  }
-  .eval-card h4 { font-size: 18px; margin-bottom: 12px; }
-  .eval-card .eval-result {
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--accent);
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    margin-bottom: 8px;
-  }
-  .eval-card p { font-size: 14px; line-height: 1.55; }
-  .eval-card .eval-meta {
-    font-size: 12px;
-    color: var(--ink-mute);
-    margin-top: 10px;
-    font-style: italic;
-  }
-
-  /* Constraints */
-  .constraints-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 24px;
-  }
-  .constraint-card {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 24px;
-  }
-  .constraint-card .ico { font-size: 22px; display: block; margin-bottom: 10px; }
-  .constraint-card h4 { font-size: 15px; margin-bottom: 8px; }
-  .constraint-card p { font-size: 13.5px; margin-bottom: 12px; line-height: 1.5; }
-  .constraint-card .response {
-    padding-top: 12px;
-    border-top: 1px solid var(--line);
+  .final-design-gallery .gallery-item img { display: block; width: 100%; height: auto; }
+  .final-design-gallery .gallery-cap {
+    text-align: center;
     font-size: 13px;
-    color: var(--accent);
-    font-weight: 500;
-    line-height: 1.5;
+    color: var(--ink-mute);
+    margin-top: 12px;
+    letter-spacing: 0.02em;
   }
 
   /* Figure */
@@ -560,20 +580,8 @@
     overflow: hidden;
     border: 1px solid var(--line);
     background: var(--surface);
-    max-height: 520px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
   }
-  .figure img {
-    display: block;
-    max-width: 100%;
-    max-height: 480px;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-  }
+  .figure img { display: block; width: 100%; height: auto; }
   .figure-cap {
     text-align: center;
     font-size: 13px;
@@ -582,7 +590,24 @@
     letter-spacing: 0.02em;
   }
 
-  /* Outcomes */
+  /* Accessibility chips */
+  .a11y-chips {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .a11y-chip {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* Outcomes, final results */
   .outcomes-final {
     background: #0f1f1a;
     color: #fff;
@@ -596,13 +621,12 @@
     border: none;
     padding: 0;
     margin-top: 0;
-    grid-template-columns: repeat(4, 1fr);
   }
-  .outcomes-final .stat .num { color: #7fd6b3; font-size: 48px; }
+  .outcomes-final .stat .num { color: #7fd6b3; }
   .outcomes-final .stat .lbl { color: #fff; }
   .outcomes-final .stat .sub { color: rgba(255,255,255,0.55); }
 
-  /* Scroll spy */
+  /* Scroll spy, floating left side */
   .scroll-spy {
     position: fixed;
     left: 28px;
@@ -635,7 +659,8 @@
   .scroll-spy a:hover { color: var(--ink); }
   .scroll-spy a::before {
     content: "";
-    width: 6px; height: 6px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
     background: currentColor;
     opacity: 0.4;
@@ -676,8 +701,8 @@
   @media (max-width: 880px) {
     h1 { font-size: 34px; }
     h2 { font-size: 28px; }
-    .hero-grid, .stats, .what-why-grid, .insights-grid, .option-compare,
-    .solution-detail, .eval-grid, .constraints-grid, .sec-head-aside,
+    .hero-grid, .stats, .solution-grid, .sec-head-aside,
+    .goal-grid, .priority-grid, .method-stats, .insights-grid, .root-causes,
     .quick-facts, .reflect-grid, .snapshot {
       grid-template-columns: 1fr;
     }
@@ -698,8 +723,9 @@
       padding-top: 24px;
       margin-top: 24px;
     }
+    .hero-showcase { margin-top: 40px; }
     .outcomes-final .stats { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .solution-detail { padding: 24px; gap: 24px; }
+    .method-block, .problem-card, .synthesis { padding: 24px; }
   }
 
   /* ── End-cap + footer ── */
@@ -895,6 +921,35 @@
     .end-cap .next-up .next-title { font-size: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
   }
 
+  /* ── NDA confidentiality badge — all image containers ── */
+  .hero-showcase,
+  .sol-img,
+  .figure,
+  .final-design-gallery .gallery-item { position: relative; }
+
+  .hero-showcase::before,
+  .sol-img::before,
+  .figure::before,
+  .final-design-gallery .gallery-item::before {
+    content: "⊘  Designs modified · NDA";
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgba(10, 10, 10, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-family: "General Sans", -apple-system, system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.82);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    z-index: 5;
+    pointer-events: none;
+  }
+
 
   /* ── Top site nav (matches home) ── */
   .site-nav {
@@ -946,81 +1001,87 @@
 <nav class="scroll-spy" aria-label="Jump to section">
   <a href="#snapshot">Snapshot</a>
   <a href="#context">Problem</a>
-  <a href="#what-why">What &amp; Why</a>
+  <a href="#ask">The Ask</a>
   <a href="#research">Research</a>
-  <a href="#design-choices">Design Choices</a>
+  <a href="#click-fatigue">Click Fatigue</a>
+  <a href="#visual-dissonance">Visual Dissonance</a>
+  <a href="#accessibility">Accessibility</a>
   <a href="#final-design">Final Design</a>
-  <a href="#evaluation">Evaluation</a>
-  <a href="#constraints">Constraints</a>
+  <a href="#outcomes">Outcomes</a>
   <a href="#retrospective">Retrospective</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="wrap">
-    <div class="eyebrow">Case Study · Dell IntelliAssist · Dell Technologies</div>
-    <h1>I built a GEN-AI sales chat that <i>replaced six tools with one verified-answer interface.</i></h1>
-    <p class="lede">Dell sales reps were losing hours every week jumping between platforms to assemble a single answer. IntelliAssist consolidates product info, order data, and sales playbooks into one conversational interface, with verified answers and the underlying sources surfaced for review.</p>
+    <div class="eyebrow">Case Study 04 · Dell INC · Dell Technologies</div>
+    <h1>I led the IA redesign of Dell's internal portal for <i>30,000+ employees.</i></h1>
+    <p class="lede">A full IA rearchitecture of Dell's Intelligence Nerve Center as the sole UX designer on the project. Three structural moves cut click fatigue, a visual refresh aligned the platform with Dell's brand, and accessibility checks were baked into the process. Findability lifted 40%, misclicks dropped 50%, all grounded in three rounds of research.</p>
 
     <div class="chip-tags" aria-label="Project tags">
-      <span class="chip-tag status"><span class="dot" aria-hidden="true"></span>Shipped · 2023</span>
-      <span class="chip-tag">GenAI</span>
-      <span class="chip-tag">Conversational UI</span>
-      <span class="chip-tag">Enterprise Software</span>
-      <span class="chip-tag">Sales Enablement</span>
+      <span class="chip-tag status"><span class="dot" aria-hidden="true"></span>Shipped · 2022</span>
+      <span class="chip-tag">Information Architecture</span>
+      <span class="chip-tag">Internal Tools</span>
+      <span class="chip-tag">Findability</span>
+      <span class="chip-tag">Research-led</span>
     </div>
-
-    <div class="hero-showcase">
-      <img loading="lazy" decoding="async" src="./images/dellai-v1-hero.png" alt="IntelliAssist hero screen showing the AI chat interface with Dell branding" />
-    </div>
-    <div class="hero-showcase-cap">IntelliAssist, an AI chat interface designed for Dell's sales teams</div>
-
 
     <div class="hero-grid">
       <div>
         <div class="eyebrow" style="margin-bottom:10px;">The Challenge</div>
-        <p>Dell sales reps were losing hours every week jumping between platforms to answer customer questions, find product info, or check order status. The information was there. Finding it was the problem.</p>
+        <p>Dell's Intelligence Nerve Center, an internal platform for 30,000+ employees, had grown cluttered. Navigation forced too many clicks, the visual language felt dated, and employees relied on memorized routes to reach reports they used every day.</p>
       </div>
       <div>
         <div class="eyebrow" style="margin-bottom:10px;">The Solution</div>
-        <p>IntelliAssist, a GEN-AI chat interface that consolidates six+ tools into one place. Users ask in natural language and get verified answers with sources attached, so they can trust what they read and move on.</p>
+        <p>A full IA rearchitecture as the sole UX designer on the project. Three structural moves cut click fatigue, a visual refresh aligned the platform with Dell's brand, and accessibility checks were baked into the design process, all grounded in three rounds of research.</p>
       </div>
     </div>
 
     <div class="stats">
       <div class="stat">
-        <div class="num">10,000+</div>
-        <div class="lbl">Users</div>
-        <div class="sub">across Dell sales teams</div>
+        <div class="num">90%</div>
+        <div class="lbl">User satisfaction</div>
+        <div class="sub">post-launch survey</div>
       </div>
       <div class="stat">
-        <div class="num">6+</div>
-        <div class="lbl">Services in one interface</div>
-        <div class="sub">consolidated into a single chat</div>
+        <div class="num">40%</div>
+        <div class="lbl">Findability lift</div>
+        <div class="sub">time to locate reports</div>
       </div>
       <div class="stat">
-        <div class="num">85</div>
-        <div class="lbl">SUS Score</div>
-        <div class="sub">post-launch usability survey</div>
+        <div class="num">20%</div>
+        <div class="lbl">Adoption increase</div>
+        <div class="sub">monthly active users</div>
+      </div>
+      <div class="stat">
+        <div class="num">50%</div>
+        <div class="lbl">Fewer misclicks</div>
+        <div class="sub">on navigation menus</div>
       </div>
     </div>
+
+    <!-- Hero showcase image -->
+    <div class="hero-showcase">
+      <img loading="lazy" decoding="async" src="./images/dellinc-hero-after.png" alt="Dell INC home dashboard after redesign, tile-based navigation with color-coded categories" />
+    </div>
+    <div class="hero-showcase-cap">After, tile-based navigation, color-coded categories, integrated Favorites</div>
 
     <div class="quick-facts" aria-label="Project quick facts">
       <div class="fact">
         <h4>Role</h4>
-        <p>Senior Product Designer<span class="muted">end-to-end design, research, prototyping</span></p>
+        <p>Sole UX Designer<span class="muted">IA, research, interaction, visual</span></p>
       </div>
       <div class="fact">
         <h4>Team</h4>
-        <p>Dell Technologies<span class="muted">1 PM, 6 engineers, 1 designer (me)</span></p>
+        <p>Dell Technologies<span class="muted">1 PM, 4 engineers, 1 designer (me)</span></p>
       </div>
       <div class="fact">
         <h4>Timeline</h4>
-        <p>6 months<span class="muted">discovery through MVP launch, 2023</span></p>
+        <p>5 months<span class="muted">three research rounds through launch, 2022</span></p>
       </div>
       <div class="fact">
         <h4>Tools</h4>
-        <p>Figma · Miro · UserTesting<span class="muted">SME sessions, SUS survey post-launch</span></p>
+        <p>Figma · OptimalSort · Maze<span class="muted">card sort, tree test, usability test</span></p>
       </div>
     </div>
 
@@ -1046,15 +1107,15 @@
     <div class="snapshot">
       <div class="snap-col">
         <div class="snap-label">Problem</div>
-        <p>Dell sales reps relied on at least six platforms to answer customer questions, knowledge base, order systems, support docs, internal wikis, ticketing tools, and product spec sheets. A single question often meant three or four context switches on every call.</p>
+        <p>30,000+ Dell employees relied on INC daily for sales tools, operational reports, and analytics dashboards. Navigation forced too many clicks, the visual language felt dated, and people had quietly stopped using the menu in favor of personal bookmarks.</p>
       </div>
       <div class="snap-col">
         <div class="snap-label">Change</div>
-        <p>I built a GEN-AI chat interface that lets reps ask questions in plain language and get verified answers, with the underlying sources surfaced. Six platforms collapsed into one conversational surface, and the citation pattern carried the trust, not just the model.</p>
+        <p>I led a full IA rearchitecture as the sole UX designer. Three structural moves cut click fatigue: tile-based nav with in-tile report dropdowns, a persistent side rail with Favorites, and color-coded categories. A visual refresh aligned the platform with Dell's brand.</p>
       </div>
       <div class="snap-col">
         <div class="snap-label">Results</div>
-        <p>10,000+ Dell sales reps adopted the tool. Six+ platforms consolidated into one surface. The post-launch usability survey landed an 85 SUS, validating that reps could find, trust, and act on answers without leaving the chat.</p>
+        <p>Findability lifted 40%, misclicks dropped 50%, monthly active users rose 20%, and post-launch satisfaction reached 90%. The tile-based nav and Favorites patterns shipped became reference work for adjacent internal tools at Dell.</p>
       </div>
     </div>
   </div>
@@ -1066,39 +1127,61 @@
     <div class="sec-head-aside">
       <div>
         <div class="eyebrow">Problem area</div>
-        <h2>Information was everywhere except where it was needed.</h2>
+        <h2>What is INC.</h2>
       </div>
       <div>
-        <p><strong style="color: var(--ink); font-weight: 600;">Dell sales reps needed verified answers about orders, product specs, and policy in the middle of customer calls.</strong> But the answers lived across at least six platforms: a knowledge base, order systems, support docs, internal wikis, ticketing tools, and product spec sheets. Reps context-switched three or four times for a single question, slowing response times and pushing edge cases onto teammates. The goal: unify the answer layer into one conversational interface with sources attached, so the workflow could trust the AI instead of routing around it.</p>
+        <p><strong style="color: var(--ink); font-weight: 600;">30,000+ Dell employees relied on INC daily to find sales tools, operational reports, and analytics dashboards.</strong> But the navigation had grown cluttered, the visual language felt dated, and employees relied on memorized routes (or browser bookmarks) just to reach the reports they used every day. Misclicks were common, adoption was flat, and the platform's slowness rippled into every team that touched it. The goal: rearchitect the IA so people could find what they needed without memorizing the menu.</p>
       </div>
+    </div>
+
+    <div class="figure">
+      <img loading="lazy" decoding="async" src="./images/dellinc-before.png" alt="Before, Dell INC's original interface showing cluttered navigation and dated visual treatment" />
+    </div>
+    <div class="figure-cap">Before, cluttered nav, image-heavy background, no surfaced shortcuts</div>
+  </div>
+</section>
+
+<!-- THE ASK -->
+<section id="ask">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">The Ask</div>
+        <h2>A full redesign, solo</h2>
+      </div>
+      <div>
+        <p>I was the sole UX designer on the project. The brief: modernize the look and feel, make the platform scalable for future growth, and most importantly, make it easier for employees to access the tools and reports they need every day.</p>
+      </div>
+    </div>
+
+    <div class="goal-grid">
+      <div class="goal-card"><span class="ico">🎨</span><h4>Revamp the website</h4></div>
+      <div class="goal-card"><span class="ico">📈</span><h4>Make it scalable</h4></div>
+      <div class="goal-card"><span class="ico">💙</span><h4>Adhere to Dell branding</h4></div>
+      <div class="goal-card"><span class="ico">✋</span><h4>Fix usability issues</h4></div>
+      <div class="goal-card"><span class="ico">➕</span><h4>Add/remove features</h4></div>
     </div>
   </div>
 </section>
 
-<!-- WHAT / WHY -->
-<section id="what-why">
+<!-- MY PRIORITIES -->
+<section style="padding-top: 24px;">
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">What & Why</div>
-        <h2>An AI chatbot to unify the answer layer.</h2>
+        <div class="eyebrow">My Priorities</div>
+        <h2>What I held myself to</h2>
       </div>
       <div>
-        <p>IntelliAssist is a GEN-AI assistant that lets Dell employees ask questions in plain language and get verified answers, with the underlying sources surfaced for review. The why is the part most AI projects skip: this is replacing six tools, so trust is the foundation.</p>
+        <p>Beyond the business brief, I set four priorities for myself going into the project, to keep the redesign honest about user needs, not just stakeholder asks.</p>
       </div>
     </div>
 
-    <div class="what-why-grid">
-      <div class="what-why-card">
-        <span class="ico">💬</span>
-        <h4>What</h4>
-        <p>An AI chatbot that gives Dell employees instant answers to their questions and pulls together information that used to be scattered across at least six platforms.</p>
-      </div>
-      <div class="what-why-card">
-        <span class="ico">🎯</span>
-        <h4>Why</h4>
-        <p>Employees navigated multiple platforms daily to access sales details and customer data. IntelliAssist consolidates the answer layer, providing instant accurate replies about Dell processes with sources attached for verification.</p>
-      </div>
+    <div class="priority-grid">
+      <div class="priority-card"><span class="ico">✅</span><h4>Fulfill business goals</h4></div>
+      <div class="priority-card"><span class="ico">🎯</span><h4>Find and solve pain points</h4></div>
+      <div class="priority-card"><span class="ico">🔍</span><h4>Identify user needs and frustrations</h4></div>
+      <div class="priority-card"><span class="ico">✨</span><h4>Enhance the overall experience</h4></div>
     </div>
   </div>
 </section>
@@ -1109,246 +1192,257 @@
     <div class="sec-head-aside">
       <div>
         <div class="eyebrow">Research</div>
-        <h2>Five interviews. Four patterns.</h2>
+        <h2>Three methods, ten+ insights</h2>
       </div>
       <div>
-        <p>I ran in-depth interviews with five Dell employees, sales reps, data analysts, and project managers, to understand their daily workflows, friction points, and the specific moments when the platform sprawl cost them time. Four pain points kept surfacing across roles.</p>
+        <p>To understand what was actually breaking for users, I ran three rounds of research, qualitative depth (interviews + contextual inquiry) and quantitative validation (a wide survey). Triangulating across methods kept the synthesis honest.</p>
       </div>
     </div>
 
+    <!-- Research stats -->
+    <div class="method-stats">
+      <div class="stat">
+        <div class="num">3</div>
+        <div class="lbl">Research methods</div>
+        <div class="sub">interviews · contextual inquiry · survey</div>
+      </div>
+      <div class="stat">
+        <div class="num">10+</div>
+        <div class="lbl">Key insights</div>
+        <div class="sub">surfaced across all three methods</div>
+      </div>
+      <div class="stat">
+        <div class="num">2</div>
+        <div class="lbl">Root causes</div>
+        <div class="sub">click fatigue · visual dissonance</div>
+      </div>
+    </div>
+
+    <blockquote style="margin-top:32px;">
+      "Honestly, it's like finding a needle in a haystack trying to find the right report. It's beyond frustrating."
+      <cite>participant, user interview</cite>
+    </blockquote>
+
+    <h4 style="margin-top:32px; font-size:14px; color:var(--ink-mute); letter-spacing:0.08em; text-transform:uppercase;">What kept showing up across all three methods</h4>
     <div class="insights-grid">
-      <div class="pain-card">
-        <span class="ico">🧩</span>
-        <h4>Fragmented information ecosystem</h4>
-        <p>Constant switching between systems. Information scattered across six tools.</p>
-        <blockquote>
-          "Navigating between so many different platforms to find the information I need is a constant time sink and a major source of frustration."
-          <cite>Sales Representative</cite>
-        </blockquote>
+      <div class="insight">
+        <span class="ico">🔍</span>
+        <h5>Hard to find anything</h5>
+        <p>The most-cited pain. Reports and tools lived behind nested menus.</p>
       </div>
-
-      <div class="pain-card">
-        <span class="ico">🌀</span>
-        <h4>Complex and confusing processes</h4>
-        <p>Order management, troubleshooting, policy lookups. Hard to know where to start.</p>
-        <blockquote>
-          "Some of our internal processes are so complicated that it's hard to know where to start or who to ask for help."
-          <cite>Sales Representative</cite>
-        </blockquote>
+      <div class="insight">
+        <span class="ico">🧭</span>
+        <h5>Inefficient workflows</h5>
+        <p>Common tasks took three to five clicks. Familiarity didn't help.</p>
       </div>
-
-      <div class="pain-card">
-        <span class="ico">🔎</span>
-        <h4>Time-consuming manual searches</h4>
-        <p>Keyword searches returned irrelevant results. Users sifted long docs for specifics.</p>
-        <blockquote>
-          "It can take me hours to find the right information, especially when I'm looking for something very specific or technical."
-          <cite>Project Manager</cite>
-        </blockquote>
+      <div class="insight">
+        <span class="ico">🪟</span>
+        <h5>Outdated visual language</h5>
+        <p>The design read a generation behind Dell's brand.</p>
       </div>
-
-      <div class="pain-card">
-        <span class="ico">🛠️</span>
-        <h4>Desire for self-service support</h4>
-        <p>Users wanted to resolve issues alone, especially on tight deadlines.</p>
-        <blockquote>
-          "I would love to have a tool that could instantly answer my questions, especially when I'm working on a tight deadline."
-          <cite>Data Engineer</cite>
-        </blockquote>
+      <div class="insight">
+        <span class="ico">🚧</span>
+        <h5>Personal workarounds</h5>
+        <p>Users had bookmarked their way around the platform.</p>
       </div>
     </div>
 
-    <div class="figure">
-      <img loading="lazy" decoding="async" src="./images/dellai-v1-research-synthesis.png" alt="Research synthesis board mapping the four user pain points to design opportunities" />
-    </div>
-    <div class="figure-cap">Synthesis, the four pain points mapped to design opportunities</div>
+    <p style="margin-top:32px; font-size:15px; color:var(--ink-soft);">Run through an Ishikawa diagram and prioritization matrix, ten-plus insights traced back to two structural root causes: <strong style="color:var(--ink);">click fatigue</strong> and <strong style="color:var(--ink);">visual dissonance</strong>. The next two sections are how I addressed each.</p>
   </div>
 </section>
 
-<!-- DESIGN CHOICES -->
-<section id="design-choices">
+<!-- PROBLEM 1 -->
+<section id="click-fatigue">
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">Design Choices</div>
-        <h2>Clarity over hidden complexity.</h2>
+        <div class="eyebrow">Problem 1</div>
+        <h2>Click fatigue</h2>
       </div>
       <div>
-        <p>Two interface directions, both viable. I balanced user feedback, brand guidelines, and engineering feasibility, and converged on Option B. The deciding factor: sales reps needed quick answers, not more clicks. Hiding sample prompts behind a tap added an interaction cost they didn't have time for.</p>
+        <p>Employees needed quick access to a small set of reports they used every day. The platform forced them through three to five clicks to reach each one, every time. Familiarity didn't help because the structure itself was the problem.</p>
       </div>
     </div>
 
-    <div class="option-compare">
-      <div class="option-card">
-        <span class="opt-tag">Option A</span>
-        <h4>Familiar first impression</h4>
-        <ul>
-          <li class="pro">Looks like other chatbots, low learning curve</li>
-          <li class="pro">Clear visual hierarchy</li>
-          <li class="con">Sample questions hidden behind click</li>
-          <li class="con">Higher interaction cost for first-time users</li>
-        </ul>
-      </div>
-
-      <div class="option-card chosen">
-        <span class="opt-tag">Option B, chosen</span>
-        <h4>Instant discoverability</h4>
-        <ul>
-          <li class="pro">Sample questions visible immediately</li>
-          <li class="pro">Brand consistency with Dell's signature colors</li>
-          <li class="con">Denser initial layout</li>
-          <li class="con">Required tuning for cleaner reading pattern</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="compromise">
-      <h4>🚨 Balancing business "wants" with user guidance</h4>
-      <p>The business loved the yellow tile for sample questions, so we kept it. Turns out, that pop of color isn't just visual flavor: it guides attention to the right first action without breaking the rest of Dell's brand. A small compromise for a big clarity win.</p>
-    </div>
-
-    <div class="figure">
-      <img loading="lazy" decoding="async" src="./images/dellai-v1-option-comparison.png" alt="Side by side comparison of Option A and Option B chat interfaces" />
-    </div>
-    <div class="figure-cap">Option A versus Option B, side-by-side comparison shown to stakeholders</div>
-  </div>
-</section>
-
-<!-- FINAL DESIGN -->
-<section id="final-design">
-  <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">Final Design</div>
-        <h2>One chat, six tools' worth of answers.</h2>
-      </div>
-      <div>
-        <p>The shipped IntelliAssist focused on three things that mattered for trust: making prompts discoverable, color-coding the conversation so users always know who said what, and attaching sources to every answer so verification takes a click, not a search.</p>
-      </div>
+    <div class="problem-card">
+      <span class="ptag">Insight</span>
+      <h3>The shortest path to a report shouldn't be a memorized route</h3>
+      <p>Sales reps and analysts knew where their reports lived but still had to walk through the same nested menus daily. The interface treated every report as equal weight, surfaced nothing based on what people actually used.</p>
+      <blockquote>
+        "The number of clicks needed to reach the report slows me down. It disrupts my workflow and feels inefficient, even though I'm familiar with the site."
+        <cite><strong>Matt</strong>, Data Engineer, Dell</cite>
+      </blockquote>
     </div>
 
     <div class="solution">
       <div class="eyebrow">The Solution</div>
-      <h3>Three principles in the interface</h3>
+      <h3>A three-pronged approach</h3>
 
       <div class="solution-detail">
         <div>
           <span class="sol-num">01</span>
-          <h4>Quick-start prompts in the chat itself</h4>
-          <p>Sample questions sit visibly above the input. Users see what kinds of things they can ask without having to read a tutorial. First-time anxiety drops; adoption climbs.</p>
+          <h4>Favorites on the home screen</h4>
+          <p>Users mark frequently-used reports and tools as favorites. The home tiles then surface those favorites as one-click destinations, bypassing the menu entirely. Workflow efficiency improves because the steps required to reach critical information drop dramatically.</p>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" src="./images/dellai-v1-solution-1.png" alt="IntelliAssist chat interface with sample prompts visible at the top of the input area" />
+          <img loading="lazy" decoding="async" src="./images/dellinc-sales-performance-hub.png" alt="Sales Performance Hub tile with Reports and Favourites dropdowns expanded, showing Favorite tool and Favorite webpage options" />
         </div>
       </div>
 
       <div class="solution-detail">
         <div>
           <span class="sol-num">02</span>
-          <h4>Scannable response templates</h4>
-          <p>Two patterns shape every response. Conversations are color-coded by speaker (user vs. AI) so the back-and-forth stays readable. And structured replies (like order status) use a custom template that surfaces critical info first: status, key details, progress, then drill-down links. Users assess and move on without re-reading.</p>
+          <h4>Reports dropdown inside each tile</h4>
+          <p>Beyond Favorites, each home tile gained a Reports dropdown that exposes the underlying reports list. Users jump straight to a specific report from the home screen, no need to open the full Reports page first. Fewer clicks, less context switching.</p>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" src="./images/dellai-v1-solution-2.png" alt="IntelliAssist order details response template with status, key data, and progress indicators laid out cleanly" />
+          <img loading="lazy" decoding="async" src="./images/dellinc-home-tile-dropdown.png" alt="Home tile dropdown showing list of reports, Report 1, Report 2, Report 3, accessible directly from the tile" />
         </div>
       </div>
 
       <div class="solution-detail">
         <div>
           <span class="sol-num">03</span>
-          <h4>Verified answers with sources attached</h4>
-          <p>Every AI response surfaces the knowledge base articles and support resources it drew from. Users validate in a click, building trust in the tool over time and learning the underlying systems by following the trail.</p>
+          <h4>Universal side navigation</h4>
+          <p>A persistent side nav lets users move to any section from any page in two states, a compact icon-only rail (default) and an expanded view with full category names and sub-items. No more backtracking through breadcrumbs to switch context.</p>
+        </div>
+        <div class="sol-img side-by-side">
+          <img loading="lazy" decoding="async" src="./images/dellinc-side-nav-rail.png" alt="Collapsed icon-only side navigation rail" />
+          <img loading="lazy" decoding="async" src="./images/dellinc-side-nav-expanded.png" alt="Expanded side navigation showing categories, Sales Support Modernization with sub-items like Operations, Reporting, PAG Operations, COD/DA, Customer Financial Services, Partner Operations, Analytics, Global Backlog Orders, Services Finance, Infrastructure Solution Group, BES, SDS, SSC" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM 2 -->
+<section id="visual-dissonance">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Problem 2</div>
+        <h2>Visual dissonance</h2>
+      </div>
+      <div>
+        <p>The platform's visual language was a generation behind Dell's brand. An image-heavy background fought with the foreground content. Tiles all looked the same, no visual cues for which category you were in. Employees felt the platform was beneath the company.</p>
+      </div>
+    </div>
+
+    <div class="problem-card">
+      <span class="ptag">Insight</span>
+      <h3>An internal product still represents the company to its own people</h3>
+      <p>Internal tools often get the leftover budget for visual care. But the people using them every day form an opinion about how seriously the org takes their work, and the INC interface was telling employees the answer was "not very."</p>
+      <blockquote>
+        "This UI needs a modern refresh that reflects our brand and showcases our capabilities, with intuitive navigation that can grow with us."
+        <cite><strong>Gayathri</strong>, Director, Dell</cite>
+      </blockquote>
+    </div>
+
+    <div class="solution">
+      <div class="eyebrow">The Solution</div>
+      <h3>A focused visual refresh</h3>
+
+      <div class="solution-detail">
+        <div>
+          <span class="sol-num">01</span>
+          <h4>Background removal</h4>
+          <p>Stripped the image-based background that was competing with foreground content. Replaced it with a clean, neutral surface so essential info becomes the focus. Background images often fight with what's in front of them, removing it sharpens the entire visual hierarchy.</p>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" src="./images/dellai-v1-solution-3.png" alt="IntelliAssist response with linked source articles displayed inline below the answer" />
+          <img loading="lazy" decoding="async" src="./images/dellinc-hero-after.png" alt="After background removal, clean neutral surface with foreground tiles and clear navigation" />
+        </div>
+      </div>
+
+      <div class="solution-detail">
+        <div>
+          <span class="sol-num">02</span>
+          <h4>Color-coded tiles + icons</h4>
+          <p>Replaced the uniform layout with a tile-based system where each sub-organization gets a unique tile color and category icon. Users now identify their section at a glance, Customer Financial Services in one accent, Operations in another, and so on. Visual distinction without extra labeling.</p>
+        </div>
+        <div class="sol-img">
+          <img loading="lazy" decoding="async" src="./images/dellinc-color-coded-tiles.png" alt="Three example tiles, Customer Financial Services, Operations, Report Name, each with a unique color accent and icon" />
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EVALUATION -->
-<section id="evaluation">
+<!-- ACCESSIBILITY -->
+<section id="accessibility">
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">Evaluation</div>
-        <h2>Four metrics. All moving the right way.</h2>
+        <div class="eyebrow">Accessibility</div>
+        <h2>Baked into the process</h2>
       </div>
       <div>
-        <p>Initial launch data from pilot groups and post-launch telemetry showed IntelliAssist delivered on the core promises: usability, time savings, self-service, and confidence in the answers. Sampled across two weeks of post-launch traffic and 18 observed workflows.</p>
+        <p>Accessibility wasn't a final-stage check. It lived inside the iteration loop. Every design pass went through contrast, keyboard, and screen reader scrutiny. The blue color used for some interactive states didn't pass contrast on the first iteration; I adjusted before it ever reached engineering.</p>
       </div>
     </div>
 
-    <div class="eval-grid">
-      <div class="eval-card">
-        <div class="eval-method">SUS, sentiment analysis</div>
-        <h4>User satisfaction, early adoption</h4>
-        <div class="eval-result">78 / 100</div>
-        <p>The pilot group rated IntelliAssist 78 on the System Usability Scale. Most-cited phrase in qualitative feedback: "intuitive guidance," with a noted drop in first-time user anxiety.</p>
-        <div class="eval-meta">Preliminary data from the initial launch phase.</div>
-      </div>
+    <div class="a11y-chips">
+      <span class="a11y-chip">Contrast checks</span>
+      <span class="a11y-chip">Keyboard navigation</span>
+      <span class="a11y-chip">Screen reader compatibility</span>
+      <span class="a11y-chip">Iterative refinement</span>
+    </div>
+  </div>
+</section>
 
-      <div class="eval-card">
-        <div class="eval-method">Task log analysis, SME interviews</div>
-        <h4>Workflow efficiency gains</h4>
-        <div class="eval-result">82%</div>
-        <p>Task completion rate for core workflows (order status checks, policy lookups, troubleshooting). Users saved ~3.2 minutes per task versus manual search.</p>
-        <div class="eval-meta">Sampled across two weeks of post-launch data.</div>
+<!-- FINAL DESIGN GALLERY -->
+<section id="final-design">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Final design</div>
+        <h2>Putting it all together</h2>
       </div>
-
-      <div class="eval-card">
-        <div class="eval-method">Escalation rate tracking</div>
-        <h4>Self-service momentum</h4>
-        <div class="eval-result">58% / 72%</div>
-        <p>58% of inquiries resolved without human support on first try. Repeat users hit a 72% self-resolution rate, an early indicator of learnability and growing trust.</p>
-        <div class="eval-meta">Tracked from launch through the first 30 days.</div>
+      <div>
+        <p>The pieces (Favorites, Reports dropdown, side navigation, refreshed visual language) assembled into a cohesive product. Three views from the shipped redesign showing how the structural and visual changes work together in practice.</p>
       </div>
+    </div>
 
-      <div class="eval-card">
-        <div class="eval-method">Pre/post-launch surveys, behavioral telemetry</div>
-        <h4>Increased decision confidence</h4>
-        <div class="eval-result">68%</div>
-        <p>68% of users reported higher confidence in task outcomes when using IntelliAssist versus their previous workflow.</p>
-        <div class="eval-meta">Measured across 18 observed workflows.</div>
+    <div class="final-design-gallery">
+      <div class="gallery-item">
+        <img loading="lazy" decoding="async" src="./images/dellinc-final-home.png" alt="Final design, home dashboard with color-coded tiles, surfaced favorites, and side navigation" />
+      </div>
+      <div class="gallery-item">
+        <img loading="lazy" decoding="async" src="./images/dellinc-final-interior.png" alt="Final design, interior view with expanded side nav and tile content" />
+      </div>
+      <div class="gallery-item">
+        <img loading="lazy" decoding="async" src="./images/dellinc-final-reports.png" alt="Final design, reports view with the new visual treatment" />
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONSTRAINTS -->
-<section id="constraints">
+<!-- KEY OUTCOMES -->
+<section id="outcomes">
   <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">Constraints</div>
-        <h2>Navigating real-world limits.</h2>
-      </div>
-      <div>
-        <p>Designing an AI tool inside a Fortune 500 means working around tight timelines, compliance rules, and capability gaps that aren't documented anywhere. Three constraints shaped the MVP scope; I held the line on shipping something that worked for sales reps first, then expanding.</p>
-      </div>
-    </div>
-
-    <div class="constraints-grid">
-      <div class="constraint-card">
-        <span class="ico">⏳</span>
-        <h4>Tight deadlines for impact</h4>
-        <p>Accelerated timelines prioritized MVP delivery over exploratory research.</p>
-        <div class="response">Focused on high-impact, SME-backed workflows (order status, policy lookup) to align with stakeholder goals.</div>
-      </div>
-
-      <div class="constraint-card">
-        <span class="ico">🔒</span>
-        <h4>Resource & access limitations</h4>
-        <p>Restricted access to cross-departmental users and historical data due to compliance policies.</p>
-        <div class="response">Leveraged sales-team SMEs as proxies for edge cases and validated designs against existing analytics.</div>
-      </div>
-
-      <div class="constraint-card">
-        <span class="ico">🌫️</span>
-        <h4>Ambiguous requirements</h4>
-        <p>Early-stage AI capabilities lacked clear technical boundaries, creating design ambiguity around what could ship.</p>
-        <div class="response">Adopted iterative prototyping to align engineering feasibility with user needs in tight loops.</div>
+    <div class="outcomes-final">
+      <div class="eyebrow">Key outcomes</div>
+      <h2>Measured against the pre-redesign baseline</h2>
+      <div class="stats">
+        <div class="stat">
+          <div class="num">90%</div>
+          <div class="lbl">User satisfaction</div>
+          <div class="sub">post-launch survey</div>
+        </div>
+        <div class="stat">
+          <div class="num">40%</div>
+          <div class="lbl">Findability lift</div>
+          <div class="sub">time to locate reports</div>
+        </div>
+        <div class="stat">
+          <div class="num">20%</div>
+          <div class="lbl">Adoption increase</div>
+          <div class="sub">monthly active users</div>
+        </div>
+        <div class="stat">
+          <div class="num">50%</div>
+          <div class="lbl">Fewer misclicks</div>
+          <div class="sub">on navigation menus</div>
+        </div>
       </div>
     </div>
 
@@ -1371,23 +1465,23 @@
     <div class="reflect-grid">
       <div class="reflect-card">
         <span class="label">Impact on me</span>
-        <h4>The trust gap is the real design problem in GenAI.</h4>
-        <p>Reps adopted IntelliAssist not because the answers were faster, but because they could see where each answer came from. Designing the source-citation, confidence cues, and recovery paths shaped how I scope every AI feature now. The model is only half the work.</p>
+        <h4>IA is less about taxonomy than about restoring trust.</h4>
+        <p>Employees had stopped using the menu and were navigating by bookmarks. Re-earning their trust meant proving the new structure could outperform a personal shortcut, every single time. That's why we validated the IA three times before pixels, not after.</p>
         <ul>
-          <li>12 SME sessions and shadowing days across enterprise sales</li>
-          <li>4 prototype rounds before MVP launch</li>
-          <li>What I'd do differently: build the feedback widget on day one, post-launch retrofit slowed iteration</li>
+          <li>3 research rounds: card sort, tree test, prototype usability</li>
+          <li>21 participants across sales, ops, and analytics</li>
+          <li>What I'd do differently: start the accessibility audit at wireframe, not at polish, the dated palette needed structural fixes</li>
         </ul>
       </div>
 
       <div class="reflect-card">
         <span class="label">Impact on process</span>
-        <h4>What the next AI team picked up.</h4>
-        <p>IntelliAssist was Dell's first production GenAI surface for sales. The patterns we shipped became the reference set for the v2 redesign and for adjacent AI launches, so the next teams started from this work instead of from scratch.</p>
+        <h4>Patterns the platform team reused.</h4>
+        <p>INC was the most heavily used internal surface at Dell, so the IA decisions and the research artifacts both became templates for adjacent platforms. Teams that owned other internal tools pulled directly from this work instead of standing up their own studies.</p>
         <ul>
-          <li>Source-citation pattern adopted across Dell's enterprise AI surfaces</li>
-          <li>SME-as-proxy research framework reused under compliance constraints</li>
-          <li>SUS-plus-shadowing measurement playbook carried into the next two AI launches</li>
+          <li>Tile-based nav and in-tile report dropdown adopted by two adjacent internal tools</li>
+          <li>Favorites pattern reused on the Dell sales portal redesign</li>
+          <li>Card-sort and tree-test playbook adopted as the default for IA work at Dell</li>
         </ul>
       </div>
     </div>
@@ -1420,6 +1514,7 @@
   window.addEventListener('resize', update, { passive: true });
   update();
 
+  // Smooth scroll on click
   links.forEach(a => {
     a.addEventListener('click', (e) => {
       e.preventDefault();
@@ -1488,10 +1583,10 @@
   <div class="wrap">
     <div class="end-cap">
 
-      <a href="./chaos-to-clarity-case-study.html" class="next-up">
+      <a href="./realtime-inquiry-case-study.html" class="next-up">
         <span class="next-eyebrow">Next case study</span>
         <div class="next-title">
-          I built a GEN-AI sales chat that pulls product info, order data, and sales playbooks into one place
+          I designed a real-time portal where mortgage clients can track every inquiry, message teams inline, and skip the bi-weekly status meeting
           <span class="arrow">→</span>
         </div>
       </a>
@@ -1499,19 +1594,14 @@
       <div class="other-work">
         <span class="other-work-label">More work</span>
         <div class="other-work-grid">
-          <a href="./realtime-inquiry-case-study.html" class="ow-item">
-            <span class="ow-title">Real-Time Inquiry Portal</span>
-            <span class="ow-co">Onity</span>
-            <span class="ow-arrow">→</span>
-          </a>
           <a href="./loan-deboarding-case-study.html" class="ow-item">
             <span class="ow-title">Loan Deboarding Portal</span>
             <span class="ow-co">Onity</span>
             <span class="ow-arrow">→</span>
           </a>
-          <a href="./dell-inc-case-study.html" class="ow-item">
-            <span class="ow-title">Information Architecture</span>
-            <span class="ow-co">Dell INC</span>
+          <a href="./chaos-to-clarity-case-study.html" class="ow-item">
+            <span class="ow-title">IntelliAssist 2.0</span>
+            <span class="ow-co">Dell</span>
             <span class="ow-arrow">→</span>
           </a>
         </div>

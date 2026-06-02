@@ -89,19 +89,15 @@
   .chip-tag {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 7px;
-    height: 30px;
-    padding: 0 14px;
+    gap: 6px;
+    padding: 7px 14px;
     border-radius: 999px;
     background: var(--surface);
     border: 1px solid var(--line);
     font-size: 12px;
     font-weight: 500;
-    line-height: 1;
     color: var(--ink);
     letter-spacing: 0.02em;
-    white-space: nowrap;
   }
   .chip-tag.status {
     background: var(--accent-soft);
@@ -112,8 +108,7 @@
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.12);
-    flex-shrink: 0;
+    box-shadow: 0 0 0 4px rgba(31, 77, 62, 0.14);
     animation: pulse 2.4s ease-in-out infinite;
   }
   @keyframes pulse {
@@ -1289,12 +1284,6 @@
       <span class="chip-tag">0 to 1</span>
     </div>
 
-    <div class="hero-showcase">
-      <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-hero-release-dashboard.png" alt="Loan Deboarding Portal Release Dashboard showing 5 active submissions with status chips, SLA indicators, and aging signals" />
-    </div>
-    <div class="hero-showcase-cap">A release record, milestone timeline with per-loan progress at every stage</div>
-
-
     <div class="stats">
       <div class="stat">
         <div class="num">1 record</div>
@@ -1312,6 +1301,11 @@
         <div class="sub">interview baseline: status follow-ups + parallel reconciliation sheets</div>
       </div>
     </div>
+
+    <div class="hero-showcase">
+      <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-hero-release-dashboard.png" alt="Loan Deboarding Portal Release Dashboard showing 5 active submissions with status chips, SLA indicators, and aging signals" />
+    </div>
+    <div class="hero-showcase-cap">A release record, milestone timeline with per-loan progress at every stage</div>
 
     <div class="quick-facts" aria-label="Project quick facts">
       <div class="fact">

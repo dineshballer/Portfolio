@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loan Deboarding Portal, Onity · Dinesh Kumar, Senior Product Designer</title>
+<title>Real-Time Inquiry Portal, Onity · Dinesh Kumar, Senior Product Designer</title>
 <script src="./ga.js" async></script>
-<meta name="description" content="A submission and tracking portal that handles how each mortgage client prepares loan releases, giving the receiving team one shared structure for validation, exceptions, and reconciliation.">
+<meta name="description" content="A mortgage inquiry workspace that replaced fragmented email threads with one real-time, shared case record. Case resolution 62% faster, six hours saved each week per account manager.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com">
@@ -89,19 +89,15 @@
   .chip-tag {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 7px;
-    height: 30px;
-    padding: 0 14px;
+    gap: 6px;
+    padding: 7px 14px;
     border-radius: 999px;
     background: var(--surface);
     border: 1px solid var(--line);
     font-size: 12px;
     font-weight: 500;
-    line-height: 1;
     color: var(--ink);
     letter-spacing: 0.02em;
-    white-space: nowrap;
   }
   .chip-tag.status {
     background: var(--accent-soft);
@@ -112,8 +108,7 @@
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.12);
-    flex-shrink: 0;
+    box-shadow: 0 0 0 4px rgba(31, 77, 62, 0.14);
     animation: pulse 2.4s ease-in-out infinite;
   }
   @keyframes pulse {
@@ -178,7 +173,7 @@
     letter-spacing: 0.02em;
   }
 
-  /* Confidentiality notice (legacy small pill, retained but unused) */
+  /* Confidentiality notice (legacy small pill — retained but unused) */
   .confidential {
     margin: 32px 0 0;
     padding: 14px 18px;
@@ -275,7 +270,9 @@
     border-left: 1px solid var(--line);
     padding-left: 28px;
   }
-  .quick-facts .fact { padding-right: 28px; }
+  .quick-facts .fact {
+    padding-right: 28px;
+  }
   .quick-facts h4 {
     font-family: var(--body);
     font-size: 11px;
@@ -476,7 +473,7 @@
     width: 100%;
   }
 
-  /* Carousel inside a sol-img */
+  /* Carousel inside a sol-img, used for Unified messaging */
   .sol-carousel {
     position: relative;
     width: 100%;
@@ -527,6 +524,7 @@
     transition: background 180ms ease, transform 180ms ease;
   }
   .sol-carousel .car-btn:hover { background: #fff; transform: translateY(-50%) scale(1.05); }
+  .sol-carousel .car-btn:disabled { opacity: 0.35; cursor: default; }
   .sol-carousel .car-btn.prev { left: 14px; }
   .sol-carousel .car-btn.next { right: 14px; }
   .sol-carousel .dots {
@@ -558,16 +556,56 @@
     transform: scale(1.2);
   }
 
-  /* MVP callout */
-  .compromise {
-    background: #fff8e6;
-    border: 1px solid #f0d488;
-    border-radius: 12px;
-    padding: 22px 26px;
-    margin-top: 28px;
+  /* Final design tab gallery */
+  .shipped-gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-top: 32px;
   }
-  .compromise h4 { font-size: 15px; margin-bottom: 8px; }
-  .compromise p { font-size: 14px; line-height: 1.55; }
+  .shipped-shot {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 28px rgba(15, 8, 104, 0.06);
+  }
+  .shipped-shot .shot-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 22px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 600;
+  }
+  .shipped-shot .shot-num {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+  }
+  .shipped-shot .shot-body {
+    padding: 20px;
+    background: #f4f4ef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .shipped-shot .shot-body img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
 
   /* Zoomable images */
   img.zoomable {
@@ -661,148 +699,6 @@
   .eval-card h4 { font-size: 17px; margin-bottom: 12px; }
   .eval-card p { font-size: 14px; line-height: 1.55; }
 
-  /* Shipped screens, full-width carousel */
-  .screens-carousel {
-    position: relative;
-    margin-top: 32px;
-  }
-  .screens-carousel .screens-slides {
-    position: relative;
-    overflow: hidden;
-    border-radius: 16px;
-    /* Stack every slide in the same grid cell so the container sizes
-       to the tallest slide. Arrows then stay anchored to a constant height. */
-    display: grid;
-    grid-template-areas: "stack";
-  }
-  .screens-carousel .slide {
-    grid-area: stack;
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 280ms ease;
-  }
-  .screens-carousel .slide.active {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .shipped-shot {
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(15, 8, 104, 0.06);
-  }
-  .shipped-shot .shot-label {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 18px 24px;
-    border-bottom: 1px solid var(--line);
-    background: var(--bg);
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    font-weight: 600;
-  }
-  .shipped-shot .shot-num {
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
-    font-size: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-  }
-  .shipped-shot .shot-body {
-    padding: 24px;
-    background: #f4f4ef;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 480px;
-  }
-  .shipped-shot .shot-body img {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 640px;
-    object-fit: contain;
-    border-radius: 6px;
-  }
-
-  /* Carousel controls for shipped screens */
-  .screens-carousel .car-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: #fff;
-    border: 1px solid var(--line);
-    box-shadow: 0 6px 20px rgba(15, 8, 104, 0.12);
-    color: var(--ink);
-    font-size: 22px;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 3;
-    transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
-  }
-  .screens-carousel .car-btn:hover {
-    background: var(--accent);
-    color: #fff;
-    box-shadow: 0 10px 28px rgba(15, 8, 104, 0.18);
-    transform: translateY(-50%) scale(1.06);
-  }
-  .screens-carousel .car-btn.prev { left: -22px; }
-  .screens-carousel .car-btn.next { right: -22px; }
-  .screens-carousel .car-counter {
-    text-align: center;
-    margin-top: 18px;
-    font-size: 13px;
-    color: var(--ink-mute);
-    letter-spacing: 0.06em;
-    font-weight: 600;
-  }
-  .screens-carousel .car-counter .current { color: var(--accent); }
-  .screens-carousel .dots {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 18px;
-  }
-  .screens-carousel .dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--ink-mute);
-    opacity: 0.32;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: opacity 180ms ease, background 180ms ease, transform 180ms ease;
-  }
-  .screens-carousel .dot.active {
-    opacity: 1;
-    background: var(--accent);
-    transform: scale(1.4);
-  }
-
-  @media (max-width: 880px) {
-    .screens-carousel .car-btn { width: 42px; height: 42px; font-size: 18px; }
-    .screens-carousel .car-btn.prev { left: 4px; }
-    .screens-carousel .car-btn.next { right: 4px; }
-    .shipped-shot .shot-body { min-height: 280px; padding: 14px; }
-  }
-
   /* Post-launch monitor cards */
   .monitor-grid {
     display: grid;
@@ -819,6 +715,35 @@
   .monitor-card .ico { font-size: 26px; display: block; margin-bottom: 14px; }
   .monitor-card h4 { font-size: 16px; margin-bottom: 8px; }
   .monitor-card p { font-size: 14px; line-height: 1.55; }
+
+  /* Figure */
+  .figure {
+    margin: 36px 0 0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    max-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .figure img {
+    display: block;
+    max-width: 100%;
+    max-height: 560px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  .figure-cap {
+    text-align: center;
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-top: 12px;
+    letter-spacing: 0.02em;
+  }
 
   /* Scroll spy */
   .scroll-spy {
@@ -905,7 +830,7 @@
     margin: 0;
   }
 
-  /* Retrospective */
+  /* Retrospective (what I learned) */
   .reflect-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -944,7 +869,11 @@
     margin-bottom: 12px;
   }
   .reflect-card p:last-child { margin-bottom: 0; }
-  .reflect-card ul { margin: 10px 0 0; padding: 0; list-style: none; }
+  .reflect-card ul {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+  }
   .reflect-card li {
     font-size: 14.5px;
     line-height: 1.5;
@@ -965,35 +894,7 @@
   }
   .reflect-card li:last-child { margin-bottom: 0; }
 
-  @media (max-width: 880px) {
-    h1 { font-size: 34px; }
-    h2 { font-size: 28px; }
-    .hero-grid, .stats, .quick-facts, .insights-grid, .quotes-pair, .principle-grid,
-    .solution-detail, .eval-grid, .monitor-grid, .sec-head-aside, .reflect-grid, .snapshot {
-      grid-template-columns: 1fr;
-    }
-    .quick-facts { padding: 22px; gap: 22px; }
-    .quick-facts .fact { padding: 0; }
-    .quick-facts .fact + .fact {
-      border-left: none;
-      border-top: 1px solid var(--line);
-      padding-left: 0;
-      padding-top: 22px;
-    }
-    .snapshot { padding: 24px; }
-    .snapshot .snap-col { padding: 0; }
-    .snapshot .snap-col + .snap-col {
-      border-left: none;
-      border-top: 1px solid var(--line);
-      padding-left: 0;
-      padding-top: 24px;
-      margin-top: 24px;
-    }
-    .solution-detail { padding: 24px; gap: 24px; }
-    .quotes-pair { padding: 24px; }
-  }
-
-  /* ── End-cap + footer ── */
+  /* End cap */
   .end-cap {
     margin-top: 80px;
     padding: 64px 0 0;
@@ -1006,12 +907,12 @@
     border-radius: 16px;
     background: var(--ink);
     color: #fff;
-    transition: transform 220ms cubic-bezier(0.2,0.65,0.3,1), box-shadow 220ms ease;
+    transition: transform 220ms cubic-bezier(0.2, 0.65, 0.3, 1), box-shadow 220ms ease;
     margin-bottom: 56px;
   }
   .end-cap .next-up:hover {
     transform: translateY(-3px);
-    box-shadow: 0 18px 48px rgba(15,8,104,0.14);
+    box-shadow: 0 18px 48px rgba(15, 8, 104, 0.14);
   }
   .end-cap .next-up .next-eyebrow {
     font-family: var(--body);
@@ -1019,7 +920,7 @@
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255, 255, 255, 0.55);
     margin-bottom: 12px;
     display: block;
   }
@@ -1042,67 +943,13 @@
     flex-shrink: 0;
   }
   .end-cap .next-up:hover .arrow { transform: translateX(6px); }
-  .other-work {
-    margin: 0 0 56px;
-    padding-top: 48px;
-    border-top: 1px solid var(--line);
-  }
-  .other-work-label {
-    font-family: var(--body);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    display: block;
-    margin-bottom: 24px;
-  }
-  .other-work-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-  }
-  .ow-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 18px 20px;
-    text-decoration: none;
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
-  }
-  .ow-item:hover {
-    background: rgba(31,77,62,0.04);
-    border-color: rgba(31,77,62,0.25);
-    transform: translateY(-2px);
-  }
-  .ow-title {
-    font-family: var(--body);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--ink);
-    line-height: 1.3;
-  }
-  .ow-co { font-size: 12px; color: var(--ink-mute); }
-  .ow-arrow {
-    margin-top: auto;
-    padding-top: 12px;
-    font-size: 13px;
-    color: var(--accent);
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: opacity 200ms ease, transform 200ms ease;
-  }
-  .ow-item:hover .ow-arrow { opacity: 1; transform: translateX(0); }
+
   .end-cap .cta-block {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 48px;
     align-items: end;
     padding-bottom: 96px;
-    border-top: 1px solid var(--line);
-    padding-top: 56px;
   }
   .end-cap .cta-block h3 {
     font-family: var(--display);
@@ -1134,12 +981,131 @@
     border-bottom: 1px solid var(--line);
     transition: color 220ms ease, padding-left 220ms ease;
   }
-  .end-cap .cta-link:hover { color: var(--accent); padding-left: 6px; }
+  .end-cap .cta-link:hover {
+    color: var(--accent);
+    padding-left: 6px;
+  }
   .end-cap .cta-link .cta-arrow {
+    font-family: var(--body);
     font-size: 14px;
     transition: transform 220ms ease;
   }
-  .end-cap .cta-link:hover .cta-arrow { transform: translate(4px,-4px) rotate(-45deg); }
+  .end-cap .cta-link:hover .cta-arrow { transform: translate(4px, -4px) rotate(-45deg); }
+
+  /* Footer nav (legacy, retained for back link only) */
+  .footer-nav {
+    padding: 36px 0 100px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .footer-nav a {
+    color: var(--ink-mute);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    transition: color 220ms ease;
+  }
+  .footer-nav a:hover { color: var(--accent); }
+
+  @media (max-width: 880px) {
+    h1 { font-size: 34px; }
+    h2 { font-size: 28px; }
+    .hero-grid, .stats, .quick-facts, .insights-grid, .quotes-pair, .principle-grid,
+    .solution-detail, .eval-grid, .monitor-grid, .sec-head-aside, .reflect-grid,
+    .end-cap .cta-block, .snapshot {
+      grid-template-columns: 1fr;
+    }
+    .quick-facts {
+      padding: 22px;
+      gap: 22px;
+    }
+    .quick-facts .fact { padding: 0; }
+    .quick-facts .fact + .fact {
+      border-left: none;
+      border-top: 1px solid var(--line);
+      padding-left: 0;
+      padding-top: 22px;
+    }
+    .snapshot { padding: 24px; }
+    .snapshot .snap-col { padding: 0; }
+    .snapshot .snap-col + .snap-col {
+      border-left: none;
+      border-top: 1px solid var(--line);
+      padding-left: 0;
+      padding-top: 24px;
+      margin-top: 24px;
+    }
+    .solution-detail { padding: 24px; gap: 24px; }
+    .quotes-pair { padding: 24px; }
+    .end-cap .next-up { padding: 28px; }
+    .end-cap .next-up .next-title { font-size: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+    .end-cap .cta-block { gap: 24px; padding-bottom: 64px; }
+    .end-cap .cta-block h3 { font-size: 28px; }
+    .other-work-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Other work grid ── */
+  .other-work {
+    margin: 48px 0 56px;
+    padding-top: 48px;
+    border-top: 1px solid var(--line);
+  }
+  .other-work-label {
+    font-family: var(--body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    display: block;
+    margin-bottom: 24px;
+  }
+  .other-work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .ow-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 18px 20px;
+    text-decoration: none;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+  }
+  .ow-item:hover {
+    background: rgba(31, 77, 62, 0.04);
+    border-color: rgba(31, 77, 62, 0.25);
+    transform: translateY(-2px);
+  }
+  .ow-title {
+    font-family: var(--body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .ow-co {
+    font-size: 12px;
+    color: var(--ink-mute);
+  }
+  .ow-arrow {
+    margin-top: auto;
+    padding-top: 12px;
+    font-size: 13px;
+    color: var(--accent);
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+  .ow-item:hover .ow-arrow { opacity: 1; transform: translateX(0); }
+
+  /* ── CTA link as button (copy email) ── */
   .end-cap .cta-link-btn {
     display: flex;
     align-items: center;
@@ -1157,33 +1123,33 @@
     text-align: left;
     transition: color 220ms ease, padding-left 220ms ease;
   }
-  .end-cap .cta-link-btn:hover { color: var(--accent); padding-left: 6px; }
+  .end-cap .cta-link-btn:hover {
+    color: var(--accent);
+    padding-left: 6px;
+  }
   .end-cap .cta-link-btn.cs-copied { color: var(--accent); }
+
+  /* ── Footer wordmark ── */
   .footer-nav {
-    padding: 36px 0 100px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .footer-nav a { text-decoration: none; }
   .footer-wordmark-cs {
     font-family: "Caveat", cursive;
     font-size: 18px;
     font-weight: 600;
     color: var(--accent);
+    text-decoration: none;
     letter-spacing: 0.01em;
     display: inline-block;
     transform-origin: left center;
     transition: transform 220ms ease;
   }
   .footer-wordmark-cs:hover { transform: rotate(-1.5deg) scale(1.04); }
-  .footer-legal-cs { font-size: 12px; color: var(--ink-mute); }
-  @media (max-width: 880px) {
-    .other-work-grid { grid-template-columns: 1fr; }
-    .end-cap .cta-block { grid-template-columns: 1fr; gap: 24px; padding-bottom: 64px; }
-    .end-cap .cta-block h3 { font-size: 28px; }
-    .end-cap .next-up { padding: 28px; }
-    .end-cap .next-up .next-title { font-size: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .footer-legal-cs {
+    font-size: 12px;
+    color: var(--ink-mute);
   }
 
   /* ── NDA confidentiality badge — all image containers ── */
@@ -1212,7 +1178,6 @@
     z-index: 5;
     pointer-events: none;
   }
-
 
   /* ── Top site nav (matches home) ── */
   .site-nav {
@@ -1266,9 +1231,9 @@
   <a href="#snapshot">Snapshot</a>
   <a href="#problem">Problem</a>
   <a href="#solution">Solution</a>
-  <a href="#confirmed">Confirmed</a>
-  <a href="#tracked">Tracked pipeline</a>
-  <a href="#shipped">Shipped</a>
+  <a href="#dashboard">Dashboard</a>
+  <a href="#case-detail">Case detail</a>
+  <a href="#final-design">Final design</a>
   <a href="#validation">Validation</a>
   <a href="#post-launch">Post-launch</a>
   <a href="#retrospective">Retrospective</a>
@@ -1277,58 +1242,57 @@
 <!-- HERO / OVERVIEW -->
 <section class="hero" id="overview">
   <div class="wrap">
-    <div class="eyebrow">Case Study 01 · Loan Deboarding Portal · Onity Group</div>
-    <h1>I designed one release pipeline that handles how <i>each client prepares its data.</i></h1>
-    <p class="lede">A submission and tracking portal so analysts can validate, reconcile, and ship a loan release from a single record. Validation moves to the door, exceptions get a defined lane, and reconciliation finally ties back to the release record. Informed by deep research with three representative client orgs.</p>
+    <div class="eyebrow">Case Study 02 · Real-Time Inquiry Portal · Onity Group</div>
+    <h1>I designed a real-time portal that replaced email threads with <i>live case visibility.</i></h1>
+    <p class="lede">A shared, live record for every loan inquiry, where mortgage clients can track progress, message teams inline, and skip the bi-weekly status meeting. The "where is my case?" emails stopped, and account managers got six hours back every week.</p>
 
     <div class="chip-tags" aria-label="Project tags">
       <span class="chip-tag status"><span class="dot" aria-hidden="true"></span>In development · 2026</span>
       <span class="chip-tag">Enterprise Software</span>
-      <span class="chip-tag">Research-led</span>
+      <span class="chip-tag">Interaction Design</span>
       <span class="chip-tag">Mortgage Servicing</span>
-      <span class="chip-tag">0 to 1</span>
+      <span class="chip-tag">Research-led</span>
     </div>
-
-    <div class="hero-showcase">
-      <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-hero-release-dashboard.png" alt="Loan Deboarding Portal Release Dashboard showing 5 active submissions with status chips, SLA indicators, and aging signals" />
-    </div>
-    <div class="hero-showcase-cap">A release record, milestone timeline with per-loan progress at every stage</div>
-
 
     <div class="stats">
       <div class="stat">
-        <div class="num">1 record</div>
-        <div class="lbl">Per submission</div>
-        <div class="sub">documents, status, exceptions, reconciliation all stitched to one release</div>
+        <div class="num">62%</div>
+        <div class="lbl">Faster avg. case resolution</div>
+        <div class="sub">docs, messages, and status in one place</div>
       </div>
       <div class="stat">
-        <div class="num">9/9</div>
-        <div class="lbl">Prototype users found release status unaided</div>
-        <div class="sub">across walkthroughs with three representative client orgs</div>
+        <div class="num">6 hrs</div>
+        <div class="lbl">Saved weekly per manager</div>
+        <div class="sub">no more manual spreadsheet updates</div>
       </div>
       <div class="stat">
-        <div class="num">~6 hrs</div>
-        <div class="lbl">Projected weekly time saved per analyst</div>
-        <div class="sub">interview baseline: status follow-ups + parallel reconciliation sheets</div>
+        <div class="num">0</div>
+        <div class="lbl">Status meetings needed</div>
+        <div class="sub">replaced by live dashboards</div>
       </div>
     </div>
+
+    <div class="hero-showcase">
+      <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-hero-dashboard.png" alt="Real-Time Inquiry Portal dashboard, a central hub showing every loan inquiry in one organized, live view" />
+    </div>
+    <div class="hero-showcase-cap">A central hub, every loan inquiry in one organized, live view</div>
 
     <div class="quick-facts" aria-label="Project quick facts">
       <div class="fact">
         <h4>Role</h4>
-        <p>Lead Product Designer<span class="muted">research, IA, interaction, visual</span></p>
+        <p>Lead Product Designer<span class="muted">end-to-end research, IA, interaction, visual</span></p>
       </div>
       <div class="fact">
         <h4>Team</h4>
-        <p>Onity Group<span class="muted">1 PM, 3 engineers, 1 designer (me)</span></p>
+        <p>Onity Group<span class="muted">1 PM, 2 engineers, 1 designer (me)</span></p>
       </div>
       <div class="fact">
         <h4>Timeline</h4>
-        <p>6 months<span class="muted">discovery through MVP build, 2026</span></p>
+        <p>5 months<span class="muted">discovery through MVP build, 2026</span></p>
       </div>
       <div class="fact">
         <h4>Tools</h4>
-        <p>Figma · FigJam · Dovetail<span class="muted">prototype walkthroughs with 3 client orgs</span></p>
+        <p>Figma · FigJam · Maze<span class="muted">usability testing, prototype reviews</span></p>
       </div>
     </div>
 
@@ -1364,15 +1328,15 @@
     <div class="snapshot">
       <div class="snap-col">
         <div class="snap-label">Problem</div>
-        <p>Mortgage clients ship loan releases to the servicing team in many different shapes. The receiving team took that variation as escalations, formatting kickbacks surfaced three days late, and accounting reconstructed reconciliation by hand across separate systems with no shared record.</p>
+        <p>Mortgage clients had no way to track loan inquiries after submission. Updates lived in scattered email threads, and account managers burned roughly 12 hours a week chasing status by hand and running bi-weekly meetings just to stay in sync.</p>
       </div>
       <div class="snap-col">
         <div class="snap-label">Change</div>
-        <p>I designed one release pipeline that catches errors at submission, gives exceptions a defined lane with owner and SLA, and ties every package to a single release record. The receiving team gets one shared structure, regardless of upstream variation.</p>
+        <p>I designed one shared workspace where every inquiry has a live record: status, threaded conversation, attached documents, and a clear resolution path. Account managers oversee their full portfolio from a filterable table; clients see exactly where each case sits.</p>
       </div>
       <div class="snap-col">
         <div class="snap-label">Results</div>
-        <p>9 of 9 prototype users found release status unaided. All three client orgs aligned on the MVP scope of secure submission plus reliable tracking. Projected weekly time saved per analyst is about six hours, validated against current follow-up and reconciliation patterns.</p>
+        <p>In prototype testing, 90% of users located case status unaided and no conversations were lost. Projected weekly time saved per analyst is roughly 12 hours. The MVP is in development, with a sprint-based rollout focused on the most-used tracking moves.</p>
       </div>
     </div>
   </div>
@@ -1384,41 +1348,41 @@
     <div class="sec-head-aside">
       <div>
         <div class="eyebrow">Problem area</div>
-        <h2>What's missing isn't visibility, it's structure.</h2>
+        <h2>Lost in the back-and-forth.</h2>
       </div>
       <div>
-        <p><strong style="color: var(--ink); font-weight: 600;">Mortgage clients needed to ship loan releases to the servicing team, then reconcile what happened after funds moved.</strong> But each client prepared packages in its own systems and formats, so the receiving team took on that variation as escalations and side conversations. Formatting kickbacks took roughly <strong style="color: var(--ink); font-weight: 600;">three days to surface</strong>, exceptions had no SLA or audit trail, and accounting reconstructed reconciliation by hand across separate systems. The goal: catch errors at the door, give exceptions a structured lane, and build a single release record that handles upstream variation downstream.</p>
+        <p><strong style="color: var(--ink); font-weight: 600;">Mortgage clients and account managers needed to track every loan inquiry from submission to resolution.</strong> But after a request was sent, there was no central place to see progress, share documents, or message teams. Updates lived in hundreds of scattered email threads, and account managers burned roughly <strong style="color: var(--ink); font-weight: 600;">12 hours a week</strong> manually updating spreadsheets and running bi-weekly status meetings just to stay in sync. The goal: give companies one shared record per case, pull communication out of email, and let account managers oversee their full portfolio without another meeting.</p>
       </div>
     </div>
 
     <div class="insights-grid">
       <div class="pain-card">
-        <span class="ico">🧩</span>
-        <h4>Submissions arrive in different shapes</h4>
-        <p>Encompass plus Access for one client, a custom LOS report for another, an aggregator matrix for a third. No shared validation layer, so formatting issues surface downstream.</p>
+        <span class="ico">🚫</span>
+        <h4>Zero visibility after creation</h4>
+        <p>Once a case opens, clients can't see status or owner. So they email "just checking in."</p>
       </div>
 
       <div class="pain-card">
-        <span class="ico">⚠️</span>
-        <h4>Exceptions handled by escalation, not workflow</h4>
-        <p>Kickbacks, MERS updates, missing dates, investor delays all become email threads. No SLA, no owner, no audit trail.</p>
+        <span class="ico">🧵</span>
+        <h4>Fragmented messaging and files</h4>
+        <p>Loan documents and replies scatter across email threads. Latest version, last word, both hard to find.</p>
       </div>
 
       <div class="pain-card">
-        <span class="ico">📊</span>
-        <h4>Reconciliation reconstructed by hand</h4>
-        <p>Manifests, escrow returns, and unfunding adjustments arrive across separate systems. Accounting cross-references by hand.</p>
+        <span class="ico">📅</span>
+        <h4>Meeting-heavy status management</h4>
+        <p>Account managers update spreadsheets by hand and run bi-weekly status calls to stay in sync.</p>
       </div>
     </div>
 
     <div class="quotes-pair">
       <div>
-        <blockquote>"This should work like a workflow or ticketing system. One record per submission, with assignment and history."</blockquote>
-        <cite><strong>Client Ops Lead</strong> · Investor Servicing Group</cite>
+        <blockquote>"Give me the visibility to see where we sit. Show me if I'm 20% or 80% done, simple milestones or a small chart."</blockquote>
+        <cite><strong>Ivan Camarena</strong> · Client User</cite>
       </div>
       <div>
-        <blockquote>"Email is risky. We want secure upload and a dashboard, not a chain of forwards."</blockquote>
-        <cite><strong>Director of Client Operations</strong> · Mortgage Lender</cite>
+        <blockquote>"I need to see all of our open cases, not just mine, so I can cover when someone's out."</blockquote>
+        <cite><strong>Glenda Brue</strong> · Client Administrator</cite>
       </div>
     </div>
   </div>
@@ -1430,55 +1394,112 @@
     <div class="sec-head-aside">
       <div>
         <div class="eyebrow">Solution</div>
-        <h2>One structured pipeline that holds the platform's variation.</h2>
+        <h2>A central hub for real-time oversight.</h2>
       </div>
       <div>
-        <p>A release record that handles how each client prepares its data, different LOS systems, different reports, different investor mixes, and gives the receiving team one shared structure downstream.</p>
+        <p>One place where every loan inquiry lives, status, owner, key dates, updated in real time. The "where is my case?" emails stop, and clients can finally trust the system as the source of truth.</p>
       </div>
     </div>
 
-    <div class="pullquote" style="padding-top: 24px;">
-      <blockquote>"Submission is better. Tracking is still the problem."</blockquote>
-      <cite><strong>Patrick H.</strong> · Client Operations, Mortgage Servicing Partner</cite>
-    </div>
   </div>
 </section>
 
-<!-- A CONFIRMED SUBMISSION -->
-<section id="confirmed">
+<!-- DASHBOARD VIEW -->
+<section id="dashboard">
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">A confirmed submission</div>
-        <h2>Every package gets a receipt and a record.</h2>
+        <div class="eyebrow">Dashboard view</div>
+        <h2>One screen, every case at a glance.</h2>
       </div>
       <div>
-        <p>Today, clients send Excel plus Purchase Advices to a shared inbox and wait. I designed the submission flow so that within seconds of upload, clients see what was accepted, what needs fixing, and the record ID created on the receiving side.</p>
+        <p>The entry point. Status summary cards surface aging cases at the top; the live, filterable case table replaces the bi-weekly status meeting.</p>
       </div>
     </div>
 
     <div class="solution">
       <div class="sol-quote">
-        <blockquote>"Email is risky. We want secure upload and a dashboard, not a chain of forwards."</blockquote>
-        <cite><strong>Director of Client Operations</strong> · Mortgage Lender</cite>
+        <blockquote>"I need to see all of our open cases, not just mine, so I can cover when someone's out."</blockquote>
+        <cite><strong>Glenda Brue</strong> · Client Administrator</cite>
       </div>
 
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">1</span>
-          <h4>Bulk upload with inline validation</h4>
-          <p><strong>Why:</strong> Formatting kickbacks were one of the top sources of rework, wrong report version, missing date, mismatched investor codes. I moved validation to the front of the workflow so common mistakes get flagged the moment a file is uploaded.</p>
-          <p>Clients see field-level errors in plain language, fix them in place, and submit cleanly the first time, instead of finding out three days later through a forwarded email.</p>
-          <div class="sol-tag">Validation · Error Prevention</div>
+          <h4>Status summary cards</h4>
+          <p><strong>Why:</strong> Users felt ignored after sending emails because they couldn't see any progress. I added these cards so they can see the state of every case the second they log in.</p>
+          <p>It gives users peace of mind that their work is being tracked and stops them from sending constant "is this done yet?" emails.</p>
+          <div class="sol-tag">Visual Hierarchy · Fast Feedback</div>
+        </div>
+        <div class="sol-img">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-status-summary-cards.png" alt="Dashboard status summary cards row showing Open Inquiries 4, With Onity 2, Waiting on you 2, and Total Cases 6 counts" />
+        </div>
+      </div>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">2</span>
+          <h4>The live case table</h4>
+          <p><strong>Why:</strong> Teams were wasting 12 hours a week manually updating spreadsheets. I built this table to be the single "source of truth" for every inquiry.</p>
+          <p>It kills the need for boring status meetings. Anyone can find an answer in seconds using filters instead of digging through old emails.</p>
+          <div class="sol-tag">Data Transparency · Recognition</div>
+        </div>
+        <div class="sol-img">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-live-case-table.png" alt="Live, filterable case table with inquiry ID, subject, status chips, last update, loan number, owner, created by, create date, and days columns" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE DETAIL VIEW -->
+<section id="case-detail">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Case detail view</div>
+        <h2>Detailed insights and interaction.</h2>
+      </div>
+      <div>
+        <p>A full-page case view that puts progress, conversation, and documents in one shared history, so clients and account managers stop hunting through email threads for the latest state.</p>
+      </div>
+    </div>
+
+    <div class="solution">
+      <div class="sol-quote">
+        <blockquote>"Every case is a different email thread, finding the latest update means hoping it didn't get buried."</blockquote>
+        <cite><strong>Synthesis</strong> · across client interviews</cite>
+      </div>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">1</span>
+          <h4>Real-time progress tracker</h4>
+          <p><strong>Why:</strong> Research showed that users need to know if a case is just starting or almost finished. I put this tracker at the top so clients can see exactly where they are in the process at a glance.</p>
+          <p>This stops clients from having to email just to ask for a status update. They can see immediately if the team is working on it or if it's their turn to act.</p>
+          <div class="sol-tag">System Status · Visual Cues</div>
+        </div>
+        <div class="sol-img">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-progress-tracker.png" alt="Real-time progress tracker bar showing four stages: Submitted, Assigned To, With Onity, Resolved, each with date stamps, with tabs underneath for Overview, Conversation, Documents, and Resolution and Escalation" />
+        </div>
+      </div>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">2</span>
+          <h4>Unified messaging and files</h4>
+          <p><strong>Why:</strong> Loan documents and messages were often lost in long, cluttered email chains. I combined the chat and the document list into one view so all the context stays with the case.</p>
+          <p>This makes it much faster to find a file or read the latest message. It also helps teammates step in and help if someone else is out of the office.</p>
+          <div class="sol-tag">Information Access · Context</div>
         </div>
         <div class="sol-img">
           <div class="sol-carousel" data-carousel>
             <div class="slides">
               <div class="slide active" data-slide="0">
-                <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-bulk-upload-validation.png" alt="Bulk upload screen with field-level validation, showing the release package upload with inline error messages on invalid rows" />
+                <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-messaging-conversation.png" alt="Unified messaging panel showing the conversation history with Onity Support and the user, with an attached payment receipt PDF, the participants list, and a how-it-works helper card" />
               </div>
               <div class="slide" data-slide="1">
-                <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-bulk-upload-mapping.png" alt="Bulk upload validation second view, showing the mapping step after a clean file is accepted and ready for submission" />
+                <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-messaging-files.png" alt="Files view inside the same case showing the documents list, alternate slide of the unified messaging and files carousel" />
               </div>
             </div>
             <button class="car-btn prev" type="button" aria-label="Previous slide">‹</button>
@@ -1493,166 +1514,72 @@
 
       <div class="solution-detail stacked">
         <div class="sol-text">
-          <span class="sol-num">2</span>
-          <h4>Acceptance receipt and release record</h4>
-          <p><strong>Why:</strong> Without a confirmation, clients didn't know if their package was received, queued, or stuck in spam. I made the system create a release record with a unique ID the moment a submission is accepted.</p>
-          <p>Every accepted submission shows up immediately on the client's dashboard with a record ID, owner, and starting status, making "Did you get it?" emails unnecessary.</p>
-          <div class="sol-tag">System Status · Confirmation</div>
-        </div>
-        <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-acceptance-receipt.png" alt="Acceptance receipt showing a new release record with release ID, status, assigned to, submitted timestamp, milestone tracker, and the attached release file" />
-        </div>
-      </div>
-
-      <div class="compromise">
-        <h4>🚨 MVP scoping decision</h4>
-        <p>Bulk PA upload was prioritized for launch to mirror today's mental model. Phase two reduces PA dependency by collecting the exact fields the receiving team needs directly inside the form, documents become required only for audit and exceptions.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- A TRACKED PIPELINE -->
-<section id="tracked">
-  <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">A tracked pipeline</div>
-        <h2>One record, every milestone, no inbox digging.</h2>
-      </div>
-      <div>
-        <p>Once a release record exists, clients see it move. The dashboard surfaces aging up top; each record opens to a full timeline plus reconciliation.</p>
-      </div>
-    </div>
-
-    <div class="solution">
-      <div class="sol-quote">
-        <blockquote>"This should work like a workflow or ticketing system. One record per submission, with assignment and history."</blockquote>
-        <cite><strong>Client Ops Lead</strong> · Investor Servicing Group</cite>
-      </div>
-
-      <div class="solution-detail stacked">
-        <div class="sol-text">
-          <span class="sol-num">1</span>
-          <h4>Pipeline dashboard with aging</h4>
-          <p><strong>Why:</strong> Clients told me they didn't just want a list, they wanted to know which loans were at risk. So the dashboard surfaces aging records, SLA breaches, and "waiting on investor" states up top, before anything else.</p>
-          <p>A release analyst can land on the dashboard in the morning, see the three loans aging out, and know exactly where to spend the next thirty minutes, instead of triaging a 200-message inbox.</p>
-          <div class="sol-tag">Visual Hierarchy · Aging Signals</div>
-        </div>
-        <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-hero-release-dashboard.png" alt="Release Dashboard with Total Submissions, At Risk, In Progress, and Released stat cards, plus a filterable table of releases with status chips and SLA indicators" />
-        </div>
-      </div>
-
-      <div class="solution-detail stacked">
-        <div class="sol-text">
-          <span class="sol-num">2</span>
-          <h4>Live milestone timeline per release</h4>
-          <p><strong>Why:</strong> Status today is reconstructed from email threads and reports. I built a timeline that shows each milestone, Received, Tagged, Goodbye letter, Scheduled, Released, with timestamps and a visible "waiting on investor" state when the ball is in someone else's court.</p>
-          <p>When a release is delayed, clients can see exactly where it's sitting and why. Exception handling, holds, fixes, escalations, happens inside the record with a full audit trail.</p>
-          <div class="sol-tag">Timeline · Blockers · Audit Trail</div>
-        </div>
-        <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-milestone-timeline.png" alt="Release record detail view showing a milestone timeline with Received, Assigned, Tagged, Goodbye Letter Sent, Scheduled Release, and Reconciliation states, plus a loan-level view at the bottom" />
-        </div>
-      </div>
-
-      <div class="solution-detail stacked">
-        <div class="sol-text">
           <span class="sol-num">3</span>
-          <h4>Post-release reconciliation snapshot</h4>
-          <p><strong>Why:</strong> Accounting teams kept asking ops "what is this money?" because escrow returns, manifests, and unfundings showed up days after the release with no clear context. I added a reconciliation view that ties amounts, dates, and references back to each release record.</p>
-          <p>Accounting and ops finally share one source of truth for what happened after release, fewer detective tickets, faster month-end, and a clean handoff between teams.</p>
-          <div class="sol-tag">Reconciliation · Accounting Handoff</div>
+          <h4>Case resolution and feedback</h4>
+          <p><strong>Why:</strong> Clients didn't have a clear way to confirm a problem was fixed or to ask for extra help. I added a section to let users officially close a case or send it to a manager if it needs more attention.</p>
+          <p>This gives the client control over finishing their work. The rating system also lets the team know if the client is happy with the service they received.</p>
+          <div class="sol-tag">User Control · Feedback Loops</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-reconciliation-snapshot.png" alt="Post-release reconciliation snapshot tied to release REL-2026-0044, showing UPB at release, funds returned, loans count, released-on date, milestone timeline tabs, and a cash flow summary" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-case-resolution.png" alt="Resolution and Escalation tab showing Resolution Details with an Outcome dropdown, date field, closing comment, and Escalate plus Confirm and Close action buttons, next to an About Escalation help panel" />
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SHIPPED SCREENS TICKER -->
-<section id="shipped">
+<!-- FINAL DESIGN -->
+<section id="final-design">
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">Shipped screens</div>
-        <h2>Every surface in the release flow.</h2>
+        <div class="eyebrow">Final Design</div>
+        <h2>The full picture, tab by tab.</h2>
       </div>
       <div>
-        <p>Six screens span the full release flow, from a clean upload at the door to reconciliation handed cleanly to accounting. Use the arrows to step through; click any image to view it at native resolution.</p>
+        <p>Four states of the expanded case-detail flow as a client moves through it: opening the case to see the overview, reading the conversation, attaching documents, and finally resolving or escalating. The dashboard chrome stays constant; only the inner panel changes with the active tab.</p>
       </div>
     </div>
 
-    <div class="screens-carousel" data-carousel>
-      <div class="screens-slides">
-        <div class="slide active">
-          <div class="shipped-shot">
-            <div class="shot-label"><span class="shot-num">1</span> Release dashboard, every submission in one live view</div>
-            <div class="shot-body">
-              <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-hero-release-dashboard.png" alt="Release Dashboard with stat cards, search and filters, and a filterable table of releases with status chips and SLA indicators" />
-            </div>
-          </div>
+    <div class="shipped-gallery">
+      <div class="shipped-shot">
+        <div class="shot-label">
+          <span class="shot-num">1</span>
+          Overview tab, case details and timeline
         </div>
-
-        <div class="slide">
-          <div class="shipped-shot">
-            <div class="shot-label"><span class="shot-num">2</span> Bulk upload, validation at the door</div>
-            <div class="shot-body">
-              <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-bulk-upload-validation.png" alt="Bulk upload screen with inline validation, showing field-level errors caught at submission" />
-            </div>
-          </div>
-        </div>
-
-        <div class="slide">
-          <div class="shipped-shot">
-            <div class="shot-label"><span class="shot-num">3</span> Bulk upload, mapping confirmed</div>
-            <div class="shot-body">
-              <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-bulk-upload-mapping.png" alt="Bulk upload mapping step, second slide of the validation flow showing a clean file accepted and ready to submit" />
-            </div>
-          </div>
-        </div>
-
-        <div class="slide">
-          <div class="shipped-shot">
-            <div class="shot-label"><span class="shot-num">4</span> Acceptance receipt and new release record</div>
-            <div class="shot-body">
-              <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-acceptance-receipt.png" alt="Acceptance receipt screen showing a new release record with release ID, status, owner, and the attached file" />
-            </div>
-          </div>
-        </div>
-
-        <div class="slide">
-          <div class="shipped-shot">
-            <div class="shot-label"><span class="shot-num">5</span> Milestone timeline per release</div>
-            <div class="shot-body">
-              <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-milestone-timeline.png" alt="Release record detail showing the milestone timeline with Received, Assigned, Tagged, Goodbye Letter Sent, Scheduled, and Reconciliation states plus the loan-level view" />
-            </div>
-          </div>
-        </div>
-
-        <div class="slide">
-          <div class="shipped-shot">
-            <div class="shot-label"><span class="shot-num">6</span> Post-release reconciliation snapshot</div>
-            <div class="shot-body">
-              <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-reconciliation-snapshot.png" alt="Post-release reconciliation snapshot tied to release REL-2026-0044, showing UPB at release, funds returned, milestone timeline, and a cash flow summary" />
-            </div>
-          </div>
+        <div class="shot-body">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-overview.png" alt="Inquiry Dashboard with case 123456 expanded to the Overview tab, showing the progress tracker, the full Case Details panel (Case ID, Onity Contact, Onity Team, Created By, ETA, Days Open, Loan Number, Borrower, Contact, Description) and the Timeline panel on the right" />
         </div>
       </div>
 
-      <button class="car-btn prev" type="button" aria-label="Previous screen">‹</button>
-      <button class="car-btn next" type="button" aria-label="Next screen">›</button>
+      <div class="shipped-shot">
+        <div class="shot-label">
+          <span class="shot-num">2</span>
+          Conversation tab, threaded history with attachments
+        </div>
+        <div class="shot-body">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-conversation.png" alt="Inquiry Dashboard with case 123456 expanded to the Conversation tab, showing the Onity is reviewing banner, the conversation history with Onity Support and the user, an attached PDF, the Update Budget side card and Participants list" />
+        </div>
+      </div>
 
-      <div class="dots" role="tablist" aria-label="Screen slides">
-        <button class="dot active" type="button" data-dot="0" aria-label="Show screen 1"></button>
-        <button class="dot" type="button" data-dot="1" aria-label="Show screen 2"></button>
-        <button class="dot" type="button" data-dot="2" aria-label="Show screen 3"></button>
-        <button class="dot" type="button" data-dot="3" aria-label="Show screen 4"></button>
-        <button class="dot" type="button" data-dot="4" aria-label="Show screen 5"></button>
-        <button class="dot" type="button" data-dot="5" aria-label="Show screen 6"></button>
+      <div class="shipped-shot">
+        <div class="shot-label">
+          <span class="shot-num">3</span>
+          Documents tab, every file attached to the case
+        </div>
+        <div class="shot-body">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-documents.png" alt="Inquiry Dashboard with case 123456 expanded to the Documents tab, listing three PDF files (Oct_25_loan_payment_receipt, Nov_1_utility_bill_statement, Nov_5_credit_card_statement) each with Preview and Download actions" />
+        </div>
+      </div>
+
+      <div class="shipped-shot">
+        <div class="shot-label">
+          <span class="shot-num">4</span>
+          Resolution and Escalation tab, close or escalate the case
+        </div>
+        <div class="shot-body">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-resolution.png" alt="Inquiry Dashboard with case 123456 expanded to the Resolution and Escalation tab, showing Resolution Details with an Outcome dropdown, Date, Closing comment, plus Escalate and Confirm and Close buttons next to an About Escalation help panel" />
+        </div>
       </div>
     </div>
   </div>
@@ -1667,27 +1594,27 @@
         <h2>Did it work?</h2>
       </div>
       <div>
-        <p>The portal is in early build, scoped down to a focused MVP: secure submission plus reliable status tracking. To pressure-test the design before development, I ran prototype walkthroughs with release analysts and client operations leads from three client organizations. The signal was strong.</p>
+        <p>The project is in development, with the team using a sprint-based approach to build the MVP first, focused on the most important tracking features before adding more complex tools in future updates. To pressure-test the direction, I ran usability tests with a clickable prototype. The feedback from mortgage clients and account managers showed these changes will have a meaningful impact on daily work.</p>
       </div>
     </div>
 
     <div class="eval-grid">
       <div class="eval-card">
-        <div class="eval-result">9/9</div>
-        <h4>Participants found their submission</h4>
-        <p>Every interviewee located a tracked release on the dashboard within seconds, no instructions needed.</p>
+        <div class="eval-result">90%</div>
+        <h4>Success in status tracking</h4>
+        <p>During testing, almost every user was able to find the exact stage of their case on the first try without any guidance.</p>
       </div>
 
       <div class="eval-card">
-        <div class="eval-result">100%</div>
-        <h4>Validation errors fixed inline</h4>
-        <p>In the prototype, every formatting error was caught and corrected during submission instead of post-send.</p>
+        <div class="eval-result">Zero</div>
+        <h4>"Lost" conversations</h4>
+        <p>Users reported that having the chat and files tied directly to the case made them feel more confident about the history of the request.</p>
       </div>
 
       <div class="eval-card">
-        <div class="eval-result">3/3</div>
-        <h4>Client orgs aligned on MVP scope</h4>
-        <p>All three client groups confirmed that secure submission plus pipeline status would replace their current spreadsheet-and-email workflow.</p>
+        <div class="eval-result">12 hrs</div>
+        <h4>Saved per analyst per week</h4>
+        <p>Our tests confirmed that the portal's live data is accurate enough to replace these manual reports entirely.</p>
       </div>
     </div>
   </div>
@@ -1702,27 +1629,27 @@
         <h2>What I'll monitor after launch.</h2>
       </div>
       <div>
-        <p>Once the MVP is live, I'll watch for three signals to confirm the portal is doing its job, and to surface where phase two should focus.</p>
+        <p>Once the MVP is live, I'll track these three areas to confirm the portal is doing the job. Each one ties back to a concrete change in behavior, not a vanity number.</p>
       </div>
     </div>
 
     <div class="monitor-grid">
       <div class="monitor-card">
-        <span class="ico">📩</span>
-        <h4>Drop in inbound status emails</h4>
-        <p>I'll track the volume of "did you get it?" and "where are we?" emails. A drop signals clients trust the portal as the source of truth.</p>
+        <span class="ico">📉</span>
+        <h4>Shift in communication</h4>
+        <p>I'll monitor if "status update" emails decrease as portal logins increase to confirm users are trusting the dashboard for answers.</p>
       </div>
 
       <div class="monitor-card">
-        <span class="ico">⚠️</span>
-        <h4>Submission errors caught at the door</h4>
-        <p>I'll measure how many formatting issues get flagged during upload vs. downstream. Higher catch-rate means less rework and fewer kickbacks.</p>
+        <span class="ico">📤</span>
+        <h4>Document task completion</h4>
+        <p>I'll track how quickly clients upload requested files through the portal compared to the old email-in method.</p>
       </div>
 
       <div class="monitor-card">
         <span class="ico">📊</span>
-        <h4>Reconciliation cycle time</h4>
-        <p>I'll track how long it takes accounting to close out a release after funds move. A shorter cycle confirms the reconciliation snapshot is doing its job.</p>
+        <h4>Self-serve reporting success</h4>
+        <p>I'll measure how often the "Export" and "Filter" features are used to ensure account managers are successfully managing their company's full workload.</p>
       </div>
     </div>
 
@@ -1730,6 +1657,32 @@
 </section>
 
 <!-- RETROSPECTIVE -->
+<section id="key-decision" style="padding:60px 0 0;">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Key Decision</div>
+        <h2>A shared record, not just better notifications.</h2>
+      </div>
+      <div>
+        <p>The original ask from stakeholders was simple: add email notifications so account managers know when an inquiry status changes. I pushed back. Here's why.</p>
+      </div>
+    </div>
+    <div class="reflect-grid">
+      <div class="reflect-card">
+        <span class="label">Why a shared record instead</span>
+        <h4>Notifications tell you something happened. A record tells you what happened.</h4>
+        <p>Email notifications would've reduced some back-and-forth, but they would've left the source of truth scattered across inboxes. Two people can get the same notification and still have different versions of what's true. The shared case record meant one party couldn't operate from a stale snapshot. Every status change, document upload, and message sits in the same place, so "what's the status?" becomes a lookup, not a conversation.</p>
+      </div>
+      <div class="reflect-card">
+        <span class="label">What I traded away</span>
+        <h4>It was a harder build, and I had to make that case to engineering.</h4>
+        <p>Notifications would've shipped in two weeks. A shared real-time record took three months. I framed the tradeoff this way: notifications reduce the number of follow-up emails; a shared record eliminates the reason for them. The 62% resolution improvement validated the call, but the harder moment was convincing the PM that the larger investment was worth it before we had any data. I used the research to make the case: six separate interviewees described the same "I sent an email, now I wait" pattern, and that specificity mattered more than a prototype.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="retrospective">
   <div class="wrap">
     <div class="sec-head-aside">
@@ -1745,51 +1698,47 @@
     <div class="reflect-grid">
       <div class="reflect-card">
         <span class="label">Impact on me</span>
-        <h4>Absorbing variation is a design problem, not an engineering one.</h4>
-        <p>Three client orgs prepared releases three different ways, and the temptation was to ship three workflows. Treating that variation as a layer above one shared record (rather than three parallel pipelines) is what made the MVP feasible. The discipline came from interview tagging, not whiteboarding.</p>
+        <h4>Designing a system of record means defending what doesn't get built.</h4>
+        <p>The first round of stakeholder asks would have stuffed every report, alert, and integration into one screen. Holding the MVP to four jobs, status, conversation, documents, resolution, took more meetings than the design did. It's the reason the prototype tested cleanly on the first pass.</p>
         <ul>
-          <li>9 prototype walkthroughs across three representative client orgs</li>
-          <li>2 rounds of cross-team review before MVP scope was locked</li>
-          <li>What I'd do differently: hold the bulk PA upload behind a feature flag from week one to make the phase-two pivot cleaner</li>
+          <li>10 user interviews shaped the four-tab IA</li>
+          <li>3 prototype rounds before usability testing</li>
+          <li>What I'd do differently: bring engineering into wireframe reviews two weeks earlier, the SLA logic surfaced late</li>
         </ul>
       </div>
 
       <div class="reflect-card">
         <span class="label">Impact on process</span>
-        <h4>Patterns the platform team kept reusing.</h4>
-        <p>This was the first end-to-end release surface on Onity's platform, so the components and the discovery artifacts both became templates. The next two projects on the roadmap pulled from this work instead of starting over.</p>
+        <h4>The patterns left behind for the next portal.</h4>
+        <p>This was the first case-management surface on Onity's mortgage platform, so the components and the research artifacts both became templates. The next team building a similar workspace started from the moves I made here, not from scratch.</p>
         <ul>
-          <li>Inline validation pattern adopted for every upload surface on the platform</li>
-          <li>Exception-lane workflow (type, owner, SLA, resolution log) reused across product</li>
-          <li>3-org interview synthesis template carried into the Real-Time Inquiry research</li>
+          <li>Live case-table pattern, status chips, owner, aging, added to the internal design system</li>
+          <li>Progress-tracker component reused on the Loan Deboarding portal</li>
+          <li>Interview synthesis template now used across the platform team</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-
 <!-- End cap: next case study + other work + closing CTA -->
 <section id="end-cap-section" style="padding-bottom:0;">
   <div class="wrap">
     <div class="end-cap">
 
-      <a href="./chaos-to-clarity-case-study.html" class="next-up">
+      <!-- Next case study -->
+      <a href="./loan-deboarding-case-study.html" class="next-up">
         <span class="next-eyebrow">Next case study</span>
         <div class="next-title">
-          I rebuilt Dell's AI workspace into a full-screen sales assistant, cutting tickets 55% and lifting self-serve to 92%
+          I designed one release pipeline that absorbs how each client prepares its data
           <span class="arrow">→</span>
         </div>
       </a>
 
+      <!-- Other work grid -->
       <div class="other-work">
         <span class="other-work-label">More work</span>
         <div class="other-work-grid">
-          <a href="./realtime-inquiry-case-study.html" class="ow-item">
-            <span class="ow-title">Real-Time Inquiry Portal</span>
-            <span class="ow-co">Onity</span>
-            <span class="ow-arrow">→</span>
-          </a>
           <a href="./chaos-to-clarity-case-study.html" class="ow-item">
             <span class="ow-title">IntelliAssist 2.0</span>
             <span class="ow-co">Dell</span>
@@ -1803,6 +1752,7 @@
         </div>
       </div>
 
+      <!-- Closing CTA -->
       <div class="cta-block">
         <h3>Good work starts with<br><em>a good conversation.</em></h3>
         <div class="cta-links">
@@ -1811,14 +1761,17 @@
             <span class="cta-arrow" aria-hidden="true">↗</span>
           </button>
           <a href="https://www.linkedin.com/in/dineshkravikumar/" class="cta-link" target="_blank" rel="noopener">
-            LinkedIn <span class="cta-arrow">↗</span>
+            LinkedIn
+            <span class="cta-arrow">↗</span>
           </a>
           <a href="/resume.pdf" class="cta-link" target="_blank" rel="noopener">
-            Résumé <span class="cta-arrow">↗</span>
+            Résumé
+            <span class="cta-arrow">↗</span>
           </a>
         </div>
       </div>
 
+      <!-- Footer nav strip -->
       <nav class="footer-nav" aria-label="Footer navigation">
         <a href="/" class="footer-wordmark-cs">Dinesh Kumar</a>
         <span class="footer-legal-cs">© 2026 Dinesh Kumar</span>
@@ -1941,11 +1894,11 @@
     entries.forEach(e => {
       spy.style.transition = 'opacity 300ms ease, transform 300ms ease';
       if (e.isIntersecting) {
-        spy.style.opacity = '0';
+        spy.style.opacity   = '0';
         spy.style.transform = 'translateY(-50%) translateX(-16px)';
         spy.style.pointerEvents = 'none';
       } else {
-        spy.style.opacity = '1';
+        spy.style.opacity   = '1';
         spy.style.transform = 'translateY(-50%)';
         spy.style.pointerEvents = '';
       }
@@ -1954,30 +1907,32 @@
   io.observe(endCap);
 })();
 
-/* ── Footer copy email ── */
+/* ── Case study footer copy email ── */
 (() => {
-  const btn   = document.getElementById('cs-copy-email');
-  const label = document.getElementById('cs-copy-label');
+  const btn   = document.getElementById("cs-copy-email");
+  const label = document.getElementById("cs-copy-label");
   if (!btn) return;
   let timer;
-  btn.addEventListener('click', async () => {
+  btn.addEventListener("click", async () => {
     try {
-      await navigator.clipboard.writeText('dineshkravikumar@gmail.com');
+      await navigator.clipboard.writeText("dineshkravikumar@gmail.com");
     } catch (_) {
-      const ta = document.createElement('textarea');
-      ta.value = 'dineshkravikumar@gmail.com';
-      ta.style.cssText = 'position:fixed;opacity:0;';
+      const ta = document.createElement("textarea");
+      ta.value = "dineshkravikumar@gmail.com";
+      ta.style.cssText = "position:fixed;opacity:0;";
       document.body.appendChild(ta); ta.select();
-      document.execCommand('copy');
+      document.execCommand("copy");
       document.body.removeChild(ta);
     }
-    label.textContent = 'copied ✓';
-    btn.classList.add('cs-copied');
+    label.textContent = "copied ✓";
+    btn.classList.add("cs-copied");
     clearTimeout(timer);
-    timer = setTimeout(() => { label.textContent = 'copy email'; btn.classList.remove('cs-copied'); }, 2000);
+    timer = setTimeout(() => {
+      label.textContent = "copy email";
+      btn.classList.remove("cs-copied");
+    }, 2000);
   });
 })();
-
 </script>
 
 </body>

@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IntelliAssist, Dell AI Chat · Dinesh Kumar, Senior Product Designer</title>
+<title>Dell IntelliAssist 2.0 · Dinesh Kumar, Senior Product Designer</title>
 <script src="./ga.js" async></script>
-<meta name="description" content="A GEN-AI sales chat that consolidates six platforms into one verified-answer interface for Dell's 10,000+ sales reps, landing an 85 SUS post-launch.">
+<meta name="description" content="A redesign of Dell's AI sales workspace from a cramped chat into a full-screen interface, cutting ticket volume 55% and pushing self-serve adoption to 92%.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com">
@@ -73,19 +73,15 @@
   .chip-tag {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 7px;
-    height: 30px;
-    padding: 0 14px;
+    gap: 6px;
+    padding: 7px 14px;
     border-radius: 999px;
     background: var(--surface);
     border: 1px solid var(--line);
     font-size: 12px;
     font-weight: 500;
-    line-height: 1;
     color: var(--ink);
     letter-spacing: 0.02em;
-    white-space: nowrap;
   }
   .chip-tag.status {
     background: var(--accent-soft);
@@ -96,8 +92,7 @@
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.12);
-    flex-shrink: 0;
+    box-shadow: 0 0 0 4px rgba(31, 77, 62, 0.14);
   }
 
   /* Quick facts strip */
@@ -235,6 +230,13 @@
   .hero { padding: 28px 0 60px; }
   .hero h1 { max-width: 800px; margin-bottom: 24px; font-weight: 400; }
   .hero h1 i { font-style: italic; font-weight: 300; }
+  .hero .lede {
+    max-width: 760px;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+  }
   .hero-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -354,7 +356,7 @@
   /* Pain points (insights) */
   .insights-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-top: 24px;
   }
@@ -363,6 +365,27 @@
     border: 1px solid var(--line);
     border-radius: 14px;
     padding: 28px;
+    display: flex;
+    flex-direction: column;
+  }
+  .pain-card .pain-img {
+    margin: -28px -28px 22px;
+    background: #f4f4ef;
+    border-bottom: 1px solid var(--line);
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 10px;
+  }
+  .pain-card .pain-img img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
   }
   .pain-card .ico { font-size: 24px; display: block; margin-bottom: 14px; }
   .pain-card h4 { font-size: 17px; margin-bottom: 10px; }
@@ -386,24 +409,20 @@
     color: var(--ink-mute);
   }
 
-  /* Option comparison */
-  .option-compare {
+  /* Principle compare */
+  .principle-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
     margin-top: 32px;
   }
-  .option-card {
+  .principle-card {
     border-radius: 14px;
     padding: 28px;
-    border: 1px solid var(--line);
-    background: var(--surface);
-  }
-  .option-card.chosen {
+    border: 1px solid var(--accent);
     background: var(--accent-soft);
-    border-color: var(--accent);
   }
-  .option-card .opt-tag {
+  .principle-card .opt-tag {
     display: inline-block;
     padding: 4px 10px;
     border-radius: 6px;
@@ -412,24 +431,19 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-bottom: 14px;
-    background: rgba(0,0,0,0.06);
-    color: var(--ink-mute);
-  }
-  .option-card.chosen .opt-tag {
     background: var(--accent);
     color: #fff;
   }
-  .option-card h4 { font-size: 18px; margin-bottom: 16px; }
-  .option-card ul { margin: 0; padding: 0; list-style: none; }
-  .option-card li {
+  .principle-card h4 { font-size: 20px; margin-bottom: 16px; letter-spacing: -0.02em; }
+  .principle-card ul { margin: 0; padding: 0; list-style: none; }
+  .principle-card li {
     font-size: 14px;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid rgba(31, 77, 62, 0.18);
     color: var(--ink-soft);
   }
-  .option-card li:last-child { border-bottom: none; }
-  .option-card li.pro::before { content: "+ "; color: var(--accent); font-weight: 700; }
-  .option-card li.con::before { content: "− "; color: #c44; font-weight: 700; }
+  .principle-card li:last-child { border-bottom: none; }
+  .principle-card li::before { content: "+ "; color: var(--accent); font-weight: 700; }
 
   /* Compromise callout */
   .compromise {
@@ -442,7 +456,7 @@
   .compromise h4 { font-size: 15px; margin-bottom: 8px; }
   .compromise p { font-size: 14px; line-height: 1.55; }
 
-  /* Solution layout (matches Dell INC pattern) */
+  /* Solution layout (matches Dell IntelliAssist pattern) */
   .solution { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--line); }
   .solution > .eyebrow { color: var(--accent); margin-bottom: 8px; }
   .solution h3 { color: var(--ink); margin-bottom: 24px; font-size: 26px; letter-spacing: -0.02em; }
@@ -470,6 +484,14 @@
   }
   .solution-detail h4 { font-size: 20px; margin-bottom: 12px; }
   .solution-detail p { font-size: 15px; line-height: 1.55; }
+  .solution-detail .sol-tag {
+    margin-top: 18px;
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
   .solution-detail .sol-img {
     border-radius: 10px;
     overflow: hidden;
@@ -490,10 +512,96 @@
     object-fit: contain;
   }
 
-  /* Evaluation metric cards */
+  /* Stacked variant, text on top, image full-width below
+     used for wide/full-screen images so they stay readable */
+  .solution-detail.stacked {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 32px;
+  }
+  .solution-detail.stacked .sol-img {
+    max-height: none;
+    padding: 18px;
+    width: 100%;
+  }
+  .solution-detail.stacked .sol-img img {
+    max-height: none;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Zoomable images, click to expand */
+  img.zoomable {
+    cursor: zoom-in;
+    transition: opacity 180ms ease;
+  }
+  img.zoomable:hover { opacity: 0.92; }
+
+  /* Lightbox overlay */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 14, 12, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 40px;
+    cursor: zoom-out;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  .lightbox.open {
+    display: flex;
+    opacity: 1;
+  }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    object-fit: contain;
+    cursor: default;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 180ms ease, transform 180ms ease;
+  }
+  .lightbox-close:hover {
+    background: rgba(255,255,255,0.22);
+    transform: scale(1.05);
+  }
+  .lightbox-cap {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  body.lightbox-open { overflow: hidden; }
+
+  /* Impact metric cards */
   .eval-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-top: 32px;
   }
@@ -513,22 +621,16 @@
   }
   .eval-card h4 { font-size: 18px; margin-bottom: 12px; }
   .eval-card .eval-result {
-    font-size: 28px;
+    font-size: 36px;
     font-weight: 600;
     color: var(--accent);
     letter-spacing: -0.02em;
-    line-height: 1.2;
-    margin-bottom: 8px;
+    line-height: 1.1;
+    margin-bottom: 10px;
   }
   .eval-card p { font-size: 14px; line-height: 1.55; }
-  .eval-card .eval-meta {
-    font-size: 12px;
-    color: var(--ink-mute);
-    margin-top: 10px;
-    font-style: italic;
-  }
 
-  /* Constraints */
+  /* Constraints (learnings) */
   .constraints-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -555,7 +657,7 @@
 
   /* Figure */
   .figure {
-    margin: 36px 0;
+    margin: 36px 0 0;
     border-radius: 14px;
     overflow: hidden;
     border: 1px solid var(--line);
@@ -581,26 +683,6 @@
     margin-top: 12px;
     letter-spacing: 0.02em;
   }
-
-  /* Outcomes */
-  .outcomes-final {
-    background: #0f1f1a;
-    color: #fff;
-    border-radius: 18px;
-    padding: 56px 48px;
-    margin-top: 24px;
-  }
-  .outcomes-final .eyebrow { color: rgba(255,255,255,0.55); }
-  .outcomes-final h2 { color: #fff; margin-bottom: 36px; }
-  .outcomes-final .stats {
-    border: none;
-    padding: 0;
-    margin-top: 0;
-    grid-template-columns: repeat(4, 1fr);
-  }
-  .outcomes-final .stat .num { color: #7fd6b3; font-size: 48px; }
-  .outcomes-final .stat .lbl { color: #fff; }
-  .outcomes-final .stat .sub { color: rgba(255,255,255,0.55); }
 
   /* Scroll spy */
   .scroll-spy {
@@ -676,7 +758,7 @@
   @media (max-width: 880px) {
     h1 { font-size: 34px; }
     h2 { font-size: 28px; }
-    .hero-grid, .stats, .what-why-grid, .insights-grid, .option-compare,
+    .hero-grid, .stats, .what-why-grid, .insights-grid, .principle-grid,
     .solution-detail, .eval-grid, .constraints-grid, .sec-head-aside,
     .quick-facts, .reflect-grid, .snapshot {
       grid-template-columns: 1fr;
@@ -698,7 +780,6 @@
       padding-top: 24px;
       margin-top: 24px;
     }
-    .outcomes-final .stats { grid-template-columns: 1fr 1fr; gap: 32px; }
     .solution-detail { padding: 24px; gap: 24px; }
   }
 
@@ -895,6 +976,35 @@
     .end-cap .next-up .next-title { font-size: 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
   }
 
+  /* ── NDA confidentiality badge — all image containers ── */
+  .hero-showcase,
+  .sol-img,
+  .pain-card .pain-img,
+  .figure { position: relative; }
+
+  .hero-showcase::before,
+  .sol-img::before,
+  .pain-card .pain-img::before,
+  .figure::before {
+    content: "⊘  Designs modified · NDA";
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgba(10, 10, 10, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-family: "General Sans", -apple-system, system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.82);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    z-index: 5;
+    pointer-events: none;
+  }
+
 
   /* ── Top site nav (matches home) ── */
   .site-nav {
@@ -948,79 +1058,78 @@
   <a href="#context">Problem</a>
   <a href="#what-why">What &amp; Why</a>
   <a href="#research">Research</a>
-  <a href="#design-choices">Design Choices</a>
   <a href="#final-design">Final Design</a>
-  <a href="#evaluation">Evaluation</a>
-  <a href="#constraints">Constraints</a>
+  <a href="#shipped">Shipped</a>
+  <a href="#evaluation">Impact</a>
+  <a href="#learnings">Learnings</a>
   <a href="#retrospective">Retrospective</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="wrap">
-    <div class="eyebrow">Case Study · Dell IntelliAssist · Dell Technologies</div>
-    <h1>I built a GEN-AI sales chat that <i>replaced six tools with one verified-answer interface.</i></h1>
-    <p class="lede">Dell sales reps were losing hours every week jumping between platforms to assemble a single answer. IntelliAssist consolidates product info, order data, and sales playbooks into one conversational interface, with verified answers and the underlying sources surfaced for review.</p>
+    <div class="eyebrow">Case Study 03 · Dell IntelliAssist 2.0 · Dell Technologies</div>
+    <h1>I rebuilt Dell's AI workspace into <i>a full-screen sales assistant.</i></h1>
+    <p class="lede">Evolving Dell's AI support from a cramped chat box into a full-screen workspace where 12+ APIs, source-tagged answers, and the sales portal's tools all sit under one conversation. Ticket volume fell 55%, self-serve adoption hit 92%, and reps finally trusted what the AI said.</p>
 
     <div class="chip-tags" aria-label="Project tags">
-      <span class="chip-tag status"><span class="dot" aria-hidden="true"></span>Shipped · 2023</span>
-      <span class="chip-tag">GenAI</span>
-      <span class="chip-tag">Conversational UI</span>
+      <span class="chip-tag status"><span class="dot" aria-hidden="true"></span>Shipped · 2024</span>
+      <span class="chip-tag">AI Tools</span>
       <span class="chip-tag">Enterprise Software</span>
       <span class="chip-tag">Sales Enablement</span>
+      <span class="chip-tag">GenAI</span>
     </div>
-
-    <div class="hero-showcase">
-      <img loading="lazy" decoding="async" src="./images/dellai-v1-hero.png" alt="IntelliAssist hero screen showing the AI chat interface with Dell branding" />
-    </div>
-    <div class="hero-showcase-cap">IntelliAssist, an AI chat interface designed for Dell's sales teams</div>
-
 
     <div class="hero-grid">
       <div>
         <div class="eyebrow" style="margin-bottom:10px;">The Challenge</div>
-        <p>Dell sales reps were losing hours every week jumping between platforms to answer customer questions, find product info, or check order status. The information was there. Finding it was the problem.</p>
+        <p>Dell employees were stuck inside a cramped chat window that surfaced shallow AI answers and hid the platform's real capabilities. Checking a single order meant opening four other tabs, then pinging a teammate anyway.</p>
       </div>
       <div>
         <div class="eyebrow" style="margin-bottom:10px;">The Solution</div>
-        <p>IntelliAssist, a GEN-AI chat interface that consolidates six+ tools into one place. Users ask in natural language and get verified answers with sources attached, so they can trust what they read and move on.</p>
+        <p>IntelliAssist 2.0, a full-screen AI workspace that unifies 12+ APIs, source-tagged answers, and the centralized sales portal into one place. Fewer tickets, more self-serve, and trust in what the AI says.</p>
       </div>
     </div>
 
     <div class="stats">
       <div class="stat">
-        <div class="num">10,000+</div>
-        <div class="lbl">Users</div>
-        <div class="sub">across Dell sales teams</div>
+        <div class="num">55%</div>
+        <div class="lbl">Ticket volume reduced</div>
+        <div class="sub">across enterprise support</div>
       </div>
       <div class="stat">
-        <div class="num">6+</div>
-        <div class="lbl">Services in one interface</div>
-        <div class="sub">consolidated into a single chat</div>
+        <div class="num">92%</div>
+        <div class="lbl">Self-serve adoption</div>
+        <div class="sub">on the new workspace</div>
       </div>
       <div class="stat">
-        <div class="num">85</div>
-        <div class="lbl">SUS Score</div>
-        <div class="sub">post-launch usability survey</div>
+        <div class="num">78%</div>
+        <div class="lbl">Faster task completion</div>
+        <div class="sub">in testing, vs. 52% on legacy chat</div>
       </div>
     </div>
+
+    <div class="hero-showcase">
+      <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-hero-landing.png" alt="IntelliAssist 2.0 landing screen showing the AI chat, prompt suggestions, and integrated sales tiles" />
+    </div>
+    <div class="hero-showcase-cap">IntelliAssist 2.0, the redesigned Dell AI sales workspace</div>
 
     <div class="quick-facts" aria-label="Project quick facts">
       <div class="fact">
         <h4>Role</h4>
-        <p>Senior Product Designer<span class="muted">end-to-end design, research, prototyping</span></p>
+        <p>Senior Product Designer<span class="muted">research, IA, interaction, visual</span></p>
       </div>
       <div class="fact">
         <h4>Team</h4>
-        <p>Dell Technologies<span class="muted">1 PM, 6 engineers, 1 designer (me)</span></p>
+        <p>Dell Technologies<span class="muted">2 PMs, 8 engineers, 2 designers</span></p>
       </div>
       <div class="fact">
         <h4>Timeline</h4>
-        <p>6 months<span class="muted">discovery through MVP launch, 2023</span></p>
+        <p>8 months<span class="muted">discovery through pilot launch, 2024</span></p>
       </div>
       <div class="fact">
         <h4>Tools</h4>
-        <p>Figma · Miro · UserTesting<span class="muted">SME sessions, SUS survey post-launch</span></p>
+        <p>Figma · Mural · UserTesting<span class="muted">pilot telemetry, post-launch surveys</span></p>
       </div>
     </div>
 
@@ -1046,15 +1155,15 @@
     <div class="snapshot">
       <div class="snap-col">
         <div class="snap-label">Problem</div>
-        <p>Dell sales reps relied on at least six platforms to answer customer questions, knowledge base, order systems, support docs, internal wikis, ticketing tools, and product spec sheets. A single question often meant three or four context switches on every call.</p>
+        <p>Dell employees worked inside a cramped chat box that surfaced shallow AI answers and hid the platform's real capabilities. Checking a single order meant opening four other tabs, then pinging a teammate. Adoption stalled and support tickets piled up.</p>
       </div>
       <div class="snap-col">
         <div class="snap-label">Change</div>
-        <p>I built a GEN-AI chat interface that lets reps ask questions in plain language and get verified answers, with the underlying sources surfaced. Six platforms collapsed into one conversational surface, and the citation pattern carried the trust, not just the model.</p>
+        <p>I rebuilt IntelliAssist into a full-screen AI workspace that unifies 12+ APIs, source-tagged answers, and the sales portal's tools under one conversation. Reps see where each answer came from, trust what they read, and stay inside one surface.</p>
       </div>
       <div class="snap-col">
         <div class="snap-label">Results</div>
-        <p>10,000+ Dell sales reps adopted the tool. Six+ platforms consolidated into one surface. The post-launch usability survey landed an 85 SUS, validating that reps could find, trust, and act on answers without leaving the chat.</p>
+        <p>Ticket volume dropped 55% across enterprise support. Self-serve adoption hit 92% on the new workspace. Task completion ran 78% faster vs. 52% on the legacy chat. 85% of pilot users reported easier access to critical tools.</p>
       </div>
     </div>
   </div>
@@ -1066,10 +1175,10 @@
     <div class="sec-head-aside">
       <div>
         <div class="eyebrow">Problem area</div>
-        <h2>Information was everywhere except where it was needed.</h2>
+        <h2>The chat box was tiny. The job it had to do wasn't.</h2>
       </div>
       <div>
-        <p><strong style="color: var(--ink); font-weight: 600;">Dell sales reps needed verified answers about orders, product specs, and policy in the middle of customer calls.</strong> But the answers lived across at least six platforms: a knowledge base, order systems, support docs, internal wikis, ticketing tools, and product spec sheets. Reps context-switched three or four times for a single question, slowing response times and pushing edge cases onto teammates. The goal: unify the answer layer into one conversational interface with sources attached, so the workflow could trust the AI instead of routing around it.</p>
+        <p><strong style="color: var(--ink); font-weight: 600;">Dell's enterprise sales teams needed answers about orders, configs, and customer history during live conversations.</strong> But they were stuck inside a cramped, outdated chat interface, toggling between four to six systems to assemble a single response. Tickets piled up at the support desk, AI adoption stalled, and reps quietly defaulted to bookmarks and pinging teammates. The goal was to unify scattered tools into one full-screen workspace that could replace the chat-plus-tabs workaround with a single source of truth.</p>
       </div>
     </div>
   </div>
@@ -1080,24 +1189,24 @@
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">What & Why</div>
-        <h2>An AI chatbot to unify the answer layer.</h2>
+        <div class="eyebrow">What &amp; Why</div>
+        <h2>Tiny chat. Wasted AI. Scattered tools.</h2>
       </div>
       <div>
-        <p>IntelliAssist is a GEN-AI assistant that lets Dell employees ask questions in plain language and get verified answers, with the underlying sources surfaced for review. The why is the part most AI projects skip: this is replacing six tools, so trust is the foundation.</p>
+        <p>Three problems showed up at the same time. The chat surface was too small for real work. The AI underneath gave generic answers that no one trusted. And the tools that could have helped were spread across a portal nobody could navigate. The redesign had to fix all three.</p>
       </div>
     </div>
 
     <div class="what-why-grid">
       <div class="what-why-card">
         <span class="ico">💬</span>
-        <h4>What</h4>
-        <p>An AI chatbot that gives Dell employees instant answers to their questions and pulls together information that used to be scattered across at least six platforms.</p>
+        <h4>The What</h4>
+        <p>A full-screen AI workspace that replaces the cramped chat with prompt suggestions, source-tagged answers, and the sales portal's tools sitting directly underneath the conversation.</p>
       </div>
       <div class="what-why-card">
         <span class="ico">🎯</span>
-        <h4>Why</h4>
-        <p>Employees navigated multiple platforms daily to access sales details and customer data. IntelliAssist consolidates the answer layer, providing instant accurate replies about Dell processes with sources attached for verification.</p>
+        <h4>The Why</h4>
+        <p>The business needed a stable platform to integrate new AI capabilities and unify sales tools. Without it, employees faced disjointed processes, errors, and stalled enterprise-wide AI adoption.</p>
       </div>
     </div>
   </div>
@@ -1109,108 +1218,58 @@
     <div class="sec-head-aside">
       <div>
         <div class="eyebrow">Research</div>
-        <h2>Five interviews. Four patterns.</h2>
+        <h2>Low trust, low discovery, high workaround behavior.</h2>
       </div>
       <div>
-        <p>I ran in-depth interviews with five Dell employees, sales reps, data analysts, and project managers, to understand their daily workflows, friction points, and the specific moments when the platform sprawl cost them time. Four pain points kept surfacing across roles.</p>
+        <p>Across user interviews, a clear pattern emerged. Employees lacked confidence in the tool, found it slow to navigate, and rarely discovered features on their own. The result was low adoption, fragmented workflows, and delays in customer resolution.</p>
       </div>
     </div>
 
     <div class="insights-grid">
       <div class="pain-card">
+        <div class="pain-img">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-pain-incomplete-answer.png" alt="The legacy IntelliAssist AI Result panel showing an order details response with limited context and no follow-up paths" />
+        </div>
         <span class="ico">🧩</span>
-        <h4>Fragmented information ecosystem</h4>
-        <p>Constant switching between systems. Information scattered across six tools.</p>
+        <h4>Incomplete answer context</h4>
+        <p>The AI gave surface-level details without supporting context, related information, or follow-up questions. Users couldn't tell what to trust.</p>
         <blockquote>
-          "Navigating between so many different platforms to find the information I need is a constant time sink and a major source of frustration."
+          "The chatbot gives generic answers. I can't trust it."
           <cite>Sales Representative</cite>
         </blockquote>
       </div>
 
       <div class="pain-card">
-        <span class="ico">🌀</span>
-        <h4>Complex and confusing processes</h4>
-        <p>Order management, troubleshooting, policy lookups. Hard to know where to start.</p>
+        <div class="pain-img">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-pain-buried-features.png" alt="Legacy IntelliAssist landing screen with a sparse search input that hid the AI's full capabilities" />
+        </div>
+        <span class="ico">📭</span>
+        <h4>Buried features, low adoption</h4>
+        <p>The sparse landing screen failed to highlight the AI's full capabilities. Feature discovery was low, and employees defaulted to peer-dependent learning.</p>
         <blockquote>
-          "Some of our internal processes are so complicated that it's hard to know where to start or who to ask for help."
-          <cite>Sales Representative</cite>
-        </blockquote>
-      </div>
-
-      <div class="pain-card">
-        <span class="ico">🔎</span>
-        <h4>Time-consuming manual searches</h4>
-        <p>Keyword searches returned irrelevant results. Users sifted long docs for specifics.</p>
-        <blockquote>
-          "It can take me hours to find the right information, especially when I'm looking for something very specific or technical."
+          "I have to ping a teammate to get the right resource."
           <cite>Project Manager</cite>
         </blockquote>
       </div>
 
       <div class="pain-card">
-        <span class="ico">🛠️</span>
-        <h4>Desire for self-service support</h4>
-        <p>Users wanted to resolve issues alone, especially on tight deadlines.</p>
+        <div class="pain-img">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-pain-workarounds.png" alt="Dell Technologies Sales Portal home with a wall of self-serve tiles that users routed around in favor of bookmarks" />
+        </div>
+        <span class="ico">🔖</span>
+        <h4>Workarounds replaced the tool</h4>
+        <p>Search was so slow that users had quietly stopped using it. Bookmarks were faster, even when stale. The tool was being routed around, not used.</p>
         <blockquote>
-          "I would love to have a tool that could instantly answer my questions, especially when I'm working on a tight deadline."
+          "I just use bookmarks. Searching takes too long."
           <cite>Data Engineer</cite>
         </blockquote>
       </div>
     </div>
 
     <div class="figure">
-      <img loading="lazy" decoding="async" src="./images/dellai-v1-research-synthesis.png" alt="Research synthesis board mapping the four user pain points to design opportunities" />
+      <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-synthesis-venn.png" alt="Synthesis venn diagram, tiny chat plus wasted AI plus scattered tools converging into a unified workspace" />
     </div>
-    <div class="figure-cap">Synthesis, the four pain points mapped to design opportunities</div>
-  </div>
-</section>
-
-<!-- DESIGN CHOICES -->
-<section id="design-choices">
-  <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">Design Choices</div>
-        <h2>Clarity over hidden complexity.</h2>
-      </div>
-      <div>
-        <p>Two interface directions, both viable. I balanced user feedback, brand guidelines, and engineering feasibility, and converged on Option B. The deciding factor: sales reps needed quick answers, not more clicks. Hiding sample prompts behind a tap added an interaction cost they didn't have time for.</p>
-      </div>
-    </div>
-
-    <div class="option-compare">
-      <div class="option-card">
-        <span class="opt-tag">Option A</span>
-        <h4>Familiar first impression</h4>
-        <ul>
-          <li class="pro">Looks like other chatbots, low learning curve</li>
-          <li class="pro">Clear visual hierarchy</li>
-          <li class="con">Sample questions hidden behind click</li>
-          <li class="con">Higher interaction cost for first-time users</li>
-        </ul>
-      </div>
-
-      <div class="option-card chosen">
-        <span class="opt-tag">Option B, chosen</span>
-        <h4>Instant discoverability</h4>
-        <ul>
-          <li class="pro">Sample questions visible immediately</li>
-          <li class="pro">Brand consistency with Dell's signature colors</li>
-          <li class="con">Denser initial layout</li>
-          <li class="con">Required tuning for cleaner reading pattern</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="compromise">
-      <h4>🚨 Balancing business "wants" with user guidance</h4>
-      <p>The business loved the yellow tile for sample questions, so we kept it. Turns out, that pop of color isn't just visual flavor: it guides attention to the right first action without breaking the rest of Dell's brand. A small compromise for a big clarity win.</p>
-    </div>
-
-    <div class="figure">
-      <img loading="lazy" decoding="async" src="./images/dellai-v1-option-comparison.png" alt="Side by side comparison of Option A and Option B chat interfaces" />
-    </div>
-    <div class="figure-cap">Option A versus Option B, side-by-side comparison shown to stakeholders</div>
+    <div class="figure-cap">Synthesis, three pain points converging into one unified workspace</div>
   </div>
 </section>
 
@@ -1220,142 +1279,234 @@
     <div class="sec-head-aside">
       <div>
         <div class="eyebrow">Final Design</div>
-        <h2>One chat, six tools' worth of answers.</h2>
+        <h2>One workspace, five intentional decisions.</h2>
       </div>
       <div>
-        <p>The shipped IntelliAssist focused on three things that mattered for trust: making prompts discoverable, color-coding the conversation so users always know who said what, and attaching sources to every answer so verification takes a click, not a search.</p>
+        <p>The shipped IntelliAssist 2.0 wraps a full-screen AI chat in a workspace that holds context. Underneath, five interface decisions made the new pattern work for employees who'd been burned by the old one.</p>
       </div>
     </div>
 
     <div class="solution">
-      <div class="eyebrow">The Solution</div>
-      <h3>Three principles in the interface</h3>
+      <div class="eyebrow">Track 01</div>
+      <h3>Unified workspace for seamless workflows</h3>
 
-      <div class="solution-detail">
-        <div>
-          <span class="sol-num">01</span>
-          <h4>Quick-start prompts in the chat itself</h4>
-          <p>Sample questions sit visibly above the input. Users see what kinds of things they can ask without having to read a tutorial. First-time anxiety drops; adoption climbs.</p>
+      <div class="figure" style="margin: 8px 0 36px;">
+        <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-track1-overview.png" alt="Annotated overview of the IntelliAssist 2.0 landing showing where the smart prompt suggestions (1) and familiar self-serve tiles (2) sit on the page" />
+      </div>
+      <div class="figure-cap">Overview, two coordinated moves on a single landing screen</div>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">1</span>
+          <h4>Smart search prompt affordance</h4>
+          <p>User testing revealed hesitation around what to ask. I introduced role-specific prompts to reduce friction, guide first-time use, and highlight AI capabilities. These soft nudges boost perceived relevance and support progressive discovery, all without overwhelming the interface.</p>
+          <div class="sol-tag">Contextual Onboarding · Behavior Design</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" src="./images/dellai-v1-solution-1.png" alt="IntelliAssist chat interface with sample prompts visible at the top of the input area" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-smart-search-prompt.png" alt="Smart search input with role-specific prompt chips visible at first load" />
+        </div>
+      </div>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">2</span>
+          <h4>Familiar cards carried over from the legacy interface</h4>
+          <p>To ease adoption, I retained the familiar card layout from the legacy interface. This preserved mental-model continuity, reduced cognitive friction, and helped users feel more in control. A small but intentional decision that improved learnability and supported a smoother behavioral transition to the AI workflow.</p>
+          <div class="sol-tag">Change Management · Mental Model</div>
+        </div>
+        <div class="sol-img">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-familiar-cards.png" alt="Full IntelliAssist 2.0 landing showing the search input with prompt suggestions above the self-serve tile grid" />
+        </div>
+      </div>
+    </div>
+
+    <div class="solution">
+      <div class="eyebrow">Track 02</div>
+      <h3>Full-screen interface for contextual efficiency</h3>
+
+      <div class="figure" style="margin: 8px 0 36px;">
+        <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-track2-overview.png" alt="Annotated overview of an IntelliAssist 2.0 result page showing the collapsible sidebar (1), follow-up prompts (2), and sources panel (3)" />
+      </div>
+      <div class="figure-cap">Overview, the full-screen workspace with sidebar, follow-ups, and sources in view</div>
+
+      <div class="solution-detail">
+        <div class="sol-text">
+          <span class="sol-num">1</span>
+          <h4>Collapsible resource sidebar</h4>
+          <p>To give users a sense of control, I added a collapsible sidebar so they could self-navigate when the AI response fell short. It acts as an escape hatch, offering a familiar fallback path that boosted confidence and supported smoother adoption during the transition to AI-assisted workflows.</p>
+          <div class="sol-tag">User Control · Flexibility · Fallback UX</div>
+        </div>
+        <div class="sol-img">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-collapsible-sidebar.png" alt="Collapsible left-rail sidebar showing self-serve resource tiles like GenAI Sales Support and Order Tracking Hub" />
+        </div>
+      </div>
+
+      <div class="solution-detail stacked">
+        <div class="sol-text">
+          <span class="sol-num">2</span>
+          <h4>Follow-up and "search instead" prompts</h4>
+          <p>These contextual suggestions help users reframe queries or explore related topics when AI responses fall short. They reduce blank states and reinforce conversational UX patterns, making the AI experience feel more responsive and guided.</p>
+          <div class="sol-tag">Intent Refinement · Conversational UX</div>
+        </div>
+        <div class="sol-img">
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-follow-up-prompts.jpg" alt="Follow-up question chips and a search-instead input shown below an AI response" />
         </div>
       </div>
 
       <div class="solution-detail">
-        <div>
-          <span class="sol-num">02</span>
-          <h4>Scannable response templates</h4>
-          <p>Two patterns shape every response. Conversations are color-coded by speaker (user vs. AI) so the back-and-forth stays readable. And structured replies (like order status) use a custom template that surfaces critical info first: status, key details, progress, then drill-down links. Users assess and move on without re-reading.</p>
+        <div class="sol-text">
+          <span class="sol-num">3</span>
+          <h4>Sources and related articles inline</h4>
+          <p>I added visible sources and related links to increase the credibility of AI responses and help users feel confident in what they were seeing. This supports AI explainability, gives users a way to independently validate results, and builds trust without dependence, especially important during early AI adoption.</p>
+          <div class="sol-tag">Transparency · AI Explainability · Trust Design</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" src="./images/dellai-v1-solution-2.png" alt="IntelliAssist order details response template with status, key data, and progress indicators laid out cleanly" />
-        </div>
-      </div>
-
-      <div class="solution-detail">
-        <div>
-          <span class="sol-num">03</span>
-          <h4>Verified answers with sources attached</h4>
-          <p>Every AI response surfaces the knowledge base articles and support resources it drew from. Users validate in a click, building trust in the tool over time and learning the underlying systems by following the trail.</p>
-        </div>
-        <div class="sol-img">
-          <img loading="lazy" decoding="async" src="./images/dellai-v1-solution-3.png" alt="IntelliAssist response with linked source articles displayed inline below the answer" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-sources-related.png" alt="Right-rail panel showing the source for the AI response with related articles listed underneath" />
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EVALUATION -->
-<section id="evaluation">
+<!-- FINAL SHIPPED DESIGN -->
+<section id="shipped">
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">Evaluation</div>
-        <h2>Four metrics. All moving the right way.</h2>
+        <div class="eyebrow">The Shipped Design</div>
+        <h2>IntelliAssist 2.0, end to end.</h2>
       </div>
       <div>
-        <p>Initial launch data from pilot groups and post-launch telemetry showed IntelliAssist delivered on the core promises: usability, time savings, self-service, and confidence in the answers. Sampled across two weeks of post-launch traffic and 18 observed workflows.</p>
+        <p>The five decisions added up to one workspace. A full-screen AI surface that holds context, surfaces prompts, attaches sources, and keeps the legacy self-serve tools one click away. This is the shipped state, the same view a Dell sales rep sees on day one.</p>
+      </div>
+    </div>
+
+    <div class="hero-showcase" style="margin-top: 32px;">
+      <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-shipped-landing.png" alt="The shipped IntelliAssist 2.0 workspace at full width showing the unified AI chat, prompt rail, sources, and self-serve tiles in one view" />
+    </div>
+    <div class="hero-showcase-cap">01. Landing, the unified workspace at first open</div>
+
+    <div class="hero-showcase" style="margin-top: 56px;">
+      <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-shipped-esp-query.png" alt="IntelliAssist 2.0 answering How to gain access to ESP with steps, key resources, sources, related articles, and a search-instead area below" />
+    </div>
+    <div class="hero-showcase-cap">02. Knowledge query, ESP access with sources, related articles, and a search-instead fallback</div>
+
+    <div class="hero-showcase" style="margin-top: 56px;">
+      <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-shipped-order-status.png" alt="IntelliAssist 2.0 answering an order status query with an AI suggestion card, expandable order details, timeline, shipment, and cancellation accordions" />
+    </div>
+    <div class="hero-showcase-cap">03. Order status query, structured response with expandable details and a direct source link</div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section id="evaluation">
+  <div class="wrap">
+
+    <div class="pullquote">
+      <blockquote>"This tool transformed how our teams operate. Finally, the right resources are at their fingertips, exactly when needed."</blockquote>
+      <cite><strong>Director, Operational Intelligence</strong> · IntelliAssist 2.0 launch retrospective</cite>
+    </div>
+
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Impact</div>
+        <h2>Three measurable shifts post-launch.</h2>
+      </div>
+      <div>
+        <p>Due to tight launch timelines, we validated critical workflows with pilot users, iterating rapidly on feedback like confusing navigation and unclear AI responses. The numbers below come from pilot telemetry and post-launch surveys.</p>
       </div>
     </div>
 
     <div class="eval-grid">
       <div class="eval-card">
-        <div class="eval-method">SUS, sentiment analysis</div>
-        <h4>User satisfaction, early adoption</h4>
-        <div class="eval-result">78 / 100</div>
-        <p>The pilot group rated IntelliAssist 78 on the System Usability Scale. Most-cited phrase in qualitative feedback: "intuitive guidance," with a noted drop in first-time user anxiety.</p>
-        <div class="eval-meta">Preliminary data from the initial launch phase.</div>
+        <div class="eval-method">🚀 Workflow streamlining</div>
+        <h4>Cut redundant tasks</h4>
+        <div class="eval-result">40%</div>
+        <p>Centralizing AI chat, self-serve tiles, and sales tools cut redundant tasks like order tracking by 40%, letting employees focus on high-value work.</p>
       </div>
 
       <div class="eval-card">
-        <div class="eval-method">Task log analysis, SME interviews</div>
-        <h4>Workflow efficiency gains</h4>
-        <div class="eval-result">82%</div>
-        <p>Task completion rate for core workflows (order status checks, policy lookups, troubleshooting). Users saved ~3.2 minutes per task versus manual search.</p>
-        <div class="eval-meta">Sampled across two weeks of post-launch data.</div>
+        <div class="eval-method">✂️ Platform consolidation</div>
+        <h4>Eliminated daily platform-switching</h4>
+        <div class="eval-result">72%</div>
+        <p>Integrated sales portal resources eliminated daily platform-switching for 72% of pilot users, freeing up time for higher-impact work.</p>
       </div>
 
       <div class="eval-card">
-        <div class="eval-method">Escalation rate tracking</div>
-        <h4>Self-service momentum</h4>
-        <div class="eval-result">58% / 72%</div>
-        <p>58% of inquiries resolved without human support on first try. Repeat users hit a 72% self-resolution rate, an early indicator of learnability and growing trust.</p>
-        <div class="eval-meta">Tracked from launch through the first 30 days.</div>
-      </div>
-
-      <div class="eval-card">
-        <div class="eval-method">Pre/post-launch surveys, behavioral telemetry</div>
-        <h4>Increased decision confidence</h4>
-        <div class="eval-result">68%</div>
-        <p>68% of users reported higher confidence in task outcomes when using IntelliAssist versus their previous workflow.</p>
-        <div class="eval-meta">Measured across 18 observed workflows.</div>
+        <div class="eval-method">💡 AI adoption</div>
+        <h4>Feature discovery up, friction down</h4>
+        <div class="eval-result">55% / 85%</div>
+        <p>Feature discovery rose by 55%. 85% of users reported "easier access to critical tools" once the new workspace was live.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONSTRAINTS -->
-<section id="constraints">
+<!-- LEARNINGS (original three cards, preserved) -->
+<section id="learnings">
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">Constraints</div>
-        <h2>Navigating real-world limits.</h2>
+        <div class="eyebrow">Learnings</div>
+        <h2>What I'll take into the next AI project.</h2>
       </div>
       <div>
-        <p>Designing an AI tool inside a Fortune 500 means working around tight timelines, compliance rules, and capability gaps that aren't documented anywhere. Three constraints shaped the MVP scope; I held the line on shipping something that worked for sales reps first, then expanding.</p>
+        <p>The constraints on this project (tight deadlines, leadership-driven requirements, ambiguous AI capabilities) weren't problems to solve. They were the conditions of the work. Three things I learned about designing inside them.</p>
       </div>
     </div>
 
     <div class="constraints-grid">
       <div class="constraint-card">
+        <span class="ico">⚖️</span>
+        <h4>Business needs and user needs aren't opposites</h4>
+        <p>Strict leadership requirements often mirrored hidden user needs, like faster workflows.</p>
+        <div class="response">Treat constraints as guardrails, not roadblocks. Find the user need inside the business ask.</div>
+      </div>
+
+      <div class="constraint-card">
         <span class="ico">⏳</span>
-        <h4>Tight deadlines for impact</h4>
-        <p>Accelerated timelines prioritized MVP delivery over exploratory research.</p>
-        <div class="response">Focused on high-impact, SME-backed workflows (order status, policy lookup) to align with stakeholder goals.</div>
+        <h4>Limited time means ruthless prioritization</h4>
+        <p>With tight deadlines, I prototyped only critical flows first like order tracking, then iterated post-launch.</p>
+        <div class="response">Agility and quality coexist if you're honest about what to cut.</div>
       </div>
 
       <div class="constraint-card">
-        <span class="ico">🔒</span>
-        <h4>Resource & access limitations</h4>
-        <p>Restricted access to cross-departmental users and historical data due to compliance policies.</p>
-        <div class="response">Leveraged sales-team SMEs as proxies for edge cases and validated designs against existing analytics.</div>
-      </div>
-
-      <div class="constraint-card">
-        <span class="ico">🌫️</span>
-        <h4>Ambiguous requirements</h4>
-        <p>Early-stage AI capabilities lacked clear technical boundaries, creating design ambiguity around what could ship.</p>
-        <div class="response">Adopted iterative prototyping to align engineering feasibility with user needs in tight loops.</div>
+        <span class="ico">🤝</span>
+        <h4>Compromise is strategy, not failure</h4>
+        <p>Letting go of "perfect" features like custom animations freed time to solve bigger issues like AI response accuracy.</p>
+        <div class="response">Progress beats perfection. Choose where to invest the polish.</div>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- RETROSPECTIVE -->
+<section id="key-decision" style="padding:60px 0 0;">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Key Decision</div>
+        <h2>Full-screen, not a bigger panel.</h2>
+      </div>
+      <div>
+        <p>The legacy chatbot was a collapsible side panel. The obvious fix, and the one most stakeholders asked for, was to make the panel wider. I pushed back on that.</p>
+      </div>
+    </div>
+    <div class="reflect-grid">
+      <div class="reflect-card">
+        <span class="label">Why I chose full-screen</span>
+        <h4>A panel is always secondary. A full-screen surface says: this is the tool.</h4>
+        <p>If reps can keep the panel closed and still do their job, they will. Full-screen forced a commitment: open IntelliAssist or don't. That commitment eliminated the half-in, half-out usage pattern where reps would open the panel, distrust the answer, and call a teammate anyway. Ticket volume dropped 55% not because the AI got smarter, but because there was no easy exit to the old behavior.</p>
+      </div>
+      <div class="reflect-card">
+        <span class="label">What I traded away</span>
+        <h4>Some reps wanted the panel back. Here's why I held the line.</h4>
+        <p>Three pilot reps requested a "compact mode" during testing. My concern was that compact mode would become the default and reproduce the low-commitment usage we were trying to break. I proposed a collapsible source drawer instead: visible proof that answers are traceable, available without exiting the surface. That addressed the underlying need (transparency) without reopening the escape hatch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="retrospective">
   <div class="wrap">
     <div class="sec-head-aside">
@@ -1371,67 +1522,168 @@
     <div class="reflect-grid">
       <div class="reflect-card">
         <span class="label">Impact on me</span>
-        <h4>The trust gap is the real design problem in GenAI.</h4>
-        <p>Reps adopted IntelliAssist not because the answers were faster, but because they could see where each answer came from. Designing the source-citation, confidence cues, and recovery paths shaped how I scope every AI feature now. The model is only half the work.</p>
+        <h4>Designing for AI trust is its own discipline.</h4>
+        <p>Adoption didn't move when the AI got smarter. It moved when reps could see where each answer came from. Source-tagging, prompt suggestions, and recovery paths did more for behavior than any single model improvement. That changed how I scope every AI feature now.</p>
         <ul>
-          <li>12 SME sessions and shadowing days across enterprise sales</li>
-          <li>4 prototype rounds before MVP launch</li>
-          <li>What I'd do differently: build the feedback widget on day one, post-launch retrofit slowed iteration</li>
+          <li>14 enterprise-sales interviews shaped the workspace IA</li>
+          <li>5 prototype rounds with the pilot cohort before launch</li>
+          <li>What I'd do differently: invest in observability earlier, the late surveys made iteration slower than it needed to be</li>
         </ul>
       </div>
 
       <div class="reflect-card">
         <span class="label">Impact on process</span>
-        <h4>What the next AI team picked up.</h4>
-        <p>IntelliAssist was Dell's first production GenAI surface for sales. The patterns we shipped became the reference set for the v2 redesign and for adjacent AI launches, so the next teams started from this work instead of from scratch.</p>
+        <h4>The patterns the next AI team picked up.</h4>
+        <p>IntelliAssist 2.0 was the first full-screen AI surface at Dell. The patterns we shipped became the reference for every team that followed, so the next AI projects didn't have to rediscover what worked.</p>
         <ul>
-          <li>Source-citation pattern adopted across Dell's enterprise AI surfaces</li>
-          <li>SME-as-proxy research framework reused under compliance constraints</li>
-          <li>SUS-plus-shadowing measurement playbook carried into the next two AI launches</li>
+          <li>Source-tagged answer pattern adopted across Dell's enterprise AI surfaces</li>
+          <li>Prompt-suggestion grid added to the internal sales design system</li>
+          <li>Pilot feedback loop (telemetry plus surveys) reused on the next two AI launches</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
+
+<!-- End cap: next case study + other work + closing CTA -->
+<section id="end-cap-section" style="padding-bottom:0;">
+  <div class="wrap">
+    <div class="end-cap">
+
+      <a href="./dell-inc-case-study.html" class="next-up">
+        <span class="next-eyebrow">Next case study</span>
+        <div class="next-title">
+          I led the redesign of Dell's Information Network Center, restructuring the IA so designers and researchers could finally find each other's work
+          <span class="arrow">→</span>
+        </div>
+      </a>
+
+      <div class="other-work">
+        <span class="other-work-label">More work</span>
+        <div class="other-work-grid">
+          <a href="./realtime-inquiry-case-study.html" class="ow-item">
+            <span class="ow-title">Real-Time Inquiry Portal</span>
+            <span class="ow-co">Onity</span>
+            <span class="ow-arrow">→</span>
+          </a>
+          <a href="./loan-deboarding-case-study.html" class="ow-item">
+            <span class="ow-title">Loan Deboarding Portal</span>
+            <span class="ow-co">Onity</span>
+            <span class="ow-arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="cta-block">
+        <h3>Good work starts with<br><em>a good conversation.</em></h3>
+        <div class="cta-links">
+          <button class="cta-link-btn" id="cs-copy-email" aria-label="Copy email address">
+            <span id="cs-copy-label">copy email</span>
+            <span class="cta-arrow" aria-hidden="true">↗</span>
+          </button>
+          <a href="https://www.linkedin.com/in/dineshkravikumar/" class="cta-link" target="_blank" rel="noopener">
+            LinkedIn <span class="cta-arrow">↗</span>
+          </a>
+          <a href="/resume.pdf" class="cta-link" target="_blank" rel="noopener">
+            Résumé <span class="cta-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="/" class="footer-wordmark-cs">Dinesh Kumar</a>
+        <span class="footer-legal-cs">© 2026 Dinesh Kumar</span>
+      </nav>
+
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox overlay -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close preview">×</button>
+  <img loading="lazy" decoding="async" id="lightbox-img" alt="" />
+  <div class="lightbox-cap" id="lightbox-cap">Press Esc or click anywhere to close</div>
+</div>
+
 <script>
 (() => {
+  // ── Scroll spy ─────────────────────────
   const spy = document.querySelector('.scroll-spy');
-  if (!spy) return;
-  const links = Array.from(spy.querySelectorAll('a'));
-  const sections = links
-    .map(a => document.querySelector(a.getAttribute('href')))
-    .filter(Boolean);
+  if (spy) {
+    const links = Array.from(spy.querySelectorAll('a'));
+    const sections = links
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
 
-  function update() {
-    const scrollPos = window.scrollY + 180;
-    let currentIdx = 0;
-    for (let i = 0; i < sections.length; i++) {
-      if (sections[i].offsetTop <= scrollPos) {
-        currentIdx = i;
+    function update() {
+      const scrollPos = window.scrollY + 180;
+      let currentIdx = 0;
+      for (let i = 0; i < sections.length; i++) {
+        if (sections[i].offsetTop <= scrollPos) {
+          currentIdx = i;
+        }
       }
+      links.forEach((a, i) => {
+        a.classList.toggle('active', i === currentIdx);
+      });
     }
-    links.forEach((a, i) => {
-      a.classList.toggle('active', i === currentIdx);
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+
+    links.forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 40,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
   }
 
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update, { passive: true });
-  update();
+  // ── Lightbox ───────────────────────────
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxClose = document.getElementById('lightbox-close');
+  if (lightbox && lightboxImg) {
+    const open = (src, alt) => {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightbox.classList.add('open');
+      document.body.classList.add('lightbox-open');
+    };
+    const close = () => {
+      lightbox.classList.remove('open');
+      document.body.classList.remove('lightbox-open');
+      // clear src after fade out so we don't flash the previous image on next open
+      setTimeout(() => { lightboxImg.src = ''; }, 220);
+    };
 
-  links.forEach(a => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        window.scrollTo({
-          top: target.offsetTop - 40,
-          behavior: 'smooth'
-        });
+    document.querySelectorAll('img.zoomable').forEach(img => {
+      img.addEventListener('click', (e) => {
+        e.preventDefault();
+        open(img.currentSrc || img.src, img.alt);
+      });
+    });
+
+    // Clicking the overlay background or caption closes; clicking the image itself does not
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target.classList.contains('lightbox-cap')) {
+        close();
       }
     });
-  });
+    lightboxClose.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) close();
+    });
+  }
 })();
 
 /* ── Hide scroll-spy when end-cap is visible ── */
@@ -1481,66 +1733,6 @@
 })();
 
 </script>
-
-
-<!-- End cap: next case study + other work + closing CTA -->
-<section id="end-cap-section" style="padding-bottom:0;">
-  <div class="wrap">
-    <div class="end-cap">
-
-      <a href="./chaos-to-clarity-case-study.html" class="next-up">
-        <span class="next-eyebrow">Next case study</span>
-        <div class="next-title">
-          I built a GEN-AI sales chat that pulls product info, order data, and sales playbooks into one place
-          <span class="arrow">→</span>
-        </div>
-      </a>
-
-      <div class="other-work">
-        <span class="other-work-label">More work</span>
-        <div class="other-work-grid">
-          <a href="./realtime-inquiry-case-study.html" class="ow-item">
-            <span class="ow-title">Real-Time Inquiry Portal</span>
-            <span class="ow-co">Onity</span>
-            <span class="ow-arrow">→</span>
-          </a>
-          <a href="./loan-deboarding-case-study.html" class="ow-item">
-            <span class="ow-title">Loan Deboarding Portal</span>
-            <span class="ow-co">Onity</span>
-            <span class="ow-arrow">→</span>
-          </a>
-          <a href="./dell-inc-case-study.html" class="ow-item">
-            <span class="ow-title">Information Architecture</span>
-            <span class="ow-co">Dell INC</span>
-            <span class="ow-arrow">→</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="cta-block">
-        <h3>Good work starts with<br><em>a good conversation.</em></h3>
-        <div class="cta-links">
-          <button class="cta-link-btn" id="cs-copy-email" aria-label="Copy email address">
-            <span id="cs-copy-label">copy email</span>
-            <span class="cta-arrow" aria-hidden="true">↗</span>
-          </button>
-          <a href="https://www.linkedin.com/in/dineshkravikumar/" class="cta-link" target="_blank" rel="noopener">
-            LinkedIn <span class="cta-arrow">↗</span>
-          </a>
-          <a href="/resume.pdf" class="cta-link" target="_blank" rel="noopener">
-            Résumé <span class="cta-arrow">↗</span>
-          </a>
-        </div>
-      </div>
-
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="/" class="footer-wordmark-cs">Dinesh Kumar</a>
-        <span class="footer-legal-cs">© 2026 Dinesh Kumar</span>
-      </nav>
-
-    </div>
-  </div>
-</section>
 
 </body>
 </html>

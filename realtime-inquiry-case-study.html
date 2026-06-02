@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Real-Time Inquiry Portal, Onity · Dinesh Baller, Senior Product Designer</title>
+<title>Real-Time Inquiry Portal, Onity · Dinesh Kumar, Senior Product Designer</title>
 <script src="./ga.js" async></script>
 <meta name="description" content="A mortgage inquiry workspace that replaced fragmented email threads with one real-time, shared case record. Case resolution 62% faster, six hours saved each week per account manager.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
     --surface: #ffffff;
     --ink: #171717;
     --ink-soft: #4a4a4a;
-    --ink-mute: #8a8378;
+    --ink-mute: #6E675C;
     --line: rgba(23, 23, 23, 0.10);
     --accent: #1F4D3E;
     --accent-soft: #e8efe9;
@@ -64,7 +64,7 @@
   .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px; }
 
   /* Hero */
-  .hero { padding: 90px 0 60px; }
+  .hero { padding: 28px 0 60px; }
   .hero h1 {
     max-width: 800px;
     margin-bottom: 24px;
@@ -89,15 +89,19 @@
   .chip-tag {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 7px 14px;
+    justify-content: center;
+    gap: 7px;
+    height: 30px;
+    padding: 0 14px;
     border-radius: 999px;
     background: var(--surface);
     border: 1px solid var(--line);
     font-size: 12px;
     font-weight: 500;
+    line-height: 1;
     color: var(--ink);
     letter-spacing: 0.02em;
+    white-space: nowrap;
   }
   .chip-tag.status {
     background: var(--accent-soft);
@@ -108,7 +112,8 @@
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 4px rgba(31, 77, 62, 0.14);
+    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.12);
+    flex-shrink: 0;
     animation: pulse 2.4s ease-in-out infinite;
   }
   @keyframes pulse {
@@ -1054,7 +1059,7 @@
   }
   .other-work-label {
     font-family: var(--body);
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -1178,9 +1183,52 @@
     z-index: 5;
     pointer-events: none;
   }
+
+  /* ── Top site nav (matches home) ── */
+  .site-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1040px; margin: 0 auto; padding: 26px 40px;
+    position: relative; z-index: 30;
+  }
+  .site-nav .brand {
+    font-family: "Caveat", cursive; font-size: 22px; font-weight: 600;
+    letter-spacing: 0.01em; color: var(--accent); text-decoration: none;
+    transform-origin: left center; transition: transform 220ms ease, color 220ms ease;
+  }
+  .site-nav .brand:hover { transform: rotate(-1.5deg) scale(1.04); color: var(--ink); }
+  .site-nav ul { display: flex; gap: 30px; align-items: center; list-style: none; margin: 0; padding: 0; }
+  .site-nav a.site-link {
+    font-family: var(--body); font-size: 14px; font-weight: 500; color: var(--ink-soft);
+    text-decoration: none; letter-spacing: 0.005em; transition: color 200ms ease;
+  }
+  .site-nav a.site-link:hover { color: var(--accent); }
+  .site-nav .nav-resume {
+    font-family: var(--body); font-size: 13px; font-weight: 500; color: var(--accent);
+    text-decoration: none; padding: 6px 14px; border: 1px solid rgba(31,77,62,0.30);
+    border-radius: 999px; transition: background 200ms ease, border-color 200ms ease, transform 180ms ease;
+  }
+  .site-nav .nav-resume:hover { background: rgba(31,77,62,0.06); border-color: rgba(31,77,62,0.55); transform: translateY(-1px); }
+  @media (max-width: 640px) {
+    .site-nav { padding: 20px 22px; }
+    .site-nav ul { gap: 18px; }
+    .site-nav a.site-link { font-size: 13px; }
+  }
+
 </style>
 </head>
 <body>
+
+<!-- TOP SITE NAV -->
+<nav class="site-nav" aria-label="Primary">
+  <a href="./index.html" class="brand">Dinesh Kumar</a>
+  <ul>
+    <li><a class="site-link" href="./index.html#work">work</a></li>
+    <li><a class="site-link" href="./about.html">story</a></li>
+    <li><a class="site-link" href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener">LinkedIn&nbsp;↗</a></li>
+    <li><a class="nav-resume" href="/resume.pdf" rel="noopener">résumé</a></li>
+  </ul>
+</nav>
+
 
 <!-- SCROLL SPY -->
 <nav class="scroll-spy" aria-label="Jump to section">
@@ -1211,6 +1259,12 @@
       <span class="chip-tag">Research-led</span>
     </div>
 
+    <div class="hero-showcase">
+      <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-hero-dashboard.png" alt="Real-Time Inquiry Portal dashboard, a central hub showing every loan inquiry in one organized, live view" />
+    </div>
+    <div class="hero-showcase-cap">A central hub, every loan inquiry in one organized, live view</div>
+
+
     <div class="stats">
       <div class="stat">
         <div class="num">62%</div>
@@ -1228,11 +1282,6 @@
         <div class="sub">replaced by live dashboards</div>
       </div>
     </div>
-
-    <div class="hero-showcase">
-      <img class="zoomable" src="./images/rti-hero-dashboard.png" alt="Real-Time Inquiry Portal dashboard, a central hub showing every loan inquiry in one organized, live view" />
-    </div>
-    <div class="hero-showcase-cap">A central hub, every loan inquiry in one organized, live view</div>
 
     <div class="quick-facts" aria-label="Project quick facts">
       <div class="fact">
@@ -1389,7 +1438,7 @@
           <div class="sol-tag">Visual Hierarchy · Fast Feedback</div>
         </div>
         <div class="sol-img">
-          <img class="zoomable" src="./images/rti-status-summary-cards.png" alt="Dashboard status summary cards row showing Open Inquiries 4, With Onity 2, Waiting on you 2, and Total Cases 6 counts" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-status-summary-cards.png" alt="Dashboard status summary cards row showing Open Inquiries 4, With Onity 2, Waiting on you 2, and Total Cases 6 counts" />
         </div>
       </div>
 
@@ -1402,7 +1451,7 @@
           <div class="sol-tag">Data Transparency · Recognition</div>
         </div>
         <div class="sol-img">
-          <img class="zoomable" src="./images/rti-live-case-table.png" alt="Live, filterable case table with inquiry ID, subject, status chips, last update, loan number, owner, created by, create date, and days columns" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-live-case-table.png" alt="Live, filterable case table with inquiry ID, subject, status chips, last update, loan number, owner, created by, create date, and days columns" />
         </div>
       </div>
     </div>
@@ -1437,7 +1486,7 @@
           <div class="sol-tag">System Status · Visual Cues</div>
         </div>
         <div class="sol-img">
-          <img class="zoomable" src="./images/rti-progress-tracker.png" alt="Real-time progress tracker bar showing four stages: Submitted, Assigned To, With Onity, Resolved, each with date stamps, with tabs underneath for Overview, Conversation, Documents, and Resolution and Escalation" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-progress-tracker.png" alt="Real-time progress tracker bar showing four stages: Submitted, Assigned To, With Onity, Resolved, each with date stamps, with tabs underneath for Overview, Conversation, Documents, and Resolution and Escalation" />
         </div>
       </div>
 
@@ -1453,10 +1502,10 @@
           <div class="sol-carousel" data-carousel>
             <div class="slides">
               <div class="slide active" data-slide="0">
-                <img class="zoomable" src="./images/rti-messaging-conversation.png" alt="Unified messaging panel showing the conversation history with Onity Support and the user, with an attached payment receipt PDF, the participants list, and a how-it-works helper card" />
+                <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-messaging-conversation.png" alt="Unified messaging panel showing the conversation history with Onity Support and the user, with an attached payment receipt PDF, the participants list, and a how-it-works helper card" />
               </div>
               <div class="slide" data-slide="1">
-                <img class="zoomable" src="./images/rti-messaging-files.png" alt="Files view inside the same case showing the documents list, alternate slide of the unified messaging and files carousel" />
+                <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-messaging-files.png" alt="Files view inside the same case showing the documents list, alternate slide of the unified messaging and files carousel" />
               </div>
             </div>
             <button class="car-btn prev" type="button" aria-label="Previous slide">‹</button>
@@ -1478,7 +1527,7 @@
           <div class="sol-tag">User Control · Feedback Loops</div>
         </div>
         <div class="sol-img">
-          <img class="zoomable" src="./images/rti-case-resolution.png" alt="Resolution and Escalation tab showing Resolution Details with an Outcome dropdown, date field, closing comment, and Escalate plus Confirm and Close action buttons, next to an About Escalation help panel" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-case-resolution.png" alt="Resolution and Escalation tab showing Resolution Details with an Outcome dropdown, date field, closing comment, and Escalate plus Confirm and Close action buttons, next to an About Escalation help panel" />
         </div>
       </div>
     </div>
@@ -1505,7 +1554,7 @@
           Overview tab, case details and timeline
         </div>
         <div class="shot-body">
-          <img class="zoomable" src="./images/rti-final-overview.png" alt="Inquiry Dashboard with case 123456 expanded to the Overview tab, showing the progress tracker, the full Case Details panel (Case ID, Onity Contact, Onity Team, Created By, ETA, Days Open, Loan Number, Borrower, Contact, Description) and the Timeline panel on the right" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-overview.png" alt="Inquiry Dashboard with case 123456 expanded to the Overview tab, showing the progress tracker, the full Case Details panel (Case ID, Onity Contact, Onity Team, Created By, ETA, Days Open, Loan Number, Borrower, Contact, Description) and the Timeline panel on the right" />
         </div>
       </div>
 
@@ -1515,7 +1564,7 @@
           Conversation tab, threaded history with attachments
         </div>
         <div class="shot-body">
-          <img class="zoomable" src="./images/rti-final-conversation.png" alt="Inquiry Dashboard with case 123456 expanded to the Conversation tab, showing the Onity is reviewing banner, the conversation history with Onity Support and the user, an attached PDF, the Update Budget side card and Participants list" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-conversation.png" alt="Inquiry Dashboard with case 123456 expanded to the Conversation tab, showing the Onity is reviewing banner, the conversation history with Onity Support and the user, an attached PDF, the Update Budget side card and Participants list" />
         </div>
       </div>
 
@@ -1525,7 +1574,7 @@
           Documents tab, every file attached to the case
         </div>
         <div class="shot-body">
-          <img class="zoomable" src="./images/rti-final-documents.png" alt="Inquiry Dashboard with case 123456 expanded to the Documents tab, listing three PDF files (Oct_25_loan_payment_receipt, Nov_1_utility_bill_statement, Nov_5_credit_card_statement) each with Preview and Download actions" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-documents.png" alt="Inquiry Dashboard with case 123456 expanded to the Documents tab, listing three PDF files (Oct_25_loan_payment_receipt, Nov_1_utility_bill_statement, Nov_5_credit_card_statement) each with Preview and Download actions" />
         </div>
       </div>
 
@@ -1535,7 +1584,7 @@
           Resolution and Escalation tab, close or escalate the case
         </div>
         <div class="shot-body">
-          <img class="zoomable" src="./images/rti-final-resolution.png" alt="Inquiry Dashboard with case 123456 expanded to the Resolution and Escalation tab, showing Resolution Details with an Outcome dropdown, Date, Closing comment, plus Escalate and Confirm and Close buttons next to an About Escalation help panel" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-resolution.png" alt="Inquiry Dashboard with case 123456 expanded to the Resolution and Escalation tab, showing Resolution Details with an Outcome dropdown, Date, Closing comment, plus Escalate and Confirm and Close buttons next to an About Escalation help panel" />
         </div>
       </div>
     </div>
@@ -1696,13 +1745,8 @@
       <div class="other-work">
         <span class="other-work-label">More work</span>
         <div class="other-work-grid">
-          <a href="./dell-ai-case-study.html" class="ow-item">
-            <span class="ow-title">AI Sales Enablement</span>
-            <span class="ow-co">Dell</span>
-            <span class="ow-arrow">→</span>
-          </a>
           <a href="./chaos-to-clarity-case-study.html" class="ow-item">
-            <span class="ow-title">IntelliAssist GEN-AI Chat</span>
+            <span class="ow-title">IntelliAssist 2.0</span>
             <span class="ow-co">Dell</span>
             <span class="ow-arrow">→</span>
           </a>
@@ -1722,7 +1766,7 @@
             <span id="cs-copy-label">copy email</span>
             <span class="cta-arrow" aria-hidden="true">↗</span>
           </button>
-          <a href="https://linkedin.com/in/dineshkravikumar" class="cta-link" target="_blank" rel="noopener">
+          <a href="https://www.linkedin.com/in/dineshkravikumar/" class="cta-link" target="_blank" rel="noopener">
             LinkedIn
             <span class="cta-arrow">↗</span>
           </a>
@@ -1746,7 +1790,7 @@
 <!-- Lightbox overlay -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
   <button class="lightbox-close" id="lightbox-close" aria-label="Close preview">×</button>
-  <img id="lightbox-img" alt="" />
+  <img loading="lazy" decoding="async" id="lightbox-img" alt="" />
   <div class="lightbox-cap" id="lightbox-cap">Press Esc or click anywhere to close</div>
 </div>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dell IntelliAssist 2.0 · Dinesh Kumar, Senior Product Designer</title>
+<title>Dell IntelliAssist 2.0 · Dinesh Baller, Senior Product Designer</title>
 <script src="./ga.js" async></script>
 <meta name="description" content="A redesign of Dell's AI sales workspace from a cramped chat into a full-screen interface, cutting ticket volume 55% and pushing self-serve adoption to 92%.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
     --surface: #ffffff;
     --ink: #171717;
     --ink-soft: #4a4a4a;
-    --ink-mute: #6E675C;
+    --ink-mute: #8a8378;
     --line: rgba(23, 23, 23, 0.10);
     --accent: #1F4D3E;
     --accent-soft: #e8efe9;
@@ -73,19 +73,15 @@
   .chip-tag {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 7px;
-    height: 30px;
-    padding: 0 14px;
+    gap: 6px;
+    padding: 7px 14px;
     border-radius: 999px;
     background: var(--surface);
     border: 1px solid var(--line);
     font-size: 12px;
     font-weight: 500;
-    line-height: 1;
     color: var(--ink);
     letter-spacing: 0.02em;
-    white-space: nowrap;
   }
   .chip-tag.status {
     background: var(--accent-soft);
@@ -96,8 +92,7 @@
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.12);
-    flex-shrink: 0;
+    box-shadow: 0 0 0 4px rgba(31, 77, 62, 0.14);
   }
 
   /* Quick facts strip */
@@ -232,7 +227,7 @@
   .reflect-card li:last-child { margin-bottom: 0; }
 
   /* Hero */
-  .hero { padding: 28px 0 60px; }
+  .hero { padding: 90px 0 60px; }
   .hero h1 { max-width: 800px; margin-bottom: 24px; font-weight: 400; }
   .hero h1 i { font-style: italic; font-weight: 300; }
   .hero .lede {
@@ -844,7 +839,7 @@
   }
   .other-work-label {
     font-family: var(--body);
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -1010,52 +1005,9 @@
     pointer-events: none;
   }
 
-
-  /* ── Top site nav (matches home) ── */
-  .site-nav {
-    display: flex; align-items: center; justify-content: space-between;
-    max-width: 1040px; margin: 0 auto; padding: 26px 40px;
-    position: relative; z-index: 30;
-  }
-  .site-nav .brand {
-    font-family: "Caveat", cursive; font-size: 22px; font-weight: 600;
-    letter-spacing: 0.01em; color: var(--accent); text-decoration: none;
-    transform-origin: left center; transition: transform 220ms ease, color 220ms ease;
-  }
-  .site-nav .brand:hover { transform: rotate(-1.5deg) scale(1.04); color: var(--ink); }
-  .site-nav ul { display: flex; gap: 30px; align-items: center; list-style: none; margin: 0; padding: 0; }
-  .site-nav a.site-link {
-    font-family: var(--body); font-size: 14px; font-weight: 500; color: var(--ink-soft);
-    text-decoration: none; letter-spacing: 0.005em; transition: color 200ms ease;
-  }
-  .site-nav a.site-link:hover { color: var(--accent); }
-  .site-nav .nav-resume {
-    font-family: var(--body); font-size: 13px; font-weight: 500; color: var(--accent);
-    text-decoration: none; padding: 6px 14px; border: 1px solid rgba(31,77,62,0.30);
-    border-radius: 999px; transition: background 200ms ease, border-color 200ms ease, transform 180ms ease;
-  }
-  .site-nav .nav-resume:hover { background: rgba(31,77,62,0.06); border-color: rgba(31,77,62,0.55); transform: translateY(-1px); }
-  @media (max-width: 640px) {
-    .site-nav { padding: 20px 22px; }
-    .site-nav ul { gap: 18px; }
-    .site-nav a.site-link { font-size: 13px; }
-  }
-
 </style>
 </head>
 <body>
-
-<!-- TOP SITE NAV -->
-<nav class="site-nav" aria-label="Primary">
-  <a href="./index.html" class="brand">Dinesh Kumar</a>
-  <ul>
-    <li><a class="site-link" href="./index.html#work">work</a></li>
-    <li><a class="site-link" href="./about.html">story</a></li>
-    <li><a class="site-link" href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener">LinkedIn&nbsp;↗</a></li>
-    <li><a class="nav-resume" href="/resume.pdf" rel="noopener">résumé</a></li>
-  </ul>
-</nav>
-
 
 <!-- SCROLL SPY -->
 <nav class="scroll-spy" aria-label="Jump to section">
@@ -1085,12 +1037,6 @@
       <span class="chip-tag">GenAI</span>
     </div>
 
-    <div class="hero-showcase">
-      <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-hero-landing.png" alt="IntelliAssist 2.0 landing screen showing the AI chat, prompt suggestions, and integrated sales tiles" />
-    </div>
-    <div class="hero-showcase-cap">IntelliAssist 2.0, the redesigned Dell AI sales workspace</div>
-
-
     <div class="hero-grid">
       <div>
         <div class="eyebrow" style="margin-bottom:10px;">The Challenge</div>
@@ -1119,6 +1065,11 @@
         <div class="sub">in testing, vs. 52% on legacy chat</div>
       </div>
     </div>
+
+    <div class="hero-showcase">
+      <img class="zoomable" src="./images/chaos-hero-landing.png" alt="IntelliAssist 2.0 landing screen showing the AI chat, prompt suggestions, and integrated sales tiles" />
+    </div>
+    <div class="hero-showcase-cap">IntelliAssist 2.0, the redesigned Dell AI sales workspace</div>
 
     <div class="quick-facts" aria-label="Project quick facts">
       <div class="fact">
@@ -1234,7 +1185,7 @@
     <div class="insights-grid">
       <div class="pain-card">
         <div class="pain-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-pain-incomplete-answer.png" alt="The legacy IntelliAssist AI Result panel showing an order details response with limited context and no follow-up paths" />
+          <img class="zoomable" src="./images/chaos-pain-incomplete-answer.png" alt="The legacy IntelliAssist AI Result panel showing an order details response with limited context and no follow-up paths" />
         </div>
         <span class="ico">🧩</span>
         <h4>Incomplete answer context</h4>
@@ -1247,7 +1198,7 @@
 
       <div class="pain-card">
         <div class="pain-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-pain-buried-features.png" alt="Legacy IntelliAssist landing screen with a sparse search input that hid the AI's full capabilities" />
+          <img class="zoomable" src="./images/chaos-pain-buried-features.png" alt="Legacy IntelliAssist landing screen with a sparse search input that hid the AI's full capabilities" />
         </div>
         <span class="ico">📭</span>
         <h4>Buried features, low adoption</h4>
@@ -1260,7 +1211,7 @@
 
       <div class="pain-card">
         <div class="pain-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-pain-workarounds.png" alt="Dell Technologies Sales Portal home with a wall of self-serve tiles that users routed around in favor of bookmarks" />
+          <img class="zoomable" src="./images/chaos-pain-workarounds.png" alt="Dell Technologies Sales Portal home with a wall of self-serve tiles that users routed around in favor of bookmarks" />
         </div>
         <span class="ico">🔖</span>
         <h4>Workarounds replaced the tool</h4>
@@ -1273,7 +1224,7 @@
     </div>
 
     <div class="figure">
-      <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-synthesis-venn.png" alt="Synthesis venn diagram, tiny chat plus wasted AI plus scattered tools converging into a unified workspace" />
+      <img class="zoomable" src="./images/chaos-synthesis-venn.png" alt="Synthesis venn diagram, tiny chat plus wasted AI plus scattered tools converging into a unified workspace" />
     </div>
     <div class="figure-cap">Synthesis, three pain points converging into one unified workspace</div>
   </div>
@@ -1297,7 +1248,7 @@
       <h3>Unified workspace for seamless workflows</h3>
 
       <div class="figure" style="margin: 8px 0 36px;">
-        <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-track1-overview.png" alt="Annotated overview of the IntelliAssist 2.0 landing showing where the smart prompt suggestions (1) and familiar self-serve tiles (2) sit on the page" />
+        <img class="zoomable" src="./images/chaos-track1-overview.png" alt="Annotated overview of the IntelliAssist 2.0 landing showing where the smart prompt suggestions (1) and familiar self-serve tiles (2) sit on the page" />
       </div>
       <div class="figure-cap">Overview, two coordinated moves on a single landing screen</div>
 
@@ -1309,7 +1260,7 @@
           <div class="sol-tag">Contextual Onboarding · Behavior Design</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-smart-search-prompt.png" alt="Smart search input with role-specific prompt chips visible at first load" />
+          <img class="zoomable" src="./images/chaos-smart-search-prompt.png" alt="Smart search input with role-specific prompt chips visible at first load" />
         </div>
       </div>
 
@@ -1321,7 +1272,7 @@
           <div class="sol-tag">Change Management · Mental Model</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-familiar-cards.png" alt="Full IntelliAssist 2.0 landing showing the search input with prompt suggestions above the self-serve tile grid" />
+          <img class="zoomable" src="./images/chaos-familiar-cards.png" alt="Full IntelliAssist 2.0 landing showing the search input with prompt suggestions above the self-serve tile grid" />
         </div>
       </div>
     </div>
@@ -1331,7 +1282,7 @@
       <h3>Full-screen interface for contextual efficiency</h3>
 
       <div class="figure" style="margin: 8px 0 36px;">
-        <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-track2-overview.png" alt="Annotated overview of an IntelliAssist 2.0 result page showing the collapsible sidebar (1), follow-up prompts (2), and sources panel (3)" />
+        <img class="zoomable" src="./images/chaos-track2-overview.png" alt="Annotated overview of an IntelliAssist 2.0 result page showing the collapsible sidebar (1), follow-up prompts (2), and sources panel (3)" />
       </div>
       <div class="figure-cap">Overview, the full-screen workspace with sidebar, follow-ups, and sources in view</div>
 
@@ -1343,7 +1294,7 @@
           <div class="sol-tag">User Control · Flexibility · Fallback UX</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-collapsible-sidebar.png" alt="Collapsible left-rail sidebar showing self-serve resource tiles like GenAI Sales Support and Order Tracking Hub" />
+          <img class="zoomable" src="./images/chaos-collapsible-sidebar.png" alt="Collapsible left-rail sidebar showing self-serve resource tiles like GenAI Sales Support and Order Tracking Hub" />
         </div>
       </div>
 
@@ -1355,7 +1306,7 @@
           <div class="sol-tag">Intent Refinement · Conversational UX</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-follow-up-prompts.jpg" alt="Follow-up question chips and a search-instead input shown below an AI response" />
+          <img class="zoomable" src="./images/chaos-follow-up-prompts.jpg" alt="Follow-up question chips and a search-instead input shown below an AI response" />
         </div>
       </div>
 
@@ -1367,7 +1318,7 @@
           <div class="sol-tag">Transparency · AI Explainability · Trust Design</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-sources-related.png" alt="Right-rail panel showing the source for the AI response with related articles listed underneath" />
+          <img class="zoomable" src="./images/chaos-sources-related.png" alt="Right-rail panel showing the source for the AI response with related articles listed underneath" />
         </div>
       </div>
     </div>
@@ -1388,17 +1339,17 @@
     </div>
 
     <div class="hero-showcase" style="margin-top: 32px;">
-      <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-shipped-landing.png" alt="The shipped IntelliAssist 2.0 workspace at full width showing the unified AI chat, prompt rail, sources, and self-serve tiles in one view" />
+      <img class="zoomable" src="./images/chaos-shipped-landing.png" alt="The shipped IntelliAssist 2.0 workspace at full width showing the unified AI chat, prompt rail, sources, and self-serve tiles in one view" />
     </div>
     <div class="hero-showcase-cap">01. Landing, the unified workspace at first open</div>
 
     <div class="hero-showcase" style="margin-top: 56px;">
-      <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-shipped-esp-query.png" alt="IntelliAssist 2.0 answering How to gain access to ESP with steps, key resources, sources, related articles, and a search-instead area below" />
+      <img class="zoomable" src="./images/chaos-shipped-esp-query.png" alt="IntelliAssist 2.0 answering How to gain access to ESP with steps, key resources, sources, related articles, and a search-instead area below" />
     </div>
     <div class="hero-showcase-cap">02. Knowledge query, ESP access with sources, related articles, and a search-instead fallback</div>
 
     <div class="hero-showcase" style="margin-top: 56px;">
-      <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-shipped-order-status.png" alt="IntelliAssist 2.0 answering an order status query with an AI suggestion card, expandable order details, timeline, shipment, and cancellation accordions" />
+      <img class="zoomable" src="./images/chaos-shipped-order-status.png" alt="IntelliAssist 2.0 answering an order status query with an AI suggestion card, expandable order details, timeline, shipment, and cancellation accordions" />
     </div>
     <div class="hero-showcase-cap">03. Order status query, structured response with expandable details and a direct source link</div>
   </div>
@@ -1578,6 +1529,11 @@
             <span class="ow-co">Onity</span>
             <span class="ow-arrow">→</span>
           </a>
+          <a href="./dell-ai-case-study.html" class="ow-item">
+            <span class="ow-title">AI Sales Enablement</span>
+            <span class="ow-co">Dell</span>
+            <span class="ow-arrow">→</span>
+          </a>
         </div>
       </div>
 
@@ -1588,7 +1544,7 @@
             <span id="cs-copy-label">copy email</span>
             <span class="cta-arrow" aria-hidden="true">↗</span>
           </button>
-          <a href="https://www.linkedin.com/in/dineshkravikumar/" class="cta-link" target="_blank" rel="noopener">
+          <a href="https://linkedin.com/in/dineshkravikumar" class="cta-link" target="_blank" rel="noopener">
             LinkedIn <span class="cta-arrow">↗</span>
           </a>
           <a href="/resume.pdf" class="cta-link" target="_blank" rel="noopener">
@@ -1609,7 +1565,7 @@
 <!-- Lightbox overlay -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
   <button class="lightbox-close" id="lightbox-close" aria-label="Close preview">×</button>
-  <img loading="lazy" decoding="async" id="lightbox-img" alt="" />
+  <img id="lightbox-img" alt="" />
   <div class="lightbox-cap" id="lightbox-cap">Press Esc or click anywhere to close</div>
 </div>
 

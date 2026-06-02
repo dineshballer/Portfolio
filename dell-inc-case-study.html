@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Redesigning Dell's INC · Dinesh Baller, Senior Product Designer</title>
+<title>Redesigning Dell's INC · Dinesh Kumar, Senior Product Designer</title>
 <script src="./ga.js" async></script>
 <meta name="description" content="A full IA rearchitecture of Dell's Intelligence Nerve Center, an internal portal for 30,000+ employees. Findability up 40%, misclicks down 50%.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
     --surface: #ffffff;
     --ink: #171717;
     --ink-soft: #4a4a4a;
-    --ink-mute: #8a8378;
+    --ink-mute: #6E675C;
     --line: rgba(23, 23, 23, 0.10);
     --accent: #1F4D3E;
     --accent-soft: #e8efe9;
@@ -73,15 +73,19 @@
   .chip-tag {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 7px 14px;
+    justify-content: center;
+    gap: 7px;
+    height: 30px;
+    padding: 0 14px;
     border-radius: 999px;
     background: var(--surface);
     border: 1px solid var(--line);
     font-size: 12px;
     font-weight: 500;
+    line-height: 1;
     color: var(--ink);
     letter-spacing: 0.02em;
+    white-space: nowrap;
   }
   .chip-tag.status {
     background: var(--accent-soft);
@@ -92,7 +96,8 @@
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 4px rgba(31, 77, 62, 0.14);
+    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.12);
+    flex-shrink: 0;
   }
 
   /* Quick facts strip */
@@ -227,7 +232,7 @@
   .reflect-card li:last-child { margin-bottom: 0; }
 
   /* Hero */
-  .hero { padding: 90px 0 60px; }
+  .hero { padding: 28px 0 60px; }
   .hero h1 { max-width: 800px; margin-bottom: 24px; font-weight: 400; }
   .hero h1 i { font-style: italic; font-weight: 300; }
   .hero-grid {
@@ -784,7 +789,7 @@
   }
   .other-work-label {
     font-family: var(--body);
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -950,9 +955,52 @@
     pointer-events: none;
   }
 
+
+  /* ── Top site nav (matches home) ── */
+  .site-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1040px; margin: 0 auto; padding: 26px 40px;
+    position: relative; z-index: 30;
+  }
+  .site-nav .brand {
+    font-family: "Caveat", cursive; font-size: 22px; font-weight: 600;
+    letter-spacing: 0.01em; color: var(--accent); text-decoration: none;
+    transform-origin: left center; transition: transform 220ms ease, color 220ms ease;
+  }
+  .site-nav .brand:hover { transform: rotate(-1.5deg) scale(1.04); color: var(--ink); }
+  .site-nav ul { display: flex; gap: 30px; align-items: center; list-style: none; margin: 0; padding: 0; }
+  .site-nav a.site-link {
+    font-family: var(--body); font-size: 14px; font-weight: 500; color: var(--ink-soft);
+    text-decoration: none; letter-spacing: 0.005em; transition: color 200ms ease;
+  }
+  .site-nav a.site-link:hover { color: var(--accent); }
+  .site-nav .nav-resume {
+    font-family: var(--body); font-size: 13px; font-weight: 500; color: var(--accent);
+    text-decoration: none; padding: 6px 14px; border: 1px solid rgba(31,77,62,0.30);
+    border-radius: 999px; transition: background 200ms ease, border-color 200ms ease, transform 180ms ease;
+  }
+  .site-nav .nav-resume:hover { background: rgba(31,77,62,0.06); border-color: rgba(31,77,62,0.55); transform: translateY(-1px); }
+  @media (max-width: 640px) {
+    .site-nav { padding: 20px 22px; }
+    .site-nav ul { gap: 18px; }
+    .site-nav a.site-link { font-size: 13px; }
+  }
+
 </style>
 </head>
 <body>
+
+<!-- TOP SITE NAV -->
+<nav class="site-nav" aria-label="Primary">
+  <a href="./index.html" class="brand">Dinesh Kumar</a>
+  <ul>
+    <li><a class="site-link" href="./index.html#work">work</a></li>
+    <li><a class="site-link" href="./about.html">story</a></li>
+    <li><a class="site-link" href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener">LinkedIn&nbsp;↗</a></li>
+    <li><a class="nav-resume" href="/resume.pdf" rel="noopener">résumé</a></li>
+  </ul>
+</nav>
+
 
 <!-- SCROLL SPY -->
 <nav class="scroll-spy" aria-label="Jump to section">
@@ -982,6 +1030,13 @@
       <span class="chip-tag">Findability</span>
       <span class="chip-tag">Research-led</span>
     </div>
+
+    <!-- Hero showcase image -->
+    <div class="hero-showcase">
+      <img loading="lazy" decoding="async" src="./images/dellinc-hero-after.png" alt="Dell INC home dashboard after redesign, tile-based navigation with color-coded categories" />
+    </div>
+    <div class="hero-showcase-cap">After, tile-based navigation, color-coded categories, integrated Favorites</div>
+
 
     <div class="hero-grid">
       <div>
@@ -1016,12 +1071,6 @@
         <div class="sub">on navigation menus</div>
       </div>
     </div>
-
-    <!-- Hero showcase image -->
-    <div class="hero-showcase">
-      <img src="./images/dellinc-hero-after.png" alt="Dell INC home dashboard after redesign, tile-based navigation with color-coded categories" />
-    </div>
-    <div class="hero-showcase-cap">After, tile-based navigation, color-coded categories, integrated Favorites</div>
 
     <div class="quick-facts" aria-label="Project quick facts">
       <div class="fact">
@@ -1092,7 +1141,7 @@
     </div>
 
     <div class="figure">
-      <img src="./images/dellinc-before.png" alt="Before, Dell INC's original interface showing cluttered navigation and dated visual treatment" />
+      <img loading="lazy" decoding="async" src="./images/dellinc-before.png" alt="Before, Dell INC's original interface showing cluttered navigation and dated visual treatment" />
     </div>
     <div class="figure-cap">Before, cluttered nav, image-heavy background, no surfaced shortcuts</div>
   </div>
@@ -1242,7 +1291,7 @@
           <p>Users mark frequently-used reports and tools as favorites. The home tiles then surface those favorites as one-click destinations, bypassing the menu entirely. Workflow efficiency improves because the steps required to reach critical information drop dramatically.</p>
         </div>
         <div class="sol-img">
-          <img src="./images/dellinc-sales-performance-hub.png" alt="Sales Performance Hub tile with Reports and Favourites dropdowns expanded, showing Favorite tool and Favorite webpage options" />
+          <img loading="lazy" decoding="async" src="./images/dellinc-sales-performance-hub.png" alt="Sales Performance Hub tile with Reports and Favourites dropdowns expanded, showing Favorite tool and Favorite webpage options" />
         </div>
       </div>
 
@@ -1253,7 +1302,7 @@
           <p>Beyond Favorites, each home tile gained a Reports dropdown that exposes the underlying reports list. Users jump straight to a specific report from the home screen, no need to open the full Reports page first. Fewer clicks, less context switching.</p>
         </div>
         <div class="sol-img">
-          <img src="./images/dellinc-home-tile-dropdown.png" alt="Home tile dropdown showing list of reports, Report 1, Report 2, Report 3, accessible directly from the tile" />
+          <img loading="lazy" decoding="async" src="./images/dellinc-home-tile-dropdown.png" alt="Home tile dropdown showing list of reports, Report 1, Report 2, Report 3, accessible directly from the tile" />
         </div>
       </div>
 
@@ -1264,8 +1313,8 @@
           <p>A persistent side nav lets users move to any section from any page in two states, a compact icon-only rail (default) and an expanded view with full category names and sub-items. No more backtracking through breadcrumbs to switch context.</p>
         </div>
         <div class="sol-img side-by-side">
-          <img src="./images/dellinc-side-nav-rail.png" alt="Collapsed icon-only side navigation rail" />
-          <img src="./images/dellinc-side-nav-expanded.png" alt="Expanded side navigation showing categories, Sales Support Modernization with sub-items like Operations, Reporting, PAG Operations, COD/DA, Customer Financial Services, Partner Operations, Analytics, Global Backlog Orders, Services Finance, Infrastructure Solution Group, BES, SDS, SSC" />
+          <img loading="lazy" decoding="async" src="./images/dellinc-side-nav-rail.png" alt="Collapsed icon-only side navigation rail" />
+          <img loading="lazy" decoding="async" src="./images/dellinc-side-nav-expanded.png" alt="Expanded side navigation showing categories, Sales Support Modernization with sub-items like Operations, Reporting, PAG Operations, COD/DA, Customer Financial Services, Partner Operations, Analytics, Global Backlog Orders, Services Finance, Infrastructure Solution Group, BES, SDS, SSC" />
         </div>
       </div>
     </div>
@@ -1306,7 +1355,7 @@
           <p>Stripped the image-based background that was competing with foreground content. Replaced it with a clean, neutral surface so essential info becomes the focus. Background images often fight with what's in front of them, removing it sharpens the entire visual hierarchy.</p>
         </div>
         <div class="sol-img">
-          <img src="./images/dellinc-hero-after.png" alt="After background removal, clean neutral surface with foreground tiles and clear navigation" />
+          <img loading="lazy" decoding="async" src="./images/dellinc-hero-after.png" alt="After background removal, clean neutral surface with foreground tiles and clear navigation" />
         </div>
       </div>
 
@@ -1317,7 +1366,7 @@
           <p>Replaced the uniform layout with a tile-based system where each sub-organization gets a unique tile color and category icon. Users now identify their section at a glance, Customer Financial Services in one accent, Operations in another, and so on. Visual distinction without extra labeling.</p>
         </div>
         <div class="sol-img">
-          <img src="./images/dellinc-color-coded-tiles.png" alt="Three example tiles, Customer Financial Services, Operations, Report Name, each with a unique color accent and icon" />
+          <img loading="lazy" decoding="async" src="./images/dellinc-color-coded-tiles.png" alt="Three example tiles, Customer Financial Services, Operations, Report Name, each with a unique color accent and icon" />
         </div>
       </div>
     </div>
@@ -1361,13 +1410,13 @@
 
     <div class="final-design-gallery">
       <div class="gallery-item">
-        <img src="./images/dellinc-final-home.png" alt="Final design, home dashboard with color-coded tiles, surfaced favorites, and side navigation" />
+        <img loading="lazy" decoding="async" src="./images/dellinc-final-home.png" alt="Final design, home dashboard with color-coded tiles, surfaced favorites, and side navigation" />
       </div>
       <div class="gallery-item">
-        <img src="./images/dellinc-final-interior.png" alt="Final design, interior view with expanded side nav and tile content" />
+        <img loading="lazy" decoding="async" src="./images/dellinc-final-interior.png" alt="Final design, interior view with expanded side nav and tile content" />
       </div>
       <div class="gallery-item">
-        <img src="./images/dellinc-final-reports.png" alt="Final design, reports view with the new visual treatment" />
+        <img loading="lazy" decoding="async" src="./images/dellinc-final-reports.png" alt="Final design, reports view with the new visual treatment" />
       </div>
     </div>
   </div>
@@ -1556,13 +1605,8 @@
             <span class="ow-co">Onity</span>
             <span class="ow-arrow">→</span>
           </a>
-          <a href="./dell-ai-case-study.html" class="ow-item">
-            <span class="ow-title">AI Sales Enablement</span>
-            <span class="ow-co">Dell</span>
-            <span class="ow-arrow">→</span>
-          </a>
           <a href="./chaos-to-clarity-case-study.html" class="ow-item">
-            <span class="ow-title">IntelliAssist GEN-AI Chat</span>
+            <span class="ow-title">IntelliAssist 2.0</span>
             <span class="ow-co">Dell</span>
             <span class="ow-arrow">→</span>
           </a>
@@ -1576,7 +1620,7 @@
             <span id="cs-copy-label">copy email</span>
             <span class="cta-arrow" aria-hidden="true">↗</span>
           </button>
-          <a href="https://linkedin.com/in/dineshkravikumar" class="cta-link" target="_blank" rel="noopener">
+          <a href="https://www.linkedin.com/in/dineshkravikumar/" class="cta-link" target="_blank" rel="noopener">
             LinkedIn <span class="cta-arrow">↗</span>
           </a>
           <a href="/resume.pdf" class="cta-link" target="_blank" rel="noopener">

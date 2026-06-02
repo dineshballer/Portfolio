@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Story · Dinesh Kumar, Senior Product Designer</title>
-<meta name="description" content="Dinesh Kumar is a senior product designer crafting calm, operational software for the analysts, account managers, and ops teams who run mortgage and financial workflows. The story behind the work, at Onity, Dell, and Red Hat." />
+<title>Story — Dinesh Kumar</title>
 <script src="./ga.js" async></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -19,7 +18,7 @@
     --paper: #FBF7EF;
     --ink: #171717;
     --ink-soft: #5A5A55;
-    --ink-mute: #6F6A60;
+    --ink-mute: #9A9489;
     --line: rgba(23, 23, 23, 0.10);
     --line-soft: rgba(23, 23, 23, 0.06);
 
@@ -99,26 +98,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 1100px;
-    margin: 0 auto;
     padding: 32px 48px;
     position: relative;
     z-index: 10;
   }
   .wordmark {
-    font-family: "Caveat", cursive;
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: 0.01em;
-    color: var(--accent);
-    text-decoration: none;
-    display: inline-block;
-    transform-origin: left center;
-    transition: transform 220ms var(--ease), color 220ms var(--ease);
-  }
-  .wordmark:hover {
-    transform: rotate(-1.5deg) scale(1.04);
+    font-family: var(--body);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
     color: var(--ink);
+    text-decoration: none;
   }
   .nav-links {
     display: flex;
@@ -689,7 +679,7 @@
     padding: 3px 10px 3px 8px;
     background: rgba(40, 168, 104, 0.12);
     color: #1d6e47;
-    font-size: 11px; font-weight: 600;
+    font-size: 10px; font-weight: 600;
     letter-spacing: 0.08em; text-transform: uppercase;
     border-radius: 999px;
   }
@@ -1152,12 +1142,12 @@
 
   <!-- ─────────── NAV (matches index.html) ─────────── -->
   <nav class="nav">
-    <a href="./index.html" class="wordmark">Dinesh Kumar</a>
+    <a href="./index.html" class="wordmark">Dinesh Baller</a>
     <ul class="nav-links">
       <li><a href="./index.html#work">work</a></li>
       <li><a href="./about.html" class="active">story</a></li>
-      <li><a href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener">LinkedIn&nbsp;↗</a></li>
       <li><a href="/resume.pdf" target="_blank" rel="noopener">résumé</a></li>
+      <li><a href="mailto:dineshballer@gmail.com">email</a></li>
     </ul>
   </nav>
 
@@ -1171,9 +1161,9 @@
       </h1>
 
       <div class="hero-intro">
-        <p>Hi there! <span class="wave">👋</span> I'm Dinesh, a senior product designer crafting calm, operational software for the analysts, account managers, and ops teams who live inside mortgage and financial workflows.</p>
-        <p>My journey began in code, but I was drawn to design, where curiosity turns into structure and structure turns into something a team can actually use on a Tuesday.</p>
-        <p>I design for the quiet wins: the escalation email that never gets sent, the report found in one click, the status meeting that stops being necessary.</p>
+        <p>Hi there! <span class="wave">👋</span> I'm Dinesh, a UX Designer passionate about understanding how people interact with technology.</p>
+        <p>My journey began in code, but I was more drawn to design, where my curiosity could thrive through problem-solving and creativity.</p>
+        <p>I love crafting experiences that feel intuitive, purposeful, and just a little bit delightful.</p>
       </div>
 
       <div class="hero-blocks">
@@ -1200,7 +1190,7 @@
 
     <div class="hero-right">
       <div class="hero-visual" id="heroVisual">
-        <img loading="lazy" decoding="async" class="hero-visual-img" src="./images/about/hero-mountain.jpg" alt="Dinesh on a misty mountain summit above the cloud line" />
+        <img class="hero-visual-img" src="./images/about/hero-mountain.jpg" alt="Dinesh on a misty mountain summit above the cloud line" />
         <div class="hero-caption">
           <span class="dot"></span>
           <span>Above the cloud line · White Mountains</span>
@@ -1234,7 +1224,7 @@
       <button class="wg-word active" data-idx="0">
         Kilimanjaro
         <span class="wg-card" data-img="kili" aria-hidden="true">
-          <img loading="lazy" decoding="async" src="./images/about/kilimanjaro.jpg" alt="Uhuru Peak summit sign" />
+          <img src="./images/about/kilimanjaro.jpg" alt="Uhuru Peak summit sign" />
           <span class="wg-card-caption">Uhuru Peak · Tanzania</span>
         </span>
       </button>
@@ -1242,7 +1232,7 @@
       <button class="wg-word" data-idx="1">
         White Mountains
         <span class="wg-card" data-img="white" aria-hidden="true">
-          <img loading="lazy" decoding="async" src="./images/about/hero-mountain.jpg" alt="On a misty summit" />
+          <img src="./images/about/hero-mountain.jpg" alt="On a misty summit" />
           <span class="wg-card-caption">Above the cloud line</span>
         </span>
       </button>
@@ -1250,7 +1240,7 @@
       <button class="wg-word" data-idx="2">
         Winter Trek
         <span class="wg-card" data-img="snow" aria-hidden="true">
-          <img loading="lazy" decoding="async" src="./images/about/snow-hike.jpg" alt="Winter snow hike" />
+          <img src="./images/about/snow-hike.jpg" alt="Winter snow hike" />
           <span class="wg-card-caption">Snow ascent · NH</span>
         </span>
       </button>
@@ -1258,7 +1248,7 @@
       <button class="wg-word" data-idx="3">
         Hoops
         <span class="wg-card" data-img="hoops" aria-hidden="true">
-          <img loading="lazy" decoding="async" src="./images/about/basketball.jpeg" alt="Holding a basketball trophy" />
+          <img src="./images/about/basketball.jpeg" alt="Holding a basketball trophy" />
           <span class="wg-card-caption">Sandal Rockets · ₹10,000 trophy</span>
         </span>
       </button>
@@ -1266,7 +1256,7 @@
       <button class="wg-word" data-idx="4">
         Fenway Park
         <span class="wg-card" data-img="fenway" aria-hidden="true">
-          <img loading="lazy" decoding="async" src="./images/about/graduation.webp" alt="Graduation at Fenway Park" />
+          <img src="./images/about/graduation.webp" alt="Graduation at Fenway Park" />
           <span class="wg-card-caption">Graduation Day · Boston</span>
         </span>
       </button>
@@ -1392,7 +1382,7 @@
             <p class="role-desc">Building the Next-Gen Mortgage Experience. Leading UX for client-facing portals across inquiry tracking, loan deboarding, and post-release reconciliation.</p>
           </div>
           <div class="role-dates">
-            2025 to Present
+            2025 — Present
             <span class="span">Current</span>
           </div>
         </div>
@@ -1407,7 +1397,7 @@
             <p class="role-desc">I designed intuitive user experiences, developed user-centered data visualization systems, and implemented AI-powered tools to enhance productivity and user satisfaction.</p>
           </div>
           <div class="role-dates">
-            2022 to 2025
+            2022 — 2025
             <span class="span">3 yrs</span>
           </div>
         </div>
@@ -1422,7 +1412,7 @@
             <p class="role-desc">I collaborated with stakeholders to gather requirements, designed user-centered interfaces, and implemented intuitive features to enhance the usability and accessibility of internal websites and tools.</p>
           </div>
           <div class="role-dates">
-            2021 to 2022
+            2021 — 2022
             <span class="span">1 yr</span>
           </div>
         </div>
@@ -1437,7 +1427,7 @@
             <p class="role-desc">I designed and developed high-quality websites for small and medium enterprises, resulting in increased user engagement and positive business impact.</p>
           </div>
           <div class="role-dates">
-            2018 to 2019
+            2018 — 2019
             <span class="span">1 yr</span>
           </div>
         </div>
@@ -1457,7 +1447,7 @@
       <p class="hero-quote-text">Dinesh has a knack for <em>transforming product experiences</em>. Users love the changes he's made. His can-do attitude, quick thinking, and ability to turn ideas into reality make him an invaluable team player.</p>
       <div class="hero-quote-author">
         <div class="commend-avatar">
-          <img loading="lazy" decoding="async" src="./images/about/testimonial-gayathri.png" alt="Gayathri" />
+          <img src="./images/about/testimonial-gayathri.png" alt="Gayathri" />
         </div>
         <div>
           <div class="hero-quote-name">Gayathri</div>
@@ -1474,14 +1464,14 @@
         <p class="commend-text">Dinesh's UI prototypes are a developer's dream: visually stunning, functional, and a breeze to implement. His collaborative spirit, openness to feedback, and deep understanding of development needs make him a true asset to any team.</p>
         <div class="commend-author">
           <div class="commend-avatar">
-            <img loading="lazy" decoding="async" src="./images/about/testimonial-baylock.png" alt="Baylock" />
+            <img src="./images/about/testimonial-baylock.png" alt="Baylock" />
           </div>
           <div>
             <div class="commend-name">Baylock</div>
             <div class="commend-role">Developer</div>
           </div>
         </div>
-        <a href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener" class="rec-link">
+        <a href="https://www.linkedin.com/in/dineshballer/" target="_blank" rel="noopener" class="rec-link">
           Read full recommendation
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
         </a>
@@ -1492,14 +1482,14 @@
         <p class="commend-text">Dinesh's organization and proactive approach keep projects running smoothly. His clear communication ensures everyone stays aligned, making collaboration seamless and stress-free.</p>
         <div class="commend-author">
           <div class="commend-avatar">
-            <img loading="lazy" decoding="async" src="./images/about/testimonial-veronica.png" alt="Veronica" />
+            <img src="./images/about/testimonial-veronica.png" alt="Veronica" />
           </div>
           <div>
             <div class="commend-name">Veronica</div>
             <div class="commend-role">Project Manager</div>
           </div>
         </div>
-        <a href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener" class="rec-link">
+        <a href="https://www.linkedin.com/in/dineshballer/" target="_blank" rel="noopener" class="rec-link">
           Read full recommendation
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>
         </a>
@@ -1516,7 +1506,8 @@
     </div>
 
     <div class="stack-grid">
-      <div class="stack-card reveal"><div class="stack-icon figma"><img loading="lazy" decoding="async" src="./images/about/tool-figma.png" alt=""/></div><div><div class="stack-name">Figma</div><div class="stack-desc">Design & Prototyping</div></div></div>
+      <div class="stack-card reveal"><div class="stack-icon figma"><img src="./images/about/tool-figma.png" alt=""/></div><div><div class="stack-name">Figma</div><div class="stack-desc">Design & Prototyping</div></div></div>
+      <div class="stack-card reveal"><div class="stack-icon xd"><img src="./images/about/tool-adobexd.png" alt=""/></div><div><div class="stack-name">Adobe XD</div><div class="stack-desc">Design & Prototyping</div></div></div>
       <div class="stack-card reveal"><div class="stack-icon html">5</div><div><div class="stack-name">HTML5</div><div class="stack-desc">Development</div></div></div>
       <div class="stack-card reveal"><div class="stack-icon framer">F</div><div><div class="stack-name">Framer</div><div class="stack-desc">Design & Prototyping</div></div></div>
       <div class="stack-card reveal"><div class="stack-icon css">3</div><div><div class="stack-name">CSS3</div><div class="stack-desc">Development</div></div></div>
@@ -1704,7 +1695,7 @@
         <span class="fp-dot" aria-hidden="true"></span>
         <span id="footer-copy-label">copy email</span>
       </button>
-      <a href="https://www.linkedin.com/in/dineshkravikumar/" class="footer-ext-link" target="_blank" rel="noopener">
+      <a href="https://linkedin.com/in/dineshkravikumar" class="footer-ext-link" target="_blank" rel="noopener">
         LinkedIn <span class="ext-arrow" aria-hidden="true">↗</span>
       </a>
       <a href="/resume.pdf" class="footer-ext-link" target="_blank" rel="noopener">
