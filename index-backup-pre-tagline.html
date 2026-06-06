@@ -23,7 +23,7 @@
 <meta property="og:image"        content="./images/rti-final-overview.png" />
 <meta property="og:image:width"  content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:url"          content="https://www.dineshkumar.design" />
+<meta property="og:url"          content="https://dineshballer.com" />
 <meta property="og:site_name"    content="Dinesh Kumar" />
 
 <!-- ── Twitter / X Card ── -->
@@ -890,92 +890,39 @@
     outline: none;
   }
 
-  /* ── Revolving multicolor gradient stroke on the AI trigger — closed state only ── */
-  @property --ai-angle {
-    syntax: "<angle>";
-    inherits: false;
-    initial-value: 0deg;
-  }
+  /* ── Static gradient border on the AI trigger — closed state only ── */
   .ai-morph-slot:not(.is-open) .ai-trigger {
-    border: none;
-    background: #FFFFFF;
+    border: 1.5px solid transparent;
+    background:
+      #FFFFFF padding-box,
+      linear-gradient(
+        105deg,
+        rgba(31, 77, 62, 0.70),
+        rgba(100, 178, 138, 0.85) 38%,
+        rgba(218, 190, 130, 0.72) 62%,
+        rgba(31, 77, 62, 0.55)
+      ) border-box;
     box-shadow:
       0 2px 6px rgba(23, 23, 23, 0.05),
       0 10px 28px rgba(31, 77, 62, 0.10),
       0 24px 48px rgba(31, 77, 62, 0.06);
   }
-  /* the spinning gradient ring sits just behind the pill */
-  .ai-morph-slot:not(.is-open) .ai-trigger::before {
-    content: "";
-    position: absolute;
-    inset: -1.4px;
-    border-radius: 999px;
-    padding: 1.4px;
-    background: conic-gradient(
-      from var(--ai-angle),
-      #1F4D3E,
-      #2f9e74,
-      #6ec8a4,
-      #d9be82,
-      #c87f4a,
-      #7a5cc4,
-      #2f9e74,
-      #1F4D3E
-    );
-    /* mask so only the 2px ring shows, not the fill */
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    animation: ai-rotate 6s linear infinite;
-    pointer-events: none;
-    z-index: 0;
-  }
-  /* soft glowing aura sits on the WRAPPER, behind the pill, so the white
-     interior always covers it (avoids the hover stacking-context bleed) */
-  .ai-morph-slot:not(.is-open)::before {
-    content: "";
-    position: absolute;
-    inset: -3px;
-    border-radius: 999px;
-    background: conic-gradient(
-      from var(--ai-angle),
-      #1F4D3E, #2f9e74, #6ec8a4, #d9be82, #c87f4a, #7a5cc4, #2f9e74, #1F4D3E
-    );
-    filter: blur(11px);
-    opacity: 0.26;
-    animation: ai-rotate 6s linear infinite;
-    pointer-events: none;
-    z-index: 0;
-    transition: opacity 280ms var(--ease);
-  }
-  /* the trigger paints above the wrapper glow */
-  .ai-morph-slot .ai-trigger { position: relative; z-index: 1; }
-  /* keep the pill's own content above the ring layer */
-  .ai-trigger > * { position: relative; z-index: 1; }
-  @keyframes ai-rotate {
-    to { --ai-angle: 360deg; }
-  }
-  .ai-morph-slot:not(.is-open):hover::before {
-    opacity: 0.42;
-  }
   .ai-morph-slot:not(.is-open) .ai-trigger:hover,
   .ai-morph-slot:not(.is-open) .ai-trigger:focus-visible {
     transform: translateY(-3px);
+    background:
+      #FFFFFF padding-box,
+      linear-gradient(
+        105deg,
+        rgba(31, 77, 62, 0.90),
+        rgba(100, 178, 138, 1) 38%,
+        rgba(218, 190, 130, 0.85) 62%,
+        rgba(31, 77, 62, 0.70)
+      ) border-box;
     box-shadow:
       0 4px 10px rgba(23, 23, 23, 0.07),
       0 16px 40px rgba(31, 77, 62, 0.15),
       0 36px 72px rgba(31, 77, 62, 0.08);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .ai-morph-slot:not(.is-open)::before,
-    .ai-morph-slot:not(.is-open) .ai-trigger::before {
-      animation: none;
-    }
   }
   .ai-trigger-spark {
     display: inline-flex;
@@ -2948,7 +2895,7 @@
       <div class="greeting-inner">
         <p>Hi, I'm Dinesh.</p>
         <svg class="wavy" width="92" height="12" viewBox="0 0 92 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M 3 7 Q 12 2 22 7 T 44 7 T 66 7 T 89 6" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+          <path d="M 3 7 Q 12 2 22 7 T 44 7 T 66 7 T 89 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
     </div>

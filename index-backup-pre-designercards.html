@@ -13,23 +13,23 @@
 <link rel="apple-touch-icon" sizes="180x180"    href="./apple-touch-icon.png" />
 
 <!-- ── SEO ── -->
-<meta name="description" content="Dinesh Kumar is a product designer building B2B products and AI-powered workflows at Onity. Case studies in mortgage servicing, AI workspaces, and financial operations tooling." />
+<meta name="description" content="Dinesh Kumar is a senior product designer building the operational software that runs mortgage and lending work at Onity. Case studies in mortgage servicing, AI workspaces, and financial operations tooling." />
 <meta name="author" content="Dinesh Kumar" />
 
 <!-- ── Open Graph (LinkedIn, Slack, iMessage previews) ── -->
 <meta property="og:type"         content="website" />
 <meta property="og:title"        content="Dinesh Kumar, Senior Product Designer" />
-<meta property="og:description"  content="Designer building B2B products and AI-powered workflows that keep financial teams moving. Case studies at Onity, Dell, and Red Hat." />
+<meta property="og:description"  content="The best workflow I ever shipped is the status meeting that stopped happening. Senior product designer for the software that runs financial operations. Case studies at Onity, Dell, and Red Hat." />
 <meta property="og:image"        content="./images/rti-final-overview.png" />
 <meta property="og:image:width"  content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:url"          content="https://www.dineshkumar.design" />
+<meta property="og:url"          content="https://dineshballer.com" />
 <meta property="og:site_name"    content="Dinesh Kumar" />
 
 <!-- ── Twitter / X Card ── -->
 <meta name="twitter:card"        content="summary_large_image" />
 <meta name="twitter:title"       content="Dinesh Kumar, Senior Product Designer" />
-<meta name="twitter:description" content="Designer building B2B products and AI-powered workflows that keep financial teams moving." />
+<meta name="twitter:description" content="The best workflow I ever shipped is the status meeting that stopped happening. Senior product designer for the software that runs financial operations." />
 <meta name="twitter:image"       content="./images/rti-final-overview.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -221,92 +221,115 @@
   }
 
   /* Chip rail */
-  .chip-rail {
+  /* ── Tarot lens deck ── */
+  .deck {
     display: flex;
-    flex-wrap: wrap;
+    gap: 18px;
     justify-content: center;
-    gap: 28px;
-    margin-bottom: 36px;
-    opacity: 0;
-    animation: fadein 720ms var(--ease) 120ms forwards;
+    flex-wrap: wrap;
+    margin: 4px auto 0;
+    perspective: 1500px;
   }
-  .chip {
+  .tcard {
     appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    width: 156px;
+    height: 216px;
+    padding: 0;
     background: transparent;
     border: none;
-    padding: 0;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 400ms var(--ease);
+    border-radius: 14px;
+    /* deal-in: start tucked down, rotated, invisible */
+    opacity: 0;
+    transform: translateY(38px) rotateZ(-6deg) scale(0.94);
+    animation: deal-in 620ms cubic-bezier(0.2, 0.8, 0.25, 1) forwards;
+  }
+  .tcard:nth-child(1) { animation-delay: 360ms; }
+  .tcard:nth-child(2) { animation-delay: 460ms; }
+  .tcard:nth-child(3) { animation-delay: 560ms; }
+  .tcard:nth-child(4) { animation-delay: 660ms; }
+  .tcard:nth-child(5) { animation-delay: 760ms; }
+  @keyframes deal-in {
+    to { opacity: 1; transform: translateY(0) rotateZ(0) scale(1); }
+  }
+  /* once dealt, JS adds .ready so hover/flip transforms take over cleanly */
+  .tcard.ready { animation: none; opacity: 1; }
+  .tcard.ready:hover { transform: translateY(-8px) rotateZ(-1deg); }
+  .tcard.ready[aria-pressed="true"] { transform: rotateY(180deg); }
+  .tcard.ready[aria-pressed="true"]:hover { transform: rotateY(180deg) translateY(-8px); }
+  .tcard:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+  .tface {
+    position: absolute;
+    inset: 0;
+    border-radius: 14px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .tfront {
+    background-color: #1a4536;
+    background-image:
+      radial-gradient(rgba(207, 238, 222, 0.13) 1px, transparent 1.4px),
+      linear-gradient(160deg, #1F4D3E, #163d30 78%);
+    background-size: 13px 13px, 100% 100%;
+    background-position: 0 0, 0 0;
+    color: #f1ede4;
+    border: 1px solid #163d30;
+    box-shadow: 0 18px 40px -22px rgba(20, 40, 30, 0.7);
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 14px;
+  }
+  .tfront .frame { position: absolute; inset: 8px; border: 1px solid rgba(220, 230, 222, 0.38); border-radius: 9px; box-shadow: inset 0 0 0 1px rgba(220, 230, 222, 0.08); }
+  .tfront .rn { font-family: var(--display); font-size: 15px; letter-spacing: 0.1em; color: #bfe3d1; opacity: 0.9; }
+  .tfront .glyph { font-size: 34px; line-height: 1; color: #cfeede; }
+  .tfront .tlabel { font-family: var(--display); font-style: italic; font-weight: 380; font-size: 19px; text-align: center; line-height: 1.15; color: #fbf8f1; }
+  .tfront .hint { font-family: var(--body); font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(220, 230, 222, 0.7); }
+  .tback {
+    transform: rotateY(180deg);
+    background: var(--paper, #FFFDF9);
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 40px -22px rgba(20, 40, 30, 0.45);
+    padding: 22px 18px;
+    align-items: flex-start;
+    justify-content: center;
+    text-align: left;
+  }
+  .tback .frame { position: absolute; inset: 8px; border: 1px solid rgba(31, 77, 62, 0.18); border-radius: 9px; }
+  .tback .rn { position: absolute; top: 12px; left: 15px; font-family: var(--display); font-size: 13px; color: var(--accent); opacity: 0.55; }
+  .tback .ans { font-family: var(--display); font-weight: 360; font-size: 16px; line-height: 1.34; color: var(--ink); font-variation-settings: "opsz" 24; }
+  .tback .ans em { font-style: italic; color: var(--green-strong); }
+  .deck-hint {
     font-family: var(--body);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
+    font-size: 11px;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--ink-mute);
-    cursor: pointer;
-    transition: color 320ms var(--ease), font-weight 320ms var(--ease);
-    position: relative;
-  }
-  .chip:hover { color: var(--ink-soft); }
-  .chip::after {
-    content: "";
-    position: absolute;
-    left: 0; right: 0; bottom: -8px;
-    height: 1px;
-    background: var(--green-strong);
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 320ms var(--ease);
-  }
-  .chip[aria-selected="true"] {
-    color: var(--green-strong);
-    font-weight: 600;
-  }
-  /* Active chip: persistent underline indicator (no auto-cycle countdown) */
-  .chip[aria-selected="true"]::after {
-    transform: scaleX(1);
-    transition: transform 320ms var(--ease);
+    text-align: center;
+    margin: 24px 0 0;
+    opacity: 0;
+    animation: fadein 760ms var(--ease) 460ms forwards;
   }
   @media (prefers-reduced-motion: reduce) {
-    .chip[aria-selected="true"]::after {
-      animation: none;
-      transform: scaleX(1);
-    }
+    .tcard { transition: none; }
+    .tcard:hover { transform: none; }
+    .tcard[aria-pressed="true"]:hover { transform: rotateY(180deg); }
   }
-  .chip:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 6px;
-    border-radius: 2px;
+  @media (max-width: 760px) {
+    .deck { gap: 12px; }
+    .tcard { width: 132px; height: 184px; }
+    .tfront .glyph { font-size: 28px; }
+    .tfront .tlabel { font-size: 17px; }
+    .tback .ans { font-size: 15px; }
   }
-
-  /* Fixed-height stage — text always vertically centered, AI chat never moves */
-  .lens-stage {
-    position: relative;
-    width: 100%;
-    max-width: 820px;
-    height: clamp(130px, 17vw, 190px);
-    margin: 0 auto;
-    opacity: 0;
-    animation: fadein 900ms var(--ease) 280ms forwards;
-  }
-  .lens-line {
-    position: absolute;
-    top: 35%; left: 0; right: 0;
-    font-family: var(--display);
-    font-weight: 350;
-    font-size: clamp(28px, 4vw, 44px);
-    line-height: 1.18;
-    letter-spacing: -0.018em;
-    color: var(--ink);
-    font-variation-settings: "opsz" 60;
-    opacity: 0;
-    transform: translateY(calc(-50% + 8px));
-    transition: opacity 220ms var(--ease), transform 320ms var(--ease);
-    pointer-events: none;
-  }
-  .lens-line[data-active="true"] {
-    opacity: 1;
-    transform: translateY(-50%);
-    pointer-events: auto;
-    transition-delay: 80ms;
+  @media (max-width: 460px) {
+    .tcard { width: 44%; height: 168px; }
   }
 
   @keyframes fadein {
@@ -318,7 +341,7 @@
 
   /* Greeting at the top of hero — sets the personal tone before chips */
   .greeting {
-    margin: 0 0 48px;
+    margin: 0 0 20px;
     text-align: center;
     opacity: 0;
     animation: greeting-in 600ms var(--ease) 120ms forwards;
@@ -890,92 +913,39 @@
     outline: none;
   }
 
-  /* ── Revolving multicolor gradient stroke on the AI trigger — closed state only ── */
-  @property --ai-angle {
-    syntax: "<angle>";
-    inherits: false;
-    initial-value: 0deg;
-  }
+  /* ── Static gradient border on the AI trigger — closed state only ── */
   .ai-morph-slot:not(.is-open) .ai-trigger {
-    border: none;
-    background: #FFFFFF;
+    border: 1.5px solid transparent;
+    background:
+      #FFFFFF padding-box,
+      linear-gradient(
+        105deg,
+        rgba(31, 77, 62, 0.70),
+        rgba(100, 178, 138, 0.85) 38%,
+        rgba(218, 190, 130, 0.72) 62%,
+        rgba(31, 77, 62, 0.55)
+      ) border-box;
     box-shadow:
       0 2px 6px rgba(23, 23, 23, 0.05),
       0 10px 28px rgba(31, 77, 62, 0.10),
       0 24px 48px rgba(31, 77, 62, 0.06);
   }
-  /* the spinning gradient ring sits just behind the pill */
-  .ai-morph-slot:not(.is-open) .ai-trigger::before {
-    content: "";
-    position: absolute;
-    inset: -1.4px;
-    border-radius: 999px;
-    padding: 1.4px;
-    background: conic-gradient(
-      from var(--ai-angle),
-      #1F4D3E,
-      #2f9e74,
-      #6ec8a4,
-      #d9be82,
-      #c87f4a,
-      #7a5cc4,
-      #2f9e74,
-      #1F4D3E
-    );
-    /* mask so only the 2px ring shows, not the fill */
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    animation: ai-rotate 6s linear infinite;
-    pointer-events: none;
-    z-index: 0;
-  }
-  /* soft glowing aura sits on the WRAPPER, behind the pill, so the white
-     interior always covers it (avoids the hover stacking-context bleed) */
-  .ai-morph-slot:not(.is-open)::before {
-    content: "";
-    position: absolute;
-    inset: -3px;
-    border-radius: 999px;
-    background: conic-gradient(
-      from var(--ai-angle),
-      #1F4D3E, #2f9e74, #6ec8a4, #d9be82, #c87f4a, #7a5cc4, #2f9e74, #1F4D3E
-    );
-    filter: blur(11px);
-    opacity: 0.26;
-    animation: ai-rotate 6s linear infinite;
-    pointer-events: none;
-    z-index: 0;
-    transition: opacity 280ms var(--ease);
-  }
-  /* the trigger paints above the wrapper glow */
-  .ai-morph-slot .ai-trigger { position: relative; z-index: 1; }
-  /* keep the pill's own content above the ring layer */
-  .ai-trigger > * { position: relative; z-index: 1; }
-  @keyframes ai-rotate {
-    to { --ai-angle: 360deg; }
-  }
-  .ai-morph-slot:not(.is-open):hover::before {
-    opacity: 0.42;
-  }
   .ai-morph-slot:not(.is-open) .ai-trigger:hover,
   .ai-morph-slot:not(.is-open) .ai-trigger:focus-visible {
     transform: translateY(-3px);
+    background:
+      #FFFFFF padding-box,
+      linear-gradient(
+        105deg,
+        rgba(31, 77, 62, 0.90),
+        rgba(100, 178, 138, 1) 38%,
+        rgba(218, 190, 130, 0.85) 62%,
+        rgba(31, 77, 62, 0.70)
+      ) border-box;
     box-shadow:
       0 4px 10px rgba(23, 23, 23, 0.07),
       0 16px 40px rgba(31, 77, 62, 0.15),
       0 36px 72px rgba(31, 77, 62, 0.08);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .ai-morph-slot:not(.is-open)::before,
-    .ai-morph-slot:not(.is-open) .ai-trigger::before {
-      animation: none;
-    }
   }
   .ai-trigger-spark {
     display: inline-flex;
@@ -2760,6 +2730,92 @@
   }
 
   /* ── Role descriptor — persistent identity line above chip rail ── */
+  .hero-headline {
+    font-family: var(--display);
+    font-weight: 380;
+    font-size: clamp(30px, 4.6vw, 52px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto 48px;
+    font-variation-settings: "opsz" 80;
+    opacity: 0;
+    animation: fadein 800ms var(--ease) 200ms forwards;
+  }
+  /* Hand-drawn strike-through: the meeting literally gets cancelled */
+  .strike-word {
+    position: relative;
+    white-space: nowrap;
+    color: var(--ink-mute);
+    cursor: default;
+  }
+  .strike-mark {
+    position: absolute;
+    left: -2%;
+    top: 50%;
+    width: 106%;
+    height: 0.5em;
+    transform: translateY(-52%) rotate(-1.5deg);
+    color: #7c2b22;
+    overflow: visible;
+    pointer-events: none;
+  }
+  .strike-mark path {
+    stroke-dasharray: 320;
+    stroke-dashoffset: 320;
+    animation: strike-draw 620ms var(--ease) 1150ms forwards;
+  }
+  @keyframes strike-draw {
+    to { stroke-dashoffset: 0; }
+  }
+  /* "Canceled" rubber stamp */
+  .cancel-stamp {
+    position: absolute;
+    right: -0.7em;
+    top: -0.62em;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 0.26em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #7c2b22;
+    border: 2.5px solid #7c2b22;
+    border-radius: 5px;
+    padding: 3px 7px 2px;
+    transform: rotate(8deg) scale(1.6);
+    opacity: 0;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    animation: stamp-thunk 360ms var(--ease-spring, var(--ease)) 1650ms forwards;
+  }
+  @keyframes stamp-thunk {
+    0%   { opacity: 0; transform: rotate(8deg) scale(1.6); }
+    60%  { opacity: 0.95; transform: rotate(8deg) scale(0.92); }
+    100% { opacity: 0.92; transform: rotate(8deg) scale(1); }
+  }
+  /* Replay on hover: re-draw the strike and re-thunk the stamp */
+  .strike-word:hover .strike-mark path {
+    animation: strike-draw 560ms var(--ease) 60ms forwards;
+  }
+  .strike-word:hover .cancel-stamp {
+    animation: stamp-thunk 340ms var(--ease-spring, var(--ease)) 480ms forwards;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .strike-mark path { animation: none; stroke-dashoffset: 0; }
+    .cancel-stamp { animation: none; opacity: 0.92; transform: rotate(8deg) scale(1); }
+    .strike-word:hover .strike-mark path,
+    .strike-word:hover .cancel-stamp { animation: none; }
+  }
+  .hero-headline i {
+    font-style: italic;
+    font-weight: 340;
+    color: var(--green-strong);
+  }
+  @media (max-width: 680px) {
+    .hero-headline { font-size: clamp(26px, 7vw, 34px); }
+  }
   .role-descriptor {
     font-family: var(--display);
     font-style: italic;
@@ -2767,7 +2823,7 @@
     font-size: clamp(14px, 1.5vw, 18px);
     letter-spacing: -0.005em;
     color: var(--ink-mute);
-    margin: -20px 0 28px;
+    margin: 0 0 40px;
     opacity: 0;
     animation: fadein 700ms var(--ease) 80ms forwards;
     text-align: center;
@@ -2948,28 +3004,38 @@
       <div class="greeting-inner">
         <p>Hi, I'm Dinesh.</p>
         <svg class="wavy" width="92" height="12" viewBox="0 0 92 12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M 3 7 Q 12 2 22 7 T 44 7 T 66 7 T 89 6" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+          <path d="M 3 7 Q 12 2 22 7 T 44 7 T 66 7 T 89 6" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
     </div>
 
     <p class="role-descriptor">Senior UX Designer &nbsp;·&nbsp; B2B Enterprise &nbsp;·&nbsp; Fintech &amp; Mortgage</p>
 
-    <div class="chip-rail" role="tablist" aria-label="Choose a lens">
-      <button class="chip" role="tab" aria-selected="true"  aria-controls="lens-work"      data-lens="work"      tabindex="0">What I do</button>
-      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-operators" data-lens="operators" tabindex="-1">Who it's for</button>
-      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-approach"  data-lens="approach"  tabindex="-1">How I work</button>
-      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-backstory" data-lens="backstory" tabindex="-1">The path</button>
-      <button class="chip" role="tab" aria-selected="false" aria-controls="lens-now"       data-lens="now"       tabindex="-1">Now</button>
-    </div>
+    <h1 class="hero-headline">The best workflow I ever shipped is the <span class="strike-word">status meeting<svg class="strike-mark" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path d="M2 14 C 58 7, 118 19, 172 11 S 248 7, 298 12" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg><span class="cancel-stamp" aria-hidden="true">Canceled</span></span> that <i>stopped happening.</i></h1>
 
-    <div class="lens-stage" aria-live="polite">
-      <p class="lens-line" id="lens-work"      data-lens="work"      data-active="true">Designer building B2B products and AI-powered workflows that keep financial teams moving.</p>
-      <p class="lens-line" id="lens-operators" data-lens="operators">Analysts, AMs, and ops teams running mortgage and lending workflows all day, every day.</p>
-      <p class="lens-line" id="lens-approach"  data-lens="approach">Research-led, structure-first. Progress over pixels.</p>
-      <p class="lens-line" id="lens-backstory" data-lens="backstory">Now at Onity. Dell and Red Hat before that.</p>
-      <p class="lens-line" id="lens-now"       data-lens="now">Building AI products at Onity. Mortgage portals, inquiry systems, release pipelines. Vibe-coding anything else worth shipping.</p>
+    <div class="deck" role="group" aria-label="Turn a card to learn more about Dinesh">
+      <button class="tcard" type="button" aria-pressed="false" aria-label="What I do, tap to reveal">
+        <span class="tface tfront"><span class="frame" aria-hidden="true"></span><span class="rn">I</span><span class="glyph" aria-hidden="true">✦</span><span class="tlabel">What I do</span><span class="hint">Tap to reveal</span></span>
+        <span class="tface tback"><span class="frame" aria-hidden="true"></span><span class="rn">I</span><span class="ans">I design <em>B2B products and AI workflows</em> that keep financial teams moving.</span></span>
+      </button>
+      <button class="tcard" type="button" aria-pressed="false" aria-label="Who it's for, tap to reveal">
+        <span class="tface tfront"><span class="frame" aria-hidden="true"></span><span class="rn">II</span><span class="glyph" aria-hidden="true">◐</span><span class="tlabel">Who it's for</span><span class="hint">Tap to reveal</span></span>
+        <span class="tface tback"><span class="frame" aria-hidden="true"></span><span class="rn">II</span><span class="ans">For the <em>analysts, AMs, and ops teams</em> who live inside the tools.</span></span>
+      </button>
+      <button class="tcard" type="button" aria-pressed="false" aria-label="How I work, tap to reveal">
+        <span class="tface tfront"><span class="frame" aria-hidden="true"></span><span class="rn">III</span><span class="glyph" aria-hidden="true">△</span><span class="tlabel">How I work</span><span class="hint">Tap to reveal</span></span>
+        <span class="tface tback"><span class="frame" aria-hidden="true"></span><span class="rn">III</span><span class="ans"><em>Research-led, structure-first.</em> Progress over pixels.</span></span>
+      </button>
+      <button class="tcard" type="button" aria-pressed="false" aria-label="The path, tap to reveal">
+        <span class="tface tfront"><span class="frame" aria-hidden="true"></span><span class="rn">IV</span><span class="glyph" aria-hidden="true">❖</span><span class="tlabel">The path</span><span class="hint">Tap to reveal</span></span>
+        <span class="tface tback"><span class="frame" aria-hidden="true"></span><span class="rn">IV</span><span class="ans">Shipped at <em>Onity, Dell, and Red Hat</em>.</span></span>
+      </button>
+      <button class="tcard" type="button" aria-pressed="false" aria-label="Now, tap to reveal">
+        <span class="tface tfront"><span class="frame" aria-hidden="true"></span><span class="rn">V</span><span class="glyph" aria-hidden="true">✷</span><span class="tlabel">Now</span><span class="hint">Tap to reveal</span></span>
+        <span class="tface tback"><span class="frame" aria-hidden="true"></span><span class="rn">V</span><span class="ans">Building <em>AI products at Onity</em>: portals, inquiry systems, release pipelines.</span></span>
+      </button>
     </div>
+    <p class="deck-hint" aria-hidden="true">Turn a card</p>
 
     <!-- ───────────────────────────────────────────────
          AI chat — Inline morph
@@ -4661,49 +4727,89 @@
 })();
 
 /* ───────────────────────────────────────────────
-   Hero chip rail — word-by-word stagger entrance
+   Hero tarot deck — click / keyboard to flip a card
 ─────────────────────────────────────────────── */
 (() => {
+  const cards = Array.from(document.querySelectorAll(".tcard"));
+  if (!cards.length) return;
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Mark cards "ready" after the deal-in finishes so hover/flip transforms take over.
+  // Last card delay 760ms + 620ms duration ≈ 1400ms; reduced-motion users are ready instantly.
+  if (reduced) {
+    cards.forEach(c => c.classList.add("ready"));
+  } else {
+    setTimeout(() => cards.forEach(c => c.classList.add("ready")), 1450);
+  }
+
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      const open = card.getAttribute("aria-pressed") === "true";
+      // One-at-a-time: close every other card before opening this one
+      if (!open) {
+        cards.forEach(c => { if (c !== card) c.setAttribute("aria-pressed", "false"); });
+      }
+      card.setAttribute("aria-pressed", open ? "false" : "true");
+      if (window.trackEvent) window.trackEvent("lens_card_flip", {
+        lens: (card.getAttribute("aria-label") || "").split(",")[0],
+        state: open ? "close" : "open"
+      });
+    });
+  });
+})();
+
+/* ───────────────────────────────────────────────
+   (legacy chip rail — retired in favour of the tarot deck)
+─────────────────────────────────────────────── */
+(() => {
+  return; // deck replaces this; guard kept so old code below never runs
   const chips = Array.from(document.querySelectorAll(".chip"));
   const lines = Array.from(document.querySelectorAll(".lens-line"));
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // Store original text so we always animate from the canonical copy
+  // Store canonical innerHTML so swaps preserve the <em> highlight
   const originals = new Map();
-  lines.forEach(l => originals.set(l.dataset.lens, l.textContent.trim()));
+  lines.forEach(l => originals.set(l.dataset.lens, l.innerHTML.trim()));
 
   let cleanupTimer = null;
   let firstLoad = true;
 
+  // Wrap each word in a fading span, but keep inline elements (like <em>) whole.
+  function buildStaggerHTML(html) {
+    const tmp = document.createElement("div");
+    tmp.innerHTML = html;
+    let i = 0;
+    const wrapWord = (w) =>
+      `<span data-w style="opacity:0;transition:opacity 320ms cubic-bezier(0.16,1,0.3,1) ${(i++) * 42}ms">${w}</span>`;
+    let out = "";
+    tmp.childNodes.forEach(node => {
+      if (node.nodeType === 3) { // text node
+        const parts = node.textContent.split(/(\s+)/);
+        parts.forEach(p => { out += /^\s+$/.test(p) ? p : (p ? wrapWord(p) : ""); });
+      } else { // element (e.g. <em>): fade as one unit, keep its markup
+        out += `<span data-w style="opacity:0;transition:opacity 320ms cubic-bezier(0.16,1,0.3,1) ${(i++) * 42}ms">${node.outerHTML}</span>`;
+      }
+    });
+    return out;
+  }
+
   function animateWordsIn(el) {
     if (cleanupTimer) clearTimeout(cleanupTimer);
-    const text = originals.get(el.dataset.lens) || el.textContent;
-    const words = text.split(" ");
+    const html = originals.get(el.dataset.lens) || el.innerHTML;
 
-    // Keep CSS control for position/transform — only override opacity + transition
     el.style.opacity = "1";
     el.style.transition = "none";
+    el.innerHTML = buildStaggerHTML(html);
 
-    // Use display:inline (not inline-block) so text wraps identically to plain text.
-    // Transforms require inline-block and would change line-break behaviour — opacity only.
-    el.innerHTML = words
-      .map((w, i) =>
-        `<span data-w style="opacity:0;` +
-        `transition:opacity 320ms cubic-bezier(0.16,1,0.3,1) ${i * 42}ms">${w}</span>`
-      )
-      .join(" ");
-
-    // Two rAF so the browser paints the hidden state before fading in
+    const count = el.querySelectorAll("[data-w]").length;
     requestAnimationFrame(() => requestAnimationFrame(() => {
-      el.querySelectorAll("[data-w]").forEach(s => {
-        s.style.opacity = "1";
-      });
+      el.querySelectorAll("[data-w]").forEach(s => { s.style.opacity = "1"; });
     }));
 
-    // After animation settles, restore plain text and hand back full CSS control
-    const settle = (words.length - 1) * 42 + 320 + 60;
+    const settle = (count - 1) * 42 + 320 + 60;
     cleanupTimer = setTimeout(() => {
-      el.textContent = text;
+      el.innerHTML = html;
       el.style.opacity = "";
       el.style.transition = "";
     }, settle);
@@ -4720,10 +4826,9 @@
       if (on) {
         l.dataset.active = "true";
         if (!reduced && !firstLoad) animateWordsIn(l);
-        else l.textContent = originals.get(lens) || l.textContent;
+        else l.innerHTML = originals.get(lens) || l.innerHTML;
       } else {
-        // Restore plain text before the CSS fade-out so it's clean
-        l.textContent = originals.get(l.dataset.lens) || l.textContent;
+        l.innerHTML = originals.get(l.dataset.lens) || l.innerHTML;
         l.style.cssText = "";
         l.dataset.active = "false";
       }
