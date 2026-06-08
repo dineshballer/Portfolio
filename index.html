@@ -1082,7 +1082,7 @@
       0 0 0 4px rgba(31, 77, 62, 0.06);
   }
 
-  /* Panel — structural wrapper for header + conversation */
+  /* Panel — structural wrapper for header + conversation + pinned chips */
   .ai-panel {
     position: static;
     display: flex;
@@ -1093,6 +1093,7 @@
     box-shadow: none;
     overflow: hidden;
     min-height: 0;
+    flex: 1;
   }
 
   /* Reset text alignment inside the dock — main.hero applies center,
@@ -1116,28 +1117,27 @@
   .ai-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 16px 18px 14px;
+    gap: 12px;
+    padding: 16px 18px;
     border-bottom: 1px solid rgba(23, 23, 23, 0.06);
+    position: relative;
   }
   .ai-header-text {
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 3px;
     min-width: 0;
+    flex: 1;
   }
+  .ai-controls { margin-left: auto; }
   .ai-header-text h3 {
     font-family: var(--body);
     font-weight: 600;
     font-size: 15px;
-    line-height: 1.2;
+    line-height: 1.1;
     letter-spacing: -0.008em;
     margin: 0;
     color: var(--ink);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
   }
   .ai-spark {
     color: var(--green-strong);
@@ -1220,12 +1220,13 @@
 
   /* Conversation area */
   .ai-convo {
-    padding: 20px 20px 18px;
+    padding: 20px 20px 8px;
     overflow-y: auto;
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 18px;
+    scroll-padding-bottom: 28px;
   }
   .ai-msg-user {
     align-self: flex-end;
@@ -1440,8 +1441,22 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-top: 2px;
+    flex-shrink: 0;
+    padding: 28px 20px 8px;
+    margin-top: -22px;            /* sit over the convo's last 22px so it fades under */
+    position: relative;
+    z-index: 2;
+    pointer-events: none;         /* transparent top must not block the scroll area */
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.55) 32%,
+      rgba(255, 255, 255, 0.92) 60%,
+      #FFFFFF 80%
+    );
   }
+  .ai-followup-label,
+  .ai-followup-chips { pointer-events: auto; }   /* clicks work on label + chips only */
   .ai-followup-label {
     font-family: var(--body);
     font-size: 11px;
@@ -1478,6 +1493,43 @@
     color: var(--green-strong);
     border-color: rgba(31, 77, 62, 0.30);
     transform: translateY(-1px);
+  }
+  /* staggered cascade-in when chips first appear */
+  .ai-followup {
+    animation: chip-rise 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes chip-rise {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  /* the hero chip — the JD fit-check, the killer action */
+  .ai-followup.is-hero {
+    background: var(--green-strong);
+    color: #fffdf9;
+    border-color: var(--green-strong);
+    font-weight: 500;
+    padding-left: 28px;
+  }
+  .ai-followup.is-hero::before {
+    content: "";
+    position: absolute;
+    left: 12px; top: 50%;
+    width: 9px; height: 9px;
+    margin-top: -4.5px;
+    background: #e0a657;
+    /* four-point spark */
+    clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%);
+  }
+  .ai-followup.is-hero {
+    position: relative;
+  }
+  .ai-followup.is-hero:hover {
+    background: #163d30;
+    color: #fffdf9;
+    border-color: #163d30;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ai-followup { animation: none; }
   }
 
   /* Input row — seamless bottom of the card, no separate pill background */
@@ -1701,36 +1753,120 @@
   .ai-collapse svg { transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1); }
   .ai-collapse:hover svg { transform: rotate(90deg); }
 
-  /* ───────── Folio: avatar in header ───────── */
+  /* ───────── Sage: pixel-art guru avatar in header ───────── */
+  .ai-header-text h3 { position: relative; }
   .ai-header-text h3 .ai-name { display: inline-block; }
   .ai-avatar {
+    appearance: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(31, 77, 62, 0.18), rgba(31, 77, 62, 0.32));
-    border: 1px solid rgba(31, 77, 62, 0.30);
-    margin-right: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: none;
+    border: 1px solid rgba(23, 23, 23, 0.08);
+    padding: 0;
     flex-shrink: 0;
-    vertical-align: -5px;
     position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 200ms var(--ease), box-shadow 200ms var(--ease);
   }
-  .ai-avatar-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--green-strong);
-    box-shadow: 0 0 0 0 rgba(31, 77, 62, 0.32);
+  .ai-avatar:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(20, 40, 30, 0.22); }
+  .ai-avatar:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .ai-avatar .sage-scene { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+  .sage-profile-av .sage-scene { width: 100%; height: 100%; display: block; border-radius: 12px; image-rendering: pixelated; }
+  /* The Sage mark: meditating figure seated inside a zen enso ring + spark */
+  .sage-mark {
+    width: 24px;
+    height: 24px;
+    display: block;
   }
-  /* Pulse while Folio is "speaking" (streaming) */
-  .ai-dock.is-speaking .ai-avatar-dot {
-    animation: avatar-pulse 1.2s ease-in-out infinite;
+  .sage-mark .sm-ring  { color: var(--green-strong); }
+  .sage-mark .sm-head  { fill: var(--green-strong); }
+  .sage-mark .sm-body  { stroke: var(--green-strong); }
+  .sage-mark .sm-spark { fill: #c8772e; }
+  /* Gentle "breathing" while Sage is speaking (streaming) */
+  .ai-dock.is-speaking .ai-avatar {
+    animation: sage-breathe 1.8s ease-in-out infinite;
   }
-  @keyframes avatar-pulse {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(31, 77, 62, 0.32); }
-    50%      { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(31, 77, 62, 0); }
+  /* the spark twinkles while speaking */
+  .ai-dock.is-speaking .sage-mark .sm-spark {
+    animation: sage-twinkle 1.8s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  @keyframes sage-breathe {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(216, 138, 60, 0.32); }
+    50%      { transform: scale(1.06); box-shadow: 0 0 0 6px rgba(216, 138, 60, 0); }
+  }
+  @keyframes sage-twinkle {
+    0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50%      { transform: scale(1.35) rotate(45deg); opacity: 0.8; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ai-dock.is-speaking .ai-avatar,
+    .ai-dock.is-speaking .sage-mark .sm-spark { animation: none; }
+  }
+  /* Profile popover that opens when the avatar is clicked */
+  .sage-profile {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 18px 18px 18px;
+    background: var(--paper, #FFFDF9);
+    border: 1px solid rgba(31, 77, 62, 0.18);
+    border-radius: 14px;
+    box-shadow: 0 16px 40px -18px rgba(20, 40, 30, 0.45);
+    z-index: 20;
+    text-align: left;
+  }
+  .sage-profile[hidden] { display: none; }
+  .sage-profile::before {
+    content: "";
+    position: absolute;
+    top: -6px; left: 12px;
+    width: 11px; height: 11px;
+    background: var(--paper, #FFFDF9);
+    border-left: 1px solid rgba(31, 77, 62, 0.18);
+    border-top: 1px solid rgba(31, 77, 62, 0.18);
+    transform: rotate(45deg);
+  }
+  .sage-profile-av {
+    width: 52px; height: 52px;
+    border-radius: 13px;
+    background: radial-gradient(circle at 50% 36%, #fbf6ec, #f3ece0 72%, #ece3d4);
+    border: 1px solid rgba(31, 77, 62, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 12px;
+  }
+  .sage-profile-av svg { width: 40px; height: 40px; display: block; }
+  .sage-profile-av .sm-ring { color: var(--green-strong); }
+  .sage-profile-av .sm-head { fill: var(--green-strong); }
+  .sage-profile-av .sm-body { stroke: var(--green-strong); }
+  .sage-profile-av .sm-spark { fill: #c8772e; }
+  .sage-profile-name {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 7px;
+    line-height: 1.1;
+  }
+  .sage-profile-bio {
+    font-family: var(--body);
+    font-size: 12.5px;
+    line-height: 1.62;
+    color: var(--ink-soft);
+    margin: 0;
   }
 
   /* ───────── Folio: typed welcome ───────── */
@@ -1761,6 +1897,35 @@
   .ai-convo.has-messages .ai-welcome {
     display: none;
   }
+  /* Pre-canned sample exchange */
+  .ai-demo {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    animation: demo-fade 600ms var(--ease) both;
+  }
+  @keyframes demo-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .ai-demo-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    align-self: flex-start;
+    font-family: var(--body);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .ai-demo-tag::before {
+    content: "";
+    width: 16px;
+    height: 1px;
+    background: var(--ink-mute);
+    opacity: 0.5;
+  }
+  .ai-convo.has-messages .ai-demo { display: none; }
   /* When followups has nothing to show (no chips), hide it to avoid an empty gap */
   .ai-followups.is-empty {
     display: none;
@@ -2977,14 +3142,14 @@
     ─────────────────────────────────────────────── -->
     <div class="ai-morph-slot">
 
-      <button class="ai-trigger" type="button" aria-expanded="false" aria-controls="ai-dock" aria-label="Open Folio, Dinesh's portfolio assistant">
+      <button class="ai-trigger" type="button" aria-expanded="false" aria-controls="ai-dock" aria-label="Open Sage, Dinesh's portfolio guru">
         <span class="ai-trigger-spark" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="18" height="18">
             <path d="M12 2 L13.4 9.4 L20.8 10.8 L13.4 12.2 L12 19.6 L10.6 12.2 L3.2 10.8 L10.6 9.4 Z" fill="currentColor"/>
             <path d="M18 3.5 L18.6 5.4 L20.5 6 L18.6 6.6 L18 8.5 L17.4 6.6 L15.5 6 L17.4 5.4 Z" fill="currentColor" opacity="0.7"/>
           </svg>
         </span>
-        <span class="ai-trigger-text" data-trigger-text>Ask Folio anything</span>
+        <span class="ai-trigger-text" data-trigger-text>Hiring? Ask Sage if Dinesh fits the role</span>
       </button>
 
       <aside class="ai-dock" id="ai-dock" aria-labelledby="ai-dock-title" aria-hidden="true">
@@ -2993,26 +3158,27 @@
       <div class="ai-panel">
 
         <header class="ai-header">
+          <button class="ai-avatar" type="button" aria-label="About Sage" aria-expanded="false" aria-controls="sage-profile">
+            <img class="sage-scene" src="./images/sage-avatar.svg" width="40" height="40" alt="" aria-hidden="true" />
+          </button>
           <div class="ai-header-text">
-            <h3 id="ai-dock-title">
-              <span class="ai-avatar" aria-hidden="true">
-                <span class="ai-avatar-dot"></span>
-              </span>
-              <span class="ai-name">Folio</span>
-            </h3>
-            <p class="ai-subtitle">Trained on 4 case studies, the résumé, and a decade of project notes.</p>
+            <h3 id="ai-dock-title"><span class="ai-name">Sage</span></h3>
+            <p class="ai-subtitle">Dinesh's portfolio guru. Paste a job description and I'll tell you straight whether he fits.</p>
           </div>
           <div class="ai-controls">
-            <span class="ai-mode-label">Recruiter</span>
-            <button class="ai-toggle" role="switch" aria-checked="false" aria-label="Toggle recruiter mode">
-              <span class="ai-toggle-thumb"></span>
-            </button>
             <button class="ai-collapse" aria-label="Close chat">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 3l8 8M11 3l-8 8"/>
               </svg>
             </button>
           </div>
+          <span class="sage-profile" id="sage-profile" role="dialog" aria-label="About Sage" hidden>
+            <span class="sage-profile-av" aria-hidden="true">
+              <img class="sage-scene" src="./images/sage-avatar.svg" width="120" height="120" alt="" aria-hidden="true" />
+            </span>
+            <span class="sage-profile-name">Sage</span>
+            <span class="sage-profile-bio">A calm guru trained on Dinesh's case studies, résumé, and a decade of notes. Ask about his work, his approach, or whether he fits a role you're hiring for. Powered by Claude.</span>
+          </span>
         </header>
 
         <div class="ai-convo">
@@ -3022,10 +3188,14 @@
             <p class="ai-welcome-text"><span data-welcome-typed></span><span class="ai-welcome-caret">▎</span></p>
           </div>
 
-          <div class="ai-followups">
-            <p class="ai-followup-label">Try asking</p>
-            <div class="ai-followup-chips" data-chip-container>
-              <!-- chips are populated by JS based on recruiter mode -->
+          <!-- Pre-canned sample exchange — shows the value before the visitor types.
+               Auto-removed by clearDemo() the moment a real question is asked. -->
+          <div class="ai-demo" data-demo>
+            <span class="ai-demo-tag">Example</span>
+            <p class="ai-msg-user">Is he actually senior, or just experienced?</p>
+            <div class="ai-msg-bot">
+              <p>Senior, and the work shows it. Three signals: he defends what he chooses <em>not</em> to build (he pushed back on a notifications-only ask and shipped a shared record instead), he frames problems as systems (<em>"absorbing variation is a design problem, not an engineering one"</em>), and he leaves patterns the next team reuses.</p>
+              <p>The proof: a real-time portal that cut case resolution 62%, and an AI workspace that cut tickets 55% with 92% self-serve adoption.</p>
             </div>
           </div>
 
@@ -3035,6 +3205,14 @@
             <span class="ai-mode-toast-text">Switched to recruiter mode</span>
           </div>
 
+        </div>
+
+        <!-- Suggestion chips — pinned footer, always visible above the input -->
+        <div class="ai-followups">
+          <p class="ai-followup-label">Your turn, ask Sage</p>
+          <div class="ai-followup-chips" data-chip-container>
+            <!-- chips are populated by JS based on recruiter mode -->
+          </div>
         </div>
 
       </div>
@@ -3047,7 +3225,7 @@
             <path d="M18 3.5 L18.6 5.4 L20.5 6 L18.6 6.6 L18 8.5 L17.4 6.6 L15.5 6 L17.4 5.4 Z" fill="currentColor" opacity="0.7"/>
           </svg>
         </span>
-        <input type="text" placeholder="" aria-label="Ask Folio anything" />
+        <input type="text" placeholder="" aria-label="Ask Sage anything" />
         <button type="submit" class="ai-send" aria-label="Press Enter to send">
           <span class="ai-send-label">Press</span>
           <span class="ai-send-kbd" aria-hidden="true">↵</span>
@@ -3349,6 +3527,26 @@
   const welcomeCaretEl = welcomeSlot ? welcomeSlot.querySelector(".ai-welcome-caret") : null;
   const modeToast      = convo.querySelector("[data-mode-toast]");
 
+  // ─── Sage profile popover (click the pixel avatar) ───
+  const sageAvatar  = dock.querySelector(".ai-avatar");
+  const sageProfile = dock.querySelector(".sage-profile");
+  if (sageAvatar && sageProfile) {
+    const closeProfile = () => {
+      sageProfile.hidden = true;
+      sageAvatar.setAttribute("aria-expanded", "false");
+    };
+    sageAvatar.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = !sageProfile.hidden;
+      sageProfile.hidden = open;
+      sageAvatar.setAttribute("aria-expanded", open ? "false" : "true");
+    });
+    document.addEventListener("click", (e) => {
+      if (!sageProfile.hidden && !sageProfile.contains(e.target) && e.target !== sageAvatar) closeProfile();
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeProfile(); });
+  }
+
   // ─── Inline morph open/close ───
   function openDock(opts = {}) {
     if (slot.classList.contains("is-open")) return;
@@ -3443,6 +3641,7 @@
 
   function clearDemo() {
     if (demoCleared) return;
+    convo.querySelector("[data-demo]")?.remove();
     convo.querySelectorAll(".ai-msg-user, .ai-msg-bot").forEach((el) => el.remove());
     demoCleared = true;
   }
@@ -3537,7 +3736,7 @@
   ─────────────────────────────────────────────── */
 
   // 1. Typed welcome on first open of session
-  const WELCOME_MESSAGE = "Hi, I'm Folio. I've read every case study and the résumé. Ask me anything.";
+  const WELCOME_MESSAGE = "Namaste. I'm Sage. I've studied everything Dinesh has shipped. Tell me the role you're hiring for and I'll tell you, honestly, whether he fits.";
   let welcomeTyped = false;
   function typeWelcome() {
     if (welcomeTyped || !welcomeTypedEl) return;
@@ -3557,16 +3756,16 @@
 
   // 2. Mode-aware starter chips
   const RECRUITER_CHIPS = [
-    "Is he a fit for a senior IC role?",
-    "Show me his strongest case study",
-    "What outcomes has he shipped?",
-    "Paste a job description",
+    "Paste your job description",
+    "Is he senior, honestly?",
+    "Show me proof, not adjectives",
+    "Where is he still growing?",
   ];
   const CURIOUS_CHIPS = [
-    "What are his skills?",
-    "How does he approach research?",
-    "Tell me about a recent project",
-    "Why hire Dinesh?",
+    "Paste a job description",
+    "Where does he do his best work?",
+    "Walk me through a real project",
+    "What makes him different?",
   ];
   function renderStarterChips() {
     if (!chipsContainer) return;
@@ -3574,11 +3773,15 @@
     const mode = getMode();
     const chips = mode === "recruiter" ? RECRUITER_CHIPS : CURIOUS_CHIPS;
     chipsContainer.innerHTML = "";
-    chips.forEach((text) => {
+    chips.forEach((text, idx) => {
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "ai-followup";
+      // The first chip is always the JD fit-check, the hero action.
+      if (idx === 0) btn.classList.add("is-hero");
       btn.textContent = text;
+      // staggered cascade-in for a polished reveal
+      btn.style.animationDelay = (idx * 60) + "ms";
       chipsContainer.appendChild(btn);
     });
   }
@@ -4246,7 +4449,7 @@
     const userMsg = document.createElement("p");
     userMsg.className = "ai-msg-user";
     userMsg.textContent = question;
-    convo.insertBefore(userMsg, followupsSection);
+    convo.appendChild(userMsg);
     history.push({ role: "user", content: question });
 
     // GA: question asked
@@ -4297,7 +4500,7 @@
       </svg>
       <span class="ai-typing-text">Reading the files</span>
     `;
-    convo.insertBefore(typing, followupsSection);
+    convo.appendChild(typing);
     scrollDown();
 
     // Folio: open the Source Drawer while we're consulting files
@@ -4348,7 +4551,7 @@
       typing.remove();
       botMsg = document.createElement("div");
       botMsg.className = "ai-msg-bot ai-msg-streaming";
-      convo.insertBefore(botMsg, followupsSection);
+      convo.appendChild(botMsg);
       // Folio: pulse the avatar while streaming
       dock.classList.add("is-speaking");
       // Snap the convo so the TOP of this response is at the top of the chat container
@@ -4422,10 +4625,10 @@
       const errMsg = document.createElement("div");
       errMsg.className = "ai-msg-bot ai-msg-error";
       errMsg.innerHTML =
-        `<p>Couldn't reach Folio right now: <em>${escapeHtml(
+        `<p>Couldn't reach Sage right now: <em>${escapeHtml(
           err.message || "unknown error"
         )}</em>. Try again in a moment.</p>`;
-      convo.insertBefore(errMsg, followupsSection);
+      convo.appendChild(errMsg);
       // Snap the error message to the top of the convo as well, so it's read first
       snapBotToTop(errMsg);
       // Roll back the user message from history so retries don't poison context
@@ -4510,12 +4713,11 @@
   // ─── Typewriter placeholder — cycles through prompts character-by-character ───
   // Drives BOTH the trigger pill text (always visible) and the modal input placeholder.
   const placeholders = [
-    "What are his skills?",
-    "Tell me about a recent project",
-    "Why hire Dinesh?",
-    "What's his strongest fit?",
-    "Paste a job description",
-    "Show me his strongest case study",
+    "Paste a job description, I'll tell you if he fits",
+    "Is he senior, honestly?",
+    "Show me proof, not adjectives",
+    "Where does he do his best work?",
+    "Where is he still growing?",
   ];
 
   let phIdx = 0;

@@ -1,0 +1,67 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+body{margin:0;background:#F6F1E8;font-family:system-ui;display:flex;flex-wrap:wrap;gap:40px;padding:48px;align-items:flex-start}
+.cell{display:flex;flex-direction:column;align-items:center;gap:12px}
+.cell .lbl{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#6f6a60}
+.box{background:#FFFDF9;border:1px solid #e4ddcf;border-radius:14px;padding:22px;display:flex;align-items:center;justify-content:center}
+.dark{background:#1F4D3E;border:none}
+.sizes{display:flex;gap:14px;align-items:center}
+</style></head><body>
+
+<div class="cell"><span class="lbl">Enso + spark (A)</span>
+<div class="box">
+<!-- ENSO A: brush ring with tapered open stroke + 4-point spark -->
+<svg width="120" height="120" viewBox="0 0 100 100">
+  <defs><linearGradient id="ga" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#1F4D3E"/><stop offset="1" stop-color="#2f7d57"/></linearGradient></defs>
+  <path d="M68 22 A34 34 0 1 0 80 54" fill="none" stroke="url(#ga)" stroke-width="7" stroke-linecap="round"
+    pathLength="100" />
+  <path d="M50 6 L53 18 L65 21 L53 24 L50 36 L47 24 L35 21 L47 18 Z" fill="#c8772e"/>
+</svg>
+</div></div>
+
+<div class="cell"><span class="lbl">Enso + spark (B, calligraphic)</span>
+<div class="box">
+<svg width="120" height="120" viewBox="0 0 100 100">
+  <path d="M70 26 A33 33 0 1 0 78 60" fill="none" stroke="#1F4D3E" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M70 26 A33 33 0 0 1 78 38" fill="none" stroke="#1F4D3E" stroke-width="9" stroke-linecap="round" opacity=".55"/>
+  <circle cx="78" cy="26" r="3.2" fill="#c8772e"/>
+</svg>
+</div></div>
+
+<div class="cell"><span class="lbl">Line-art seated figure (C)</span>
+<div class="box">
+<svg width="120" height="120" viewBox="0 0 100 100">
+  <g fill="none" stroke="#1F4D3E" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="50" cy="28" r="9"/>
+    <path d="M50 37 C 40 44, 36 56, 38 66"/>
+    <path d="M50 37 C 60 44, 64 56, 62 66"/>
+    <path d="M30 72 C 42 60, 58 60, 70 72"/>
+    <path d="M38 66 C 44 70, 56 70, 62 66"/>
+  </g>
+  <path d="M50 6 L52.4 15 L61 17 L52.4 19 L50 28 L47.6 19 L39 17 L47.6 15 Z" fill="#c8772e"/>
+</svg>
+</div></div>
+
+<div class="cell"><span class="lbl">Enso encircling figure (D — combined)</span>
+<div class="box">
+<svg width="120" height="120" viewBox="0 0 100 100">
+  <path d="M72 24 A34 34 0 1 0 82 56" fill="none" stroke="#1F4D3E" stroke-width="6" stroke-linecap="round"/>
+  <g fill="none" stroke="#2f7d57" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="50" cy="40" r="7"/>
+    <path d="M50 47 C 42 52, 39 60, 41 67"/>
+    <path d="M50 47 C 58 52, 61 60, 59 67"/>
+    <path d="M37 70 C 45 62, 55 62, 63 70"/>
+  </g>
+  <path d="M72 24 m -3 -3 L 74 16 L 82 14 L 74 21 Z" fill="#c8772e"/>
+  <circle cx="78" cy="20" r="3" fill="#c8772e"/>
+</svg>
+</div></div>
+
+<div class="cell"><span class="lbl">On dark + favicon sizes (A)</span>
+<div class="box dark sizes">
+<svg width="64" height="64" viewBox="0 0 100 100"><path d="M68 22 A34 34 0 1 0 80 54" fill="none" stroke="#cfeede" stroke-width="7" stroke-linecap="round"/><path d="M50 6 L53 18 L65 21 L53 24 L50 36 L47 24 L35 21 L47 18 Z" fill="#e0a657"/></svg>
+<svg width="32" height="32" viewBox="0 0 100 100"><path d="M68 22 A34 34 0 1 0 80 54" fill="none" stroke="#cfeede" stroke-width="8" stroke-linecap="round"/><path d="M50 6 L53 18 L65 21 L53 24 L50 36 L47 24 L35 21 L47 18 Z" fill="#e0a657"/></svg>
+<svg width="20" height="20" viewBox="0 0 100 100"><path d="M68 22 A34 34 0 1 0 80 54" fill="none" stroke="#cfeede" stroke-width="9" stroke-linecap="round"/><path d="M50 6 L53 18 L65 21 L53 24 L50 36 L47 24 L35 21 L47 18 Z" fill="#e0a657"/></svg>
+</div></div>
+
+</body></html>
