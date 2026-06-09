@@ -8,9 +8,7 @@
 <meta name="description" content="A full IA rearchitecture of Dell's Intelligence Nerve Center, an internal portal for 30,000+ employees. Findability up 40%, misclicks down 50%.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://api.fontshare.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300..700;9..144,1,300..500&family=Caveat:wght@600&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #fafaf7;
@@ -23,8 +21,8 @@
     --accent-soft: #e8efe9;
     --warn: #fff3e0;
     --warn-ink: #8a4b00;
-    --display: "Fraunces", Georgia, serif;
-    --body: "General Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --display: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --body: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
@@ -37,12 +35,12 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--display);
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: -0.015em;
     margin: 0;
     color: var(--ink);
   }
-  h1 i, h2 i, h3 i { font-style: italic; font-weight: 300; }
+  h1 i, h2 i, h3 i { font-style: italic; font-weight: 600; }
   p, blockquote, cite, div, span, a, button, input, textarea, select, li, ul {
     font-family: var(--body);
   }
@@ -197,7 +195,7 @@
   .reflect-card h4 {
     font-family: var(--display);
     font-size: 22px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.25;
     letter-spacing: -0.01em;
     margin-bottom: 14px;
@@ -233,8 +231,8 @@
 
   /* Hero */
   .hero { padding: 28px 0 60px; }
-  .hero h1 { max-width: 800px; margin-bottom: 24px; font-weight: 400; }
-  .hero h1 i { font-style: italic; font-weight: 300; }
+  .hero h1 { max-width: 800px; margin-bottom: 24px; font-weight: 600; }
+  .hero h1 i { font-style: italic; font-weight: 600; }
   .hero-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -766,7 +764,7 @@
   .end-cap .next-up .next-title {
     font-family: var(--display);
     font-size: 30px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.01em;
     color: #fff;
@@ -847,14 +845,14 @@
   .end-cap .cta-block h3 {
     font-family: var(--display);
     font-size: 36px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.15;
     letter-spacing: -0.015em;
     margin: 0;
   }
   .end-cap .cta-block h3 em {
     font-style: italic;
-    font-weight: 300;
+    font-weight: 600;
     color: var(--accent);
   }
   .end-cap .cta-links {
@@ -945,7 +943,7 @@
     background: rgba(10, 10, 10, 0.55);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    font-family: "General Sans", -apple-system, system-ui, sans-serif;
+    font-family: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     font-size: 11px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.82);
@@ -1136,7 +1134,7 @@
         <h2>What is INC.</h2>
       </div>
       <div>
-        <p><strong style="color: var(--ink); font-weight: 600;">30,000+ Dell employees relied on INC daily to find sales tools, operational reports, and analytics dashboards.</strong> But the navigation had grown cluttered, the visual language felt dated, and employees relied on memorized routes (or browser bookmarks) just to reach the reports they used every day. Misclicks were common, adoption was flat, and the platform's slowness rippled into every team that touched it. The goal: rearchitect the IA so people could find what they needed without memorizing the menu.</p>
+        <p><strong style="color: var(--ink); font-weight: 600;">30,000+ Dell employees relied on INC daily for sales tools, reports, and dashboards.</strong> But the nav had grown cluttered and dated, so people reached their everyday reports by memorized routes and browser bookmarks. Misclicks were common and adoption was flat.</p>
       </div>
     </div>
 
@@ -1273,7 +1271,7 @@
     <div class="problem-card">
       <span class="ptag">Insight</span>
       <h3>The shortest path to a report shouldn't be a memorized route</h3>
-      <p>Sales reps and analysts knew where their reports lived but still had to walk through the same nested menus daily. The interface treated every report as equal weight, surfaced nothing based on what people actually used.</p>
+      <p>Reps knew exactly where their reports lived but still walked the same nested menus every day. The structure weighted every report equally and surfaced nothing by actual use.</p>
       <blockquote>
         "The number of clicks needed to reach the report slows me down. It disrupts my workflow and feels inefficient, even though I'm familiar with the site."
         <cite><strong>Matt</strong>, Data Engineer, Dell</cite>
@@ -1288,7 +1286,7 @@
         <div>
           <span class="sol-num">01</span>
           <h4>Favorites on the home screen</h4>
-          <p>Users mark frequently-used reports and tools as favorites. The home tiles then surface those favorites as one-click destinations, bypassing the menu entirely. Workflow efficiency improves because the steps required to reach critical information drop dramatically.</p>
+          <p>Users pin their everyday reports, and the home tiles surface them as one-click destinations, bypassing the menu entirely.</p>
         </div>
         <div class="sol-img">
           <img loading="lazy" decoding="async" src="./images/dellinc-sales-performance-hub.png" alt="Sales Performance Hub tile with Reports and Favourites dropdowns expanded, showing Favorite tool and Favorite webpage options" />
@@ -1299,7 +1297,7 @@
         <div>
           <span class="sol-num">02</span>
           <h4>Reports dropdown inside each tile</h4>
-          <p>Beyond Favorites, each home tile gained a Reports dropdown that exposes the underlying reports list. Users jump straight to a specific report from the home screen, no need to open the full Reports page first. Fewer clicks, less context switching.</p>
+          <p>Each tile gained a Reports dropdown, so users jump straight to a specific report from the home screen instead of opening the full Reports page first.</p>
         </div>
         <div class="sol-img">
           <img loading="lazy" decoding="async" src="./images/dellinc-home-tile-dropdown.png" alt="Home tile dropdown showing list of reports, Report 1, Report 2, Report 3, accessible directly from the tile" />
@@ -1310,7 +1308,7 @@
         <div>
           <span class="sol-num">03</span>
           <h4>Universal side navigation</h4>
-          <p>A persistent side nav lets users move to any section from any page in two states, a compact icon-only rail (default) and an expanded view with full category names and sub-items. No more backtracking through breadcrumbs to switch context.</p>
+          <p>A persistent side rail, compact by default and expandable to full categories, moves users to any section from any page with no breadcrumb backtracking.</p>
         </div>
         <div class="sol-img side-by-side">
           <img loading="lazy" decoding="async" src="./images/dellinc-side-nav-rail.png" alt="Collapsed icon-only side navigation rail" />
@@ -1352,7 +1350,7 @@
         <div>
           <span class="sol-num">01</span>
           <h4>Background removal</h4>
-          <p>Stripped the image-based background that was competing with foreground content. Replaced it with a clean, neutral surface so essential info becomes the focus. Background images often fight with what's in front of them, removing it sharpens the entire visual hierarchy.</p>
+          <p>Swapped the busy image background for a clean neutral surface, so the content becomes the focus and the whole hierarchy sharpens.</p>
         </div>
         <div class="sol-img">
           <img loading="lazy" decoding="async" src="./images/dellinc-hero-after.png" alt="After background removal, clean neutral surface with foreground tiles and clear navigation" />
@@ -1363,7 +1361,7 @@
         <div>
           <span class="sol-num">02</span>
           <h4>Color-coded tiles + icons</h4>
-          <p>Replaced the uniform layout with a tile-based system where each sub-organization gets a unique tile color and category icon. Users now identify their section at a glance, Customer Financial Services in one accent, Operations in another, and so on. Visual distinction without extra labeling.</p>
+          <p>Each sub-org gets its own tile color and category icon, so people spot their section at a glance, no extra labeling needed.</p>
         </div>
         <div class="sol-img">
           <img loading="lazy" decoding="async" src="./images/dellinc-color-coded-tiles.png" alt="Three example tiles, Customer Financial Services, Operations, Report Name, each with a unique color accent and icon" />

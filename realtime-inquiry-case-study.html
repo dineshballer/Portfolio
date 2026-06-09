@@ -8,9 +8,7 @@
 <meta name="description" content="A mortgage inquiry workspace that replaced fragmented email threads with one real-time, shared case record. Case resolution 62% faster, six hours saved each week per account manager.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://api.fontshare.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300..700;9..144,1,300..500&family=Caveat:wght@600&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #fafaf7;
@@ -23,8 +21,8 @@
     --accent-soft: #e8efe9;
     --warn: #fff3e0;
     --warn-ink: #8a4b00;
-    --display: "Fraunces", Georgia, serif;
-    --body: "General Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --display: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --body: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
@@ -37,12 +35,12 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--display);
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: -0.015em;
     margin: 0;
     color: var(--ink);
   }
-  h1 i, h2 i, h3 i { font-style: italic; font-weight: 300; }
+  h1 i, h2 i, h3 i { font-style: italic; font-weight: 600; }
   p, blockquote, cite, div, span, a, button, input, textarea, select, li, ul {
     font-family: var(--body);
   }
@@ -68,9 +66,9 @@
   .hero h1 {
     max-width: 800px;
     margin-bottom: 24px;
-    font-weight: 400;
+    font-weight: 600;
   }
-  .hero h1 .accent { font-style: italic; font-weight: 300; color: var(--accent); }
+  .hero h1 .accent { font-style: italic; font-weight: 600; color: var(--accent); }
   .hero .lede {
     max-width: 780px;
     font-size: 19px;
@@ -861,7 +859,7 @@
   .reflect-card h4 {
     font-family: var(--display);
     font-size: 22px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.25;
     letter-spacing: -0.01em;
     margin-bottom: 14px;
@@ -932,7 +930,7 @@
   .end-cap .next-up .next-title {
     font-family: var(--display);
     font-size: 30px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.01em;
     color: #fff;
@@ -959,14 +957,14 @@
   .end-cap .cta-block h3 {
     font-family: var(--display);
     font-size: 36px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.15;
     letter-spacing: -0.015em;
     margin: 0;
   }
   .end-cap .cta-block h3 em {
     font-style: italic;
-    font-weight: 300;
+    font-weight: 600;
     color: var(--accent);
   }
   .end-cap .cta-links {
@@ -1174,7 +1172,7 @@
     background: rgba(10, 10, 10, 0.55);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    font-family: "General Sans", -apple-system, system-ui, sans-serif;
+    font-family: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     font-size: 11px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.82);
@@ -1357,7 +1355,7 @@
         <h2>Lost in the back-and-forth.</h2>
       </div>
       <div>
-        <p><strong style="color: var(--ink); font-weight: 600;">Mortgage clients and account managers needed to track every loan inquiry from submission to resolution.</strong> But after a request was sent, there was no central place to see progress, share documents, or message teams. Updates lived in hundreds of scattered email threads, and account managers burned roughly <strong style="color: var(--ink); font-weight: 600;">12 hours a week</strong> manually updating spreadsheets and running bi-weekly status meetings just to stay in sync. The goal: give companies one shared record per case, pull communication out of email, and let account managers oversee their full portfolio without another meeting.</p>
+        <p><strong style="color: var(--ink); font-weight: 600;">Once an inquiry was sent, there was no shared place to see progress, share documents, or message the team.</strong> Updates lived in hundreds of email threads, and account managers burned about <strong style="color: var(--ink); font-weight: 600;">12 hours a week</strong> updating spreadsheets and running bi-weekly status calls to stay in sync.</p>
       </div>
     </div>
 
@@ -1432,9 +1430,8 @@
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">1</span>
-          <h4>Status summary cards</h4>
-          <p><strong>Why:</strong> Users felt ignored after sending emails because they couldn't see any progress. I added these cards so they can see the state of every case the second they log in.</p>
-          <p>It gives users peace of mind that their work is being tracked and stops them from sending constant "is this done yet?" emails.</p>
+          <h4>Every case state, the second you log in</h4>
+          <p>Aging cases surface at the top, so clients see progress at a glance instead of emailing "is this done yet?"</p>
           <div class="sol-tag">Visual Hierarchy · Fast Feedback</div>
         </div>
         <div class="sol-img">
@@ -1445,9 +1442,8 @@
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">2</span>
-          <h4>The live case table</h4>
-          <p><strong>Why:</strong> Teams were wasting 12 hours a week manually updating spreadsheets. I built this table to be the single "source of truth" for every inquiry.</p>
-          <p>It kills the need for boring status meetings. Anyone can find an answer in seconds using filters instead of digging through old emails.</p>
+          <h4>One table replaces the status meeting</h4>
+          <p>A filterable source of truth for every inquiry, so the 12 hours a week of spreadsheet updates and status calls disappear.</p>
           <div class="sol-tag">Data Transparency · Recognition</div>
         </div>
         <div class="sol-img">
@@ -1480,9 +1476,8 @@
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">1</span>
-          <h4>Real-time progress tracker</h4>
-          <p><strong>Why:</strong> Research showed that users need to know if a case is just starting or almost finished. I put this tracker at the top so clients can see exactly where they are in the process at a glance.</p>
-          <p>This stops clients from having to email just to ask for a status update. They can see immediately if the team is working on it or if it's their turn to act.</p>
+          <h4>Progress you can read at a glance</h4>
+          <p>Clients see whether a case is starting or nearly done, so they stop emailing to ask, and know when it's their turn to act.</p>
           <div class="sol-tag">System Status · Visual Cues</div>
         </div>
         <div class="sol-img">
@@ -1493,9 +1488,8 @@
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">2</span>
-          <h4>Unified messaging and files</h4>
-          <p><strong>Why:</strong> Loan documents and messages were often lost in long, cluttered email chains. I combined the chat and the document list into one view so all the context stays with the case.</p>
-          <p>This makes it much faster to find a file or read the latest message. It also helps teammates step in and help if someone else is out of the office.</p>
+          <h4>Messages and files, kept with the case</h4>
+          <p>Chat and documents live in one shared history, so nothing gets buried in an email chain and a teammate can step in cold.</p>
           <div class="sol-tag">Information Access · Context</div>
         </div>
         <div class="sol-img">
@@ -1521,9 +1515,8 @@
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">3</span>
-          <h4>Case resolution and feedback</h4>
-          <p><strong>Why:</strong> Clients didn't have a clear way to confirm a problem was fixed or to ask for extra help. I added a section to let users officially close a case or send it to a manager if it needs more attention.</p>
-          <p>This gives the client control over finishing their work. The rating system also lets the team know if the client is happy with the service they received.</p>
+          <h4>A clear way to close, or escalate</h4>
+          <p>Clients confirm a fix or escalate to a manager, and a rating tells the team whether the outcome landed.</p>
           <div class="sol-tag">User Control · Feedback Loops</div>
         </div>
         <div class="sol-img">

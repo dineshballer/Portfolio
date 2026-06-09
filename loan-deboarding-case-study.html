@@ -8,9 +8,7 @@
 <meta name="description" content="A submission and tracking portal that handles how each mortgage client prepares loan releases, giving the receiving team one shared structure for validation, exceptions, and reconciliation.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://api.fontshare.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300..700;9..144,1,300..500&family=Caveat:wght@600&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #fafaf7;
@@ -23,8 +21,8 @@
     --accent-soft: #e8efe9;
     --warn: #fff3e0;
     --warn-ink: #8a4b00;
-    --display: "Fraunces", Georgia, serif;
-    --body: "General Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --display: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --body: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
   body {
@@ -37,12 +35,12 @@
   }
   h1, h2, h3, h4 {
     font-family: var(--display);
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: -0.015em;
     margin: 0;
     color: var(--ink);
   }
-  h1 i, h2 i, h3 i { font-style: italic; font-weight: 300; }
+  h1 i, h2 i, h3 i { font-style: italic; font-weight: 600; }
   p, blockquote, cite, div, span, a, button, input, textarea, select, li, ul {
     font-family: var(--body);
   }
@@ -68,9 +66,9 @@
   .hero h1 {
     max-width: 800px;
     margin-bottom: 24px;
-    font-weight: 400;
+    font-weight: 600;
   }
-  .hero h1 .accent { font-style: italic; font-weight: 300; color: var(--accent); }
+  .hero h1 .accent { font-style: italic; font-weight: 600; color: var(--accent); }
   .hero .lede {
     max-width: 780px;
     font-size: 19px;
@@ -931,7 +929,7 @@
   .reflect-card h4 {
     font-family: var(--display);
     font-size: 22px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.25;
     letter-spacing: -0.01em;
     margin-bottom: 14px;
@@ -1026,7 +1024,7 @@
   .end-cap .next-up .next-title {
     font-family: var(--display);
     font-size: 30px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.2;
     letter-spacing: -0.01em;
     color: #fff;
@@ -1107,14 +1105,14 @@
   .end-cap .cta-block h3 {
     font-family: var(--display);
     font-size: 36px;
-    font-weight: 400;
+    font-weight: 600;
     line-height: 1.15;
     letter-spacing: -0.015em;
     margin: 0;
   }
   .end-cap .cta-block h3 em {
     font-style: italic;
-    font-weight: 300;
+    font-weight: 600;
     color: var(--accent);
   }
   .end-cap .cta-links {
@@ -1203,7 +1201,7 @@
     background: rgba(10, 10, 10, 0.55);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    font-family: "General Sans", -apple-system, system-ui, sans-serif;
+    font-family: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     font-size: 11px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.82);
@@ -1387,7 +1385,7 @@
         <h2>What's missing isn't visibility, it's structure.</h2>
       </div>
       <div>
-        <p><strong style="color: var(--ink); font-weight: 600;">Mortgage clients needed to ship loan releases to the servicing team, then reconcile what happened after funds moved.</strong> But each client prepared packages in its own systems and formats, so the receiving team took on that variation as escalations and side conversations. Formatting kickbacks took roughly <strong style="color: var(--ink); font-weight: 600;">three days to surface</strong>, exceptions had no SLA or audit trail, and accounting reconstructed reconciliation by hand across separate systems. The goal: catch errors at the door, give exceptions a structured lane, and build a single release record that handles upstream variation downstream.</p>
+        <p><strong style="color: var(--ink); font-weight: 600;">Every client prepares releases its own way, and the receiving team absorbs the variation by hand.</strong> Kickbacks surfaced about three days late, exceptions had no owner or SLA, and reconciliation was rebuilt across separate systems. The goal: catch errors at the door, give exceptions a defined lane, and tie everything to one release record.</p>
       </div>
     </div>
 
@@ -1395,7 +1393,7 @@
       <div class="pain-card">
         <span class="ico">🧩</span>
         <h4>Submissions arrive in different shapes</h4>
-        <p>Encompass plus Access for one client, a custom LOS report for another, an aggregator matrix for a third. No shared validation layer, so formatting issues surface downstream.</p>
+        <p>Encompass, custom LOS exports, aggregator matrices: every client submits its own way, with no shared validation layer, so formatting issues surface downstream.</p>
       </div>
 
       <div class="pain-card">
@@ -1466,9 +1464,8 @@
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">1</span>
-          <h4>Bulk upload with inline validation</h4>
-          <p><strong>Why:</strong> Formatting kickbacks were one of the top sources of rework, wrong report version, missing date, mismatched investor codes. I moved validation to the front of the workflow so common mistakes get flagged the moment a file is uploaded.</p>
-          <p>Clients see field-level errors in plain language, fix them in place, and submit cleanly the first time, instead of finding out three days later through a forwarded email.</p>
+          <h4>Validation moved to the door</h4>
+          <p>Clients fix field-level errors in plain language at upload, a wrong report version, a missing date, a mismatched investor code, instead of finding out three days later through a forwarded email.</p>
           <div class="sol-tag">Validation · Error Prevention</div>
         </div>
         <div class="sol-img">
@@ -1494,9 +1491,8 @@
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">2</span>
-          <h4>Acceptance receipt and release record</h4>
-          <p><strong>Why:</strong> Without a confirmation, clients didn't know if their package was received, queued, or stuck in spam. I made the system create a release record with a unique ID the moment a submission is accepted.</p>
-          <p>Every accepted submission shows up immediately on the client's dashboard with a record ID, owner, and starting status, making "Did you get it?" emails unnecessary.</p>
+          <h4>A receipt and a record, on accept</h4>
+          <p>The moment a submission is accepted, a release record with its own ID, owner, and starting status appears on the client's dashboard. The "did you get it?" emails stop.</p>
           <div class="sol-tag">System Status · Confirmation</div>
         </div>
         <div class="sol-img">
@@ -1534,9 +1530,8 @@
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">1</span>
-          <h4>Pipeline dashboard with aging</h4>
-          <p><strong>Why:</strong> Clients told me they didn't just want a list, they wanted to know which loans were at risk. So the dashboard surfaces aging records, SLA breaches, and "waiting on investor" states up top, before anything else.</p>
-          <p>A release analyst can land on the dashboard in the morning, see the three loans aging out, and know exactly where to spend the next thirty minutes, instead of triaging a 200-message inbox.</p>
+          <h4>The risky loans rise to the top</h4>
+          <p>Aging records, SLA breaches, and "waiting on investor" states sit above everything else, so the morning triage is a glance, not a 200-message inbox.</p>
           <div class="sol-tag">Visual Hierarchy · Aging Signals</div>
         </div>
         <div class="sol-img">
@@ -1547,9 +1542,8 @@
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">2</span>
-          <h4>Live milestone timeline per release</h4>
-          <p><strong>Why:</strong> Status today is reconstructed from email threads and reports. I built a timeline that shows each milestone, Received, Tagged, Goodbye letter, Scheduled, Released, with timestamps and a visible "waiting on investor" state when the ball is in someone else's court.</p>
-          <p>When a release is delayed, clients can see exactly where it's sitting and why. Exception handling, holds, fixes, escalations, happens inside the record with a full audit trail.</p>
+          <h4>Status you can see, not reconstruct</h4>
+          <p>Each release shows its milestones with timestamps and a visible "waiting on investor" state, and every hold, fix, and escalation lives in the record with a full audit trail.</p>
           <div class="sol-tag">Timeline · Blockers · Audit Trail</div>
         </div>
         <div class="sol-img">
@@ -1560,9 +1554,8 @@
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">3</span>
-          <h4>Post-release reconciliation snapshot</h4>
-          <p><strong>Why:</strong> Accounting teams kept asking ops "what is this money?" because escrow returns, manifests, and unfundings showed up days after the release with no clear context. I added a reconciliation view that ties amounts, dates, and references back to each release record.</p>
-          <p>Accounting and ops finally share one source of truth for what happened after release, fewer detective tickets, faster month-end, and a clean handoff between teams.</p>
+          <h4>One source of truth after release</h4>
+          <p>Escrow returns, manifests, and unfundings tie back to the release record with amounts, dates, and references, so accounting and ops stop trading detective tickets.</p>
           <div class="sol-tag">Reconciliation · Accounting Handoff</div>
         </div>
         <div class="sol-img">
