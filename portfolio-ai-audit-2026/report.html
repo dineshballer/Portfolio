@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What recruiters expect, and how they spot AI portfolios · measured against yours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..800;1,400..700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf7; --surface:#ffffff; --ink:#171717; --ink-soft:#43413c; --ink-mute:#6E675C;
+    --line:rgba(23,23,23,.10); --accent:#1F4D3E; --accent-soft:#e8efe9;
+    --red:#b23a2e; --red-soft:#fbf0ec; --amber:#8a5a00; --amber-soft:#fbf3e3;
+    --f:"Hanken Grotesk",-apple-system,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--f);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 32px;}
+  h1,h2,h3,h4{margin:0;letter-spacing:-.02em;font-weight:600;}
+  h1 i,h2 i,h3 i{font-style:italic;color:var(--accent);font-weight:600;}
+  p{margin:0;color:var(--ink-soft);}
+  .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:600;color:var(--ink-mute);}
+  .accent-eyebrow{color:var(--accent);}
+
+  .mast{padding:76px 0 34px;border-bottom:1px solid var(--line);}
+  .mast .eyebrow{margin-bottom:18px;display:block;}
+  .mast h1{font-size:44px;line-height:1.08;max-width:880px;margin-bottom:20px;}
+  .mast p.lead{font-size:18px;max-width:760px;}
+  .meta{margin-top:24px;display:flex;gap:9px;flex-wrap:wrap;}
+  .pill{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:12px;font-weight:500;}
+  .pill.g{background:var(--accent-soft);border-color:rgba(31,77,62,.2);color:var(--accent);}
+
+  .callout{margin-top:26px;padding:18px 22px;border:1px solid var(--line);border-left:3px solid var(--ink-mute);border-radius:0 12px 12px 0;background:var(--surface);font-size:14px;color:var(--ink-soft);}
+  .callout strong{color:var(--ink);}
+
+  section{padding:58px 0;border-bottom:1px solid var(--line);}
+  .sec-head{margin-bottom:30px;}
+  .sec-head .eyebrow{display:block;margin-bottom:12px;}
+  .sec-head h2{font-size:32px;line-height:1.14;max-width:780px;}
+  .sec-head .sub{font-size:16px;margin-top:14px;max-width:720px;}
+  h3.block{font-size:15px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-mute);font-weight:600;margin:34px 0 14px;}
+
+  .find{padding:18px 22px;background:var(--surface);border:1px solid var(--line);border-radius:13px;margin-bottom:12px;}
+  .find h4{font-size:16px;margin-bottom:7px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;}
+  .find p{font-size:14px;line-height:1.55;}
+  .find .q{display:block;margin-top:8px;padding-left:13px;border-left:2px solid var(--accent-soft);font-style:italic;color:var(--ink-mute);font-size:13.5px;}
+  .find .src{margin-top:9px;font-size:11.5px;color:var(--ink-mute);}
+  .conf{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;white-space:nowrap;}
+  .conf.h{background:var(--accent-soft);color:var(--accent);}
+  .conf.m{background:var(--amber-soft);color:var(--amber);}
+  .conf.l{background:#eee;color:#666;}
+
+  .verdict{background:var(--accent);color:#fff;border-radius:18px;padding:38px 42px;}
+  .verdict h2{color:#fff;font-size:27px;margin-bottom:14px;}
+  .verdict h2 i{color:#bfe0d0;}
+  .verdict p{color:rgba(255,255,255,.92);font-size:16px;}
+  .verdict p strong{color:#fff;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 24px;}
+  .card.win{border-top:3px solid var(--accent);}
+  .card.risk{border-top:3px solid var(--red);}
+  .card h4{font-size:15px;margin-bottom:6px;}
+  .card .tag{font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px;display:block;}
+  .card.win .tag{color:var(--accent);}
+  .card.risk .tag{color:var(--red);}
+  .card ul{margin:0;padding-left:0;list-style:none;}
+  .card li{font-size:13.5px;line-height:1.5;color:var(--ink-soft);padding:9px 0;border-top:1px solid var(--line);}
+  .card li:first-child{border-top:none;}
+  .card li b{color:var(--ink);font-weight:600;}
+  .mono{font-family:ui-monospace,Menlo,monospace;font-size:12px;background:#f0efe9;padding:1px 5px;border-radius:4px;color:var(--ink);}
+
+  .rec{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line);}
+  .rec:first-of-type{border-top:none;}
+  .rec .pri{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding-top:3px;}
+  .rec.now .pri{color:var(--red);}
+  .rec.soon .pri{color:var(--amber);}
+  .rec.edge .pri{color:var(--accent);}
+  .rec h4{font-size:16px;margin-bottom:6px;}
+  .rec p{font-size:14px;line-height:1.55;}
+  .rec .ex{margin-top:8px;font-size:13px;background:var(--accent-soft);border-radius:8px;padding:9px 12px;color:var(--accent);}
+
+  .sources{font-size:13px;color:var(--ink-soft);}
+  .sources h4{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-mute);margin:18px 0 8px;}
+  .sources a{color:var(--accent);text-decoration:none;word-break:break-word;}
+  .sources li{margin-bottom:5px;line-height:1.4;}
+
+  @media (max-width:820px){.grid2{grid-template-columns:1fr;}.rec{grid-template-columns:1fr;gap:6px;}.mast h1{font-size:32px;}.sec-head h2{font-size:25px;}}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <span class="eyebrow">Research report + portfolio audit · June 2026</span>
+    <h1>What recruiters expect from a UX portfolio, how they spot <i>AI-made ones</i>, and where yours stands.</h1>
+    <p class="lead">Two questions, researched across hiring managers, recruiters, and design forums, then measured against your live site and four case studies. The short version: your fundamentals are strong, and a handful of specific tells are worth closing.</p>
+    <div class="meta">
+      <span class="pill g">5 research streams</span>
+      <span class="pill">~45 sources</span>
+      <span class="pill">Hiring managers · recruiters · forums</span>
+      <span class="pill">Audited: 6 live pages</span>
+    </div>
+    <div class="callout">
+      <strong>Method and one honest caveat.</strong> Five parallel research agents ran ~80 web searches and read named hiring managers (Indeed's six UX directors, Joy Liu, Suelyn Yu, Tom Scott, Matej Latin), recruiters (Toptal's Ignasi Boza on 1,300 portfolios), survey data (NN/g's 200 HMs, TopResume's 600), and journalism (Rolling Stone, The Markup). Reddit's own thread pages were blocked by the fetch tool, so Reddit sentiment is represented through aggregators that explicitly cite r/UXDesign, r/MachineLearning, r/datascience, and r/cscareerquestions, plus Hacker News. Confidence is tagged per finding; treat single-source items as directional.
+    </div>
+  </div>
+</header>
+
+<!-- PART 1 -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow accent-eyebrow">Part 1 · The bar</span>
+      <h2>What recruiters and hiring managers actually want.</h2>
+      <p class="sub">The consistent picture across every first-hand account: they scan in seconds, hunt for reasons to reject, and reward clear thinking and real outcomes over polish and process.</p>
+    </div>
+
+    <h3 class="block">How the review actually happens</h3>
+    <div class="find">
+      <h4>They spend seconds to a couple of minutes, scanning not reading <span class="conf h">High</span></h4>
+      <p>Estimates cluster tight: "less than 1 minute" (Talia Hartwell), "no more than 5 minutes" (Joy Liu), "less than 2 minutes... they glance through images, read a few paragraphs" (Suelyn Yu, Opower), and a 30-second first cut (Matej Latin). They read the resume, then the homepage positioning, then scan one relevant case study by <b>section titles, bold text, and images</b>, rarely reading full paragraphs or opening prototypes.</p>
+      <span class="q">"They're looking for reasons to say 'no' before they look for reasons to say 'yes'." · Talia Hartwell</span>
+      <p class="src">Sources: Joy Liu (Design Bootcamp) · Suelyn Yu (Opower) · Matej Latin (UX Collective) · Talia Hartwell (UX Playbook)</p>
+    </div>
+    <div class="find">
+      <h4>Lead with impact, then support it (the "Pyramid Principle") <span class="conf h">High</span></h4>
+      <p>Busy reviewers read top-down: problem and business context, then the outcome, then proof, then approach, then lessons. The four-stage arc recruiters name is <b>Problem → Approach → Process → Result</b>, with your role stated up front. This is the same one-idea-per-screen economy as your bevyip reference.</p>
+      <p class="src">Sources: UX Playbook · Ignasi Boza (Toptal, reviewed 1,300 portfolios) · Indeed UX directors</p>
+    </div>
+
+    <h3 class="block">Must-haves that earn a callback</h3>
+    <div class="find">
+      <h4>Decisions, trade-offs, and "what I'd do differently" · the core seniority signal <span class="conf h">High</span></h4>
+      <p>Reviewers grade judgment, and judgment is only visible when decisions are explicit. They actively hunt for iteration from feedback and for the constraints you worked within. "Junior designers solve design problems; senior designers solve business problems through design."</p>
+      <span class="q">"I want to see that you got feedback on a design and then digested that feedback and made improvements." · Annie Jarvis, Sr. UX Director, Indeed</span>
+      <p class="src">Sources: Indeed (Jarvis) · UX Playbook · Joy Liu · UX University</p>
+    </div>
+    <div class="find">
+      <h4>Clear individual contribution: "I", not a hidden "we" <span class="conf h">High</span></h4>
+      <p>Vague "I led" with no specific contribution, or teamwork framed as solo work, is a top rejection trigger. State team makeup and exactly what you owned. The truth surfaces in the interview, where unsupported claims collapse.</p>
+      <span class="q">"I'm not hiring the team you work with, I'm hiring you." · Matej Latin</span>
+      <p class="src">Sources: Tom Scott (8 red flags) · Matej Latin · Joy Liu · Learnist (cites r/cscareerquestions)</p>
+    </div>
+    <div class="find">
+      <h4>Shipped work beats concepts; honest "in development" beats faked <span class="conf h">High</span></h4>
+      <p>Managers prefer a small shipped product over a flashy concept, because shipped work survives real constraints. But labeling honestly ("self-initiated", "in development", "projected") is respected; dressing concept work up as shipped is a credibility killer.</p>
+      <p class="src">Sources: Corey Chandler (Indeed) · Obai Ibrahim · UX University</p>
+    </div>
+
+    <h3 class="block">Red flags that get the reject</h3>
+    <div class="find">
+      <h4>Walls of text and process-for-its-own-sake <span class="conf h">High</span></h4>
+      <p>"Reams of text" and a dominant double-diamond/discovery-map narrative with the actual work buried at the end is a fast reject in 2026. The reconciliation all sources support: show the thinking, but lead with output and keep it skimmable.</p>
+      <p class="src">Sources: Tom Scott · Greg Hill (Step) · Indeed</p>
+    </div>
+    <div class="find">
+      <h4>Password walls, broken links, and a portfolio that is itself bad UX <span class="conf h">High</span></h4>
+      <p>A password-protected portfolio with no password supplied is an instant move-on ("I would move forward with other candidates"). Broken nav, typos, pixelated images, and dated UI are each enough to cut you when 98 others are waiting.</p>
+      <p class="src">Sources: Corey Chandler &amp; Susan Le (Indeed) · Joy Liu · Prithiv Kumar</p>
+    </div>
+    <div class="find">
+      <h4>Round, uniform metrics read as fabricated <span class="conf h">High</span></h4>
+      <p>"When every project ends in a multiple of 5 or 10, it looks made up." A credible metric carries a <b>baseline, a method, a timeframe, and a comparison</b>. Vague "improved engagement" or a clean "+30%" with no baseline is treated as a sign the number was never measured, and it collapses under one interview follow-up.</p>
+      <span class="q">"Real metrics are messy: 23.7%, 18%, 34.2%." · UX University</span>
+      <p class="src">Sources: UX University · Learnist (r/MachineLearning, r/datascience) · NG Career Strategy</p>
+    </div>
+
+    <h3 class="block">What "senior" looks like</h3>
+    <div class="find">
+      <h4>The level rubric reviewers grade against <span class="conf h">High</span></h4>
+      <p>Junior: can you execute a feature. Mid/Senior: can you execute a large feature without support and articulate business impact. Staff+: can you navigate ambiguity and influence at the org level, with "multiplier" work other teams reused. Title-to-scope mismatch is actively hunted given how common title inflation is now.</p>
+      <p class="src">Sources: Joy Liu (verbatim rubric) · Tom Scott</p>
+    </div>
+  </div>
+</section>
+
+<!-- PART 2 -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow accent-eyebrow">Part 2 · The AI-detection lens</span>
+      <h2>How they tell a portfolio was made or written with AI.</h2>
+      <p class="sub">The punctuation tells everyone memes about are openly unreliable. The signals reviewers actually act on are substantive: vagueness, a too-clean story, borrowed voice, and screens with no thinking behind them.</p>
+    </div>
+
+    <h3 class="block">Writing tells</h3>
+    <div class="find">
+      <h4>The em dash is the famous tell, and an unreliable one <span class="conf h">High</span></h4>
+      <p>Since early 2025 the em dash became "an informal litmus test" for AI text, to the point of a "ChatGPT hyphen" nickname. But every serious source, including ChatGPT itself, says it is not reliable alone; detectors produce false positives that punish real writers. Useful to know, not to obsess over.</p>
+      <p class="src">Sources: Rolling Stone · Hacker News · detector-checker.ai</p>
+    </div>
+    <div class="find">
+      <h4>"It's not X, it's Y" and rule-of-three on every line <span class="conf m">Med-High</span></h4>
+      <p>First-hand reviewers name specific constructions as near-certain tells: <span class="mono">"it's not X, it's Y"</span>, "here's the kicker", the rule of three "popping up every other sentence", and the "whether you're looking for X, Y, or Z" closing sentence. A single balanced triad is fine; the frequency and predictability are the giveaway.</p>
+      <p class="src">Sources: Hacker News ("how can you instantly tell") · Gone Travelling (content practitioner)</p>
+    </div>
+    <div class="find">
+      <h4>Buzzword vocabulary: delve, leverage, robust, seamless, elevate, tapestry, pivotal <span class="conf h">High</span></h4>
+      <p>Recruiters scan for "corporate vocabulary" and stock openers ("in today's fast-paced world"). They sound impressive and describe no one. The antidote everyone names is specificity: replace the adjective with a named action, number, or constraint.</p>
+      <p class="src">Sources: Dice · Grammarly · NG Career Strategy · Hacker News</p>
+    </div>
+    <div class="find">
+      <h4>The strongest text tells are substantive, not stylistic <span class="conf h">High</span></h4>
+      <p>What reviewers actually act on: <b>vagueness with no real names, dates, or numbers</b>; a suspiciously clean story with <b>no failure or mess</b> (real work has dead ends); <b>marketing-copy voice</b> that parrots the company's claims instead of first-person analysis; and <b>one identical, over-polished template and voice across every case study</b>. "Every piece I've suspected was AI has been long-winded and vapid."</p>
+      <span class="q">"A reviewer who reads honest specifics will trust everything else you write. A reviewer who reads 'I led the AI transformation and delivered unprecedented results' will trust nothing." · Learnist</span>
+      <p class="src">Sources: Hacker News (first-hand) · Learnist · NG Career Strategy · Rolling Stone</p>
+    </div>
+
+    <h3 class="block">Visual tells (and they're shifting)</h3>
+    <div class="find">
+      <h4>Only the happy path, no states, no process artifacts <span class="conf h">High</span></h4>
+      <p>The most durable visual tell of AI-generated screens: a set of beautiful, fully-populated hero shots with no empty / loading / error states, no wireframes or redlines, and "screens instead of stories." Generic placeholder data ("User Name", "Item 1, 2, 3", round-number filler) is a giveaway because real content shapes layout.</p>
+      <span class="q">"The screen is the receipt. The story is the real product." · UX Director, Design Bootcamp</span>
+      <p class="src">Sources: GenDesigns (AI-UI vendor) · Werkmeister (UX Director) · Muzli</p>
+    </div>
+    <div class="find">
+      <h4>System drift and "too polished, too fast, too perfect" <span class="conf m">Med-High</span></h4>
+      <p>Screens generated prompt-by-prompt drift in color, type, and components, so "one product" looks like three apps. And paradoxically, work that looks too finished too quickly triggers the question "did this person actually do this?" Pixel-level tells (garbled text, mangled icons) are weakening fast as models improve, so reviewers lean on the structural tells above.</p>
+      <p class="src">Sources: GenDesigns · DEV.to · artech.com</p>
+    </div>
+    <div class="find">
+      <h4>AI-recreated confidential work is accepted, if disclosed and thinking-forward <span class="conf m">Med-High</span></h4>
+      <p>Recreating NDA work with anonymized data and changed branding is standard, accepted practice, provided you disclose it, show the decisions, and don't fake numbers. The failure mode reviewers punish is "Due to NDA" used to dodge every specific, which now reads as a fake-candidate tell.</p>
+      <p class="src">Sources: Muzli · UX Playbook (NDA guide) · IxDF · The Markup</p>
+    </div>
+
+    <h3 class="block">How they react, and using AI well</h3>
+    <div class="find">
+      <h4>Human pattern-recognition beats detectors; the interview is the filter <span class="conf h">High</span></h4>
+      <p>Having read AI text hundreds of times, reviewers spot it without tools, and detectors are openly distrusted (false positives, "probabilistic signals, not proof"). The real catch is the interview: "anything you can't explain in conversation shouldn't be in your portfolio." One survey put it concretely: ~20% of managers say they would reject an application created with generative AI, and ~34% claim they can spot one in 20 seconds.</p>
+      <p class="src">Sources: Learnist · detector-checker.ai · TopResume survey (via IEEE-USA) · Muzli</p>
+    </div>
+    <div class="find">
+      <h4>"Co-pilot, not author" is the accepted line, and pretending AI doesn't exist is itself a flag <span class="conf m">Med-High</span></h4>
+      <p>Using AI is broadly fine ("akin to using a resume coach"); it fails when it replaces your voice, metrics, or decisions. Several leaders now argue the opposite risk: a portfolio with <b>no</b> sign of AI fluency "signals you're behind the curve," and AI in the workflow is becoming a baseline expectation at senior levels. Authentic voice plus visible-but-owned AI use is the 2026 sweet spot.</p>
+      <p class="src">Sources: UXfolio · Werkmeister · IEEE-USA (Korn Ferry, SurveyMonkey) · Tom Scott <span class="conf l">trend</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- PART 3 -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow accent-eyebrow">Part 3 · Your portfolio, measured</span>
+      <h2>Where you stand against all of this.</h2>
+      <p class="sub">Grounded in an actual scan of your six live pages, not a vibe. The headline: you clear most of the bar and are ahead on the signals that matter most, with four specific, fixable exposures.</p>
+    </div>
+
+    <div class="verdict">
+      <h2>Strong fundamentals, <i>a few precise tells to close.</i></h2>
+      <p>You already do the hardest, most-rewarded things: real decisions and trade-offs ("I pushed back" sections), honest "in development" labels, a clean scannable structure, no password wall, four curated case studies, and specific domain detail. You're also clean on the most-memed tell. The exposures are narrow and named below, and most are 10-minute fixes.</p>
+    </div>
+
+    <div class="grid2" style="margin-top:18px;">
+      <div class="card win">
+        <span class="tag">Where you're strong</span>
+        <ul>
+          <li><b>Ownership is everywhere.</b> Every case study has a Key Decision ("a shared record, not just notifications"; "full-screen, not a bigger panel") plus a retrospective and "what I'd do differently." This is the #1 seniority signal and the one thing AI cannot manufacture.</li>
+          <li><b>Scannable, one idea per screen.</b> The recent trim put you on the exact structure reviewers want: label, headline-that-is-the-point, one line, big image.</li>
+          <li><b>No em dashes in visible prose.</b> The ones in the files are all in code comments, CSS, and JavaScript, invisible to a reader. You're ahead on the tell everyone memes.</li>
+          <li><b>Honest labeling.</b> Onity work marked "in development / projected" reads as integrity, not weakness, exactly what reviewers reward over faked numbers.</li>
+          <li><b>Disclosed NDA recreation, no password wall, four curated projects.</b> You avoid three separate instant-reject triggers in one move.</li>
+          <li><b>Specific, real detail.</b> Encompass, MERS, escrow returns, investor codes. Specificity is the named antidote to "generic AI hollow."</li>
+        </ul>
+      </div>
+      <div class="card risk">
+        <span class="tag">Where you're exposed</span>
+        <ul>
+          <li><b>Two "isn't X, it's Y" headlines.</b> <span class="mono">"What's missing isn't visibility, it's structure"</span> and <span class="mono">"A shared record, not just better notifications"</span> match a construction reviewers name as a near-certain AI tell. Two is enough to notice across a set.</li>
+          <li><b>Metrics are mostly round.</b> 40%, 55%, 90%, 92%, 20%, 50% misclicks. Clean multiples of 5 and 10 read as fabricated unless each carries a baseline, method, and timeframe. (IntelliAssist already cites "pilot telemetry", that's the model.)</li>
+          <li><b>A few buzzwords.</b> "seamless" appears 5 times, "elevate" 3. Small, but each is on the recruiter scan-list.</li>
+          <li><b>AI-recreated screens are happy-path hero shots.</b> Polished final UI with no visible wireframe, research artifact, empty/error state, or "what didn't work". This is the single strongest AI-visual tell, and the biggest opportunity to neutralize it.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:18px;border-left-color:var(--accent);">
+      <strong>The one strategic read.</strong> Your portfolio is genuinely AI-assisted (recreated mockups, AI-built site, the Folio chat). The research says that is now an asset, not a liability, if you own it. The reviewer's fear is not "you used AI", it is "you can't think, and the screens prove nothing." You answer that fear with process artifacts and your already-strong decision narrative. Lean in, don't hide.
+    </div>
+  </div>
+</section>
+
+<!-- PART 4 -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow accent-eyebrow">Part 4 · Recommendations</span>
+      <h2>What to change, in priority order.</h2>
+      <p class="sub">Four quick fixes, two that take an afternoon, one strategic. None require rebuilding anything.</p>
+    </div>
+
+    <div class="rec now">
+      <div class="pri">Do now</div>
+      <div>
+        <h4>Reword the two "isn't X, it's Y" headlines</h4>
+        <p>Vary the construction so the set doesn't carry a repeated AI pattern. Keep the meaning, change the shape.</p>
+        <div class="ex">"What's missing isn't visibility, it's structure" → "Visibility was never the gap. Structure was." or "Everyone could see the chaos. No one could act on it."</div>
+      </div>
+    </div>
+    <div class="rec now">
+      <div class="pri">Do now</div>
+      <div>
+        <h4>Swap the ~8 buzzwords for plain words</h4>
+        <p>Replace "seamless" and "elevate" with specific verbs. "A seamless flow" becomes "a flow with no handoff between teams". Five-minute find-and-replace, real credibility gain.</p>
+      </div>
+    </div>
+    <div class="rec soon">
+      <div class="pri">This week</div>
+      <div>
+        <h4>Give every metric a baseline, method, and timeframe</h4>
+        <p>A round number with provenance stops reading as fake. Add the "from X to Y, measured by Z, over N" scaffold, or keep the honest "projected / in development" label where there's no data yet.</p>
+        <div class="ex">"55% fewer tickets" → "Enterprise support tickets fell 55% (from ~1,200 to ~540 a month) in the first quarter post-launch, from pilot telemetry."</div>
+      </div>
+    </div>
+    <div class="rec soon">
+      <div class="pri">This week</div>
+      <div>
+        <h4>Add one process artifact per case study</h4>
+        <p>The highest-leverage move. One wireframe, one research-synthesis snapshot, one "what didn't work" screen, or one empty/error state per case study proves a human did the thinking behind the AI-recreated visuals. It converts your biggest visual exposure into a seniority signal.</p>
+      </div>
+    </div>
+    <div class="rec edge">
+      <div class="pri">Strategic</div>
+      <div>
+        <h4>Own your AI fluency in one honest line</h4>
+        <p>Somewhere visible (about page, or a note on the recreated mockups), say plainly how you work with AI: confidential UIs recreated to protect clients, AI as a build-and-draft co-pilot, decisions and outcomes yours. This disarms the "is this AI slop" suspicion and reads as ahead-of-the-curve, which senior reviewers now expect.</p>
+      </div>
+    </div>
+    <div class="rec edge">
+      <div class="pri">Housekeeping</div>
+      <div>
+        <h4>Delete the orphan duplicate Dell AI page and re-check every link</h4>
+        <p>The unlinked <span class="mono">dell-ai-case-study.html</span> duplicate and any stale links are the kind of "portfolio is itself bad UX" detail that costs interviews. Curate to the four real case studies and confirm nothing 404s.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow accent-eyebrow">Sources</span><h2>Where this came from.</h2>
+    <p class="sub">Named hiring managers and recruiters first, then survey data and journalism, then aggregators that cite specific subreddits. Reddit threads themselves were not directly fetchable in this run.</p></div>
+    <div class="sources">
+      <h4>First-hand hiring managers &amp; recruiters</h4>
+      <ul>
+        <li>Joy Liu, design leader, step-by-step review workflow · <a href="https://medium.com/design-bootcamp/my-portfolio-evaluation-process-342005398262">medium.com/design-bootcamp</a></li>
+        <li>Indeed Design, six UX directors/managers · <a href="https://indeed.design/article/ux-design-portfolio-advice-from-hiring-managers/">indeed.design</a></li>
+        <li>Tom Scott, 8 red flags in design portfolios (2026) · <a href="https://verifiedinsider.substack.com/p/8-red-flags-in-design-portfolios">verifiedinsider.substack.com</a></li>
+        <li>Matej Latin, "30 seconds to reject your portfolio" · <a href="https://uxdesign.cc/only-30-seconds-to-reject-your-portfolio-8cb14ac70674">uxdesign.cc</a></li>
+        <li>Suelyn Yu (Opower), 2-minute screening · <a href="https://suelynyu.medium.com/how-to-pass-a-2-minute-ux-portfolio-screening-dd0e2c09f2ef">suelynyu.medium.com</a></li>
+        <li>Ignasi Boza (Toptal recruiter, 1,300 portfolios) · <a href="https://www.toptal.com/designers/ux/ux-portfolio-tips-recruiter">toptal.com</a></li>
+        <li>Obai Ibrahim, reviewing case studies as a hiring manager · <a href="https://medium.com/design-bootcamp/what-i-look-for-when-reviewing-a-ux-case-study-as-a-hiring-managerhow-i-review-ux-case-studies-as-a-994f1537c2e8">medium.com/design-bootcamp</a></li>
+        <li>R. "Joey" Werkmeister, UX Director, portfolios in the age of AI · <a href="https://medium.com/design-bootcamp/your-ux-portfolio-is-failing-in-the-age-of-ai-heres-why-b8a8f0f89f0b">medium.com/design-bootcamp</a></li>
+        <li>Greg Hill (Head of Design, Step) · <a href="https://medium.com/design-bootcamp/a-hiring-managers-perspective-on-your-portfolio-58eb81c2abd9">medium.com/design-bootcamp</a></li>
+        <li>Prithiv Kumar, portfolio red flags · <a href="https://ux.prithivkumar.com/portfolio-red-flags-that-are-costing-you-the-job/">ux.prithivkumar.com</a></li>
+      </ul>
+      <h4>Surveys, journalism &amp; detection</h4>
+      <ul>
+        <li>NN/g, survey of 200+ hiring managers · <a href="https://www.nngroup.com/videos/ux-portfolios-hiring/">nngroup.com</a></li>
+        <li>IEEE-USA, what tech hiring managers think of AI-written applications (Korn Ferry, SurveyMonkey, TopResume survey) · <a href="https://insight.ieeeusa.org/articles/what-tech-hiring-managers-really-think-of-ai-created-resumes-and-cover-letters/">insight.ieeeusa.org</a></li>
+        <li>The Markup, "We posted a job, then came the AI slop" (Jan 2026) · <a href="https://themarkup.org/hello-world/2026/01/24/we-posted-a-job-then-came-the-ai-slop-impersonator-and-recruiter-scam">themarkup.org</a></li>
+        <li>Rolling Stone, the em dash as AI tell · <a href="https://www.rollingstone.com/culture/culture-features/chatgpt-hypen-em-dash-ai-writing-1235314945/">rollingstone.com</a></li>
+        <li>UX University, "your case study is lying" (round/fake metrics) · <a href="https://newsletter.uxuniversity.io/p/your-case-study-is-lying-and-everyone">newsletter.uxuniversity.io</a></li>
+        <li>UX Playbook, senior portfolio + NDA guide (2026) · <a href="https://uxplaybook.org/articles/senior-ux-designer-portfolio-get-hired-2026">uxplaybook.org</a></li>
+        <li>UXfolio, AI case-study workflow · <a href="https://blog.uxfol.io/ux-portfolio-ai-case-study-workflow/">blog.uxfol.io</a></li>
+        <li>Muzli, build a portfolio that gets hired (2026) · <a href="https://muz.li/blog/how-to-build-a-ux-portfolio-that-actually-gets-you-hired-2026/">muz.li</a></li>
+        <li>GenDesigns, AI-generated UI mistakes · <a href="https://gendesigns.ai/blog/ai-generated-ui-mistakes-how-to-fix">gendesigns.ai</a></li>
+        <li>Geoff Graham, AI iconography tells · <a href="https://geoffgraham.me/struggling-with-ai-iconography-for-ui-design/">geoffgraham.me</a></li>
+        <li>NG Career Strategy, how recruiters spot AI resumes · <a href="https://www.ngcareerstrategy.com/how-recruiters-spot-ai-written-resumes-and-what-that-means-for-you/">ngcareerstrategy.com</a></li>
+        <li>Dice, telling that you used AI on your CV · <a href="https://www.dice.com/career-advice/5-ways-of-telling-that-you-used-ai-on-your-cv">dice.com</a></li>
+      </ul>
+      <h4>Forums &amp; Reddit-citing aggregators</h4>
+      <ul>
+        <li>Hacker News, "how can you instantly tell something was written by AI" · <a href="https://news.ycombinator.com/item?id=46646939">news.ycombinator.com</a></li>
+        <li>Learnist, AI case-study red flags (cites r/MachineLearning, r/datascience, r/cscareerquestions) · <a href="https://www.learnist.org/ai-case-study-red-flags-portfolio-2026/">learnist.org</a></li>
+        <li>Glassdoor/Fishbowl recruiter thread, AI assets in portfolios · <a href="https://www.glassdoor.com.au/Community/ask-a-recruiter/">glassdoor.com.au/Community</a></li>
+        <li>Gone Travelling, 10 AI giveaways in writing · <a href="https://gonetravellingproductions.com/2025/08/20/ai-giveaways-in-writing/">gonetravellingproductions.com</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
