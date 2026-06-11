@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three-Lens Portfolio Audit · June 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#faf8f3; --ink:#1c2420; --forest:#1e4d3a; --forest-soft:#2d6a4f;
+    --muted:#5c6660; --line:#e4dfd4; --card:#ffffff;
+    --crit:#a8341f; --crit-bg:#f9e9e4; --high:#9a6b15; --high-bg:#f8efdc;
+    --med:#3f5e8c; --med-bg:#e8eef7; --fixed:#1e6b45; --fixed-bg:#e3f0e8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--ivory);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;font-size:16px;line-height:1.65}
+  .wrap{max-width:880px;margin:0 auto;padding:64px 28px 120px}
+  h1{font-size:clamp(30px,5vw,44px);font-weight:700;line-height:1.15;letter-spacing:-0.02em;margin:18px 0 20px}
+  h1 em{font-style:italic;color:var(--forest)}
+  h2{font-size:26px;font-weight:700;letter-spacing:-0.01em;margin:0 0 6px}
+  h3{font-size:18px;font-weight:600;margin:0 0 8px}
+  p{margin:0 0 14px}
+  .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--forest-soft)}
+  .sub{color:var(--muted);font-size:17px;max-width:640px}
+  section{margin-top:72px}
+  .sec-head{margin-bottom:28px}
+  .sec-head p{color:var(--muted);max-width:620px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px;margin-bottom:14px}
+  .chip{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:3px 10px;border-radius:99px;margin-right:8px;vertical-align:2px}
+  .chip.crit{background:var(--crit-bg);color:var(--crit)}
+  .chip.high{background:var(--high-bg);color:var(--high)}
+  .chip.med{background:var(--med-bg);color:var(--med)}
+  .chip.fixed{background:var(--fixed-bg);color:var(--fixed)}
+  .chip.open{background:var(--crit-bg);color:var(--crit)}
+  .chip.strength{background:var(--fixed-bg);color:var(--fixed)}
+  .card h3{display:inline}
+  .card .body{margin-top:10px;color:#39423d}
+  .card .fix{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:14.5px;color:var(--muted)}
+  .card .fix b{color:var(--forest)}
+  table{width:100%;border-collapse:collapse;font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .tablewrap{border-radius:12px;overflow-x:auto;margin:18px 0}
+  th{background:#f2efe6;text-align:left;padding:10px 12px;font-weight:600;font-size:12.5px;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted)}
+  td{padding:11px 12px;border-top:1px solid var(--line);vertical-align:top}
+  td.bad{color:var(--crit);font-weight:600}
+  td.ok{color:var(--fixed);font-weight:600}
+  .verdict{background:var(--forest);color:#f2f0e9;border-radius:18px;padding:36px 36px 30px;margin-top:36px}
+  .verdict h2{color:#fff;margin-bottom:14px}
+  .verdict p{color:#d8e2da}
+  .verdict .big{font-size:21px;line-height:1.5;color:#fff;font-weight:500}
+  .grades{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:22px}
+  .grade{background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px}
+  .grade .g{font-size:24px;font-weight:700;color:#fff}
+  .grade .l{font-size:12.5px;color:#b9c9bd;margin-top:2px}
+  .grade .d{font-size:11px;color:#8fa893;margin-top:1px}
+  .persona{border-left:3px solid var(--forest);padding:4px 0 4px 20px;margin:22px 0;font-style:italic;color:#39423d}
+  .persona b{font-style:normal}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:680px){.two{grid-template-columns:1fr}}
+  .delta-grid{display:grid;grid-template-columns:1fr;gap:8px}
+  .delta-item{display:flex;gap:12px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 16px;font-size:14.5px}
+  .delta-item .what{color:#39423d}
+  .roadmap-item{display:flex;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:10px;align-items:baseline}
+  .roadmap-item .n{font-size:22px;font-weight:700;color:var(--forest);min-width:34px}
+  .roadmap-item .t b{display:block;font-size:15.5px;margin-bottom:3px}
+  .roadmap-item .t span{font-size:14px;color:var(--muted)}
+  .effort{margin-left:auto;font-size:11.5px;font-weight:700;letter-spacing:0.06em;color:var(--muted);text-transform:uppercase;white-space:nowrap;padding-left:10px}
+  .keep li{margin:0 0 10px 18px;color:#39423d}
+  .note{font-size:13.5px;color:var(--muted);background:#f2efe6;border-radius:10px;padding:14px 18px;margin-top:18px}
+  .toc{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+  .toc a{font-size:13px;font-weight:600;color:var(--forest);text-decoration:none;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 14px}
+  .toc a:hover{border-color:var(--forest)}
+  .quote{font-size:15px;font-style:italic;color:var(--muted);margin:8px 0 0}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#f2efe6;padding:1px 6px;border-radius:5px;color:var(--crit)}
+  .lens-intro{font-size:15px;color:var(--muted);margin-bottom:20px;max-width:640px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">Three-lens audit · June 11, 2026 · Live site + local files + resume + Sage</div>
+  <h1>The work reads senior.<br>The <em>numbers don't agree</em> with each other.</h1>
+  <p class="sub">dineshkumar.design reviewed through three pairs of eyes: a senior recruiter on a 90-second scan, a design manager reading for depth, and a hiring manager deciding whether to spend an interview slot. Cross-referenced against the May teardown and the June AI-tells audit, so this is what is new or still open, not repeat noise.</p>
+
+  <div class="toc">
+    <a href="#verdict">Verdict</a><a href="#delta">What you fixed</a><a href="#numbers">The number problem</a><a href="#recruiter">Recruiter lens</a><a href="#dm">Design manager lens</a><a href="#hm">Hiring manager lens</a><a href="#missing">What's missing</a><a href="#roadmap">Roadmap</a><a href="#keep">Don't touch</a>
+  </div>
+
+  <div class="verdict" id="verdict">
+    <h2>The honest verdict</h2>
+    <p class="big">Since May you closed 11 of the hardest findings, and the case study architecture is now top-decile. What surfaced this round is a different class of problem: the same fact changes value depending on where a reviewer reads it. Home vs. case study, site vs. resume, Sage vs. everything. Each collision is small; together they put every number you publish on probation.</p>
+    <p>A senior reviewer forgives an unpolished corner. What they do not forgive is "6 hours" on the card and "12 hours" in the validation section of the same page, because it suggests the numbers were written, not measured. Your real asset (decision-led, honest, structured storytelling) is intact. The job now is coherence, not depth.</p>
+    <div class="grades">
+      <div class="grade"><div class="g">A-</div><div class="l">Case study architecture</div><div class="d">was A- · holding</div></div>
+      <div class="grade"><div class="g">B+</div><div class="l">First impression</div><div class="d">was B- · improved</div></div>
+      <div class="grade"><div class="g">A-</div><div class="l">Identity & links</div><div class="d">was C · fixed</div></div>
+      <div class="grade"><div class="g">C+</div><div class="l">Metric coherence</div><div class="d">new axis · the blocker</div></div>
+      <div class="grade"><div class="g">C</div><div class="l">Resume parity</div><div class="d">new axis · urgent</div></div>
+      <div class="grade"><div class="g">B</div><div class="l">Craft & a11y</div><div class="d">was B-/C+ · improved</div></div>
+    </div>
+  </div>
+
+  <!-- ================= DELTA ================= -->
+  <section id="delta">
+    <div class="sec-head">
+      <div class="eyebrow">Delta since May + June audits</div>
+      <h2>Credit first: 11 fixed, 5 still open.</h2>
+      <p>Verified against the live site and local files today. The identity layer that was bleeding trust in May is now clean.</p>
+    </div>
+    <div class="delta-grid">
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">One name everywhere. "Dinesh Kumar" across all titles, navs, metas. Zero "Baller" on any page.</span></div>
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">All 14 LinkedIn links point to one canonical profile, /in/dineshkravikumar.</span></div>
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">Duplicate Dell AI case deleted. Four curated cases, no orphan links, footers clean.</span></div>
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">Zero em dashes in visible copy on all six pages.</span></div>
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">"Isn't X, it's Y" headlines reworded ("Visibility was never the gap. Structure was.").</span></div>
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">AI fluency owned in the manifesto ("I build with AI, and own the calls"). Exactly the recommended move.</span></div>
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">Lazy loading on images, failing accent colors (#c75b39, #888) gone, type scale trimmed ~30 to 23 sizes.</span></div>
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">Adobe XD removed from the About stack. About has a meta description now.</span></div>
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">Loan Deboarding metrics carry provenance lines ("interview baseline: status follow-ups + parallel sheets").</span></div>
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">Experience timeline and tools row now live on About only.</span></div>
+      <div class="delta-item"><span class="chip fixed">Fixed</span><span class="what">First case card moved up to ~1.2 viewports (was buried). Better, though the fold is still all hero + Sage.</span></div>
+      <div class="delta-item"><span class="chip open">Open</span><span class="what">"AI-powered" still everywhere, and now in your visible hero headline. Detail below.</span></div>
+      <div class="delta-item"><span class="chip open">Open</span><span class="what">"How I Work" four-card block and all three testimonials still duplicated verbatim on Home and About.</span></div>
+      <div class="delta-item"><span class="chip open">Open</span><span class="what">Both Onity cases still show only polished final screens. No wireframe, synthesis shot, rejected direction, or empty/error state. June's #1 recommendation, untouched for the two lead cases.</span></div>
+      <div class="delta-item"><span class="chip open">Open</span><span class="what">Empty alt attributes: 3 on Home, 1 each on About, IntelliAssist, Loan, Inquiry.</span></div>
+      <div class="delta-item"><span class="chip open">Open</span><span class="what">Shipped Dell work (your hardest numbers) still sits 3rd and 4th; two in-development cases lead.</span></div>
+    </div>
+    <p class="note">Also noticed: the live deploy is a few KB behind your local files on every page. Whatever you edited most recently is not what recruiters are seeing. Worth a deploy and a "deploy after every approved change" habit.</p>
+  </section>
+
+  <!-- ================= NUMBERS ================= -->
+  <section id="numbers">
+    <div class="sec-head">
+      <div class="eyebrow">The headline finding</div>
+      <h2>One fact, four values: the metric coherence map.</h2>
+      <p>Recruiters read the resume first, then the site. Hiring managers ask Sage, then check the case study. Every pair below is a contradiction a reviewer can hit in under two minutes, and each one taxes the credibility of every other number on the site.</p>
+    </div>
+    <div class="tablewrap"><table>
+      <tr><th>Claim</th><th>Home card</th><th>Case study</th><th>Resume</th><th>Sage chat</th></tr>
+      <tr>
+        <td><b>Inquiry portal: time saved</b></td>
+        <td class="bad">6 hrs / AM / week</td>
+        <td class="bad">Hero: 6 hrs per manager<br>Snapshot + validation: 12 hrs per analyst</td>
+        <td class="bad">12 hrs per analyst</td>
+        <td>12 hrs per analyst</td>
+      </tr>
+      <tr>
+        <td><b>IntelliAssist: adoption / completion</b></td>
+        <td>92% self-serve adoption</td>
+        <td class="ok">92% self-serve · 78% faster task completion</td>
+        <td class="bad">"85% increase in self-service adoption"</td>
+        <td class="bad">"92% task completion in usability testing"</td>
+      </tr>
+      <tr>
+        <td><b>Years of experience</b></td>
+        <td>·</td>
+        <td>·</td>
+        <td class="bad">"5+ years" (honest: ~5.7 actual)</td>
+        <td class="bad">About page counter: "8+ years"</td>
+      </tr>
+      <tr>
+        <td><b>Dell role title</b></td>
+        <td>·</td>
+        <td class="bad">IntelliAssist quick facts: "Senior Product Designer"</td>
+        <td class="bad">"UX Designer, Dell Technologies"</td>
+        <td>·</td>
+      </tr>
+      <tr>
+        <td><b>Red Hat tenure</b></td>
+        <td>·</td>
+        <td class="bad">About: "2021 to 2022 · 1 yr"</td>
+        <td class="bad">07/2021 to 01/2022 (6 months)</td>
+        <td>·</td>
+      </tr>
+      <tr>
+        <td><b>Dell INC, what it stands for</b></td>
+        <td class="bad">"Information Network Center"</td>
+        <td class="bad">"Intelligence Nerve Center"</td>
+        <td>·</td>
+        <td>·</td>
+      </tr>
+      <tr>
+        <td><b>Your own title</b></td>
+        <td class="bad">Hero: "Senior UX Designer"</td>
+        <td class="bad">Title tag, meta, About: "Senior Product Designer"</td>
+        <td class="bad">Header: "User Experience Designer | Product Designer" (drops Senior entirely)</td>
+        <td>·</td>
+      </tr>
+      <tr>
+        <td><b>Contact email</b></td>
+        <td class="bad">dineshballer@gmail.com</td>
+        <td>·</td>
+        <td class="bad">dineshkravikumar@gmail.com</td>
+        <td>·</td>
+      </tr>
+    </table></div>
+
+    <div class="card"><span class="chip crit">Critical</span><h3>The 62% has a provenance problem, and the page admits it</h3>
+      <div class="body">The Inquiry portal is labeled "In development · 2026" and its validation section says the numbers come from prototype testing. But the home card says it is "cutting case resolution by 62%", the case hero says the emails "stopped" and managers "got six hours back" (past tense), and the Key Decision section says "the 62% resolution improvement validated the call." A product that has not launched cannot have improved resolution by 62%. One interview question ("how was that measured?") collapses it, and May's audit already flagged the tense. The fix is not deleting the number; it is labeling it: "projected 62%, modeled from prototype testing against the current email baseline." Honest labels are explicitly rewarded; claimed-but-unmeasured numbers are the single fastest trust killer in the 2026 research.</div>
+      <div class="fix"><b>Fix:</b> one canonical metrics table (in a doc, not on the site) with value, definition, status (measured / projected), source, and tense. Then sweep: home cards, case heroes, snapshots, validation blocks, Sage's system prompt, resume bullets. Every number appears with one value, one unit, one status, everywhere.</div>
+    </div>
+
+    <div class="card"><span class="chip crit">Critical</span><h3>Sage contradicts the case studies it represents</h3>
+      <div class="body">Live test today: asked Sage about AI experience. It answered well, then cited "92% task completion" in its outcome panel. The case study says 92% is self-serve adoption and 78% is task completion. Your flagship differentiator, the thing recruiters will remember, is misquoting your own portfolio. Same root cause: the system prompt was written before the final case copy locked.</div>
+      <div class="fix"><b>Fix:</b> regenerate the SYSTEM_PROMPT metrics block in api/chat.js directly from the canonical table. Also update its "six scattered tools" phrasing to match the case's "12+ APIs". Then redeploy and re-test the three suggestion chips.</div>
+    </div>
+
+    <div class="card"><span class="chip crit">Critical</span><h3>The resume undoes the site's whole credibility pass</h3>
+      <div class="body">The site is now clean; the PDF a recruiter actually downloads is not. Found in resume.pdf today: the name reads "Dinesh kumar Ravikumar" (lowercase k); a mangled merge artifact mid-bullet ("...mortgage servicing teams.sights into intuitive dashboards..."); "caseresolution" missing a space; "V0 Verrcel" (Vercel); "Azure DevOps (or similar)", template placeholder language shipped to recruiters; Adobe XD and InVision still listed (one discontinued, one shut down, and the site already dropped XD); the header title drops "Senior" while the site claims it; and "AI-powered" in the summary. Recruiters read resume and portfolio as one document. Right now they disagree on your name, title, email, years, and two metrics.</div>
+      <div class="fix"><b>Fix:</b> a 90-minute resume pass against the canonical table: name, title ("Senior Product Designer"), one email (pick one and make the site match), metrics synced, typos out, stack modernized (Figma, Figma Make, Claude, Framer, Miro... drop XD/InVision/"or similar").</div>
+    </div>
+  </section>
+
+  <!-- ================= RECRUITER ================= -->
+  <section id="recruiter">
+    <div class="sec-head">
+      <div class="eyebrow">Lens 1 · Senior recruiter</div>
+      <h2>The 90-second scan: you pass, with three stumbles.</h2>
+    </div>
+    <p class="lens-intro">Simulating the documented behavior: resume first, then homepage positioning, then one case study skimmed by headings and images, hunting for reasons to say no.</p>
+
+    <div class="persona"><b>0:00–0:10.</b> Clean load, distinctive look, name and title match LinkedIn now. Good. First line of the page: "Designer building B2B products and AI-powered workflows." Hmm, "AI-powered." <b>0:10–0:30.</b> Scroll. A chat box wants me to paste the JD. Clever, but I'm not doing that yet; where's the work? One more scroll. <b>0:30–1:10.</b> Card 01: in-development, NDA, "9/9 found status." Usability number, projected hours. Card 02: "cutting resolution 62%", also in development. Wait, is that measured? Card 03: shipped, 2024, 55% tickets, 92% self-serve. This is the strong one. Why is it third? <b>1:10–1:30.</b> Open resume. Title says... not Senior? Typo in bullet two. 12 hours here, 6 on the site. Close enough to forward? Maybe. Flagging the inconsistencies in my notes.</div>
+
+    <div class="card"><span class="chip crit">Critical</span><h3>Your one banned word is your first headline</h3>
+      <div class="body">"AI-powered" appears in the visible hero lens line, the meta description, the OG description, the Twitter description, the About page's Dell role, and the resume summary. Your own house rules ban it; May's audit flagged it; since then it moved up, into the largest text on the site. It is the #1 scan-list buzzword in the recruiter research, and it is also simply weaker than your real language ("AI workflows that keep financial teams moving" says the same thing without the sticker).</div>
+      <div class="fix"><b>Fix:</b> "Designer building B2B products and AI workflows that keep financial teams moving." Sweep all six locations in one pass. Fifteen minutes.</div>
+    </div>
+
+    <div class="card"><span class="chip high">High</span><h3>Sharing a link produces a broken or missing preview</h3>
+      <div class="body">The home og:image is a relative path (<code>./images/rti-final-overview.png</code>), which most scrapers cannot resolve, so pasting your URL into LinkedIn, Slack, or iMessage shows no image. About and all four case studies have no og:title or og:image at all. Recruiters share links into hiring channels constantly; right now every share renders as a bare grey link. This is invisible to you and high-frequency for them.</div>
+      <div class="fix"><b>Fix:</b> absolute URLs (https://www.dineshkumar.design/images/...) plus og:title, og:image, and twitter:card on all six pages. Pick a hero crop per case study.</div>
+    </div>
+
+    <div class="card"><span class="chip high">High</span><h3>No location, no availability, no target role</h3>
+      <div class="body">Recruiters filter on geography and level before anything else. The site never says Houston, TX, remote, US-authorized, or what you are looking for; the footer says "open for the right opportunities in B2B & fintech," which names a domain but not a role or level. They should not need the resume to learn whether you are even in their hiring geography.</div>
+      <div class="fix"><b>Fix:</b> one line near the contact block: "Senior Product Designer · Houston, TX · remote-friendly · open to senior IC roles in B2B and fintech."</div>
+    </div>
+
+    <div class="card"><span class="chip med">Medium</span><h3>The strongest shipped proof is still third</h3>
+      <div class="body">Both audits said it; it is still true. The scan rewards shipped + hard numbers in the first card, and yours (55% tickets, 92% self-serve, Shipped 2024) sits below two in-development NDA cases. Recency ordering is a defensible choice, but it costs you with the 60% of reviewers who never reach card three. A compromise exists that keeps recency: make the in-development labels work for you by adding the projected/measured distinction to the card metrics themselves, and put one line of shipped proof in the hero ("Last shipped: an AI workspace that cut tickets 55%").</div>
+      <div class="fix"><b>Fix:</b> either reorder (IntelliAssist first) or add the shipped-proof line above the fold. Test with one recruiter friend.</div>
+    </div>
+
+    <div class="card"><span class="chip med">Medium</span><h3>Small trust dents on the scan path</h3>
+      <div class="body">Mobile (390px): the script wordmark wraps to two lines and collides with the inline nav; there is no hamburger, so the first screen reads cramped on a phone. Testimonials are first-name-only on Home ("Gayathri", "Baylock", "Veronica") with no link out, which weakens them as proof; About has "read full recommendation" links, Home does not. The email is still gmail on a custom domain (minor, was flagged in May, now complicated by the resume using a different gmail).</div>
+      <div class="fix"><b>Fix:</b> stack or shrink the mobile nav; link Home testimonials to the LinkedIn recommendations; pick one email everywhere (hello@dineshkumar.design if you want the upgrade).</div>
+    </div>
+  </section>
+
+  <!-- ================= DM ================= -->
+  <section id="dm">
+    <div class="sec-head">
+      <div class="eyebrow">Lens 2 · Design manager</div>
+      <h2>Depth check: real decisions, missing mess.</h2>
+    </div>
+    <p class="lens-intro">A design manager reads one case end-to-end and grades judgment: decisions, trade-offs, iteration, collaboration, and whether the artifacts prove the thinking happened.</p>
+
+    <div class="card"><span class="chip strength">Strength</span><h3>What lands, and should not be touched</h3>
+      <div class="body">The Key Decision sections are the best thing in the portfolio: "a shared record instead of notifications" and "full-screen, not a bigger panel" both show a stakeholder ask, a refusal, a trade-off, and what it cost ("notifications would've shipped in two weeks; the record took three months"). The retrospectives split impact-on-me from patterns-the-team-reused, which is multiplier language managers read as senior-to-staff. Research specifics are real (14 enterprise-sales interviews, 21 participants across three methods, 3-org synthesis). Insight-led headings throughout. This architecture is better than most portfolios at the companies you are targeting.</div>
+    </div>
+
+    <div class="card"><span class="chip crit">Critical</span><h3>Every screen is a finished screen, and a DM notices in one scroll</h3>
+      <div class="body">Across both Onity cases, every image is a polished, fully-populated final UI. No wireframe, no synthesis wall, no rejected direction, no empty or error state, no before. (IntelliAssist has one synthesis Venn; Dell INC has a genuine before shot; the two lead cases have zero process artifacts.) Combined with the disclosed AI-recreation note, the June research is blunt about how this reads: beautiful screens with no visible thinking is the strongest AI-portfolio tell there is. You have the thinking; the prose proves it. The images don't.</div>
+      <div class="fix"><b>Fix:</b> one artifact per Onity case, even a photographed sketch, the interview tagging board mentioned in the Loan retrospective, or the validation error state (the case literally claims "100% of errors fixed inline", show one). The rejected notifications-only direction as a single lo-fi frame would be the strongest possible insert for the Inquiry case.</div>
+    </div>
+
+    <div class="card"><span class="chip high">High</span><h3>Four cases, one shape</h3>
+      <div class="body">Loan Deboarding, Inquiry Portal, and Dell INC are all "table + record detail + status visibility" products, and IntelliAssist is a workspace shell. Strong domain consistency, but a DM hiring for range will ask: where is mobile, where is a design system, where is anything zero-polish and ugly-but-shipped? Your resume claims the most senior-scoped work you have: "Created the design system for the platform, defining components, data visualization patterns, and interaction standards" at Onity. That sentence is a case study, and it appears nowhere on the site. Both Onity retros mention patterns "added to the internal design system", so the material exists.</div>
+      <div class="fix"><b>Fix:</b> a compact fifth case (or a section inside Loan Deboarding): the Onity platform design system. Tokens, the case-table pattern, the progress tracker, who consumes it, and one adoption number. Even 6 screens with captions changes the range answer.</div>
+    </div>
+
+    <div class="card"><span class="chip high">High</span><h3>The story has no failure in it</h3>
+      <div class="body">Every case resolves cleanly: research, insight, pushback, win. "What I'd do differently" exists (good) but is always procedural (bring engineering in earlier, start a11y at wireframe). Nothing ever did not work: no usability test that failed, no direction that died in review, no metric that went sideways. Managers probe for exactly this in interviews because real work has dead ends, and its absence is also a listed AI-text tell ("a suspiciously clean story with no mess").</div>
+      <div class="fix"><b>Fix:</b> one honest beat per case. The Inquiry case hints at it ("three prototype rounds before usability testing"): what changed between round one and three? Show round one. That is the cheapest authenticity on offer.</div>
+    </div>
+
+    <div class="card"><span class="chip med">Medium</span><h3>Craft notes from this pass</h3>
+      <div class="body">Type scale is down to ~23 sizes from ~30; a true ladder is 6 to 9, so the sprawl is improved, not finished. The About "few good days" gallery composition floats the photo card far left with a large dead zone at this breakpoint. The animated counters render "0+" before JS runs (and for crawlers). Empty alts linger on five pages, breaking the standard your case images set. The duplicated "How I Work" + testimonials still make Home longer than its job and leave About thinner than its title. None of these alone matters; together they are the remaining 20% of the craft tax.</div>
+    </div>
+
+    <div class="card"><span class="chip med">Medium</span><h3>Voice judgment calls (your call, not errors)</h3>
+      <div class="body">"Vibe-coding anything else worth shipping" in the Now chip is current and confident, but to a conservative enterprise DM it can read flip; you are one word from the same meaning ("prototyping in code"). "Building the Next-Gen Mortgage Experience" on About is the only marketing-cadence line on the page. "Transformative projects delivered" and "mentored to success" in the counters are puffery adjacent to an otherwise specific page; "30+ projects" also invites a "name them" follow-up.</div>
+    </div>
+  </section>
+
+  <!-- ================= HM ================= -->
+  <section id="hm">
+    <div class="sec-head">
+      <div class="eyebrow">Lens 3 · Hiring manager</div>
+      <h2>The interview-slot decision: would I spend one on you?</h2>
+    </div>
+    <p class="lens-intro">A hiring manager reads with one question: if I put this person in front of my stakeholders, does the story survive follow-up questions?</p>
+
+    <div class="card"><span class="chip strength">Strength</span><h3>The yes-case is real</h3>
+      <div class="body">Domain depth in mortgage servicing that almost no candidate has (Encompass, MERS, escrow returns, investor codes used correctly). Two genuinely senior decision narratives with named costs. Honest in-development labels. An AI-fluency story that is shown, not claimed: the site itself, the Sage chat, the disclosed recreation workflow. A manager hiring for B2B fintech tooling or AI workspaces gets an obvious "worth a screen" from this portfolio.</div>
+    </div>
+
+    <div class="card"><span class="chip crit">Critical</span><h3>The screen I would run, and where it breaks</h3>
+      <div class="body">"Walk me through the 62%." Today the honest answer is "projected from prototype testing," which is fine, except the site says "cutting case resolution by 62%" and "the 62% validated the call" in past tense, so the honest answer now contradicts the portfolio in the candidate's own first call. Same trap on "did the meetings actually stop?" ("0 status meetings needed" for an unlaunched product) and "is it 6 hours or 12?". You built the cases to survive this question (provenance lines on Loan Deboarding prove you know how); the Inquiry case just was not held to the same standard.</div>
+      <div class="fix"><b>Fix:</b> Inquiry case pass: every outcome gets measured/projected status and consistent tense. "Projected: 62% faster resolution, modeled from prototype task times against the email baseline" is a sentence that survives the interview and still impresses.</div>
+    </div>
+
+    <div class="card"><span class="chip high">High</span><h3>The shipped-lately question</h3>
+      <div class="body">Two of four cases are in development; the shipped two are 2024 and 2022, both Dell. "What have you shipped in the last 18 months?" currently has no portfolio answer, which matters more at the senior level than anywhere else. The mitigations are all within reach: ship-date clarity when the Onity MVPs land (the Loan case says build is underway), the design system section (systems "ship" continuously and the retros say yours is already being consumed), or a "Now" entry that names what is live vs. landing.</div>
+      <div class="fix"><b>Fix:</b> short term, add "MVP in build, landing H2 2026" precision to both Onity cases and put the design-system adoption (patterns reused by the next two roadmap projects) forward as shipped influence. Update the day either MVP goes live.</div>
+    </div>
+
+    <div class="card"><span class="chip high">High</span><h3>Title math a manager will quietly do</h3>
+      <div class="body">IntelliAssist quick facts say your role was "Senior Product Designer" in 2024; the resume says your Dell title was "UX Designer" until 07/2025. Title-to-scope mismatch is actively hunted in 2026 because inflation is everywhere. The work itself (lead designer of a 2-designer team on a flagship AI surface) is senior scope under a mid title, which is a strength when stated plainly and a flag when relabeled.</div>
+      <div class="fix"><b>Fix:</b> in quick facts use the truthful frame: "Role: Lead designer (UX Designer, promoted to Senior at Onity)" or simply "Lead Product Designer, one of two designers." Let the scope carry it; it can.</div>
+    </div>
+
+    <div class="card"><span class="chip med">Medium</span><h3>Unexplained gap, hidden pedigree</h3>
+      <div class="body">The About timeline runs Freelance (2018–2019), then Red Hat (2021), leaving a visible two-year hole. The resume explains it perfectly: an MS from Northeastern in Boston, which is also the Fenway "Graduation Day" photo on the same page. The degree appears nowhere on the site. You are paying the cost of the gap without collecting the credential, and the journey strip ("Computer Science Engineer → UX Designer") skips the very step that explains the arrow.</div>
+      <div class="fix"><b>Fix:</b> one timeline entry: "Northeastern University, MS Information Systems (UX), 2020–2022 · Boston." Closes the gap, adds the pedigree, makes the Fenway photo land.</div>
+    </div>
+  </section>
+
+  <!-- ================= MISSING ================= -->
+  <section id="missing">
+    <div class="sec-head">
+      <div class="eyebrow">The absence list</div>
+      <h2>What is not on the site at all.</h2>
+      <p>Ranked by how often its absence loses interest, across all three lenses.</p>
+    </div>
+    <div class="tablewrap"><table>
+      <tr><th>Missing</th><th>Who notices</th><th>Cost</th></tr>
+      <tr><td><b>Process artifacts in the lead cases</b> (any non-final screen)</td><td>Design manager, AI-skeptic reviewers</td><td>Screens read as AI-generated proof of nothing; thinking only exists as prose</td></tr>
+      <tr><td><b>The Onity design system as a case</b> (your most senior scope, currently one resume bullet)</td><td>Design manager, hiring manager</td><td>Range question fails; multiplier work invisible</td></tr>
+      <tr><td><b>Measured/projected labels on in-dev metrics</b></td><td>Hiring manager</td><td>Numbers collapse under one follow-up</td></tr>
+      <tr><td><b>Location / availability / target role line</b></td><td>Recruiter</td><td>Filtered out or forced into the resume early</td></tr>
+      <tr><td><b>Northeastern MS on the timeline</b></td><td>Recruiter, hiring manager</td><td>Reads as a 2-year gap instead of a credential</td></tr>
+      <tr><td><b>Any failure or dead end in four cases</b></td><td>Design manager</td><td>Too-clean story; authenticity discount</td></tr>
+      <tr><td><b>Social-proof verifiability on Home</b> (full names or rec links)</td><td>Recruiter</td><td>Testimonials discounted as decoration</td></tr>
+      <tr><td><b>OG/Twitter cards on five of six pages</b></td><td>Everyone who shares your link</td><td>Bare grey link in every hiring channel</td></tr>
+    </table></div>
+  </section>
+
+  <!-- ================= ROADMAP ================= -->
+  <section id="roadmap">
+    <div class="sec-head">
+      <div class="eyebrow">Priority order</div>
+      <h2>The fix list, by impact per hour.</h2>
+      <p>P0 is the credibility layer: do it before the next application goes out. P1 is one weekend. P2 is polish that compounds.</p>
+    </div>
+
+    <div class="roadmap-item"><div class="n">P0</div><div class="t"><b>Build the canonical metrics table, then sweep everything against it</b><span>One doc: every metric, value, unit, status (measured/projected), source. Sweep home cards, case heroes, snapshots, validation, resume, Sage prompt. Kills the 6/12, 85/92, task-completion/adoption, and 62%-tense collisions in one pass.</span></div><div class="effort">~3 hrs</div></div>
+    <div class="roadmap-item"><div class="n">P0</div><div class="t"><b>Resume emergency pass</b><span>Name casing, Senior title, one email, typos (teams.sights, caseresolution, Verrcel), drop XD/InVision/"(or similar)", sync metrics, remove "AI-powered". The PDF must agree with the site it links from.</span></div><div class="effort">~90 min</div></div>
+    <div class="roadmap-item"><div class="n">P0</div><div class="t"><b>Retire "AI-powered" in all six locations</b><span>Hero lens line, meta, og, twitter, About Dell line, resume. "AI workflows" carries the same meaning in your voice.</span></div><div class="effort">15 min</div></div>
+    <div class="roadmap-item"><div class="n">P0</div><div class="t"><b>Fix Sage's system prompt + redeploy + retest</b><span>Metrics block regenerated from the canonical table; "six tools" → "12+ APIs"; verify the three suggestion chips against case copy.</span></div><div class="effort">~45 min</div></div>
+    <div class="roadmap-item"><div class="n">P0</div><div class="t"><b>OG cards: absolute og:image + og:title on all six pages</b><span>Then validate with LinkedIn's Post Inspector and one Slack paste.</span></div><div class="effort">~40 min</div></div>
+    <div class="roadmap-item"><div class="n">P0</div><div class="t"><b>One INC expansion, one site title</b><span>"Intelligence Nerve Center" everywhere; pick "Senior Product Designer" or "Senior UX Designer" and use it in hero, title tags, About, resume.</span></div><div class="effort">20 min</div></div>
+    <div class="roadmap-item"><div class="n">P1</div><div class="t"><b>One process artifact per Onity case</b><span>Inquiry: the rejected notifications-only lo-fi or round-1 prototype. Loan: the interview tagging board or the inline validation error state. Caption each with what it changed.</span></div><div class="effort">half day</div></div>
+    <div class="roadmap-item"><div class="n">P1</div><div class="t"><b>De-duplicate Home vs About</b><span>"How I Work" and testimonials live in exactly one place each (recommend: About keeps both; Home gets a one-line operating-manual teaser and links out).</span></div><div class="effort">~2 hrs</div></div>
+    <div class="roadmap-item"><div class="n">P1</div><div class="t"><b>Recruiter facts: location line + Northeastern MS + Red Hat months</b><span>"Senior Product Designer · Houston, TX · remote-friendly" near contact; MS entry on the timeline; "2021 – 2022 · 6 mo" honesty on Red Hat.</span></div><div class="effort">~1 hr</div></div>
+    <div class="roadmap-item"><div class="n">P1</div><div class="t"><b>Deploy local → live, and adopt a release habit</b><span>Live is behind your local edits on every page. Deploy, then re-verify metas and Sage in production.</span></div><div class="effort">30 min</div></div>
+    <div class="roadmap-item"><div class="n">P2</div><div class="t"><b>Design-system case study (or section)</b><span>The Onity platform DS: tokens, case-table + progress-tracker patterns, who consumes them, one adoption stat. Your most senior scope, currently invisible.</span></div><div class="effort">1–2 days</div></div>
+    <div class="roadmap-item"><div class="n">P2</div><div class="t"><b>Craft polish round</b><span>Type ladder to ~9 steps; mobile nav wordmark wrap; empty alts; counters' "0+" fallback; About gallery composition; Home testimonial rec links; consider hello@dineshkumar.design.</span></div><div class="effort">half day</div></div>
+    <div class="roadmap-item"><div class="n">P2</div><div class="t"><b>Shipped-first experiment</b><span>Try IntelliAssist as card 01 for two weeks of applications targeting AI-heavy roles; GA4 is already wired, add a card-click event and compare.</span></div><div class="effort">~1 hr</div></div>
+  </section>
+
+  <!-- ================= KEEP ================= -->
+  <section id="keep">
+    <div class="sec-head">
+      <div class="eyebrow">Protected list</div>
+      <h2>Do not touch these while fixing the rest.</h2>
+    </div>
+    <ul class="keep">
+      <li><b>The Key Decision sections.</b> "A shared record instead of notifications" and "full-screen, not a bigger panel" are the two best pages on the site. Every fix above should leave them stronger, never shorter.</li>
+      <li><b>The two-layer retrospectives</b> (impact on me / patterns the team reused). That is staff-signal language; keep it in every future case.</li>
+      <li><b>The honest NDA + AI-recreation disclosure.</b> It is the accepted 2026 practice and you execute it better than the reference portfolios.</li>
+      <li><b>Sage itself.</b> A working, useful, on-brand AI layer is a differentiator almost nobody has. It just needs to be fed the right numbers.</li>
+      <li><b>The visual identity.</b> Hanken Grotesk on warm ivory with deep forest, the chip-lens hero, the calm tone. Distinctive and yours; discipline within it, not a new direction.</li>
+      <li><b>Domain specificity.</b> Encompass, MERS, escrow returns, aging signals, exception lanes. This vocabulary is the moat; never genericize it.</li>
+    </ul>
+    <p class="note">Scope note: verified against the live site (www.dineshkumar.design), local working files, resume.pdf, and a live Sage conversation on June 11, 2026. Benchmarked to the senior IC / FAANG-tier bar used in the May teardown, plus the June recruiter-and-AI-tells research (Joy Liu, Indeed's UX directors, Tom Scott, Matej Latin, Toptal, NN/g). Grades are against that bar, not the average portfolio, against the average, this portfolio is comfortably ahead.</p>
+  </section>
+
+</div>
+</body>
+</html>
