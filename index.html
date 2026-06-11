@@ -4867,17 +4867,29 @@
   const lines = Array.from(document.querySelectorAll(".lens-line"));
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Store original text so we always animate from the canonical copy
+  // Store original markup (keeps the <em> accent) so we always animate
+  // from the canonical copy and can restore it exactly.
   const originals = new Map();
-  lines.forEach(l => originals.set(l.dataset.lens, l.textContent.trim()));
+  lines.forEach(l => originals.set(l.dataset.lens, l.innerHTML.trim()));
 
   let cleanupTimer = null;
   let firstLoad = true;
 
+  // Parse the original markup into words, remembering which sit inside <em>
+  function lensWords(lens) {
+    const tmp = document.createElement("div");
+    tmp.innerHTML = originals.get(lens) || "";
+    const out = [];
+    tmp.childNodes.forEach(node => {
+      const isEm = node.nodeName === "EM";
+      (node.textContent || "").split(" ").forEach(w => { if (w) out.push({ w, em: isEm }); });
+    });
+    return out;
+  }
+
   function animateWordsIn(el) {
     if (cleanupTimer) clearTimeout(cleanupTimer);
-    const text = originals.get(el.dataset.lens) || el.textContent;
-    const words = text.split(" ");
+    const words = lensWords(el.dataset.lens);
 
     // Keep CSS control for position/transform — only override opacity + transition
     el.style.opacity = "1";
@@ -4885,11 +4897,14 @@
 
     // Use display:inline (not inline-block) so text wraps identically to plain text.
     // Transforms require inline-block and would change line-break behaviour — opacity only.
+    // Words that were inside <em> get re-wrapped so the accent survives the stagger.
     el.innerHTML = words
-      .map((w, i) =>
-        `<span data-w style="opacity:0;` +
-        `transition:opacity 320ms cubic-bezier(0.16,1,0.3,1) ${i * 42}ms">${w}</span>`
-      )
+      .map(({ w, em }, i) => {
+        const span =
+          `<span data-w style="opacity:0;` +
+          `transition:opacity 320ms cubic-bezier(0.16,1,0.3,1) ${i * 42}ms">${w}</span>`;
+        return em ? `<em>${span}</em>` : span;
+      })
       .join(" ");
 
     // Two rAF so the browser paints the hidden state before fading in
@@ -4899,10 +4914,10 @@
       });
     }));
 
-    // After animation settles, restore plain text and hand back full CSS control
+    // After animation settles, restore the original markup and hand back CSS control
     const settle = (words.length - 1) * 42 + 320 + 60;
     cleanupTimer = setTimeout(() => {
-      el.textContent = text;
+      el.innerHTML = originals.get(el.dataset.lens) || el.innerHTML;
       el.style.opacity = "";
       el.style.transition = "";
     }, settle);
@@ -4919,10 +4934,10 @@
       if (on) {
         l.dataset.active = "true";
         if (!reduced && !firstLoad) animateWordsIn(l);
-        else l.textContent = originals.get(lens) || l.textContent;
+        else l.innerHTML = originals.get(lens) || l.innerHTML;
       } else {
-        // Restore plain text before the CSS fade-out so it's clean
-        l.textContent = originals.get(l.dataset.lens) || l.textContent;
+        // Restore original markup before the CSS fade-out so it's clean
+        l.innerHTML = originals.get(l.dataset.lens) || l.innerHTML;
         l.style.cssText = "";
         l.dataset.active = "false";
       }
