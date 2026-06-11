@@ -61,6 +61,17 @@ Source framing: "measured against the pre-redesign baseline."
 | Research | 3 rounds, 21 participants | Measured |
 | Role | Sole UX Designer | — |
 
+## Platform Design System · Onity · 2025–2026 · IN ACTIVE USE (case 03)
+All claims qualitative and sourced from the two portal retros. NO invented counts (no "47 components" style numbers).
+| Claim | Source |
+|---|---|
+| 2 portals built on the system | Loan + RTI case studies |
+| 4 workflow patterns reused (inline validation, case table, progress tracker, exception lane) | Both portal retros |
+| Every upload surface runs inline validation | Loan retro ("adopted for every upload surface") |
+| Next 2 roadmap projects started from these parts | Both portal retros |
+| 3-org synthesis template adopted by platform team | RTI/Loan retros |
+| Role: Senior UX Designer, systems owner, sole designer | resume DS bullet |
+
 ## Dell data dashboards (resume/Sage only)
 | Metric | Value |
 |---|---|
@@ -71,4 +82,4 @@ Source framing: "measured against the pre-redesign baseline."
 Sage-only claims: 45% discoverability, 40% usability, 50+ usability participants, 90% WCAG score. Not on site or resume; verify before promoting.
 
 ## Sweep checklist when a number changes
-index.html (cards + Sage example + JS data: TIMELINE_DATA, JD_COMPARISON, SKILL_DATA, FOLIO_FACTS.knownMetrics) → case study pages (hero, snapshot, validation, next-case teasers) → api/chat.js SYSTEM_PROMPT → resume.pdf → about.html → LinkedIn.
+index.html (cards + Sage example + JS data: TIMELINE_DATA, JD_COMPARISON, SKILL_DATA, FOLIO_FACTS.knownMetrics) → case study pages incl. design-system-case-study.html (hero, snapshot, validation, next-case teasers) → api/chat.js SYSTEM_PROMPT → resume.pdf → about.html → LinkedIn.

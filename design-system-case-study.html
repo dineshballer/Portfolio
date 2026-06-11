@@ -3,18 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Real-Time Inquiry Portal, Onity · Dinesh Kumar, Senior UX Designer</title>
+<title>Platform Design System, Onity · Dinesh Kumar, Senior UX Designer</title>
 <script src="./ga.js" async></script>
-<meta name="description" content="A mortgage inquiry workspace that replaces fragmented email threads with one real-time, shared case record. Projected 62% faster case resolution and 12 hours back per analyst each week, validated in prototype testing.">
+<meta name="description" content="The design system under Onity's mortgage platform: tokens, components, and workflow patterns extracted while the first two portals shipped. Both products now build from the same parts.">
 <meta property="og:type"         content="article">
-<meta property="og:title"        content="Real-Time Inquiry Portal, Onity · Dinesh Kumar">
-<meta property="og:description"  content="One shared, live record for every loan inquiry. Projected 62% faster resolution, 12 hours back per analyst weekly, validated in prototype testing.">
-<meta property="og:image"        content="https://www.dineshkumar.design/images/rti-hero-dashboard.png">
-<meta property="og:url"          content="https://www.dineshkumar.design/realtime-inquiry-case-study.html">
+<meta property="og:title"        content="Platform Design System, Onity · Dinesh Kumar">
+<meta property="og:description"  content="Tokens, components, and workflow patterns extracted mid-flight from the platform's first two portals. The system the next products start from.">
+<meta property="og:image"        content="https://www.dineshkumar.design/images/ds-hero-overview.png">
+<meta property="og:url"          content="https://www.dineshkumar.design/design-system-case-study.html">
 <meta property="og:site_name"    content="Dinesh Kumar">
 <meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="Real-Time Inquiry Portal, Onity · Dinesh Kumar">
-<meta name="twitter:image"       content="https://www.dineshkumar.design/images/rti-hero-dashboard.png">
+<meta name="twitter:title"       content="Platform Design System, Onity · Dinesh Kumar">
+<meta name="twitter:image"       content="https://www.dineshkumar.design/images/ds-hero-overview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Caveat:wght@600&display=swap" rel="stylesheet">
@@ -1241,85 +1241,75 @@
 <nav class="scroll-spy" aria-label="Jump to section">
   <a href="#overview">Overview</a>
   <a href="#snapshot">Snapshot</a>
-  <a href="#problem">Problem</a>
-  <a href="#solution">Solution</a>
-  <a href="#dashboard">Dashboard</a>
-  <a href="#case-detail">Case detail</a>
-  <a href="#final-design">Final design</a>
-  <a href="#validation">Validation</a>
-  <a href="#post-launch">Post-launch</a>
+  <a href="#foundations">Foundations</a>
+  <a href="#patterns">Patterns</a>
+  <a href="#adoption">Adoption</a>
   <a href="#retrospective">Retrospective</a>
 </nav>
 
 <!-- HERO / OVERVIEW -->
 <section class="hero" id="overview">
   <div class="wrap">
-    <div class="eyebrow">Case Study 02 · Real-Time Inquiry Portal · Onity Group</div>
-    <h1>I designed a real-time portal that replaces email threads with <i>live case visibility.</i></h1>
-    <p class="lede">A shared, live record for every loan inquiry, where mortgage clients can track progress, message teams inline, and skip the bi-weekly status meeting. Built to stop the "where is my case?" emails and hand analysts twelve hours back every week; prototype testing backs both.</p>
+    <div class="eyebrow">Case Study 03 · Platform Design System · Onity Group</div>
+    <h1>I built the design system <i>while shipping the products that needed it.</i></h1>
+    <p class="lede">Tokens, components, and workflow patterns extracted mid-flight from the platform's first two portals, so every later surface starts from parts instead of a blank file. The case table, the progress tracker, the exception lane, and the inline-validation pattern all live here now.</p>
 
     <div class="chip-tags" aria-label="Project tags">
-      <span class="chip-tag status"><span class="dot" aria-hidden="true"></span>In development · 2026</span>
+      <span class="chip-tag status"><span class="dot" aria-hidden="true"></span>In active use · 2025–2026</span>
+      <span class="chip-tag">Design Systems</span>
       <span class="chip-tag">Enterprise Software</span>
-      <span class="chip-tag">Interaction Design</span>
       <span class="chip-tag">Mortgage Servicing</span>
-      <span class="chip-tag">Research-led</span>
+      <span class="chip-tag">0 to 1</span>
     </div>
 
     <div class="hero-showcase">
-      <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-hero-dashboard.png" alt="Real-Time Inquiry Portal dashboard, a central hub showing every loan inquiry in one organized, live view" />
+      <img loading="lazy" decoding="async" class="zoomable" src="./images/ds-hero-overview.png" alt="Overview diagram of the platform design system showing the Loan Deboarding and Real-Time Inquiry portals feeding shared tokens, components, and workflow patterns" />
     </div>
-    <div class="hero-showcase-cap">A central hub, every loan inquiry in one organized, live view</div>
+    <div class="hero-showcase-cap">One system under two portals: what got extracted, and where it came from</div>
 
 
     <div class="stats">
       <div class="stat">
-        <div class="num">62%</div>
-        <div class="lbl">Projected faster case resolution</div>
-        <div class="sub">modeled from prototype task times vs. the email baseline</div>
+        <div class="num">2</div>
+        <div class="lbl">Portals built on the system</div>
+        <div class="sub">Loan Deboarding + Real-Time Inquiry</div>
       </div>
       <div class="stat">
-        <div class="num">12 hrs</div>
-        <div class="lbl">Projected weekly savings per analyst</div>
-        <div class="sub">interview baseline: spreadsheet updates + status calls</div>
+        <div class="num">4</div>
+        <div class="lbl">Workflow patterns reused across the platform</div>
+        <div class="sub">inline validation, case table, progress tracker, exception lane</div>
       </div>
       <div class="stat">
-        <div class="num">0</div>
-        <div class="lbl">Status meetings by design</div>
-        <div class="sub">the live dashboard replaces the bi-weekly call</div>
+        <div class="num">Every</div>
+        <div class="lbl">Upload surface runs the validation pattern</div>
+        <div class="sub">adopted platform-wide after the first portal</div>
       </div>
     </div>
 
     <div class="quick-facts" aria-label="Project quick facts">
       <div class="fact">
         <h4>Role</h4>
-        <p>Lead Product Designer<span class="muted">end-to-end research, IA, interaction, visual</span></p>
+        <p>Senior UX Designer<span class="muted">systems owner, sole designer</span></p>
       </div>
       <div class="fact">
         <h4>Team</h4>
-        <p>Onity Group<span class="muted">1 PM, 2 engineers, 1 designer (me)</span></p>
+        <p>Onity Group<span class="muted">two product squads consuming the system</span></p>
       </div>
       <div class="fact">
         <h4>Timeline</h4>
-        <p>5 months<span class="muted">discovery through MVP build, 2026</span></p>
+        <p>Ongoing<span class="muted">built alongside both portals, 2025 to 2026</span></p>
       </div>
       <div class="fact">
         <h4>Tools</h4>
-        <p>Figma · Figma Make · Claude Design · Copilot<span class="muted">design, prototyping, and AI-assisted build</span></p>
+        <p>Figma · Variables · Libraries<span class="muted">tokens, components, and pattern documentation</span></p>
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- NDA DISCLAIMER -->
-<section aria-label="Confidentiality note">
-  <div class="wrap">
     <div class="nda-disclaimer">
       <div class="nda-ico" aria-hidden="true">🔒</div>
       <div class="nda-copy">
         <h4>A note on confidentiality</h4>
-        <p>I've modified the visual treatment, screen names, and workflow details shown in this case study to respect Onity Group's confidentiality. The mockups here were reimagined with AI assistance to convey the design's look and feel without exposing the actual product. The design approach, decisions, and outcomes are intact.</p>
+        <p>I've modified the palette, names, and component details shown here to respect Onity Group's confidentiality. The sheets were recreated with AI assistance to convey the system's structure without exposing the actual product. The decisions and the reuse story are intact.</p>
       </div>
     </div>
   </div>
@@ -1341,362 +1331,138 @@
     <div class="snapshot">
       <div class="snap-col">
         <div class="snap-label">Problem</div>
-        <p>Mortgage clients had no way to track loan inquiries after submission. Updates lived in scattered email threads, and account managers burned roughly 12 hours a week chasing status by hand and running bi-weekly meetings just to stay in sync.</p>
+        <p>Two portals were being designed at once on a platform with no shared parts. Every screen decision was being made twice, drift was already visible between early prototypes, and everything later on the roadmap would have inherited the mess.</p>
       </div>
       <div class="snap-col">
         <div class="snap-label">Change</div>
-        <p>I designed one shared workspace where every inquiry has a live record: status, threaded conversation, attached documents, and a clear resolution path. Account managers oversee their full portfolio from a filterable table; clients see exactly where each case sits.</p>
+        <p>I extracted the system from the products instead of designing it upfront. Tokens and a six-step type ladder first, then only the components and workflow patterns the portals proved they needed: the case table, the progress tracker, the exception lane, inline validation.</p>
       </div>
       <div class="snap-col">
         <div class="snap-label">Results</div>
-        <p>In prototype testing, 90% of users located case status unaided and no conversations were lost. Projected weekly time saved per analyst is roughly 12 hours. The MVP is in development, with a sprint-based rollout focused on the most-used tracking moves.</p>
+        <p>Both portals ship from the same parts. The four core patterns are documented and reused across the platform, every upload surface runs the inline-validation pattern, and the next two roadmap projects started from this work instead of from scratch.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROBLEM AREA -->
-<section id="problem">
+<!-- FOUNDATIONS -->
+<section id="foundations">
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">Problem area</div>
-        <h2>Lost in the back-and-forth.</h2>
+        <div class="eyebrow">Foundations</div>
+        <h2>Extracted, not invented.</h2>
       </div>
       <div>
-        <p><strong style="color: var(--ink); font-weight: 600;">Once an inquiry was sent, there was no shared place to see progress, share documents, or message the team.</strong> Updates lived in hundreds of email threads, and account managers burned about <strong style="color: var(--ink); font-weight: 600;">12 hours a week</strong> updating spreadsheets and running bi-weekly status calls to stay in sync.</p>
-      </div>
-    </div>
-
-    <div class="insights-grid">
-      <div class="pain-card">
-        <span class="ico">🚫</span>
-        <h4>Zero visibility after creation</h4>
-        <p>Once a case opens, clients can't see status or owner. So they email "just checking in."</p>
-      </div>
-
-      <div class="pain-card">
-        <span class="ico">🧵</span>
-        <h4>Fragmented messaging and files</h4>
-        <p>Loan documents and replies scatter across email threads. Latest version, last word, both hard to find.</p>
-      </div>
-
-      <div class="pain-card">
-        <span class="ico">📅</span>
-        <h4>Meeting-heavy status management</h4>
-        <p>Account managers update spreadsheets by hand and run bi-weekly status calls to stay in sync.</p>
-      </div>
-    </div>
-
-    <div class="quotes-pair">
-      <div>
-        <blockquote>"Give me the visibility to see where we sit. Show me if I'm 20% or 80% done, simple milestones or a small chart."</blockquote>
-        <cite><strong>Ivan Camarena</strong> · Client User</cite>
-      </div>
-      <div>
-        <blockquote>"I need to see all of our open cases, not just mine, so I can cover when someone's out."</blockquote>
-        <cite><strong>Glenda Brue</strong> · Client Administrator</cite>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SOLUTION INTRO -->
-<section id="solution">
-  <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">Solution</div>
-        <h2>A central hub for real-time oversight.</h2>
-      </div>
-      <div>
-        <p>One place where every loan inquiry lives, status, owner, key dates, updated in real time. The "where is my case?" emails stop, and clients can finally trust the system as the source of truth.</p>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- DASHBOARD VIEW -->
-<section id="dashboard">
-  <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">Dashboard view</div>
-        <h2>One screen, every case at a glance.</h2>
-      </div>
-      <div>
-        <p>The entry point. Status summary cards surface aging cases at the top; the live, filterable case table replaces the bi-weekly status meeting.</p>
+        <p>A system designed before its products is a guess. This one was pulled out of two real portals mid-build, which meant every token and component had already survived contact with actual mortgage workflows.</p>
       </div>
     </div>
 
     <div class="solution">
-      <div class="sol-quote">
-        <blockquote>"I need to see all of our open cases, not just mine, so I can cover when someone's out."</blockquote>
-        <cite><strong>Glenda Brue</strong> · Client Administrator</cite>
-      </div>
-
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">1</span>
-          <h4>Every case state, the second you log in</h4>
-          <p>Aging cases surface at the top, so clients see progress at a glance instead of emailing "is this done yet?"</p>
-          <div class="sol-tag">Visual Hierarchy · Fast Feedback</div>
+          <h4>Tokens before opinions</h4>
+          <p>One palette, a six-step type ladder with a 12px floor, a 4px spacing base, and six semantic statuses. The statuses came straight from the portals: a release is on time, at risk, breached, waiting, released, or unassigned, on every surface, in the same colors.</p>
+          <div class="sol-tag">Tokens · Type Ladder · Semantic Status</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-status-summary-cards.png" alt="Dashboard status summary cards row showing Open Inquiries 4, With Onity 2, Waiting on you 2, and Total Cases 6 counts" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/ds-tokens.png" alt="Foundations sheet with the recreated platform palette, grey ramp, six semantic status chips, six-step type ladder, and 4px spacing scale" />
         </div>
       </div>
 
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">2</span>
-          <h4>One table replaces the status meeting</h4>
-          <p>A filterable source of truth for every inquiry, so the 12 hours a week of spreadsheet updates and status calls disappear.</p>
-          <div class="sol-tag">Data Transparency · Recognition</div>
+          <h4>Components earn their way in</h4>
+          <p>Nothing entered the library until a portal needed it twice. The case table, status chips, buttons, and fields all graduated from product screens, so the library never grew faster than the platform's real needs.</p>
+          <div class="sol-tag">Library Discipline · Reuse Over Speculation</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-live-case-table.png" alt="Live, filterable case table with inquiry ID, subject, status chips, last update, loan number, owner, created by, create date, and days columns" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/ds-components.png" alt="Core components sheet showing the case table with status chips, button set, field states including error, and the inline validation pattern with plain-language messages" />
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CASE DETAIL VIEW -->
-<section id="case-detail">
+<!-- PATTERNS -->
+<section id="patterns">
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">Case detail view</div>
-        <h2>Detailed insights and interaction.</h2>
+        <div class="eyebrow">Workflow patterns</div>
+        <h2>The patterns are the system.</h2>
       </div>
       <div>
-        <p>A full-page case view that puts progress, conversation, and documents in one shared history, so clients and account managers stop hunting through email threads for the latest state.</p>
+        <p>Components are table stakes. What the platform actually reuses is behavior: how progress reads, how exceptions get owned, how errors get caught at the door. These were designed once, argued over once, and consumed everywhere since.</p>
       </div>
     </div>
 
     <div class="solution">
-      <div class="sol-quote">
-        <blockquote>"Every case is a different email thread, finding the latest update means hoping it didn't get buried."</blockquote>
-        <cite><strong>Synthesis</strong> · across client interviews</cite>
-      </div>
-
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">1</span>
-          <h4>Progress you can read at a glance</h4>
-          <p>Clients see whether a case is starting or nearly done, so they stop emailing to ask, and know when it's their turn to act.</p>
-          <div class="sol-tag">System Status · Visual Cues</div>
+          <h4>A progress tracker where waiting is first-class</h4>
+          <p>Built for the Inquiry portal, reused by Loan Deboarding the same sprint. The "waiting on investor" state gets its own drawing, because that is where releases actually sit, and hiding it is how status meetings get born.</p>
+          <div class="sol-tag">System Status · Reused Component</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-progress-tracker.png" alt="Real-time progress tracker bar showing four stages: Submitted, Assigned To, With Onity, Resolved, each with date stamps, with tabs underneath for Overview, Conversation, Documents, and Resolution and Escalation" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/ds-progress-tracker.png" alt="Progress tracker pattern in three rows: standard flow, waiting on investor with a flagged state, and complete, across six milestones from submitted to released" />
         </div>
       </div>
 
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">2</span>
-          <h4>Messages and files, kept with the case</h4>
-          <p>Chat and documents live in one shared history, so nothing gets buried in an email chain and a teammate can step in cold.</p>
-          <div class="sol-tag">Information Access · Context</div>
+          <h4>The exception lane: type, owner, SLA, log</h4>
+          <p>Kickbacks, MERS updates, and investor delays used to live in email threads. The lane gives every exception the same four fields on any surface, and the audit trail stays on the release record where accounting can find it.</p>
+          <div class="sol-tag">Exception Handling · Audit Trail</div>
         </div>
         <div class="sol-img">
-          <div class="sol-carousel" data-carousel>
-            <div class="slides">
-              <div class="slide active" data-slide="0">
-                <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-messaging-conversation.png" alt="Unified messaging panel showing the conversation history with Onity Support and the user, with an attached payment receipt PDF, the participants list, and a how-it-works helper card" />
-              </div>
-              <div class="slide" data-slide="1">
-                <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-messaging-files.png" alt="Files view inside the same case showing the documents list, alternate slide of the unified messaging and files carousel" />
-              </div>
-            </div>
-            <button class="car-btn prev" type="button" aria-label="Previous slide">‹</button>
-            <button class="car-btn next" type="button" aria-label="Next slide">›</button>
-            <div class="dots" role="tablist" aria-label="Carousel slides">
-              <button class="dot active" type="button" data-dot="0" aria-label="Show slide 1"></button>
-              <button class="dot" type="button" data-dot="1" aria-label="Show slide 2"></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="solution-detail stacked">
-        <div class="sol-text">
-          <span class="sol-num">3</span>
-          <h4>A clear way to close, or escalate</h4>
-          <p>Clients confirm a fix or escalate to a manager, and a rating tells the team whether the outcome landed.</p>
-          <div class="sol-tag">User Control · Feedback Loops</div>
-        </div>
-        <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-case-resolution.png" alt="Resolution and Escalation tab showing Resolution Details with an Outcome dropdown, date field, closing comment, and Escalate plus Confirm and Close action buttons, next to an About Escalation help panel" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/ds-exception-lane.png" alt="Three exception lane cards showing a formatting kickback with SLA countdown, a MERS update on track, and an escalated investor delay, each with type, owner, SLA chip, and activity log" />
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FINAL DESIGN -->
-<section id="final-design">
+<!-- ADOPTION -->
+<section id="adoption">
   <div class="wrap">
     <div class="sec-head-aside">
       <div>
-        <div class="eyebrow">Final Design</div>
-        <h2>The full picture, tab by tab.</h2>
+        <div class="eyebrow">Adoption</div>
+        <h2>Did it spread?</h2>
       </div>
       <div>
-        <p>Four states of the expanded case-detail flow as a client moves through it: opening the case to see the overview, reading the conversation, attaching documents, and finally resolving or escalating. The dashboard chrome stays constant; only the inner panel changes with the active tab.</p>
-      </div>
-    </div>
-
-    <div class="shipped-gallery">
-      <div class="shipped-shot">
-        <div class="shot-label">
-          <span class="shot-num">1</span>
-          Overview tab, case details and timeline
-        </div>
-        <div class="shot-body">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-overview.png" alt="Inquiry Dashboard with case 123456 expanded to the Overview tab, showing the progress tracker, the full Case Details panel (Case ID, Onity Contact, Onity Team, Created By, ETA, Days Open, Loan Number, Borrower, Contact, Description) and the Timeline panel on the right" />
-        </div>
-      </div>
-
-      <div class="shipped-shot">
-        <div class="shot-label">
-          <span class="shot-num">2</span>
-          Conversation tab, threaded history with attachments
-        </div>
-        <div class="shot-body">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-conversation.png" alt="Inquiry Dashboard with case 123456 expanded to the Conversation tab, showing the Onity is reviewing banner, the conversation history with Onity Support and the user, an attached PDF, the Update Budget side card and Participants list" />
-        </div>
-      </div>
-
-      <div class="shipped-shot">
-        <div class="shot-label">
-          <span class="shot-num">3</span>
-          Documents tab, every file attached to the case
-        </div>
-        <div class="shot-body">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-documents.png" alt="Inquiry Dashboard with case 123456 expanded to the Documents tab, listing three PDF files (Oct_25_loan_payment_receipt, Nov_1_utility_bill_statement, Nov_5_credit_card_statement) each with Preview and Download actions" />
-        </div>
-      </div>
-
-      <div class="shipped-shot">
-        <div class="shot-label">
-          <span class="shot-num">4</span>
-          Resolution and Escalation tab, close or escalate the case
-        </div>
-        <div class="shot-body">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-final-resolution.png" alt="Inquiry Dashboard with case 123456 expanded to the Resolution and Escalation tab, showing Resolution Details with an Outcome dropdown, Date, Closing comment, plus Escalate and Confirm and Close buttons next to an About Escalation help panel" />
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- VALIDATION -->
-<section id="validation">
-  <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">Validation</div>
-        <h2>Did it work?</h2>
-      </div>
-      <div>
-        <p>The project is in development, with the team using a sprint-based approach to build the MVP first, focused on the most important tracking features before adding more complex tools in future updates. To pressure-test the direction, I ran usability tests with a clickable prototype. The feedback from mortgage clients and account managers showed these changes will have a meaningful impact on daily work.</p>
+        <p>A design system's only honest metric is whether people who are not its author build with it. The system is in active use; these are the reuse signals so far, stated plainly.</p>
       </div>
     </div>
 
     <div class="eval-grid">
       <div class="eval-card">
-        <div class="eval-result">90%</div>
-        <h4>Success in status tracking</h4>
-        <p>During testing, almost every user was able to find the exact stage of their case on the first try without any guidance.</p>
+        <div class="eval-result">2 portals</div>
+        <h4>Built entirely on the system</h4>
+        <p>Loan Deboarding and Real-Time Inquiry ship from the same tokens, components, and patterns, with no visual drift between them.</p>
       </div>
 
       <div class="eval-card">
-        <div class="eval-result">Zero</div>
-        <h4>"Lost" conversations</h4>
-        <p>Users reported that having the chat and files tied directly to the case made them feel more confident about the history of the request.</p>
+        <div class="eval-result">Every</div>
+        <h4>Upload surface runs inline validation</h4>
+        <p>The validation pattern from the Loan portal was adopted for every upload surface on the platform: plain-language errors, caught at the door.</p>
       </div>
 
       <div class="eval-card">
-        <div class="eval-result">12 hrs</div>
-        <h4>Saved per analyst per week</h4>
-        <p>Our tests confirmed that the portal's live data is accurate enough to replace these manual reports entirely.</p>
+        <div class="eval-result">Next 2</div>
+        <h4>Roadmap projects started from these parts</h4>
+        <p>The teams behind the next two platform projects pulled from this library and its research templates instead of starting over.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- POST-LAUNCH -->
-<section id="post-launch">
-  <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">Post-launch</div>
-        <h2>What I'll monitor after launch.</h2>
-      </div>
-      <div>
-        <p>Once the MVP is live, I'll track these three areas to confirm the portal is doing the job. Each one ties back to a concrete change in behavior, not a vanity number.</p>
-      </div>
-    </div>
-
-    <div class="monitor-grid">
-      <div class="monitor-card">
-        <span class="ico">📉</span>
-        <h4>Shift in communication</h4>
-        <p>I'll monitor if "status update" emails decrease as portal logins increase to confirm users are trusting the dashboard for answers.</p>
-      </div>
-
-      <div class="monitor-card">
-        <span class="ico">📤</span>
-        <h4>Document task completion</h4>
-        <p>I'll track how quickly clients upload requested files through the portal compared to the old email-in method.</p>
-      </div>
-
-      <div class="monitor-card">
-        <span class="ico">📊</span>
-        <h4>Self-serve reporting success</h4>
-        <p>I'll measure how often the "Export" and "Filter" features are used to ensure account managers are successfully managing their company's full workload.</p>
-      </div>
-    </div>
-
   </div>
 </section>
 
 <!-- RETROSPECTIVE -->
-<section id="key-decision" style="padding:60px 0 0;">
-  <div class="wrap">
-    <div class="sec-head-aside">
-      <div>
-        <div class="eyebrow">Key Decision</div>
-        <h2>Why I built a shared record instead of notifications.</h2>
-      </div>
-      <div>
-        <p>The original ask from stakeholders was simple: add email notifications so account managers know when an inquiry status changes. I pushed back. Here's why.</p>
-      </div>
-    </div>
-
-    <div class="hero-showcase" style="margin-top:8px;">
-      <img loading="lazy" decoding="async" class="zoomable" src="./images/rti-rejected-notifications-lofi.png" alt="Round-one lo-fi wireframes comparing the rejected notifications-only direction against the shared case record that was built, with annotations on why notifications leave the inbox as the source of truth" />
-    </div>
-    <div class="hero-showcase-cap">The round-1 lo-fi that settled it: notifications only vs. a shared record. Recreated; originals under NDA.</div>
-
-    <div class="reflect-grid">
-      <div class="reflect-card">
-        <span class="label">Why a shared record instead</span>
-        <h4>Notifications tell you something happened. A record tells you what happened.</h4>
-        <p>Email notifications would've reduced some back-and-forth, but they would've left the source of truth scattered across inboxes. Two people can get the same notification and still have different versions of what's true. The shared case record meant one party couldn't operate from a stale snapshot. Every status change, document upload, and message sits in the same place, so "what's the status?" becomes a lookup, not a conversation.</p>
-      </div>
-      <div class="reflect-card">
-        <span class="label">What I traded away</span>
-        <h4>It was a harder build, and I had to make that case to engineering.</h4>
-        <p>Notifications would've shipped in two weeks. A shared real-time record took three months. I framed the tradeoff this way: notifications reduce the number of follow-up emails; a shared record eliminates the reason for them. The projected 62% resolution improvement, modeled from prototype task times against the email baseline, backed the call, but the harder moment was convincing the PM that the larger investment was worth it before we had any data. I used the research to make the case: six separate interviewees described the same "I sent an email, now I wait" pattern, and that specificity mattered more than a prototype.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section id="retrospective">
   <div class="wrap">
     <div class="sec-head-aside">
@@ -1705,31 +1471,29 @@
         <h2>What I took from this.</h2>
       </div>
       <div>
-        <p>Two layers of impact that don't show up in the metrics. The work that shaped how I designed it, and the patterns the team kept using after I shipped.</p>
+        <p>Two layers of impact that don't show up in a library file. What building it changed about how I work, and what it leaves behind for the platform.</p>
       </div>
     </div>
 
     <div class="reflect-grid">
       <div class="reflect-card">
         <span class="label">Impact on me</span>
-        <h4>Designing a system of record means defending what doesn't get built.</h4>
-        <p>The first round of stakeholder asks would have stuffed every report, alert, and integration into one screen. Holding the MVP to four jobs, status, conversation, documents, resolution, took more meetings than the design did. It's the reason the prototype tested cleanly on the first pass.</p>
+        <h4>A system extracted from real products beats a system designed in advance.</h4>
+        <p>The temptation was to spend a quarter on foundations before either portal drew a screen. Extracting mid-flight was messier, but it meant every pattern had already survived a real workflow before it was named. The system never had to guess what the platform needed; the portals told it.</p>
         <ul>
-          <li>10 user interviews shaped the four-tab IA</li>
-          <li>3 prototype rounds before usability testing</li>
-          <li>What didn't work: the SLA and escalation logic was designed without engineering in the room. It surfaced late, broke in review, and forced a re-spec before round three</li>
-          <li>What I'd do differently: bring engineering into wireframe reviews two weeks earlier, so that failure happens on paper instead</li>
+          <li>Tokens and type ladder locked before the second portal's first review</li>
+          <li>Nothing entered the library until a product needed it twice</li>
+          <li>What I'd do differently: write the pattern documentation at extraction time, not after the second consumer has already picked it up</li>
         </ul>
       </div>
-
       <div class="reflect-card">
-        <span class="label">Impact on process</span>
-        <h4>The patterns left behind for the next portal.</h4>
-        <p>This was the first case-management surface on Onity's mortgage platform, so the components and the research artifacts both became templates. The next team building a similar workspace started from the moves I made here, not from scratch.</p>
+        <span class="label">Impact on the platform</span>
+        <h4>The system is why the next products start faster.</h4>
+        <p>The clearest sign it works: the parts get used by people who didn't build them. The patterns documented here became the starting point for the platform's next surfaces, and the research templates traveled with them.</p>
         <ul>
-          <li>Live case-table pattern, status chips, owner, aging, added to the internal design system</li>
-          <li>Progress-tracker component reused on the Loan Deboarding portal</li>
-          <li>Interview synthesis template now used across the platform team</li>
+          <li>Case-table pattern, status chips, owner, aging: consumed by both portals</li>
+          <li>Exception-lane workflow reused across the product</li>
+          <li>3-org interview synthesis template carried into the platform team's research</li>
         </ul>
       </div>
     </div>
@@ -1742,10 +1506,10 @@
     <div class="end-cap">
 
       <!-- Next case study -->
-      <a href="./design-system-case-study.html" class="next-up">
+      <a href="./chaos-to-clarity-case-study.html" class="next-up">
         <span class="next-eyebrow">Next case study</span>
         <div class="next-title">
-          I built the platform's design system while shipping the two portals that needed it
+          I rebuilt Dell's AI workspace into a full-screen sales assistant, cutting tickets 55% and lifting self-serve to 85%
           <span class="arrow">→</span>
         </div>
       </a>
@@ -1759,9 +1523,9 @@
             <span class="ow-co">Onity</span>
             <span class="ow-arrow">→</span>
           </a>
-          <a href="./chaos-to-clarity-case-study.html" class="ow-item">
-            <span class="ow-title">IntelliAssist 2.0</span>
-            <span class="ow-co">Dell</span>
+          <a href="./realtime-inquiry-case-study.html" class="ow-item">
+            <span class="ow-title">Real-Time Inquiry Portal</span>
+            <span class="ow-co">Onity</span>
             <span class="ow-arrow">→</span>
           </a>
           <a href="./dell-inc-case-study.html" class="ow-item">

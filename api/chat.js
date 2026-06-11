@@ -46,25 +46,32 @@ Prototype outcomes: 100% of validation errors caught and fixed inline during sub
 
 Key technique: variation map built from observational research across three representative client orgs, leading to investor segments being modeled as a first-class field in the release record.
 
-Beyond those two products, Dinesh also architected Onity's platform design system — unifying components, data visualization patterns, and interaction standards across the mortgage servicing surface. He also translated predictive analytics and LLM-assistant outputs into trustable UI patterns for non-technical operators (mortgage servicing teams who are not data scientists).
+He also translated predictive analytics and LLM-assistant outputs into trustable UI patterns for non-technical operators (mortgage servicing teams who are not data scientists).
 
 Tags: Enterprise Software, Research-led, 0 to 1, Mortgage Servicing, In development.
 
-## 3. IntelliAssist 2.0, AI Sales Workspace — Dell · 2024 · Shipped
+## 3. Platform Design System — Onity Group · 2025–2026 · In active use
+Built the design system under Onity's mortgage platform while shipping the two portals that needed it: tokens and a six-step type ladder first, then only the components and workflow patterns the products proved they needed. The case table, the progress tracker, the exception lane (type, owner, SLA, log), and the inline-validation pattern all live in the system now.
+
+Reuse signals, stated plainly: both portals ship from the same parts, every upload surface on the platform runs the inline-validation pattern, and the next two roadmap projects started from this library and its research templates instead of from scratch. Full case study at /design-system-case-study.html.
+
+Tags: Design Systems, Enterprise Software, 0 to 1, In active use.
+
+## 4. IntelliAssist 2.0, AI Sales Workspace — Dell · 2024 · Shipped
 Rebuilt Dell's cramped AI chat into a full-screen workspace that unifies 12+ APIs, source-tagged answers, and the sales portal's tools under one conversation. The AI handled lookup and summarization; the design handled context, source attribution, what happens when the AI is wrong (visible sources, click-through-to-verify, a search-instead fallback), and how human and AI hand back to each other. Validated through high-fidelity prototypes and a pilot cohort across enterprise sales teams.
 
 Outcomes, from pilot telemetry and post-launch surveys: 55% reduction in support tickets. 85% self-serve adoption on the new workspace. 78% faster task completion in testing, vs. 52% on the legacy chat.
 
 Tags: AI Tools, Conversational UI, Enterprise Software, Shipped.
 
-## 4. Enterprise Data Dashboards — Dell · 2022–2024 · Shipped
+## 5. Enterprise Data Dashboards — Dell · 2022–2024 · Shipped
 Revamped complex enterprise data dashboards into user-friendly, actionable interfaces. Conducted targeted user research and data-driven design to surface what analysts actually needed — not what was easiest to surface from the data model.
 
 Outcomes: 30% reduction in task completion time.
 
 Tags: Data Visualization, Enterprise Software, Research, Shipped.
 
-## 5. Information Architecture — Dell INC · 2022 · Shipped
+## 6. Information Architecture — Dell INC · 2022 · Shipped
 Led the redesign of Dell's Intelligence Nerve Center as the sole UX designer, restructuring the IA of an internal portal used by 30,000+ employees. Tile-based nav with in-tile report dropdowns, a persistent side rail with Favorites, and color-coded categories, grounded in three rounds of research (card sort, tree test, prototype usability with 21 participants).
 
 Outcomes, measured against the pre-redesign baseline: 40% better findability. 50% fewer misclicks. 20% adoption increase. 90% post-launch satisfaction.
