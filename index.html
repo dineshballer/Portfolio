@@ -288,17 +288,17 @@
     position: absolute;
     top: 35%; left: 0; right: 0;
     font-family: var(--display);
-    font-weight: 350;
+    font-weight: 600;
     font-size: clamp(28px, 4vw, 44px);
-    line-height: 1.18;
-    letter-spacing: -0.018em;
+    line-height: 1.16;
+    letter-spacing: -0.022em;
     color: var(--ink);
-    font-variation-settings: "opsz" 60;
     opacity: 0;
     transform: translateY(calc(-50% + 8px));
     transition: opacity 220ms var(--ease), transform 320ms var(--ease);
     pointer-events: none;
   }
+  .lens-line em { font-style: italic; color: var(--accent); }
   .lens-line[data-active="true"] {
     opacity: 1;
     transform: translateY(-50%);
@@ -3148,11 +3148,11 @@
     </div>
 
     <div class="lens-stage" aria-live="polite">
-      <p class="lens-line" id="lens-work"      data-lens="work"      data-active="true">Designer building B2B products and AI-powered workflows that keep financial teams moving.</p>
-      <p class="lens-line" id="lens-operators" data-lens="operators">Analysts, AMs, and ops teams running mortgage and lending workflows all day, every day.</p>
-      <p class="lens-line" id="lens-approach"  data-lens="approach">Research-led, structure-first. Progress over pixels.</p>
-      <p class="lens-line" id="lens-backstory" data-lens="backstory">Now at Onity. Dell and Red Hat before that.</p>
-      <p class="lens-line" id="lens-now"       data-lens="now">Building AI products at Onity. Mortgage portals, inquiry systems, release pipelines. Vibe-coding anything else worth shipping.</p>
+      <p class="lens-line" id="lens-work"      data-lens="work"      data-active="true">Designer building B2B products and AI-powered workflows that keep financial teams <em>moving.</em></p>
+      <p class="lens-line" id="lens-operators" data-lens="operators">Analysts, AMs, and ops teams running mortgage and lending workflows <em>all day, every day.</em></p>
+      <p class="lens-line" id="lens-approach"  data-lens="approach">Research-led, structure-first. <em>Progress over pixels.</em></p>
+      <p class="lens-line" id="lens-backstory" data-lens="backstory">Now at <em>Onity.</em> Dell and Red Hat before that.</p>
+      <p class="lens-line" id="lens-now"       data-lens="now">Building AI products at Onity. Mortgage portals, inquiry systems, release pipelines. <em>Vibe-coding anything else worth shipping.</em></p>
     </div>
 
     <!-- ───────────────────────────────────────────────
