@@ -185,7 +185,7 @@
     letter-spacing: 0.02em;
   }
 
-  /* Confidentiality notice (legacy small pill — retained but unused) */
+  /* Confidentiality notice (legacy small pill, retained but unused) */
   .confidential {
     margin: 32px 0 0;
     padding: 14px 18px;
@@ -1026,7 +1026,7 @@
     h2 { font-size: 28px; }
     .hero-grid, .stats, .quick-facts, .insights-grid, .quotes-pair, .principle-grid,
     .solution-detail, .eval-grid, .monitor-grid, .sec-head-aside, .reflect-grid,
-    .end-cap .cta-block, .snapshot {
+    .end-cap .cta-block, .snapshot, .model-grid {
       grid-template-columns: 1fr;
     }
     .quick-facts {
@@ -1164,7 +1164,7 @@
     color: var(--ink-mute);
   }
 
-  /* ── NDA confidentiality badge — all image containers ── */
+  /* ── NDA confidentiality badge · all image containers ── */
   .hero-showcase,
   .sol-img,
   .shipped-shot .shot-body { position: relative; }
@@ -1172,7 +1172,7 @@
   .hero-showcase::before,
   .sol-img::before,
   .shipped-shot .shot-body::before {
-    content: "⊘  Designs modified · NDA";
+    content: "⊘  Names + data masked · NDA";
     position: absolute;
     top: 12px;
     left: 14px;
@@ -1221,6 +1221,38 @@
     .site-nav a.site-link { font-size: 13px; }
   }
 
+  /* ── Operating model / governance ── */
+  .model-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 24px; }
+  .model-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 28px; }
+  .model-card .step-n { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 12px; }
+  .model-card h4 { font-size: 17px; margin-bottom: 10px; }
+  .model-card p { font-size: 14px; line-height: 1.55; }
+
+  .said-no { margin-top: 24px; padding: 32px 34px; background: var(--accent-soft); border: 1px solid rgba(31, 77, 62, 0.18); border-radius: 16px; }
+  .said-no .label { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .said-no > p { font-size: 16px; line-height: 1.55; color: var(--ink); max-width: 760px; margin-bottom: 18px; }
+  .said-no ul { display: grid; gap: 10px; }
+  .said-no li { position: relative; padding-left: 26px; font-size: 15px; line-height: 1.5; color: var(--ink-soft); }
+  .said-no li::before { content: "\2715"; position: absolute; left: 0; top: 0; color: var(--accent); font-size: 13px; font-weight: 700; }
+
+  /* ── Design-to-code parity matrix ── */
+  .matrix-wrap { margin-top: 24px; overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; }
+  .matrix { width: 100%; border-collapse: collapse; background: var(--surface); min-width: 580px; }
+  .matrix th { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); font-weight: 600; text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); background: var(--bg); }
+  .matrix td { padding: 14px 18px; font-size: 14px; color: var(--ink); border-bottom: 1px solid var(--line); }
+  .matrix tr:last-child td { border-bottom: none; }
+  .matrix th.c, .matrix td.c { text-align: center; }
+  .matrix .comp { font-weight: 600; }
+  .matrix .plat { font-size: 13px; color: var(--ink-mute); }
+  .pf { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; font-weight: 700; }
+  .pf.y { background: var(--accent-soft); color: var(--accent); }
+  .pf.p { background: #f6ead2; color: #8a5b00; }
+
+  @media (max-width: 880px) {
+    .model-grid { grid-template-columns: 1fr; }
+    .said-no { padding: 24px; }
+  }
+
 </style>
 </head>
 <body>
@@ -1241,8 +1273,10 @@
 <nav class="scroll-spy" aria-label="Jump to section">
   <a href="#overview">Overview</a>
   <a href="#snapshot">Snapshot</a>
+  <a href="#operating">Operating model</a>
   <a href="#foundations">Foundations</a>
   <a href="#patterns">Patterns</a>
+  <a href="#parity">Design to code</a>
   <a href="#adoption">Adoption</a>
   <a href="#retrospective">Retrospective</a>
 </nav>
@@ -1309,7 +1343,7 @@
       <div class="nda-ico" aria-hidden="true">🔒</div>
       <div class="nda-copy">
         <h4>A note on confidentiality</h4>
-        <p>I've modified the palette, names, and component details shown here to respect Onity Group's confidentiality. The sheets were recreated with AI assistance to convey the system's structure without exposing the actual product. The decisions and the reuse story are intact.</p>
+        <p>The palette, type scale, and tokens shown here are the real system. I've masked product names, loan data, and screen specifics to respect Onity Group's confidentiality, and rebuilt the sheets to show the system's structure without exposing the products. The decisions and the reuse story are intact.</p>
       </div>
     </div>
   </div>
@@ -1345,6 +1379,49 @@
   </div>
 </section>
 
+<!-- OPERATING MODEL -->
+<section id="operating">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Operating model</div>
+        <h2>Who owns it, and how it changes.</h2>
+      </div>
+      <div>
+        <p>A system earns trust only when changes are predictable. I owned the core as one source of truth, and the two squads contributed through a path that kept that source from turning random.</p>
+      </div>
+    </div>
+
+    <div class="model-grid">
+      <div class="model-card">
+        <span class="step-n">01 · Core</span>
+        <h4>Owned by one designer</h4>
+        <p>Tokens, components, and patterns lived in one library I maintained. One place to change a status color, and one place it changed everywhere.</p>
+      </div>
+      <div class="model-card">
+        <span class="step-n">02 · Contribution</span>
+        <h4>Squads propose, I review</h4>
+        <p>Product designers raised components straight from real screens. The ones that earned reuse graduated into the library; the rest stayed local, on purpose.</p>
+      </div>
+      <div class="model-card">
+        <span class="step-n">03 · Ratify</span>
+        <h4>Changed in the open</h4>
+        <p>Updates landed in a weekly pass both teams could see, so the system moved forward without anyone waking up to silent drift.</p>
+      </div>
+    </div>
+
+    <div class="said-no">
+      <span class="label">What I said no to</span>
+      <p>Most of the value was in the parts that never shipped. Deciding what does not exist, and holding that line across two teams, was the actual job.</p>
+      <ul>
+        <li>Collapsed a drawer of one-off button styles into a single four-variant set.</li>
+        <li>Refused per-portal status colors, so six states mean the same thing on every surface.</li>
+        <li>Held the line on one case table instead of two near-identical cousins.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 <!-- FOUNDATIONS -->
 <section id="foundations">
   <div class="wrap">
@@ -1367,7 +1444,7 @@
           <div class="sol-tag">Tokens · Type Ladder · Semantic Status</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/ds-tokens.png" alt="Foundations sheet with the recreated platform palette, grey ramp, six semantic status chips, six-step type ladder, and 4px spacing scale" />
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/ds-tokens.png" alt="Foundations sheet showing the platform's real Blue palette anchored on Blue/1100, the Green accent and neutral ramp, the full Arial type ladder, the 4px spacing scale, radii, and six semantic status chips" />
         </div>
       </div>
 
@@ -1427,6 +1504,38 @@
   </div>
 </section>
 
+<!-- DESIGN TO CODE -->
+<section id="parity">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">Design to code</div>
+        <h2>In sync, or it is just a picture.</h2>
+      </div>
+      <div>
+        <p>A library that drifts from the codebase quietly dies. I tracked every core part from Figma to production, with the states and docs that make it safe for a team I am not on to reuse.</p>
+      </div>
+    </div>
+
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead>
+          <tr><th>Component</th><th class="c">Figma</th><th class="c">Code</th><th class="c">Docs</th><th>Platforms</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="comp">Case table</td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf y">✓</span></td><td class="plat">Web</td></tr>
+          <tr><td class="comp">Status chips</td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf y">✓</span></td><td class="plat">Web + desktop</td></tr>
+          <tr><td class="comp">Buttons, 4 variants</td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf y">✓</span></td><td class="plat">Web + desktop</td></tr>
+          <tr><td class="comp">Fields + validation</td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf p">◐</span></td><td class="plat">Web</td></tr>
+          <tr><td class="comp">Progress tracker</td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf y">✓</span></td><td class="plat">Web</td></tr>
+          <tr><td class="comp">Exception lane</td><td class="c"><span class="pf y">✓</span></td><td class="c"><span class="pf p">◐</span></td><td class="c"><span class="pf p">◐</span></td><td class="plat">Web</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="synthesis-note">Two parts still show a partial. The exception lane's code and the validation docs were mid-flight at the last review, and a parity matrix only works if it is allowed to say "not yet." Showing that honestly is the point.</p>
+  </div>
+</section>
+
 <!-- ADOPTION -->
 <section id="adoption">
   <div class="wrap">
@@ -1459,6 +1568,16 @@
         <p>The teams behind the next two platform projects pulled from this library and its research templates instead of starting over.</p>
       </div>
     </div>
+
+    <p class="synthesis-note">The engineering-velocity numbers stay inside Onity, so I will not invent a percentage here. Coverage and reuse are what I can show honestly, and they are the signals that actually matter for a system: who builds with the parts, and whether anything drifts when they do.</p>
+  </div>
+</section>
+
+<!-- AI-ERA PULL QUOTE -->
+<section class="pullquote">
+  <div class="wrap">
+    <blockquote>Components are table stakes now. The system is the judgment around them: what gets consolidated, what gets refused, and what stays true when two teams move at once.</blockquote>
+    <cite>The part of the work that did not get cheaper</cite>
   </div>
 </section>
 
