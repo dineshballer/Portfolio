@@ -32,23 +32,23 @@ Outside design: he was a <mark>professional basketball player</mark> back in Ind
 
 # Selected work
 
-## 1. Real-Time Inquiry Portal — Onity Group · 2026 · In development (MVP in build)
+## 1. Real-Time Inquiry Portal — Onity Group · 2026 · Launched (early data, first cohort)
 Designed a real-time portal that replaces scattered email threads with live inquiry status across the mortgage servicing pipeline. Mortgage clients used to chase status through email back-and-forth with account managers; the portal gives them every inquiry's status, owner, and key dates in one place, inline messaging, and no bi-weekly status meeting.
 
-Projected outcomes, modeled from prototype testing against the email baseline: 62% faster case resolution and 12 hours back per analyst per week. In prototype walkthroughs, 90% of users found case status unaided. Always present these as projections validated in prototype, never as shipped results.
+Now live with a first cohort of three client orgs. Early data against the prior email baseline: 62% faster case resolution and about 6 hours back per account manager per week. In pre-launch usability walkthroughs, 90% of users found case status unaided. Present the 62% and the 6 hours as early data from the first cohort, not steady-state, and the 90% as pre-launch usability testing.
 
-Tags: Enterprise Software, Interaction Design, Mortgage Servicing, In development.
+Tags: Enterprise Software, Interaction Design, Mortgage Servicing, Launched.
 
-## 2. Loan Deboarding Portal — Onity Group · 2026 · In development (MVP in build)
-Designed one release pipeline that absorbs how each mortgage client prepares their data — so analysts can validate, reconcile, and ship a loan release from a single record instead of stitching exceptions across five different spreadsheets. Different clients used different LOS systems and different report formats; the receiving team had been absorbing all the variation as side conversations and parallel reconciliation work.
+## 2. Loan Deboarding Portal — Onity Group · 2026 · Launched (early data, first cohort)
+Designed one release pipeline that absorbs how each mortgage client prepares their data, so analysts can validate, reconcile, and ship a loan release from a single record instead of stitching exceptions across five different spreadsheets. Different clients used different LOS systems and different report formats; the receiving team had been absorbing all the variation as side conversations and parallel reconciliation work.
 
-Prototype outcomes: 100% of validation errors caught and fixed inline during submission. 9 of 9 prototype users found release status without help. ~6 hours projected weekly savings per release analyst (interview baseline). Present these as prototype results and projections, not shipped numbers.
+Now live with a first cohort of three client orgs. In pre-launch usability testing, 100% of validation errors were caught and fixed inline during submission and 9 of 9 users found release status without help. Early data shows about 6 hours saved per release analyst per week. Present 100% and 9/9 as pre-launch usability testing, and the 6 hours as early data from the first cohort.
 
 Key technique: variation map built from observational research across three representative client orgs, leading to investor segments being modeled as a first-class field in the release record.
 
 He also translated predictive analytics and LLM-assistant outputs into trustable UI patterns for non-technical operators (mortgage servicing teams who are not data scientists).
 
-Tags: Enterprise Software, Research-led, 0 to 1, Mortgage Servicing, In development.
+Tags: Enterprise Software, Research-led, 0 to 1, Mortgage Servicing, Launched.
 
 ## 3. Platform Design System — Onity Group · 2025–2026 · In active use
 Built the design system under Onity's mortgage platform while shipping the two portals that needed it: tokens and a six-step type ladder first, then only the components and workflow patterns the products proved they needed. The case table, the progress tracker, the exception lane (type, owner, SLA, log), and the inline-validation pattern all live in the system now.
@@ -117,7 +117,7 @@ Weaker fit: consumer apps, marketing surfaces, mature design-system-only orgs wh
 
 If asked about his design process: <mark>Research first, then concept</mark>. Interviews and observation before drawing screens. Competitive analysis. Concept testing. <mark>Vibe-coded prototypes</mark> for stakeholders. Then full dev handoff with tokens and edge cases.
 
-If asked about the hardest project: The <mark>Real-Time Inquiry Portal at Onity</mark>, a <mark>first-time implementation</mark> with no internal precedent. He invented the whole product from interviews with three client orgs. Prototype-validated: projected 62% faster resolution and 12 hours back per analyst per week, with the MVP now in build. Taught him how directly user research can shape a product when there's nothing to model it on.
+If asked about the hardest project: The <mark>Real-Time Inquiry Portal at Onity</mark>, a <mark>first-time implementation</mark> with no internal precedent. He invented the whole product from interviews with three client orgs. Now live with the first cohort: early data shows 62% faster resolution and about 6 hours back per account manager per week. Taught him how directly user research can shape a product when there's nothing to model it on.
 
 If asked how he works with engineers and PMs: Tight with frontend devs, minimal friction at sprint time. Loops PMs in early during design, keeps stakeholders updated as decisions form, not just at handoff.
 

@@ -1,5 +1,7 @@
 # Metrics Canon · Single Source of Truth
-Updated 2026-06-11. Every number published anywhere (site, resume, Sage prompt, LinkedIn) must match this table exactly. If a number changes, change it HERE first, then sweep.
+Updated 2026-06-21. Every number published anywhere (site, resume, Sage prompt, LinkedIn) must match this table exactly. If a number changes, change it HERE first, then sweep.
+
+> 2026-06-21 change: RTI + Loan Deboarding moved from "in development / projected" to **LAUNCHED, early data (first cohort)** per Dinesh. RTI savings unit changed to **6 hrs/week per account manager** (the old "12 hrs/analyst" is retired). Framing is "early data from the first cohort," not fully-measured at scale, so it stays defensible in interviews. IntelliAssist self-serve stays **85%** (resume still says 92% in places — fix the resume + LinkedIn by hand to 85%).
 
 ## Identity
 | Fact | Canonical value |
@@ -14,25 +16,28 @@ Updated 2026-06-11. Every number published anywhere (site, resume, Sage prompt, 
 | Dell title (2022-2025) | UX Designer (frame scope as "Lead UX Designer, one of two designers", never inflate the title) |
 | AI assistant name | Sage (Folio is retired; GA events keep folio_* names for continuity) |
 
-## Real-Time Inquiry Portal · Onity · 2026 · IN DEVELOPMENT
-All outcomes are PROJECTED, modeled from prototype testing. Always say "projected" and never past tense.
+## Real-Time Inquiry Portal · Onity · 2026 · LAUNCHED (early data, first cohort)
+Framing: "launched to the first cohort (3 client orgs), early data from the first weeks live." Outcome numbers are EARLY data, not steady-state. Pre-launch usability stats stay labeled as prototype/usability testing.
 | Metric | Value | Status | Source |
 |---|---|---|---|
-| Faster case resolution | 62% | Projected | Modeled from prototype task times vs. email baseline |
-| Time back per analyst | 12 hrs/week | Projected | Interview baseline: spreadsheet updates + status calls |
+| Faster case resolution | 62% | Early data (first cohort) | First-cohort case times vs. prior email baseline |
+| Time back per account manager | 6 hrs/week | Early data | Baseline: account managers spent ~12 hrs/week status-chasing; portal returns about half |
 | Status meetings | 0 by design | Design intent | Live dashboard replaces bi-weekly call |
-| Found case status unaided | 90% | Measured (prototype) | Usability testing, clickable prototype |
-| Lost conversations | 0 | Measured (prototype) | Usability testing |
+| Found case status unaided | 90% | Measured (usability testing) | Pre-launch usability testing, clickable prototype |
+| Lost conversations | 0 | Measured (usability testing) | Pre-launch usability testing |
+| First cohort | 3 client orgs live | Fact | Launched rollout |
 | Research | 10 interviews, 3 prototype rounds | Measured | — |
-NEVER: "6 hrs per manager" (retired 2026-06-11), "cut resolution 62%" in past tense, "shipped".
+NEVER: "12 hrs/analyst" (retired 2026-06-21), "projected" for resolution/savings (now early data), "in development".
 
-## Loan Deboarding Portal · Onity · 2026 · IN DEVELOPMENT
+## Loan Deboarding Portal · Onity · 2026 · LAUNCHED (early data, first cohort)
+Framing: "launched to the first cohort (3 client orgs), early data." Pre-launch usability stats stay labeled as such.
 | Metric | Value | Status | Source |
 |---|---|---|---|
-| Found release status unaided | 9/9 | Measured (prototype) | Walkthroughs, 3 client orgs |
-| Validation errors fixed inline | 100% | Measured (prototype) | Prototype submission flow |
-| Time saved per analyst | ~6 hrs/week | Projected | Interview baseline: status follow-ups + parallel reconciliation sheets |
-| Client orgs aligned on MVP scope | 3/3 | Measured | Cross-org reviews |
+| Found release status unaided | 9/9 | Measured (usability testing) | Walkthroughs, 3 client orgs |
+| Validation errors fixed inline | 100% | Measured (usability testing) | Prototype submission flow |
+| Time saved per analyst | 6 hrs/week | Early data | Baseline: status follow-ups + parallel reconciliation sheets |
+| First cohort | 3 client orgs live | Fact | Launched rollout |
+NEVER: "~6 hrs projected" (now early data), "in development", "MVP not yet built".
 
 ## IntelliAssist 2.0 · Dell · 2024 · SHIPPED
 Source framing: "from pilot telemetry and post-launch surveys."
@@ -47,7 +52,7 @@ Source framing: "from pilot telemetry and post-launch surveys."
 | "Easier access to critical tools" | 85% of users | Measured (survey) |
 | Research | 14 interviews, 5 prototype rounds | Measured |
 | Role | Lead UX Designer, one of two designers | — |
-NEVER: "92% self-serve adoption", "92% task completion" (both retired 2026-06-11), "2023".
+NEVER: "92% self-serve adoption", "92% task completion" (both retired 2026-06-11), "2023". RESUME + LINKEDIN STILL SAY 92 IN PLACES — fix by hand to 85.
 
 ## Dell INC (Intelligence Nerve Center) · Dell · 2022 · SHIPPED
 Source framing: "measured against the pre-redesign baseline."
@@ -83,3 +88,6 @@ Sage-only claims: 45% discoverability, 40% usability, 50+ usability participants
 
 ## Sweep checklist when a number changes
 index.html (cards + Sage example + JS data: TIMELINE_DATA, JD_COMPARISON, SKILL_DATA, FOLIO_FACTS.knownMetrics) → case study pages incl. design-system-case-study.html (hero, snapshot, validation, next-case teasers) → api/chat.js SYSTEM_PROMPT → resume.pdf → about.html → LinkedIn.
+
+## Shipped/launched status (so nothing reads "in development" anymore)
+RTI = launched (early data). Loan = launched (early data). DS = in active use. IntelliAssist, Dell INC, dashboards = shipped. NEVER describe RTI or Loan as "in development", "MVP in build", or "projected" again.

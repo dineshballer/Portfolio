@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Callback Audit · Loan Deboarding + About · June 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf7; --surface:#ffffff; --ink:#171717; --ink-soft:#4a4a4a; --ink-mute:#6E675C;
+    --line:rgba(23,23,23,.10); --accent:#1F4D3E; --accent-soft:#e8efe9;
+    --red:#8a2b2b; --red-soft:#fbecec; --amber:#8a5a00; --amber-soft:#fdf2dd; --good:#1d6e47;
+    --font:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px;}
+  h1,h2,h3,h4{font-weight:600;letter-spacing:-.015em;margin:0;line-height:1.15;}
+  h1{font-size:42px;letter-spacing:-.025em;}
+  h2{font-size:28px;margin-bottom:6px;}
+  h3{font-size:20px;}
+  h4{font-size:15px;}
+  p{margin:0 0 14px;color:var(--ink-soft);}
+  em{font-style:italic;color:var(--accent);}
+  a{color:var(--accent);}
+  code{background:#f0efe9;padding:1px 6px;border-radius:5px;font-size:.92em;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink);}
+  .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:600;color:var(--ink-mute);}
+
+  header.top{padding:64px 0 36px;border-bottom:1px solid var(--line);}
+  header.top .eyebrow{margin-bottom:18px;}
+  header.top h1{max-width:760px;margin-bottom:18px;}
+  header.top p.sub{font-size:18px;max-width:680px;color:var(--ink-soft);}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px;}
+  .pill{font-size:12px;font-weight:500;padding:5px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);color:var(--ink);}
+
+  section{padding:48px 0;border-bottom:1px solid var(--line);}
+  .sec-label{display:inline-flex;align-items:center;gap:10px;margin-bottom:22px;}
+  .sec-label .n{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;}
+  .lead{font-size:18px;color:var(--ink);margin-bottom:22px;max-width:720px;}
+
+  /* TL;DR */
+  .tldr{background:var(--accent);color:#fff;border-radius:18px;padding:34px 36px;margin:8px 0 0;}
+  .tldr h2{color:#fff;margin-bottom:14px;}
+  .tldr p{color:rgba(255,255,255,.9);font-size:16px;}
+  .tldr strong{color:#fff;}
+  .tldr .verdict{font-size:20px;font-weight:600;color:#fff;line-height:1.4;margin-bottom:18px;}
+
+  /* metric cards */
+  .grid{display:grid;gap:16px;}
+  .g2{grid-template-columns:1fr 1fr;}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;}
+  .card .big{font-size:38px;font-weight:600;color:var(--accent);letter-spacing:-.03em;line-height:1;margin-bottom:8px;}
+  .card .lbl{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px;}
+  .card .sub{font-size:13px;color:var(--ink-mute);}
+
+  table{width:100%;border-collapse:collapse;margin:8px 0 0;font-size:14px;}
+  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-mute);font-weight:600;}
+  td .flag{font-weight:600;}
+  .dim{color:var(--ink-mute);}
+
+  .callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:16px 20px;border-radius:0 10px 10px 0;margin:18px 0;font-size:15px;color:var(--ink);}
+  .callout.warn{border-color:var(--amber);background:var(--amber-soft);}
+  .callout .src{display:block;margin-top:8px;font-size:12px;color:var(--ink-mute);}
+
+  /* before/after */
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:14px 0;}
+  .ba>div{padding:18px 20px;}
+  .ba .before{background:var(--red-soft);}
+  .ba .after{background:var(--accent-soft);border-left:1px solid var(--line);}
+  .ba .tag{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:8px;display:block;}
+  .ba .before .tag{color:var(--red);}
+  .ba .after .tag{color:var(--good);}
+  .ba p{margin:0;font-size:14.5px;color:var(--ink);}
+  .ba p.quote{font-style:italic;}
+
+  ul.clean{list-style:none;margin:0 0 14px;padding:0;}
+  ul.clean li{position:relative;padding-left:24px;margin-bottom:12px;font-size:15px;color:var(--ink-soft);}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--accent);opacity:.6;}
+  ul.clean li strong{color:var(--ink);font-weight:600;}
+
+  .fix{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;margin-bottom:14px;}
+  .fix .fhead{display:flex;align-items:baseline;gap:12px;margin-bottom:10px;}
+  .fix .pri{font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:6px;flex-shrink:0;}
+  .pri.p0{background:var(--red-soft);color:var(--red);}
+  .pri.p1{background:var(--amber-soft);color:var(--amber);}
+  .pri.p2{background:var(--accent-soft);color:var(--good);}
+  .fix h4{font-size:17px;}
+  .fix p{font-size:14.5px;margin-bottom:8px;}
+  .fix .why{font-size:13px;color:var(--ink-mute);}
+
+  .priority-table td:first-child{white-space:nowrap;font-weight:600;}
+  footer{padding:48px 0 90px;color:var(--ink-mute);font-size:13px;}
+  .footer-mark{font-family:"Caveat",cursive;font-size:20px;color:var(--accent);}
+  @media(max-width:760px){.g2,.g3,.ba{grid-template-columns:1fr;}.ba .after{border-left:none;border-top:1px solid var(--line);}h1{font-size:32px;}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Portfolio Audit · 21 June 2026</div>
+    <h1>Why the visits aren't turning into callbacks, and what to change on the Loan Deboarding and About pages.</h1>
+    <p class="sub">An honest read of the GA4 data, measured against what recruiters and design leaders say they want in 2026, plus a direct answer to the question you actually asked: does this read as AI generated?</p>
+    <div class="meta">
+      <span class="pill">Scope: loan-deboarding + about</span>
+      <span class="pill">Data window: 14–21 Jun 2026</span>
+      <span class="pill">12 sources cited</span>
+      <span class="pill">No em dashes (your rule)</span>
+    </div>
+  </div>
+</header>
+
+<!-- TLDR -->
+<section>
+  <div class="wrap">
+    <div class="tldr">
+      <h2>The short version</h2>
+      <p class="verdict">The pages are well built. The problem is that nothing on them is easy to <em style="color:#cfe8d8">verify</em>, the writing has a recognizable AI cadence, and people leave before they reach your proof.</p>
+      <p>Two separate things are failing. <strong>Distribution:</strong> only 12 people saw the site in a week, so "no callback" is partly a volume problem no page edit can fix. <strong>Conversion:</strong> the few who land give the homepage about 10 seconds and the flagship case study about 25 seconds, which means they skim two screens and go. In 2026 the review is faster and more skeptical than the portfolio was built for: homepages get 10 to 15 seconds, full reviews get 2 to 3 minutes, and roughly 78% of recruiters run AI assisted screening before a human opens it. The fix is to lead with verifiable, hard-to-fake evidence and cut the polished abstraction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 1. ANALYTICS -->
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">1</span><span class="eyebrow">What the data actually says</span></div>
+    <p class="lead">Read it directionally, not literally. With 26 views and 12 users in eight days, none of this is statistically meaningful. But the shape is consistent and it lines up with the 2026 benchmarks.</p>
+
+    <div class="grid g3" style="margin-bottom:22px;">
+      <div class="card"><div class="big">10s</div><div class="lbl">Home engagement</div><div class="sub">11 views, 9 users. Sits right at the 10–15s recruiters give a homepage. You are at the floor, not above it.</div></div>
+      <div class="card"><div class="big">25s</div><div class="lbl">Loan Deboarding</div><div class="sub">6 views, 4 users. A 5+ minute case study getting 25 seconds means people read the hero and bounce.</div></div>
+      <div class="card"><div class="big">33s</div><div class="lbl">About</div><div class="sub">4 views, 4 users. Your stickiest real page, and still shallow. The story holds attention slightly better than the work.</div></div>
+    </div>
+
+    <ul class="clean">
+      <li><strong>The homepage is not earning a scroll.</strong> 10 seconds is the exact window a recruiter spends before deciding whether to continue. They are deciding "no" or "not sure" and leaving.</li>
+      <li><strong>The flagship case study loses people in the first screen.</strong> 25 seconds on a long, ten-section page means almost nobody reaches your validation, your retrospective, or the screens. Your best material is below the fold no one sees.</li>
+      <li><strong>Real-Time Inquiry is effectively invisible</strong> (1 view, 4s), yet it is the project your home page AI assistant cites as "62% faster." The strongest claim points to a page no one opens.</li>
+      <li><strong>The 57s on <code>/index.html</code> is almost certainly you.</strong> One user, deep session. Your real visitor signal is the 10s on <code>/</code>. Worth noting <code>/</code> and <code>/index.html</code> are counted as two pages, which is a minor canonical-tag cleanup.</li>
+      <li><strong>The bigger lever is volume.</strong> 12 visitors a week cannot produce callbacks no matter how good the pages are. Page fixes raise your conversion rate; you also need more qualified eyes (more applications, LinkedIn featured links, sharing). I will not pretend a rewrite alone solves "no callback."</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2. THE 2026 BAR -->
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">2</span><span class="eyebrow">What the bar is now (recruiters + Aneta + UX leads)</span></div>
+    <p class="lead">I read the current guidance so the recommendations are grounded, not vibes. The themes were strikingly consistent across a 74-recruiter survey, the Fountain Institute's June 2026 hiring breakdown, and Aneta Kmiecik's recent posts.</p>
+
+    <ul class="clean">
+      <li><strong>Shipped and traceable beats polished.</strong> The first thing a lead checks: "are these products live and traceable, and if live, are they scaling?" A beautiful redesign that moved no metric reads as a concept project. <span class="dim">(Harry Enaholo, 150+ portfolios reviewed; Muz.li 2026)</span></li>
+      <li><strong>Show the trade-off, not the process.</strong> "Seniority lives in the moment you chose between two competing goods, or traded scope against time." Process diagrams and double-diamond structures now read as a tell that you confused a framework with thinking. <span class="dim">(Fountain Institute; Tom Scott's 8 red flags)</span></li>
+      <li><strong>AI sameness is the actual tell.</strong> Aneta Kmiecik, on AI-misused portfolios: "Stories sound like an ideal double diamond process, and layouts are repetitive. Everything is produced, generated, and based on average data. When every portfolio looks the same after using AI, the AI becomes a sign of sameness rather than capability."</li>
+      <li><strong>But hiding AI is also a red flag.</strong> "No AI signals" is on the 2026 red-flag list. Showing how you direct AI, with judgment, is now load-bearing. You already do this well; see section 4.</li>
+      <li><strong>Depth in one problem space beats range.</strong> Generic competency lines ("led end-to-end design," "worked cross-functionally") put you in the wrong category. Your mortgage/lending niche is an asset; lean in.</li>
+      <li><strong>Cut anything you can't defend under pressure, and anything not real.</strong> Three strong case studies beat seven. Curated, not comprehensive.</li>
+    </ul>
+
+    <div class="callout">
+      The single sentence that reframes everything: <strong>"AI made execution cheap. It did not make cheap the ability to make a decision under uncertainty, absorb the consequence, and make a better one next time."</strong> Your portfolio's job in 2026 is to show that loop, not to show finished screens.
+      <span class="src">The Fountain Institute, "What Actually Gets Senior Product Designers Hired in 2026," Jun 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- 3. AI FEEL AUDIT -->
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">3</span><span class="eyebrow">Does it look AI generated? Yes, in three specific ways</span></div>
+    <p class="lead">You asked directly, so here is the direct answer. The work is real, but three signals make a skeptical 2026 reviewer suspect otherwise. Two are fixable in an afternoon. One is structural.</p>
+
+    <h3 style="margin-bottom:6px;">3a. The writing has a recognizable AI cadence</h3>
+    <p>The most-flagged AI pattern right now is the <strong>negation/contrast construction</strong> ("not X, it's Y") and the <strong>rule-of-three</strong>. One or two reads as good writing. Stacked, they read as generated. Your pages stack them.</p>
+
+    <table>
+      <thead><tr><th>Pattern on your pages</th><th>Where</th><th>Read</th></tr></thead>
+      <tbody>
+        <tr><td class="flag">"Visibility was never the gap. Structure was."</td><td>Loan, Problem</td><td>Contrast trope</td></tr>
+        <tr><td class="flag">"Status you can see, not reconstruct."</td><td>Loan, Tracked</td><td>Contrast trope</td></tr>
+        <tr><td class="flag">"the morning triage is a glance, not a 200-message inbox"</td><td>Loan</td><td>Contrast trope</td></tr>
+        <tr><td class="flag">"The discipline came from interview tagging, not whiteboarding."</td><td>Loan, Retro</td><td>Contrast trope</td></tr>
+        <tr><td class="flag">"The tool is new. The thinking is the job."</td><td>About, Manifesto</td><td>Contrast trope</td></tr>
+        <tr><td class="flag">"validate, reconcile, and ship" / "catch errors at the door, give exceptions a lane, and tie everything to one record"</td><td>Loan (repeated 3×)</td><td>Tricolon, restated verbatim</td></tr>
+        <tr><td class="flag">"the escalation email that never gets sent, the report found in one click, the status meeting that stops being necessary"</td><td>About, intro</td><td>Tricolon</td></tr>
+        <tr><td class="flag">Curious / Calm / Specific / Useful, then four more aphorisms in the Manifesto</td><td>About</td><td>Aphorism stack</td></tr>
+      </tbody>
+    </table>
+    <p class="why" style="margin-top:12px;">Also: the exact triad "catch errors at the door / exceptions a lane / one release record" appears in the hero, the snapshot, and the problem aside. A human editor varies it. The verbatim echo is what reads as templated. The "quieter Tuesday" motif also repeats three times across the two pages.</p>
+
+    <h3 style="margin:28px 0 6px;">3b. The layout repeats the same module about eight times</h3>
+    <p>This is Aneta's "repetitive layouts" point exactly. Nearly every section of the Loan case study is the same block: <strong>eyebrow label, a clever statement headline, a one-line aside, then a grid of three cards with emoji icons.</strong> The sameness itself signals generation, even though you hand-built it. Heavy emoji iconography (🧩 ⚠️ 📊 📩 🚨) reinforces the "AI deck" look.</p>
+
+    <h3 style="margin:28px 0 6px;">3c. The credibility gap (this is the real problem, bigger than wording)</h3>
+    <p>Put yourself in the reviewer's seat. The Loan case study is marked "In development." Every screen carries "Designs modified · NDA" and the note says the mockups were "reimagined with AI assistance." The metrics are "projected" (~6 hrs) or small and perfectly round (9/9, 100%, 3/3).</p>
+    <div class="callout warn">
+      Stack those together and a 2026 reviewer sees: a not-yet-shipped project, shown entirely through AI-generated images, with projected and round numbers, written in AI cadence. <strong>Every single credibility signal is the one reviewers now discount.</strong> That is why it can read as AI generated. The work is real; none of it is verifiable from the outside, and verifiability is the 2026 trust test.
+    </div>
+    <p style="margin-top:14px;"><strong>What is already right, keep it:</strong> the domain specificity when it shows up (Encompass, MERS, Purchase Advices, <code>REL-2026-0044</code>) is the best anti-AI material on the site. The "What didn't work / What I'd do differently" retrospective is exactly the intellectual honesty reviewers reward. The "I build with AI, and own the calls" card is the right 2026 instinct. You need more of these and less of the polished abstraction around them.</p>
+  </div>
+</section>
+
+<!-- 4. LOAN FIXES -->
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">4</span><span class="eyebrow">Loan Deboarding: what to change</span></div>
+
+    <div class="fix">
+      <div class="fhead"><span class="pri p0">P0</span><h4>Add at least one genuinely human, hard-to-fake artifact</h4></div>
+      <p>Right now 100% of the visuals are AI-recreated and NDA-stamped, which is precisely what makes it look generated. Add a real photo of a whiteboard, a phone snap of an early paper sketch, a screenshot of your actual Figma version history, or the real (redacted) tagging board instead of a recreated one. This one move does more against "looks AI generated" than any rewrite.</p>
+      <p class="why">Why: artifacts are evidence that the work happened. uxfol.io and the AI red-flag literature both rank "no supporting artifacts" as a top trust killer.</p>
+    </div>
+
+    <div class="fix">
+      <div class="fhead"><span class="pri p0">P0</span><h4>Make one thing clickable and verifiable</h4></div>
+      <p>Embed a live Figma prototype people can actually click, above the fold. The 25-second dwell says they never reach your six shipped screens. A prototype is the most engaging element in a case study and keeps reviewers on the page longer.</p>
+      <p class="why">Why: "live and traceable" is the first thing leads check. Verifiability beats polish.</p>
+    </div>
+
+    <div class="fix">
+      <div class="fhead"><span class="pri p1">P1</span><h4>Pull the trade-off up. It is your strongest senior signal and it's buried.</h4></div>
+      <p>Your retrospective already contains the best sentence in the whole case study: shipping bulk PA upload as a hard dependency that phase two now has to unwind, and "I'd hold it behind a feature flag from week one." That is seniority. Move it into a dedicated block near the top, titled something plain like "The call I'd defend."</p>
+      <p class="why">Why: "seniority lives where you chose between two competing goods or traded scope against time" (Fountain Institute).</p>
+    </div>
+
+    <div class="fix">
+      <div class="fhead"><span class="pri p1">P1</span><h4>Cut the length and kill the module repetition</h4></div>
+      <p>Collapse ten near-identical sections to roughly five: Snapshot, Problem (one screen), two hero decisions with their trade-offs, Validation, Retrospective. Vary the layout between them so it stops reading as a template.</p>
+      <p class="why">Why: repetitive layouts read as AI; recruiters skim in minutes and reward "removed everything that doesn't support the core narrative."</p>
+    </div>
+
+    <div class="fix">
+      <div class="fhead"><span class="pri p2">P2</span><h4>Re-baseline the round metrics</h4></div>
+      <p>"9/9," "100%," "3/3," "~6 hrs projected" read as inflated. Either give the method and baseline ("9 walkthroughs, ~45 min each, across 3 client orgs; 6 hrs estimated against measured follow-up + reconciliation time") or swap to numbers that are real and specific. A reviewer trusts "6 of 9" more than "100%."</p>
+      <p class="why">Why: perfect numbers without a baseline trigger skepticism; traceable numbers anchor the story.</p>
+    </div>
+
+    <h3 style="margin:24px 0 4px;">Copy rewrites (loan)</h3>
+    <div class="ba">
+      <div class="before"><span class="tag">Now</span><p class="quote">"Visibility was never the gap. Structure was."</p></div>
+      <div class="after"><span class="tag">Try</span><p class="quote">"Three clients, three ways of preparing a release. The receiving team absorbed all of it by hand."</p></div>
+    </div>
+    <div class="ba">
+      <div class="before"><span class="tag">Now</span><p class="quote">"Status you can see, not reconstruct."</p></div>
+      <div class="after"><span class="tag">Try</span><p class="quote">"Every milestone, timestamped on the record."</p></div>
+    </div>
+    <div class="ba">
+      <div class="before"><span class="tag">Now (confidentiality note)</span><p>"The mockups here were reimagined with AI assistance to convey the design's look and feel..."</p></div>
+      <div class="after"><span class="tag">Try (lead with what's real)</span><p>"The thinking, decisions, and outcomes here are real and mine. Screens are recreated to respect Onity's NDA, with one original process artifact below kept intact."</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. ABOUT FIXES -->
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">5</span><span class="eyebrow">About: what to change</span></div>
+    <p class="lead">This is your stickiest page, and it is beautifully made. The issue is the ratio: lots of belief (four principles, five manifesto cards, stacked aphorisms), little concrete proof. It sells temperament when it could sell evidence.</p>
+
+    <div class="fix">
+      <div class="fhead"><span class="pri p0">P0</span><h4>Rewrite the experience bullets. They are textbook boilerplate.</h4></div>
+      <p>These are exactly the generic competency lines the 2026 guidance says to cut. Each role should be one specific, defensible sentence with a noun only you could write: a product name, a real constraint, a real number.</p>
+      <div class="ba">
+        <div class="before"><span class="tag">Now (Dell)</span><p>"designed intuitive user experiences, developed user-centered data visualization systems, and implemented AI-powered tools to enhance productivity and user satisfaction."</p></div>
+        <div class="after"><span class="tag">Try</span><p>"Designed an AI sales workspace that cut support tickets 55% and reached 85% self-serve adoption. Won Dell's Bravo Innovation Award for it."</p></div>
+      </div>
+      <p class="why">Why: generic competencies put you in the wrong category; specific, defensible nouns are what survive an interview. (Reuse the real numbers your home-page assistant already cites, so the whole site agrees.)</p>
+    </div>
+
+    <div class="fix">
+      <div class="fhead"><span class="pri p1">P1</span><h4>Fix the hero headline so it says what you do, for whom</h4></div>
+      <div class="ba">
+        <div class="before"><span class="tag">Now</span><p class="quote">"Curious by nature and a designer by choice, crafting interactions that bridge logic with emotion"</p></div>
+        <div class="after"><span class="tag">Try</span><p class="quote">"I design calm B2B software for the analysts and ops teams who run mortgage and lending workflows."</p></div>
+      </div>
+      <p class="why">Why: "bridge logic with emotion" is generic portfolio poetry. Your own home page already nails the specific version ("B2B products and AI-powered workflows that keep financial teams moving"). Match it.</p>
+    </div>
+
+    <div class="fix">
+      <div class="fhead"><span class="pri p1">P1</span><h4>Trade one principle block for one concrete story</h4></div>
+      <p>You have four principles and five manifesto beliefs. Replace one with a short, specific story: a single decision on a single Tuesday, with the trade-off and the outcome. Behaviors land through a story; they evaporate as declarations.</p>
+    </div>
+
+    <div class="fix">
+      <div class="fhead"><span class="pri p2">P2</span><h4>Elevate the AI-ownership card, and add a Loom</h4></div>
+      <p>"I build with AI, and own the calls" is currently the last accordion item. Move it up; it is your single best 2026 signal. Then record a 5-minute Loom of you directing AI on a real screen, prompting and making judgment calls, and link it. The current guidance rates that above a polished case study.</p>
+    </div>
+
+    <div class="fix">
+      <div class="fhead"><span class="pri p2">P2</span><h4>Move availability up, and drop one puffery word</h4></div>
+      <p>"Open to senior IC roles in B2B &amp; fintech" is buried in the footer. Put it near the top. And "30+ <em>Transformative</em> projects delivered" reads as inflation; cut "transformative" or make it concrete.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6. PRIORITY -->
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">6</span><span class="eyebrow">Do this in order</span></div>
+    <table class="priority-table">
+      <thead><tr><th>When</th><th>Change</th><th>Page</th><th>Why it matters most</th></tr></thead>
+      <tbody>
+        <tr><td>P0</td><td>Add a real, hard-to-fake artifact (photo / sketch / version history)</td><td>Loan</td><td>Kills the "AI generated" read faster than any rewrite</td></tr>
+        <tr><td>P0</td><td>Embed one clickable, verifiable prototype</td><td>Loan</td><td>"Live and traceable" is the first thing leads check</td></tr>
+        <tr><td>P0</td><td>Rewrite generic experience bullets into specific, defensible lines</td><td>About</td><td>Removes the clearest boilerplate tell</td></tr>
+        <tr><td>P1</td><td>Pull the trade-off / "call I'd defend" to the top</td><td>Loan</td><td>The senior signal reviewers actually look for</td></tr>
+        <tr><td>P1</td><td>Cut length, vary layout, fix both hero headlines</td><td>Both</td><td>Wins back the 10–25s drop-off</td></tr>
+        <tr><td>P2</td><td>Re-baseline round metrics; de-stack contrast lines and tricolons</td><td>Both</td><td>Removes the AI cadence</td></tr>
+        <tr><td>P2</td><td>Elevate AI-ownership card, add a Loom, move availability up</td><td>About</td><td>Turns a hidden strength into a headline</td></tr>
+        <tr><td>Parallel</td><td>Increase volume: applications, LinkedIn featured links, sharing</td><td>Off-site</td><td>12 visitors a week cannot produce callbacks</td></tr>
+      </tbody>
+    </table>
+    <div class="callout" style="margin-top:24px;">
+      One framing to carry through every edit: <strong>replace "trust me" with "check this."</strong> Every place the site asks the reader to take your word (projected number, recreated screen, polished belief), give them one thing they can verify instead. That is the difference between a portfolio that looks AI generated and one that looks like a senior designer used AI well.
+    </div>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section>
+  <div class="wrap">
+    <div class="sec-label"><span class="n">7</span><span class="eyebrow">Sources</span></div>
+    <ul class="clean">
+      <li><a href="https://www.thefountaininstitute.com/blog/senior-product-designers-hired">What Actually Gets Senior Product Designers Hired in 2026</a> · The Fountain Institute (Jeff Humble), Jun 2026</li>
+      <li><a href="https://blog.uxfol.io/ux-portfolio-playbook/">UX Portfolio Playbook: What Recruiters Actually Look For in 2026</a> · UXfolio, survey of 74 recruiters</li>
+      <li><a href="https://www.useberry.com/blog/ux-portfolios-that-stand-out-webinar-aneta-kmiecik/">UX Portfolios That Stand Out: Aneta Kmiecik</a> · Useberry, and Aneta Kmiecik on <a href="https://www.linkedin.com/in/anetakmiecik/">LinkedIn</a></li>
+      <li><a href="https://www.uxpin.com/studio/blog/ux-portfolio-examples/">16 Best UX Portfolio Examples That Stand Out to Recruiters (2026)</a> · UXPin</li>
+      <li><a href="https://muz.li/blog/how-to-build-a-ux-portfolio-that-actually-gets-you-hired-2026/">How to Build a UX Portfolio That Actually Gets You Hired (2026)</a> · Muz.li</li>
+      <li><a href="https://www.learnist.org/ai-case-study-red-flags-portfolio-2026/">12 Red Flags in AI Case Studies</a> · Learnist, 2026</li>
+      <li><a href="https://www.blakestockton.com/dont-write-like-ai-1-101-negation/">Don't Write Like AI: "It's Not X, it's Y"</a> · on the negation tell</li>
+      <li><a href="https://www.uxdesigninstitute.com/blog/hiring-managers-ux-portfolio/">What hiring managers look for in a UX portfolio</a> · UX Design Institute</li>
+      <li><a href="https://uxplanet.org/how-design-recruiters-judge-your-ux-portfolio-in-5-seconds-59f77143ce1e">How Design Recruiters Judge Your UX Portfolio in 5 Seconds</a> · UX Planet</li>
+      <li><a href="https://uxplaybook.org/articles/senior-ux-designer-portfolio-get-hired-2026">UX Portfolio Guide: How Senior Designers Get Hired in 2026</a> · UX Playbook</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="footer-mark">Dinesh Kumar</span> · Callback audit, June 2026 · prepared for dineshkumar.design
+  </div>
+</footer>
+
+</body>
+</html>

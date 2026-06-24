@@ -1251,6 +1251,36 @@
     .site-nav a.site-link { font-size: 13px; }
   }
 
+  /* ── Annotated screens (hotspot tooltips) ── */
+  .an-fig{margin:0;}
+  .an-strip{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 14px;border:1px solid var(--line);border-bottom:none;border-radius:10px 10px 0 0;background:var(--surface);}
+  .an-sl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);}
+  .an-chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:5px 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);border:1px solid rgba(31,77,62,.18);}
+  .an-chip .an-tick{width:14px;height:14px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:8px;flex-shrink:0;}
+  .an-chip.clear{background:transparent;color:var(--ink-mute);border-color:var(--line);}
+  .an-stage{position:relative;line-height:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#f4f4ef;}
+  .an-fig.has-strip .an-stage{border-radius:0 0 10px 10px;}
+  .an-stage>img{display:block;width:100%;height:auto;}
+  .an-spot{position:absolute;width:0;height:0;z-index:3;}
+  .an-hot{position:absolute;left:0;top:0;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;cursor:pointer;background:var(--accent);color:#fff;border:3px solid #fff;font-family:var(--body);font-size:13px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;box-shadow:0 3px 10px rgba(15,8,40,.28);animation:an-pulse 2.6s ease-in-out infinite;}
+  .an-hot:hover,.an-hot:focus-visible{outline:none;transform:translate(-50%,-50%) scale(1.12);}
+  @keyframes an-pulse{0%,100%{box-shadow:0 0 0 0 rgba(31,77,62,.34),0 3px 10px rgba(15,8,40,.28);}50%{box-shadow:0 0 0 8px rgba(31,77,62,0),0 3px 10px rgba(15,8,40,.28);}}
+  .an-tip{position:absolute;z-index:5;width:240px;background:#171717;color:#fff;border-radius:11px;padding:12px 14px;line-height:1.45;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(4px);transition:opacity .18s ease,transform .18s ease;box-shadow:0 14px 36px rgba(0,0,0,.32);}
+  .an-tag{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#9fd9ba;font-weight:700;margin-bottom:5px;}
+  .an-tx{font-size:12.5px;color:#fff;}
+  .an-spot.open .an-tip,.an-spot:hover .an-tip,.an-spot:focus-within .an-tip{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);}
+  .an-tip::after{content:"";position:absolute;width:10px;height:10px;background:#171717;transform:rotate(45deg);}
+  .an-spot.below .an-tip{top:24px;left:0;margin-left:-120px;}
+  .an-spot.below .an-tip::after{top:-5px;left:50%;margin-left:-5px;}
+  .an-spot.above .an-tip{bottom:24px;left:0;margin-left:-120px;}
+  .an-spot.above .an-tip::after{bottom:-5px;left:50%;margin-left:-5px;}
+  .an-spot.redge .an-tip{margin-left:-212px;}
+  .an-spot.redge .an-tip::after{left:auto;right:16px;margin-left:0;}
+  .an-spot.ledge .an-tip{margin-left:-28px;}
+  .an-spot.ledge .an-tip::after{left:16px;margin-left:0;}
+  .an-hint{font-size:12px;color:var(--ink-mute);margin-top:10px;letter-spacing:.01em;line-height:1.5;}
+  @media (max-width:560px){.an-tip{width:186px;}.an-spot.below .an-tip,.an-spot.above .an-tip{margin-left:-93px;}.an-spot.redge .an-tip{margin-left:-160px;}.an-hot{width:25px;height:25px;font-size:12px;}}
+
 </style>
 </head>
 <body>
@@ -1271,6 +1301,7 @@
 <nav class="scroll-spy" aria-label="Jump to section">
   <a href="#overview">Overview</a>
   <a href="#snapshot">Snapshot</a>
+  <a href="#key-call">The call</a>
   <a href="#problem">Problem</a>
   <a href="#solution">Solution</a>
   <a href="#confirmed">Confirmed</a>
@@ -1286,10 +1317,10 @@
   <div class="wrap">
     <div class="eyebrow">Case Study 01 · Loan Deboarding Portal · Onity Group</div>
     <h1>I designed one release pipeline that handles how <i>each client prepares its data.</i></h1>
-    <p class="lede">A submission and tracking portal so analysts can validate, reconcile, and ship a loan release from a single record. Validation moves to the door, exceptions get a defined lane, and reconciliation finally ties back to the release record. Informed by deep research with three representative client orgs.</p>
+    <p class="lede">A submission and tracking portal so analysts can validate, reconcile, and ship a loan release from a single record, instead of stitching exceptions across separate spreadsheets. Built from deep research with three client orgs, now live with the first cohort.</p>
 
     <div class="chip-tags" aria-label="Project tags">
-      <span class="chip-tag status"><span class="dot" aria-hidden="true"></span>In development · 2026</span>
+      <span class="chip-tag status"><span class="dot" aria-hidden="true"></span>Launched · 2026</span>
       <span class="chip-tag">Enterprise Software</span>
       <span class="chip-tag">Research-led</span>
       <span class="chip-tag">Mortgage Servicing</span>
@@ -1314,9 +1345,9 @@
         <div class="sub">across walkthroughs with three representative client orgs</div>
       </div>
       <div class="stat">
-        <div class="num">~6 hrs</div>
-        <div class="lbl">Projected weekly time saved per analyst</div>
-        <div class="sub">interview baseline: status follow-ups + parallel reconciliation sheets</div>
+        <div class="num">6 hrs</div>
+        <div class="lbl">Weekly time saved per analyst</div>
+        <div class="sub">early data; baseline was status follow-ups + parallel reconciliation sheets</div>
       </div>
     </div>
 
@@ -1331,7 +1362,7 @@
       </div>
       <div class="fact">
         <h4>Timeline</h4>
-        <p>6 months<span class="muted">discovery through MVP build, 2026</span></p>
+        <p>6 months<span class="muted">discovery through launch, 2026</span></p>
       </div>
       <div class="fact">
         <h4>Tools</h4>
@@ -1349,7 +1380,7 @@
       <div class="nda-ico" aria-hidden="true">🔒</div>
       <div class="nda-copy">
         <h4>A note on confidentiality</h4>
-        <p>I've modified the visual treatment, screen names, and workflow details shown in this case study to respect Onity Group's confidentiality. The mockups here were reimagined with AI assistance to convey the design's look and feel without exposing the actual product. The design approach, decisions, and outcomes are intact.</p>
+        <p>To respect Onity Group's confidentiality, I've changed the visual treatment, screen names, and workflow details shown here. I chose not to password-gate this case study, since gates only add friction for the people I want to reach; instead I recreated the screens to keep the work open and compliant. The approach, decisions, and outcomes are intact and mine. For the real product and a deeper walkthrough, <a href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener" style="color:#1F4D3E;font-weight:600;">reach out</a>.</p>
       </div>
     </div>
   </div>
@@ -1379,7 +1410,22 @@
       </div>
       <div class="snap-col">
         <div class="snap-label">Results</div>
-        <p>9 of 9 prototype users found release status unaided. All three client orgs aligned on the MVP scope of secure submission plus reliable tracking. Projected weekly time saved per analyst is about six hours, validated against current follow-up and reconciliation patterns.</p>
+        <p>9 of 9 users found release status unaided in testing. All three client orgs are now live on the first release of secure submission plus reliable tracking. Early data shows about six hours saved per analyst each week, measured against the old follow-up and reconciliation routine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEY DECISION (pulled up from retrospective) -->
+<section id="key-call">
+  <div class="wrap">
+    <div class="sec-head-aside">
+      <div>
+        <div class="eyebrow">The call I'd defend</div>
+        <h2>I shipped bulk upload as a hard dependency, knowing phase two would have to unwind it.</h2>
+      </div>
+      <div>
+        <p>Bulk Purchase-Advice upload mirrored the team's current mental model, so it got the first cohort live fast. The trade-off I accepted: phase two has to reduce that dependency by collecting the exact fields directly in the form. If I ran it again, I'd hold the dependency behind a feature flag from week one, so the phase-two pivot is a toggle instead of a migration. Full reasoning in the retrospective below.</p>
       </div>
     </div>
   </div>
@@ -1391,10 +1437,10 @@
     <div class="sec-head-aside">
       <div>
         <div class="eyebrow">Problem area</div>
-        <h2>Visibility was never the gap. Structure was.</h2>
+        <h2>Three clients, three ways of preparing a release.</h2>
       </div>
       <div>
-        <p><strong style="color: var(--ink); font-weight: 600;">Every client prepares releases its own way, and the receiving team absorbs the variation by hand.</strong> Kickbacks surfaced about three days late, exceptions had no owner or SLA, and reconciliation was rebuilt across separate systems. The goal: catch errors at the door, give exceptions a defined lane, and tie everything to one release record.</p>
+        <p><strong style="color: var(--ink); font-weight: 600;">Every client prepares releases its own way, and the receiving team absorbs the variation by hand.</strong> Kickbacks surfaced about three days late, exceptions had no owner or SLA, and reconciliation was rebuilt across separate systems. The goal was to catch the errors at submission and give every package one record the whole team could trust.</p>
       </div>
     </div>
 
@@ -1483,22 +1529,24 @@
           <div class="sol-tag">Validation · Error Prevention</div>
         </div>
         <div class="sol-img">
-          <div class="sol-carousel" data-carousel>
-            <div class="slides">
-              <div class="slide active" data-slide="0">
-                <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-bulk-upload-validation.png" alt="Bulk upload screen with field-level validation, showing the release package upload with inline error messages on invalid rows" />
-              </div>
-              <div class="slide" data-slide="1">
-                <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-bulk-upload-mapping.png" alt="Bulk upload validation second view, showing the mapping step after a clean file is accepted and ready for submission" />
-              </div>
+          <figure class="an-fig has-strip">
+            <div class="an-strip" aria-label="Validation summary">
+              <span class="an-sl">Validation</span>
+              <span class="an-chip"><span class="an-tick">✓</span>13 / 13 columns</span>
+              <span class="an-chip"><span class="an-tick">✓</span>147 / 147 PAs matched</span>
+              <span class="an-chip"><span class="an-tick">✓</span>Mapping recognized</span>
+              <span class="an-chip clear">No blocking errors</span>
             </div>
-            <button class="car-btn prev" type="button" aria-label="Previous slide">‹</button>
-            <button class="car-btn next" type="button" aria-label="Next slide">›</button>
-            <div class="dots" role="tablist" aria-label="Carousel slides">
-              <button class="dot active" type="button" data-dot="0" aria-label="Show slide 1"></button>
-              <button class="dot" type="button" data-dot="1" aria-label="Show slide 2"></button>
+            <div class="an-stage">
+              <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-bulk-upload-validation.png" alt="Bulk upload screen with field-level validation, inline error checks, PA matching, saved mapping, and auto-detected loan numbers" />
+              <span class="an-spot below" style="left:31%;top:43%;"><button class="an-hot" type="button" aria-expanded="false" aria-describedby="lv1">1</button><span class="an-tip" id="lv1" role="tooltip"><span class="an-tag">Validation at the door</span><span class="an-tx">The moment the file lands, the portal checks column structure against the expected template. 13 of 13 columns detected, format OK. A wrong report version or missing field is caught here, not three days later.</span></span></span>
+              <span class="an-spot below redge" style="left:80%;top:43%;"><button class="an-hot" type="button" aria-expanded="false" aria-describedby="lv2">2</button><span class="an-tip" id="lv2" role="tooltip"><span class="an-tag">PAs auto-matched</span><span class="an-tx">Every Purchase Advice is matched to a loan number on upload. 147 of 147 means nothing is orphaned downstream in reconciliation.</span></span></span>
+              <span class="an-spot below ledge" style="left:23%;top:54%;"><button class="an-hot" type="button" aria-expanded="false" aria-describedby="lv3">3</button><span class="an-tip" id="lv3" role="tooltip"><span class="an-tag">Saved mapping recognized</span><span class="an-tx">The portal recognizes the client's saved column mapping, the Standard 15-day template, so repeat submitters skip remapping. One click to confirm or switch.</span></span></span>
+              <span class="an-spot above ledge" style="left:24%;top:79%;"><button class="an-hot" type="button" aria-expanded="false" aria-describedby="lv4">4</button><span class="an-tip" id="lv4" role="tooltip"><span class="an-tag">Loan numbers parsed automatically</span><span class="an-tx">147 loan numbers are read straight from the spreadsheet, so the analyst never rekeys them.</span></span></span>
             </div>
-          </div>
+            <p class="an-hint">Hover, tap, or press Tab then Enter on a marker. After a clean file, the next step is the mapping confirmation below.</p>
+          </figure>
+          <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-bulk-upload-mapping.png" alt="Bulk upload mapping step, shown after a clean file is accepted and ready for submission" style="margin-top:14px;border:1px solid var(--line);border-radius:10px;" />
         </div>
       </div>
 
@@ -1549,19 +1597,35 @@
           <div class="sol-tag">Visual Hierarchy · Aging Signals</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-hero-release-dashboard.png" alt="Release Dashboard with Total Submissions, At Risk, In Progress, and Released stat cards, plus a filterable table of releases with status chips and SLA indicators" />
+          <figure class="an-fig">
+            <div class="an-stage">
+              <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-hero-release-dashboard.png" alt="Release Dashboard with Total Submissions, At Risk, In Progress, and Released stat cards, plus a filterable table of releases with status chips and SLA indicators" />
+              <span class="an-spot below" style="left:34%;top:31%;"><button class="an-hot" type="button" aria-expanded="false" aria-describedby="ld1">1</button><span class="an-tip" id="ld1" role="tooltip"><span class="an-tag">Needs attention</span><span class="an-tx">A high-level read on what is at risk and needs attention right now. One release is in SLA breach in this view.</span></span></span>
+              <span class="an-spot below redge" style="left:88%;top:64%;"><button class="an-hot" type="button" aria-expanded="false" aria-describedby="ld2">2</button><span class="an-tip" id="ld2" role="tooltip"><span class="an-tag">SLA at a glance</span><span class="an-tx">The row-level version of the same signal. This release is 8 days overdue, so it rises to the top of the queue.</span></span></span>
+              <span class="an-spot above" style="left:73%;top:73%;"><button class="an-hot" type="button" aria-expanded="false" aria-describedby="ld3">3</button><span class="an-tip" id="ld3" role="tooltip"><span class="an-tag">Pipeline status</span><span class="an-tx">Status chips show where each release sits in the pipeline right now: at risk, tagged, scheduled, released, or received.</span></span></span>
+            </div>
+            <p class="an-hint">Hover, tap, or press Tab then Enter on a marker.</p>
+          </figure>
         </div>
       </div>
 
       <div class="solution-detail stacked">
         <div class="sol-text">
           <span class="sol-num">2</span>
-          <h4>Status you can see, not reconstruct</h4>
+          <h4>Every milestone, timestamped on the record</h4>
           <p>Each release shows its milestones with timestamps and a visible "waiting on investor" state, and every hold, fix, and escalation lives in the record with a full audit trail.</p>
           <div class="sol-tag">Timeline · Blockers · Audit Trail</div>
         </div>
         <div class="sol-img">
-          <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-milestone-timeline.png" alt="Release record detail view showing a milestone timeline with Received, Assigned, Tagged, Goodbye Letter Sent, Scheduled Release, and Reconciliation states, plus a loan-level view at the bottom" />
+          <figure class="an-fig">
+            <div class="an-stage">
+              <img loading="lazy" decoding="async" class="zoomable" src="./images/loan-milestone-timeline.png" alt="Release record detail view showing a milestone timeline with Received, Assigned, Tagged, Goodbye Letter Sent, Scheduled Release, and Reconciliation states, plus a loan-level view at the bottom" />
+              <span class="an-spot below ledge" style="left:20%;top:25%;"><button class="an-hot" type="button" aria-expanded="false" aria-describedby="lt1">1</button><span class="an-tip" id="lt1" role="tooltip"><span class="an-tag">What is next</span><span class="an-tx">A plain-language read on what happens next and whether the client needs to act. Here, the goodbye letter is drafting, ETA Feb 21, nothing needed from them.</span></span></span>
+              <span class="an-spot below" style="left:40%;top:46%;"><button class="an-hot" type="button" aria-expanded="false" aria-describedby="lt2">2</button><span class="an-tip" id="lt2" role="tooltip"><span class="an-tag">Every loan in the package</span><span class="an-tx">Each milestone shows per-loan progress, so you see all the loans in the release package and how far each stage has moved. Here, 7 of 14 goodbye letters are sent.</span></span></span>
+              <span class="an-spot above redge" style="left:86%;top:60%;"><button class="an-hot" type="button" aria-expanded="false" aria-describedby="lt3">3</button><span class="an-tip" id="lt3" role="tooltip"><span class="an-tag">Escalate if needed</span><span class="an-tx">If a release stalls, the team can raise an exception or escalate to a manager straight from the record.</span></span></span>
+            </div>
+            <p class="an-hint">Hover, tap, or press Tab then Enter on a marker.</p>
+          </figure>
         </div>
       </div>
 
@@ -1674,7 +1738,7 @@
         <h2>Did it work?</h2>
       </div>
       <div>
-        <p>The portal is in early build, scoped down to a focused MVP: secure submission plus reliable status tracking. To pressure-test the design before development, I ran prototype walkthroughs with release analysts and client operations leads from three client organizations. The signal was strong.</p>
+        <p>The portal launched to a first cohort of three client orgs, scoped to secure submission plus reliable status tracking. Before launch, I pressure-tested the design in prototype walkthroughs with release analysts and client operations leads across those orgs. The signal was strong, and early data since launch backs it up.</p>
       </div>
     </div>
 
@@ -1693,8 +1757,8 @@
 
       <div class="eval-card">
         <div class="eval-result">3/3</div>
-        <h4>Client orgs aligned on MVP scope</h4>
-        <p>All three client groups confirmed that secure submission plus pipeline status would replace their current spreadsheet-and-email workflow.</p>
+        <h4>Client orgs live on the first release</h4>
+        <p>All three client orgs are now live on secure submission plus pipeline status, replacing the spreadsheet-and-email workflow they ran before.</p>
       </div>
     </div>
   </div>
@@ -1706,10 +1770,10 @@
     <div class="sec-head-aside">
       <div>
         <div class="eyebrow">Post-launch</div>
-        <h2>What I'll monitor after launch.</h2>
+        <h2>What I'm watching now it's live.</h2>
       </div>
       <div>
-        <p>Once the MVP is live, I'll watch for three signals to confirm the portal is doing its job, and to surface where phase two should focus.</p>
+        <p>Now the first cohort is live, I'm watching three signals to confirm the portal is doing its job, and to surface where phase two should focus.</p>
       </div>
     </div>
 
@@ -1717,19 +1781,19 @@
       <div class="monitor-card">
         <span class="ico">📩</span>
         <h4>Drop in inbound status emails</h4>
-        <p>I'll track the volume of "did you get it?" and "where are we?" emails. A drop signals clients trust the portal as the source of truth.</p>
+        <p>I'm tracking the volume of "did you get it?" and "where are we?" emails. A drop signals clients trust the portal as the source of truth.</p>
       </div>
 
       <div class="monitor-card">
         <span class="ico">⚠️</span>
         <h4>Submission errors caught at the door</h4>
-        <p>I'll measure how many formatting issues get flagged during upload vs. downstream. Higher catch-rate means less rework and fewer kickbacks.</p>
+        <p>I'm measuring how many formatting issues get flagged during upload vs. downstream. A higher catch-rate means less rework and fewer kickbacks.</p>
       </div>
 
       <div class="monitor-card">
         <span class="ico">📊</span>
         <h4>Reconciliation cycle time</h4>
-        <p>I'll track how long it takes accounting to close out a release after funds move. A shorter cycle confirms the reconciliation snapshot is doing its job.</p>
+        <p>I'm tracking how long it takes accounting to close out a release after funds move. A shorter cycle confirms the reconciliation snapshot is doing its job.</p>
       </div>
     </div>
 
@@ -1986,6 +2050,27 @@
   });
 })();
 
+</script>
+
+<script>
+/* Annotated-screen hotspots: tap/click toggle (hover + keyboard focus handled in CSS) */
+(() => {
+  const spots = document.querySelectorAll('.an-spot');
+  if(!spots.length) return;
+  const closeAll = () => spots.forEach(s => { s.classList.remove('open'); const b = s.querySelector('.an-hot'); if(b) b.setAttribute('aria-expanded','false'); });
+  spots.forEach(spot => {
+    const btn = spot.querySelector('.an-hot');
+    if(!btn) return;
+    btn.addEventListener('click', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      const open = spot.classList.contains('open');
+      closeAll();
+      if(!open){ spot.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    });
+  });
+  document.addEventListener('click', closeAll);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeAll(); });
+})();
 </script>
 
 </body>

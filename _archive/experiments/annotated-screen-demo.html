@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo · Annotated screen + research artifact · Loan Deboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf7; --surface:#ffffff; --ink:#171717; --ink-soft:#4a4a4a; --ink-mute:#6E675C;
+    --line:rgba(23,23,23,.10); --accent:#1F4D3E; --accent-soft:#e8efe9;
+    --amber:#8a5a00; --amber-soft:#fdf2dd; --good:#1d6e47;
+    --font:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+  h1{font-size:34px;letter-spacing:-.02em;margin:0 0 10px;font-weight:600;}
+  h2{font-size:26px;letter-spacing:-.015em;margin:0 0 8px;font-weight:600;}
+  .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:11px;font-weight:600;color:var(--accent);margin-bottom:12px;}
+  p{color:var(--ink-soft);}
+  header.top{padding:56px 0 28px;border-bottom:1px solid var(--line);}
+  header.top p{font-size:17px;max-width:720px;}
+  section{padding:48px 0;border-bottom:1px solid var(--line);}
+  .demo-note{font-size:13px;color:var(--ink-mute);margin-top:10px;}
+  .demo-note b{color:var(--accent);}
+
+  /* ── Annotated screen ── */
+  .annot-wrap{margin-top:24px;}
+
+  /* Validation strip pinned on top of the screen */
+  .val-strip{
+    display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+    padding:14px 18px;border:1px solid var(--line);border-bottom:none;
+    border-radius:14px 14px 0 0;background:var(--surface);
+  }
+  .val-strip .vs-label{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);margin-right:4px;}
+  .val-chip{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500;padding:6px 12px;border-radius:999px;background:var(--accent-soft);color:var(--accent);border:1px solid rgba(31,77,62,.18);}
+  .val-chip .tick{width:15px;height:15px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0;}
+  .val-chip.clear{background:transparent;color:var(--ink-mute);border-color:var(--line);}
+
+  .stage{
+    position:relative;border:1px solid var(--line);border-radius:0 0 14px 14px;overflow:hidden;
+    background:#f4f4ef;line-height:0;
+  }
+  .stage img{display:block;width:100%;height:auto;}
+
+  /* hotspot marker */
+  .hot{
+    position:absolute;transform:translate(-50%,-50%);z-index:3;
+    width:30px;height:30px;border-radius:50%;cursor:pointer;
+    background:var(--accent);color:#fff;border:3px solid #fff;
+    font-family:var(--font);font-size:14px;font-weight:700;line-height:1;
+    display:flex;align-items:center;justify-content:center;padding:0;
+    box-shadow:0 3px 10px rgba(15,8,40,.28);
+    animation:hot-pulse 2.6s ease-in-out infinite;
+  }
+  .hot:hover,.hot:focus-visible{outline:none;transform:translate(-50%,-50%) scale(1.12);}
+  @keyframes hot-pulse{0%,100%{box-shadow:0 0 0 0 rgba(31,77,62,.34),0 3px 10px rgba(15,8,40,.28);}50%{box-shadow:0 0 0 9px rgba(31,77,62,0),0 3px 10px rgba(15,8,40,.28);}}
+
+  /* tooltip */
+  .tip{
+    position:absolute;z-index:5;width:248px;
+    background:#171717;color:#fff;border-radius:12px;padding:13px 15px;
+    line-height:1.45;opacity:0;visibility:hidden;pointer-events:none;
+    transform:translateY(4px);transition:opacity .18s ease,transform .18s ease;
+    box-shadow:0 14px 36px rgba(0,0,0,.32);
+  }
+  .tip .tip-tag{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9fd9ba;font-weight:700;margin-bottom:5px;}
+  .tip .tip-text{font-size:13px;color:#fff;}
+  .hotspot.open .tip,.hotspot:hover .tip,.hotspot:focus-within .tip{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0);}
+  .tip::after{content:"";position:absolute;width:10px;height:10px;background:#171717;transform:rotate(45deg);}
+  /* placement: below marker (default) */
+  .hotspot.below .tip{top:calc(50% + 24px);left:50%;margin-left:-124px;}
+  .hotspot.below .tip::after{top:-5px;left:50%;margin-left:-5px;}
+  /* placement: above marker */
+  .hotspot.above .tip{bottom:calc(50% + 24px);left:50%;margin-left:-124px;}
+  .hotspot.above .tip::after{bottom:-5px;left:50%;margin-left:-5px;}
+  .hotspot{position:absolute;width:0;height:0;}
+
+  @media (max-width:560px){
+    .tip{width:200px;}
+    .hotspot.below .tip,.hotspot.above .tip{margin-left:-100px;}
+    .hot{width:26px;height:26px;font-size:12px;}
+  }
+
+  /* ── Stylized research artifact (synthesis board) ── */
+  .board-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:8px;}
+  .board-meta{font-size:13px;color:var(--ink-mute);}
+  .board{
+    margin-top:24px;padding:30px 26px 34px;border-radius:16px;
+    background:
+      linear-gradient(0deg, rgba(31,77,62,.02), rgba(31,77,62,.02)),
+      repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(23,23,23,.045) 27px,rgba(23,23,23,.045) 28px),
+      #fbfaf6;
+    border:1px solid var(--line);
+  }
+  .board-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .col-theme{font-family:var(--font);font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--accent);text-transform:uppercase;margin:0 0 16px;padding-bottom:8px;border-bottom:2px solid rgba(31,77,62,.25);}
+  .col-theme span{display:block;font-family:"Caveat",cursive;font-size:20px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink-mute);margin-top:2px;}
+  .note{
+    position:relative;background:#fff;border:1px solid var(--line);border-radius:4px;
+    padding:14px 14px 12px;margin-bottom:18px;
+    box-shadow:0 6px 16px -8px rgba(20,20,20,.28);
+    font-size:13.5px;color:var(--ink);line-height:1.5;
+  }
+  .note:nth-child(odd){transform:rotate(-1.1deg);}
+  .note:nth-child(even){transform:rotate(.9deg);}
+  .note::before{content:"";position:absolute;top:-9px;left:50%;width:54px;height:18px;transform:translateX(-50%) rotate(-3deg);background:rgba(207,249,28,.5);border:1px solid rgba(31,77,62,.18);}
+  .note .q{font-style:italic;}
+  .note .who{display:block;margin-top:8px;font-size:11px;color:var(--ink-mute);font-style:normal;}
+  .note .tagrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+  .note .tg{font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:4px;padding:2px 7px;}
+  .count{font-family:"Caveat",cursive;font-size:20px;color:var(--accent);font-weight:700;}
+  @media (max-width:760px){.board-cols{grid-template-columns:1fr;}}
+
+  footer{padding:40px 0 90px;color:var(--ink-mute);font-size:13px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Internal demo · for Dinesh to approve</div>
+    <h1>Two new components, before they go in the live case studies</h1>
+    <p>Both are built in HTML, no screenshots faked and no AI labels. Part one makes a static screen explain itself on hover, tap, or keyboard. Part two is a hand-built research board to sit where an AI-recreated image is now. Approve the interaction and I'll drop them into Loan Deboarding and Real-Time Inquiry.</p>
+  </div>
+</header>
+
+<!-- PART 1 — ANNOTATED SCREEN -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Part 1 · Annotated screen</div>
+    <h2>Validation at the door, explained in place</h2>
+    <p>The validation summary sits on top. The numbered markers explain each feature when you hover, tap, or tab to them. Nothing leaves the page, and it works without a mouse.</p>
+
+    <div class="annot-wrap">
+      <!-- validation strip -->
+      <div class="val-strip" aria-label="Validation summary">
+        <span class="vs-label">Validation</span>
+        <span class="val-chip"><span class="tick">✓</span>13 / 13 columns detected</span>
+        <span class="val-chip"><span class="tick">✓</span>147 / 147 PAs matched by loan number</span>
+        <span class="val-chip"><span class="tick">✓</span>Saved mapping recognized</span>
+        <span class="val-chip clear">No blocking errors</span>
+      </div>
+
+      <!-- screen + hotspots -->
+      <div class="stage">
+        <img src="../../images/loan-bulk-upload-validation.png" alt="Loan Deboarding new release submission screen with file validation, PA matching, saved mapping, and auto-detected loan numbers" />
+
+        <div class="hotspot below" style="left:31%;top:43%;">
+          <button class="hot" type="button" aria-expanded="false" aria-describedby="tip1">1</button>
+          <span class="tip" id="tip1" role="tooltip">
+            <span class="tip-tag">Validation at the door</span>
+            <span class="tip-text">The moment the file lands, the portal checks the column structure against the expected template. 13 of 13 columns detected, format OK. A wrong report version or missing field is caught here, not three days later.</span>
+          </span>
+        </div>
+
+        <div class="hotspot below" style="left:80%;top:43%;">
+          <button class="hot" type="button" aria-expanded="false" aria-describedby="tip2">2</button>
+          <span class="tip" id="tip2" role="tooltip">
+            <span class="tip-tag">Purchase Advices auto-matched</span>
+            <span class="tip-text">Every PA is matched to a loan number on upload. 147 of 147 matched means nothing is orphaned downstream in reconciliation.</span>
+          </span>
+        </div>
+
+        <div class="hotspot below" style="left:23%;top:54%;">
+          <button class="hot" type="button" aria-expanded="false" aria-describedby="tip3">3</button>
+          <span class="tip" id="tip3" role="tooltip">
+            <span class="tip-tag">Saved mapping recognized</span>
+            <span class="tip-text">The portal recognizes the client's saved column mapping, the Standard 15-day template, so repeat submitters skip remapping. One click to confirm, or switch.</span>
+          </span>
+        </div>
+
+        <div class="hotspot above" style="left:24%;top:79%;">
+          <button class="hot" type="button" aria-expanded="false" aria-describedby="tip4">4</button>
+          <span class="tip" id="tip4" role="tooltip">
+            <span class="tip-tag">Loan numbers parsed automatically</span>
+            <span class="tip-text">147 loan numbers are read straight from the spreadsheet, so the analyst never rekeys them. The count cross-checks against the PA batch above.</span>
+          </span>
+        </div>
+      </div>
+      <p class="demo-note"><b>Try it:</b> hover, tap, or press Tab then Enter on a marker. On the live page I'll fine-tune marker positions and write one tooltip per real feature.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PART 2 — RESEARCH ARTIFACT -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Part 2 · Research artifact (hand-built, not a screenshot)</div>
+    <h2>The tagging board behind the structure</h2>
+    <p>This replaces the AI-recreated tagging-board image. It is laid out by hand in HTML, so it reads as real synthesis work rather than a generated picture. Quotes are paraphrased for NDA.</p>
+
+    <div class="board">
+      <div class="board-head">
+        <span class="board-meta">9 walkthroughs · 3 client orgs · paraphrased for NDA</span>
+        <span class="board-meta">Clustered into 3 themes</span>
+      </div>
+      <div class="board-cols">
+
+        <div class="col">
+          <p class="col-theme">Variation at the door <span>everyone submits differently</span></p>
+          <div class="note">
+            <span class="q">"Encompass for one client, a custom LOS export for another, an aggregator matrix for the third. Same release, three shapes."</span>
+            <span class="who">Release Analyst · Org A</span>
+            <span class="tagrow"><span class="tg">LOS variance</span><span class="tg">no shared layer</span></span>
+          </div>
+          <div class="note">
+            <span class="q">"We find the wrong report version after it is already in the queue, never at the moment they send it."</span>
+            <span class="who">Client Ops Lead · Org B</span>
+            <span class="tagrow"><span class="tg">late errors</span></span>
+          </div>
+          <p class="board-meta"><span class="count">6 of 9</span> raised this unprompted</p>
+        </div>
+
+        <div class="col">
+          <p class="col-theme">Exceptions need a lane <span>not an email thread</span></p>
+          <div class="note">
+            <span class="q">"A MERS update or a missing date just becomes a forwarded email. No owner, no due date, no trail."</span>
+            <span class="who">Director of Client Ops · Org C</span>
+            <span class="tagrow"><span class="tg">no SLA</span><span class="tg">no owner</span></span>
+          </div>
+          <div class="note">
+            <span class="q">"This should work like a ticketing system. One record per submission, with assignment and history."</span>
+            <span class="who">Client Ops Lead · Org A</span>
+            <span class="tagrow"><span class="tg">wants workflow</span></span>
+          </div>
+          <p class="board-meta"><span class="count">all 3</span> orgs described this</p>
+        </div>
+
+        <div class="col">
+          <p class="col-theme">Reconciliation ties to nothing <span>rebuilt by hand</span></p>
+          <div class="note">
+            <span class="q">"Escrow returns, manifests, unfundings, all arrive in different systems. Accounting cross-references it by hand."</span>
+            <span class="who">Accounting · Org B</span>
+            <span class="tagrow"><span class="tg">no shared record</span></span>
+          </div>
+          <div class="note">
+            <span class="q">"There is no single place that says: this release closed, here is the money that moved."</span>
+            <span class="who">Release Analyst · Org C</span>
+            <span class="tagrow"><span class="tg">manual recon</span></span>
+          </div>
+          <p class="board-meta"><span class="count">3 days</span> typical lag to reconcile</p>
+        </div>
+
+      </div>
+    </div>
+    <p class="demo-note">Decision this drove: treat the variation as a layer above <b>one shared record</b>, not three parallel pipelines. That is what made the first release feasible.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Demo only · not linked from the live site · Dinesh Kumar, June 2026</div>
+</footer>
+
+<script>
+  // Tap / click toggles a marker open (touch + click). Hover and keyboard focus are handled in CSS.
+  document.querySelectorAll('.hotspot').forEach(spot => {
+    const btn = spot.querySelector('.hot');
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = spot.classList.contains('open');
+      document.querySelectorAll('.hotspot.open').forEach(s => { s.classList.remove('open'); s.querySelector('.hot').setAttribute('aria-expanded','false'); });
+      if (!isOpen){ spot.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+    });
+  });
+  // Click anywhere else closes
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.hotspot.open').forEach(s => { s.classList.remove('open'); s.querySelector('.hot').setAttribute('aria-expanded','false'); });
+  });
+  // Esc closes
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll('.hotspot.open').forEach(s => { s.classList.remove('open'); s.querySelector('.hot').setAttribute('aria-expanded','false'); });
+  });
+</script>
+
+</body>
+</html>
