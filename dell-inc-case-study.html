@@ -993,6 +993,10 @@
     .site-nav a.site-link { font-size: 13px; }
   }
 
+  /* ── Real icons (replace emojis) ── */
+  svg.ic{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block;}
+  .goal-card .ico,.priority-card .ico,.insight .ico{width:44px;height:44px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;}
+  .goal-card .ico svg,.priority-card .ico svg,.insight .ico svg{width:22px;height:22px;}
 </style>
 </head>
 <body>
@@ -1168,11 +1172,11 @@
     </div>
 
     <div class="goal-grid">
-      <div class="goal-card"><span class="ico">🎨</span><h4>Revamp the website</h4></div>
-      <div class="goal-card"><span class="ico">📈</span><h4>Make it scalable</h4></div>
-      <div class="goal-card"><span class="ico">💙</span><h4>Adhere to Dell branding</h4></div>
-      <div class="goal-card"><span class="ico">✋</span><h4>Fix usability issues</h4></div>
-      <div class="goal-card"><span class="ico">➕</span><h4>Add/remove features</h4></div>
+      <div class="goal-card"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></span><h4>Revamp the website</h4></div>
+      <div class="goal-card"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 18"/><polyline points="16 7 22 7 22 13"/></svg></span><h4>Make it scalable</h4></div>
+      <div class="goal-card"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span><h4>Adhere to Dell branding</h4></div>
+      <div class="goal-card"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><h4>Fix usability issues</h4></div>
+      <div class="goal-card"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg></span><h4>Add/remove features</h4></div>
     </div>
   </div>
 </section>
@@ -1191,10 +1195,10 @@
     </div>
 
     <div class="priority-grid">
-      <div class="priority-card"><span class="ico">✅</span><h4>Fulfill business goals</h4></div>
-      <div class="priority-card"><span class="ico">🎯</span><h4>Find and solve pain points</h4></div>
-      <div class="priority-card"><span class="ico">🔍</span><h4>Identify user needs and frustrations</h4></div>
-      <div class="priority-card"><span class="ico">✨</span><h4>Enhance the overall experience</h4></div>
+      <div class="priority-card"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><h4>Fulfill business goals</h4></div>
+      <div class="priority-card"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><h4>Find and solve pain points</h4></div>
+      <div class="priority-card"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><h4>Identify user needs and frustrations</h4></div>
+      <div class="priority-card"><span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .962L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></svg></span><h4>Enhance the overall experience</h4></div>
     </div>
   </div>
 </section>
@@ -1239,22 +1243,22 @@
     <h4 style="margin-top:32px; font-size:14px; color:var(--ink-mute); letter-spacing:0.08em; text-transform:uppercase;">What kept showing up across all three methods</h4>
     <div class="insights-grid">
       <div class="insight">
-        <span class="ico">🔍</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
         <h5>Hard to find anything</h5>
         <p>The most-cited pain. Reports and tools lived behind nested menus.</p>
       </div>
       <div class="insight">
-        <span class="ico">🧭</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/><circle cx="12" cy="12" r="10"/></svg></span>
         <h5>Inefficient workflows</h5>
         <p>Common tasks took three to five clicks. Familiarity didn't help.</p>
       </div>
       <div class="insight">
-        <span class="ico">🪟</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span>
         <h5>Outdated visual language</h5>
         <p>The design read a generation behind Dell's brand.</p>
       </div>
       <div class="insight">
-        <span class="ico">🚧</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><line x1="6" x2="6" y1="3" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></span>
         <h5>Personal workarounds</h5>
         <p>Users had bookmarked their way around the platform.</p>
       </div>

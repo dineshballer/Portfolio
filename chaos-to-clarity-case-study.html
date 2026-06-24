@@ -1048,6 +1048,12 @@
     .site-nav a.site-link { font-size: 13px; }
   }
 
+  /* ── Real icons (replace emojis) ── */
+  svg.ic{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block;}
+  .what-why-card .ico,.pain-card .ico,.constraint-card .ico{width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .what-why-card .ico svg,.pain-card .ico svg,.constraint-card .ico svg{width:23px;height:23px;}
+  .eval-method .em-ic{display:inline-flex;vertical-align:-2px;margin-right:5px;color:var(--accent);}
+  .eval-method .em-ic svg{width:14px;height:14px;}
 </style>
 </head>
 <body>
@@ -1212,12 +1218,12 @@
 
     <div class="what-why-grid">
       <div class="what-why-card">
-        <span class="ico">💬</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
         <h4>The What</h4>
         <p>A full-screen AI workspace: prompt suggestions, source-tagged answers, and the sales portal's tools sitting right under the conversation.</p>
       </div>
       <div class="what-why-card">
-        <span class="ico">🎯</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
         <h4>The Why</h4>
         <p>The business needed one stable platform to add AI and unify sales tools. Without it, adoption stalled and workflows stayed fragmented.</p>
       </div>
@@ -1243,7 +1249,7 @@
         <div class="pain-img">
           <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-pain-incomplete-answer.png" alt="The legacy IntelliAssist AI Result panel showing an order details response with limited context and no follow-up paths" />
         </div>
-        <span class="ico">🧩</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg></span>
         <h4>Incomplete answer context</h4>
         <p>The AI gave surface-level details without supporting context, related information, or follow-up questions. Users couldn't tell what to trust.</p>
         <blockquote>
@@ -1256,7 +1262,7 @@
         <div class="pain-img">
           <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-pain-buried-features.png" alt="Legacy IntelliAssist landing screen with a sparse search input that hid the AI's full capabilities" />
         </div>
-        <span class="ico">📭</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg></span>
         <h4>Buried features, low adoption</h4>
         <p>The sparse landing screen failed to highlight the AI's full capabilities. Feature discovery was low, and employees defaulted to peer-dependent learning.</p>
         <blockquote>
@@ -1269,7 +1275,7 @@
         <div class="pain-img">
           <img loading="lazy" decoding="async" class="zoomable" src="./images/chaos-pain-workarounds.png" alt="Dell Technologies Sales Portal home with a wall of self-serve tiles that users routed around in favor of bookmarks" />
         </div>
-        <span class="ico">🔖</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></span>
         <h4>Workarounds replaced the tool</h4>
         <p>Search was so slow that users had quietly stopped using it. Bookmarks were faster, even when stale. The tool was being routed around, not used.</p>
         <blockquote>
@@ -1432,21 +1438,21 @@
 
     <div class="eval-grid">
       <div class="eval-card">
-        <div class="eval-method">🚀 Workflow streamlining</div>
+        <div class="eval-method"><span class="em-ic"><svg class="ic" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span> Workflow streamlining</div>
         <h4>Cut redundant tasks</h4>
         <div class="eval-result">40%</div>
         <p>Centralizing AI chat, self-serve tiles, and sales tools cut redundant tasks like order tracking by 40%, letting employees focus on high-value work.</p>
       </div>
 
       <div class="eval-card">
-        <div class="eval-method">✂️ Platform consolidation</div>
+        <div class="eval-method"><span class="em-ic"><svg class="ic" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg></span> Platform consolidation</div>
         <h4>Eliminated daily platform-switching</h4>
         <div class="eval-result">72%</div>
         <p>Integrated sales portal resources eliminated daily platform-switching for 72% of pilot users, freeing up time for higher-impact work.</p>
       </div>
 
       <div class="eval-card">
-        <div class="eval-method">💡 AI adoption</div>
+        <div class="eval-method"><span class="em-ic"><svg class="ic" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span> AI adoption</div>
         <h4>Feature discovery up, friction down</h4>
         <div class="eval-result">55% / 85%</div>
         <p>Feature discovery rose by 55%. 85% of users reported "easier access to critical tools" once the new workspace was live.</p>
@@ -1470,21 +1476,21 @@
 
     <div class="constraints-grid">
       <div class="constraint-card">
-        <span class="ico">⚖️</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></span>
         <h4>Business needs and user needs aren't opposites</h4>
         <p>Strict leadership requirements often mirrored hidden user needs, like faster workflows.</p>
         <div class="response">Treat constraints as guardrails, not roadblocks. Find the user need inside the business ask.</div>
       </div>
 
       <div class="constraint-card">
-        <span class="ico">⏳</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg></span>
         <h4>Limited time means ruthless prioritization</h4>
         <p>With tight deadlines, I prototyped only critical flows first like order tracking, then iterated post-launch.</p>
         <div class="response">Agility and quality coexist if you're honest about what to cut.</div>
       </div>
 
       <div class="constraint-card">
-        <span class="ico">🤝</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg></span>
         <h4>Compromise is strategy, not failure</h4>
         <p>Letting go of "perfect" features like custom animations freed time to solve bigger issues like AI response accuracy.</p>
         <div class="response">Progress beats perfection. Choose where to invest the polish.</div>

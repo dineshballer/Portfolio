@@ -1281,6 +1281,14 @@
   .an-hint{font-size:12px;color:var(--ink-mute);margin-top:10px;letter-spacing:.01em;line-height:1.5;}
   @media (max-width:560px){.an-tip{width:186px;}.an-spot.below .an-tip,.an-spot.above .an-tip{margin-left:-93px;}.an-spot.redge .an-tip{margin-left:-160px;}.an-hot{width:25px;height:25px;font-size:12px;}}
 
+  /* ── Real icons (replace emojis) ── */
+  svg.ic{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block;}
+  .pain-card .ico,.monitor-card .ico{width:46px;height:46px;border-radius:12px;background:var(--accent-soft);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;margin-bottom:14px;}
+  .pain-card .ico svg,.monitor-card .ico svg{width:23px;height:23px;}
+  .nda-disclaimer .nda-ico svg{width:18px;height:18px;}
+  .compromise h4 .ic-inline{display:inline-flex;vertical-align:-3px;margin-right:7px;color:var(--accent);}
+  .compromise h4 .ic-inline svg{width:17px;height:17px;}
+
 </style>
 </head>
 <body>
@@ -1377,7 +1385,7 @@
 <section aria-label="Confidentiality note">
   <div class="wrap">
     <div class="nda-disclaimer">
-      <div class="nda-ico" aria-hidden="true">🔒</div>
+      <div class="nda-ico" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
       <div class="nda-copy">
         <h4>A note on confidentiality</h4>
         <p>To respect Onity Group's confidentiality, I've changed the visual treatment, screen names, and workflow details shown here. I chose not to password-gate this case study, since gates only add friction for the people I want to reach; instead I recreated the screens to keep the work open and compliant. The approach, decisions, and outcomes are intact and mine. For the real product and a deeper walkthrough, <a href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener" style="color:#1F4D3E;font-weight:600;">reach out</a>.</p>
@@ -1446,19 +1454,19 @@
 
     <div class="insights-grid">
       <div class="pain-card">
-        <span class="ico">🧩</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.84Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg></span>
         <h4>Submissions arrive in different shapes</h4>
         <p>Encompass, custom LOS exports, aggregator matrices: every client submits its own way, with no shared validation layer, so formatting issues surface downstream.</p>
       </div>
 
       <div class="pain-card">
-        <span class="ico">⚠️</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
         <h4>Exceptions handled by escalation, not workflow</h4>
         <p>Kickbacks, MERS updates, missing dates, investor delays all become email threads. No SLA, no owner, no audit trail.</p>
       </div>
 
       <div class="pain-card">
-        <span class="ico">📊</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></span>
         <h4>Reconciliation reconstructed by hand</h4>
         <p>Manifests, escrow returns, and unfunding adjustments arrive across separate systems. Accounting cross-references by hand.</p>
       </div>
@@ -1563,7 +1571,7 @@
       </div>
 
       <div class="compromise">
-        <h4>🚨 MVP scoping decision</h4>
+        <h4><span class="ic-inline"><svg class="ic" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>MVP scoping decision</h4>
         <p>Bulk PA upload was prioritized for launch to mirror today's mental model. Phase two reduces PA dependency by collecting the exact fields the receiving team needs directly inside the form, documents become required only for audit and exceptions.</p>
       </div>
     </div>
@@ -1779,19 +1787,19 @@
 
     <div class="monitor-grid">
       <div class="monitor-card">
-        <span class="ico">📩</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
         <h4>Drop in inbound status emails</h4>
         <p>I'm tracking the volume of "did you get it?" and "where are we?" emails. A drop signals clients trust the portal as the source of truth.</p>
       </div>
 
       <div class="monitor-card">
-        <span class="ico">⚠️</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
         <h4>Submission errors caught at the door</h4>
         <p>I'm measuring how many formatting issues get flagged during upload vs. downstream. A higher catch-rate means less rework and fewer kickbacks.</p>
       </div>
 
       <div class="monitor-card">
-        <span class="ico">📊</span>
+        <span class="ico"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
         <h4>Reconciliation cycle time</h4>
         <p>I'm tracking how long it takes accounting to close out a release after funds move. A shorter cycle confirms the reconciliation snapshot is doing its job.</p>
       </div>
