@@ -3168,7 +3168,7 @@
             <path d="M18 3.5 L18.6 5.4 L20.5 6 L18.6 6.6 L18 8.5 L17.4 6.6 L15.5 6 L17.4 5.4 Z" fill="currentColor" opacity="0.7"/>
           </svg>
         </span>
-        <span class="ai-trigger-text" data-trigger-text>Hiring? Ask Sage if Dinesh fits the role</span>
+        <span class="ai-trigger-text" data-trigger-text>Ask me anything about Dinesh</span>
       </button>
 
       <aside class="ai-dock" id="ai-dock" aria-labelledby="ai-dock-title" aria-hidden="true">
@@ -3182,7 +3182,7 @@
           </button>
           <div class="ai-header-text">
             <h3 id="ai-dock-title"><span class="ai-name">Sage</span></h3>
-            <p class="ai-subtitle">Dinesh's portfolio guru. Paste a job description and I'll tell you straight whether he fits.</p>
+            <p class="ai-subtitle">Dinesh's portfolio guru. Ask about his work, his approach, or his fit for a role. Hiring? Paste a job description and I'll tell you straight whether he fits.</p>
           </div>
           <div class="ai-controls">
             <button class="ai-collapse" aria-label="Close chat">
@@ -3731,7 +3731,7 @@
   ─────────────────────────────────────────────── */
 
   // 1. Typed welcome on first open of session
-  const WELCOME_MESSAGE = "Namaste. I'm Sage. I've studied everything Dinesh has shipped. Tell me the role you're hiring for and I'll tell you, honestly, whether he fits.";
+  const WELCOME_MESSAGE = "Namaste. I'm Sage. I've studied everything Dinesh has shipped, so ask me anything about his work and how he thinks. Hiring? Paste a job description and I'll tell you, honestly, whether he fits.";
   let welcomeTyped = false;
   function typeWelcome() {
     if (welcomeTyped || !welcomeTypedEl) return;
@@ -3757,10 +3757,10 @@
     "Where is he still growing?",
   ];
   const CURIOUS_CHIPS = [
-    "Paste a job description",
-    "Where does he do his best work?",
-    "Walk me through a real project",
     "What makes him different?",
+    "Walk me through a real project",
+    "Where does he do his best work?",
+    "Paste a job description",
   ];
   function renderStarterChips() {
     if (!chipsContainer) return;
@@ -3772,7 +3772,7 @@
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "ai-followup";
-      // The first chip is always the JD fit-check, the hero action.
+      // The first chip is the prominent hero action.
       if (idx === 0) btn.classList.add("is-hero");
       btn.textContent = text;
       // staggered cascade-in for a polished reveal
@@ -4710,11 +4710,11 @@
   // ─── Typewriter placeholder — cycles through prompts character-by-character ───
   // Drives BOTH the trigger pill text (always visible) and the modal input placeholder.
   const placeholders = [
+    "Ask me anything about Dinesh",
+    "What makes him different?",
+    "Where does he do his best work?",
     "Paste a job description, I'll tell you if he fits",
     "Is he senior, honestly?",
-    "Show me proof, not adjectives",
-    "Where does he do his best work?",
-    "Where is he still growing?",
   ];
 
   let phIdx = 0;
