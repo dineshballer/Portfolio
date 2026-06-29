@@ -8,7 +8,7 @@ Updated 2026-06-21. Every number published anywhere (site, resume, Sage prompt, 
 |---|---|
 | Display name | Dinesh Kumar |
 | Title (everywhere) | Senior UX Designer |
-| Email (everywhere) | dineshballer@gmail.com |
+| Email (everywhere) | dineshkravikumar@gmail.com |
 | LinkedIn | linkedin.com/in/dineshkravikumar |
 | Location | Houston, TX · open to remote + US relocation |
 | Experience claim | 5+ years (do NOT use 8+, 10+, or "decade") |

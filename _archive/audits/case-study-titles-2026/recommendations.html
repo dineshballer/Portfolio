@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study Titles + Simpler Template · Recommendations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F6F1E8; --ink:#171717; --soft:#5A5A55; --forest:#1F4D3E;
+    --line:#E0D8C8; --card:#FBF8F2; --warn:#7A4B12; --warnbg:#F6ECDC;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ivory);color:var(--ink);font-family:"Hanken Grotesk",sans-serif;
+    font-weight:400;line-height:1.55;-webkit-font-smoothing:antialiased;padding:0 24px 120px}
+  .wrap{max-width:880px;margin:0 auto}
+  header{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+  .tag{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--forest);font-weight:600}
+  h1{font-size:38px;line-height:1.12;font-weight:600;margin:14px 0 16px;letter-spacing:-.02em}
+  .lede{font-size:18px;color:var(--soft);max-width:62ch}
+  .note{margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:14px 18px;font-size:15px;color:var(--soft)}
+  .note b{color:var(--ink);font-weight:600}
+  h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--forest);
+    font-weight:600;margin:64px 0 18px}
+  h3{font-size:22px;font-weight:600;letter-spacing:-.01em;margin:0 0 6px}
+  p{margin:0 0 12px;max-width:66ch}
+  .soft{color:var(--soft)}
+  ul{margin:0 0 12px 0;padding-left:0;list-style:none}
+  li{position:relative;padding-left:22px;margin-bottom:9px;max-width:66ch}
+  li::before{content:"";position:absolute;left:2px;top:10px;width:6px;height:6px;
+    border-radius:50%;background:var(--forest)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .find{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .find .k{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--forest);font-weight:600;margin-bottom:6px}
+  .find p{font-size:15px;color:var(--soft);margin:0}
+  .find p b{color:var(--ink);font-weight:600}
+  .case{border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:18px;background:var(--card)}
+  .case .meta{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--forest);font-weight:600}
+  .case h3{margin:6px 0 14px}
+  .row{display:grid;grid-template-columns:88px 1fr;gap:8px 16px;padding:11px 0;border-top:1px solid var(--line)}
+  .row:first-of-type{border-top:none}
+  .lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);font-weight:600;padding-top:3px}
+  .val{font-size:16px}
+  .val.cur{color:var(--soft)}
+  .val.rec{font-weight:500}
+  .pill{display:inline-block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    font-weight:600;color:var(--forest);border:1px solid var(--forest);border-radius:20px;
+    padding:2px 9px;margin-left:8px;vertical-align:middle}
+  .tmpl{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .tcol{padding:22px 24px}
+  .tcol:first-child{border-right:1px solid var(--line);background:#F1EBDD}
+  .tcol h4{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-bottom:14px}
+  .tcol:first-child h4{color:var(--soft)}
+  .tcol:last-child h4{color:var(--forest)}
+  .step{font-size:15px;padding:7px 0;border-top:1px solid var(--line)}
+  .step:first-of-type{border-top:none}
+  .step small{display:block;color:var(--soft);font-size:13px;margin-top:1px}
+  .warn{background:var(--warnbg);border:1px solid #E4D2B0;border-radius:12px;padding:16px 20px;margin:14px 0}
+  .warn .k{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--warn);font-weight:600;margin-bottom:5px}
+  .warn p{font-size:15px;color:#5e4527;margin:0}
+  .src{font-size:14px;color:var(--soft)}
+  .src a{color:var(--forest);text-decoration:none;border-bottom:1px solid var(--line)}
+  em{font-style:italic;color:var(--forest);font-weight:500}
+  @media(max-width:680px){.grid2,.tmpl{grid-template-columns:1fr}.tcol:first-child{border-right:none;border-bottom:1px solid var(--line)}.row{grid-template-columns:1fr}.lab{padding-top:0}h1{font-size:30px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="tag">Recommendations · June 2026</div>
+  <h1>Simpler case study titles and one shared template</h1>
+  <p class="lede">A review of all five case studies against Aneta Kmiecik's course and what other product design leads recommend in 2026. Built to make the work scan in the two minutes a hiring manager actually spends.</p>
+  <div class="note"><b>Nothing here is live.</b> This is the suggest step. Tell me which title direction you like and I will change it in prod, one file at a time.</div>
+</header>
+
+<!-- 1. WHAT I FOUND -->
+<h2>1 · What I found</h2>
+<p>Your on-page hero headlines are already tight and clear. The problems sit one layer up, on the homepage cards, and in how the template is built underneath.</p>
+<div class="grid2">
+  <div class="find">
+    <div class="k">Card titles run long</div>
+    <p>The homepage cards have grown into multi-clause sentences. The Inquiry Portal card is <b>35 words with no period</b>. A recruiter scanning at speed cannot hold that.</p>
+  </div>
+  <div class="find">
+    <div class="k">Card and hero drifted apart</div>
+    <p>Card says <b>"I built"</b>, hero says <b>"I designed"</b>. Card says <b>"inquiry visibility"</b>, hero says <b>"case visibility"</b>. Small tells, but a senior eye catches them.</p>
+  </div>
+  <div class="find">
+    <div class="k">Two different templates</div>
+    <p>The three Onity studies use <b>Snapshot / Problem area</b>. The two Dell studies use <b>The Challenge / The Solution</b>. The set does not feel like one person's system.</p>
+  </div>
+  <div class="find">
+    <div class="k">Heavy to read</div>
+    <p>Each study runs <b>4,600 to 6,100 words</b> across 8 to 16 sections. Your north star (bevyip) lands the same job in roughly 600 words of body.</p>
+  </div>
+</div>
+<div class="warn">
+  <div class="k">Naming bug to fix regardless of titles</div>
+  <p>The Dell INC study calls itself <b>"Intelligence Nerve Center"</b> four times, while the homepage also calls it <b>"information network center."</b> Pick one true expansion of INC and use it everywhere. Inconsistent product names read as carelessness.</p>
+</div>
+
+<!-- 2. WHAT THE LEADS SAY -->
+<h2>2 · What Aneta and other leads say</h2>
+<ul>
+  <li><b>Aneta Kmiecik (your course notes):</b> title is first-person and names a specific outcome. Section headings should be <em>the insight, not the method</em>. "User research" is weak; "Analysts did not trust the dashboard because the numbers disagreed" is strong. Every case study needs a 3-line snapshot up top: problem, change, results.</li>
+  <li><b>Aneta, 2026:</b> frame each study as a short story, lead with insight and impact over method. Portfolios now win on craft and first impression, not process depth.</li>
+  <li><b>uxfol.io and UX Playbook (2026 guides):</b> scannable beats thorough. Short sections, strong headings, conclusion first (the pyramid principle). If your value is not clear in 30 seconds, the longer read never happens.</li>
+  <li><b>Peer title formulas:</b> "Improving [outcome] through [design change]" and "Boosted conversion 15% through a streamlined checkout for 50k shoppers" beat "Design checkout process." The title is <em>the first promise you make</em>. A vague one makes strong work forgettable.</li>
+</ul>
+<p class="soft">The throughline: keep your first-person voice (it is your differentiator and Aneta endorses it), but enforce economy. One idea, one number, one period.</p>
+
+<!-- 3. SIMPLER TEMPLATE -->
+<h2>3 · One simpler template for all five</h2>
+<p>Collapse 8 to 16 sections down to seven blocks, each carrying one idea. Apply the same skeleton to every study so they read as a set. Target roughly 800 words of body, down from 5,000.</p>
+<div class="tmpl">
+  <div class="tcol">
+    <h4>Now (varies per study)</h4>
+    <div class="step">Snapshot</div>
+    <div class="step">Problem area / The Challenge</div>
+    <div class="step">The call I'd defend / Operating model</div>
+    <div class="step">Solution, in many parts</div>
+    <div class="step">Multiple screen walk-throughs</div>
+    <div class="step">Tracked / validation blocks</div>
+    <div class="step">Retrospective</div>
+    <div class="step soft" style="color:var(--soft)">8 to 16 labeled sections, 5,000+ words</div>
+  </div>
+  <div class="tcol">
+    <h4>Proposed (same for all five)</h4>
+    <div class="step">1 · Hero <small>Product line, first-person headline, 2 metrics, one cover image</small></div>
+    <div class="step">2 · Snapshot <small>Three lines: problem, change, result</small></div>
+    <div class="step">3 · Quick facts <small>Role, team, timeline, what was mine</small></div>
+    <div class="step">4 · The problem <small>Insight as the heading, one annotated "before"</small></div>
+    <div class="step">5 · What I designed <small>Two or three decisions, each a heading + why + one image</small></div>
+    <div class="step">6 · The call I'd defend <small>One ownership moment: what you decided or said no to</small></div>
+    <div class="step">7 · Results + what's next <small>Metrics, then a short honest retrospective</small></div>
+  </div>
+</div>
+<p class="soft" style="margin-top:14px">Block 6 is the AI-era flex Aneta keeps pushing: since your screens are NDA recreations, the <em>decisions</em> are what is provably yours. Keep one per study, prominent.</p>
+
+<!-- 4. TITLE OPTIONS -->
+<h2>4 · Title suggestions, all five</h2>
+<p>Each card gets two readable options. <b>Option A</b> tightens your single first-person sentence (one clause, one number, a period). <b>Option B</b> splits it into a plain-English label plus a first-person line, which is the easiest to scan. Pick one style and I will apply it across the set so they stay consistent.</p>
+
+<div class="case">
+  <div class="meta">Case 01 · Loan Deboarding Portal · Onity</div>
+  <h3>Loan deboarding</h3>
+  <div class="row"><div class="lab">Now</div><div class="val cur">I designed one release pipeline so analysts can validate, reconcile, and ship loan releases from a single record, replacing parallel spreadsheets and status follow-ups.</div></div>
+  <div class="row"><div class="lab">Option A</div><div class="val rec">I designed one pipeline that ships a loan release from a single record, no spreadsheets.</div></div>
+  <div class="row"><div class="lab">Option B <span class="pill">rec</span></div><div class="val rec"><b>One pipeline for loan deboarding.</b><br><span class="soft">I replaced parallel spreadsheets with a single record analysts validate, reconcile, and ship from.</span></div></div>
+</div>
+
+<div class="case">
+  <div class="meta">Case 02 · Real-Time Inquiry Portal · Onity</div>
+  <h3>Real-time inquiry portal</h3>
+  <div class="row"><div class="lab">Now</div><div class="val cur">I built a real-time portal that replaces email threads with live inquiry visibility, now live with its first cohort and cutting case resolution by 62% while handing account managers about 6 hours a week back</div></div>
+  <div class="row"><div class="lab">Option A</div><div class="val rec">I designed a real-time portal that cut case resolution 62% and gave AMs six hours a week back.</div></div>
+  <div class="row"><div class="lab">Option B <span class="pill">rec</span></div><div class="val rec"><b>A real-time portal for mortgage inquiries.</b><br><span class="soft">I replaced email threads with live visibility, cutting case resolution 62%.</span></div></div>
+</div>
+
+<div class="case">
+  <div class="meta">Case 03 · Platform Design System · Onity</div>
+  <h3>Platform design system</h3>
+  <div class="row"><div class="lab">Now</div><div class="val cur">I built the platform's design system while shipping the two portals that needed it.</div></div>
+  <div class="row"><div class="lab">Option A</div><div class="val rec">I built the design system by extracting it from two portals as I shipped them.</div></div>
+  <div class="row"><div class="lab">Option B <span class="pill">rec</span></div><div class="val rec"><b>The design system under two shipping portals.</b><br><span class="soft">I extracted it from real products in flight, so the system matched real use, not theory.</span></div></div>
+</div>
+
+<div class="case">
+  <div class="meta">Case 04 · Dell IntelliAssist 2.0 · Dell</div>
+  <h3>GenAI sales assistant</h3>
+  <div class="row"><div class="lab">Now</div><div class="val cur">I rebuilt Dell's AI workspace into a full-screen sales assistant, cutting ticket volume by 55% and pushing self-serve adoption to 85%.</div></div>
+  <div class="row"><div class="lab">Option A</div><div class="val rec">I rebuilt Dell's cramped AI chat into a full-screen assistant, cutting tickets 55%.</div></div>
+  <div class="row"><div class="lab">Option B <span class="pill">rec</span></div><div class="val rec"><b>Dell's GenAI sales assistant.</b><br><span class="soft">I gave the AI room to work, cutting tickets 55% and lifting adoption to 85%.</span></div></div>
+</div>
+
+<div class="case">
+  <div class="meta">Case 05 · Dell INC · Dell</div>
+  <h3>Internal portal IA redesign</h3>
+  <div class="row"><div class="lab">Now</div><div class="val cur">I rebuilt Dell's Intelligence Nerve Center to lift findability by 40% for designers and researchers.</div></div>
+  <div class="row"><div class="lab">Option A</div><div class="val rec">I led an IA redesign that lifted findability 40% across Dell's internal portal.</div></div>
+  <div class="row"><div class="lab">Option B <span class="pill">rec</span></div><div class="val rec"><b>An IA redesign for Dell's internal portal, 30,000+ employees.</b><br><span class="soft">I restructured the IA so teams could finally find each other's work, lifting findability 40%.</span></div></div>
+</div>
+
+<!-- 5. IF YOU APPROVE -->
+<h2>5 · If you like a direction</h2>
+<ul>
+  <li>Pick <b>Option A</b> or <b>Option B</b> as the house style. I apply it to all five cards so they match.</li>
+  <li>Align each hero headline and page title to the chosen card title (same verb, same product words).</li>
+  <li>Pin one true expansion of <b>INC</b> and fix it everywhere.</li>
+  <li>Then, separately, refactor one study (suggest starting with Loan Deboarding) into the seven-block template as a proof, before rolling it across the set.</li>
+</ul>
+
+<p class="src" style="margin-top:48px">Sources: your <a href="https://www.uxportfolio.co/">Aneta Kmiecik course notes</a> (portfolio-formula.md) · <a href="https://blog.uxfol.io/ux-case-study-template/">uxfol.io 2026 case study guide</a> · <a href="https://uxplaybook.org/articles/senior-ux-designer-portfolio-get-hired-2026">UX Playbook, senior portfolio 2026</a> · <a href="https://omerari.medium.com/how-to-write-ux-case-study-titles-that-get-attention-361ec04e428b">Ömer Ari, case study titles</a> · <a href="https://www.useberry.com/blog/ux-portfolios-that-stand-out-webinar-aneta-kmiecik/">Aneta x Useberry webinar</a>.</p>
+
+</div>
+</body>
+</html>

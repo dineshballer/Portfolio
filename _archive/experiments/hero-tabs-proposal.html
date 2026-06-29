@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero proposal — cleaner tabs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf7;--surface:#fff;--ink:#171717;--ink-soft:#4a4a4a;--ink-mute:#6E675C;
+    --line:rgba(23,23,23,.10);--accent:#1F4D3E;--accent-soft:#e8efe9;
+    --font:"Hanken Grotesk",-apple-system,system-ui,sans-serif;--ease:cubic-bezier(.2,.65,.3,1);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 40px;}
+
+  .proposal-bar{background:var(--ink);color:#fff;font-size:13px;padding:10px 0;}
+  .proposal-bar .wrap{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+  .proposal-bar b{color:#fff;} .proposal-bar span{color:rgba(255,255,255,.7);}
+
+  nav.nav{display:flex;align-items:center;justify-content:space-between;max-width:1080px;margin:0 auto;padding:30px 40px;}
+  .wordmark{font-family:"Caveat",cursive;font-size:22px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-links{display:flex;gap:30px;list-style:none;margin:0;padding:0;}
+  .nav-links a{font-size:14px;color:var(--ink-soft);text-decoration:none;}
+  .nav-resume{font-size:13px;color:var(--accent);border:1px solid rgba(31,77,62,.3);border-radius:999px;padding:6px 14px;text-decoration:none;}
+
+  /* ── HERO ── */
+  .hero{padding:7vh 0 12vh;}
+  /* one small kicker replaces the old name + separate one-liner */
+  .kicker{font-size:15px;color:var(--ink-mute);margin:0 0 28px;display:inline-flex;align-items:baseline;gap:8px;}
+  .kicker .nm{color:var(--ink);font-weight:500;position:relative;}
+  .kicker .nm svg{position:absolute;left:0;right:0;bottom:-7px;width:100%;height:7px;}
+
+  /* the changing line is THE hero — big, dominant */
+  .stage{min-height:2.4em;}
+  .line{font-size:clamp(34px,5.2vw,60px);font-weight:600;letter-spacing:-.028em;line-height:1.08;margin:0;max-width:20ch;color:var(--ink);}
+  .line em{font-style:italic;color:var(--accent);}
+  .line[hidden]{display:none;}
+  .line{animation:fade .45s var(--ease);}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  /* tabs sit quietly UNDER the statement, as a control to switch the angle */
+  .tabs{display:flex;flex-wrap:wrap;gap:6px;margin-top:34px;}
+  .tab{appearance:none;background:transparent;border:1px solid var(--line);border-radius:999px;
+    padding:8px 16px;font-family:var(--font);font-size:13px;font-weight:500;color:var(--ink-mute);
+    cursor:pointer;transition:all .2s var(--ease);}
+  .tab:hover{color:var(--ink);border-color:rgba(23,23,23,.25);}
+  .tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff;}
+
+  /* chat, clearly separated with breathing room */
+  .chat{margin-top:56px;max-width:560px;}
+  .chat-pill{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);
+    border-radius:999px;padding:15px 18px;box-shadow:0 6px 22px -14px rgba(20,20,20,.3);}
+  .chat-spark{width:20px;height:20px;color:var(--accent);flex-shrink:0;}
+  .chat-text{font-size:15px;color:var(--ink-mute);}
+  .chat-kbd{margin-left:auto;font-size:11px;color:var(--ink-mute);border:1px solid var(--line);border-radius:6px;padding:3px 8px;}
+
+  /* proposal notes */
+  .panel{border-top:1px solid var(--line);background:#fff;}
+  .panel .wrap{padding:44px 40px 64px;}
+  .panel h2{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-mute);font-weight:700;margin:0 0 16px;}
+  .row{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:14px 0;border-bottom:1px solid var(--line);align-items:baseline;}
+  .row .t{font-weight:600;font-size:14px;color:var(--ink);}
+  .row .t small{display:block;color:var(--ink-mute);font-weight:400;font-size:12px;margin-top:3px;}
+  .row .c{font-size:16px;color:var(--ink-soft);}
+  .row .c em{font-style:italic;color:var(--accent);}
+  .change{margin-top:26px;font-size:14px;color:var(--ink-soft);background:var(--accent-soft);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 18px;}
+  .change b{color:var(--ink);}
+  @media(max-width:640px){.wrap{padding-left:24px;padding-right:24px;}nav.nav{padding:22px 24px;}.row{grid-template-columns:1fr;gap:4px;}}
+</style>
+</head>
+<body>
+
+<div class="proposal-bar"><div class="wrap"><b>Proposal preview</b><span>Cleaner tabs hero · not live · click the tabs to feel it</span></div></div>
+
+<nav class="nav">
+  <a href="#" class="wordmark">Dinesh Kumar</a>
+  <ul class="nav-links">
+    <li><a href="#">work</a></li>
+    <li><a href="#">story</a></li>
+    <li><a class="nav-resume" href="#">résumé</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Hi, I'm <span class="nm">Dinesh<svg viewBox="0 0 74 7" fill="none" stroke="#1F4D3E" stroke-width="2" stroke-linecap="round"><path d="M1 4C8 1 14 1 21 4s13 3 20 0 13-3 20 0"/></svg></span>, a senior product designer.</p>
+
+    <div class="stage" aria-live="polite">
+      <p class="line" data-tab="what">I design <em>B2B enterprise products</em> that solve complex workflows, and I push for <em>progress over pixels</em>.</p>
+      <p class="line" data-tab="who" hidden>For the analysts, account managers, and ops teams who run <em>mortgage and lending</em> workflows all day.</p>
+      <p class="line" data-tab="how" hidden>Research-led and structure-first. I sit in the workflow <em>before I draw a screen</em>.</p>
+      <p class="line" data-tab="where" hidden>Now at <em>Onity</em>. Dell and Red Hat before that.</p>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="A few angles on Dinesh">
+      <button class="tab" role="tab" aria-selected="true"  data-tab="what">What I do</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="who">Who it's for</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="how">How I work</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="where">Where I've been</button>
+    </div>
+
+    <div class="chat">
+      <div class="chat-pill">
+        <svg class="chat-spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 13.4 9.4 20.8 10.8 13.4 12.2 12 19.6 10.6 12.2 3.2 10.8 10.6 9.4Z"/></svg>
+        <span class="chat-text">Ask me anything about Dinesh</span>
+        <span class="chat-kbd">Enter</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="panel">
+  <div class="wrap">
+    <h2>The tabs</h2>
+    <div class="row"><div class="t">What I do <small>rewritten</small></div><div class="c">I design <em>B2B enterprise products</em> that solve complex workflows, and I push for <em>progress over pixels</em>.</div></div>
+    <div class="row"><div class="t">Who it's for <small>kept</small></div><div class="c">For the analysts, account managers, and ops teams who run <em>mortgage and lending</em> workflows all day.</div></div>
+    <div class="row"><div class="t">How I work <small>kept (light trim)</small></div><div class="c">Research-led and structure-first. I sit in the workflow <em>before I draw a screen</em>.</div></div>
+    <div class="row"><div class="t">Where I've been <small>renamed from "The path"</small></div><div class="c">Now at <em>Onity</em>. Dell and Red Hat before that.</div></div>
+
+    <div class="change">
+      <p><b>What changed in the layout, so it stops feeling stacked:</b></p>
+      <p>The old hero had four competing bands (name, a line, tabs, chat). Now there is one clear hierarchy: a small kicker line up top, then the big changing statement as the single focal point, the tabs sit quietly under it as a control, and the chat is given real breathing room below. One quiet fade when you switch tabs.</p>
+      <p style="margin-bottom:0;"><b>Two notes:</b> I dropped the old "Now" tab (its content lived in both "What I do" and "Where I've been"). And "progress over pixels" now lives in "What I do" as you asked, so I trimmed it from "How I work" to avoid saying it twice. Say the word if you want "Now" back or "How I work" kept verbatim.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const lines = document.querySelectorAll('.line');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.setAttribute('aria-selected', String(x === t)));
+    lines.forEach(l => l.hidden = (l.dataset.tab !== t.dataset.tab));
+  }));
+</script>
+
+</body>
+</html>

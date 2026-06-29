@@ -26,8 +26,8 @@
     --ink-soft: #4a4a4a;
     --ink-mute: #6E675C;
     --line: rgba(23, 23, 23, 0.10);
-    --accent: #1F4D3E;
-    --accent-soft: #e8efe9;
+    --accent: #1B54C0;
+    --accent-soft: #E7EEFB;
     --warn: #fff3e0;
     --warn-ink: #8a4b00;
     --display: "Hanken Grotesk", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -112,20 +112,20 @@
   }
   .chip-tag.status {
     background: var(--accent-soft);
-    border-color: rgba(31, 77, 62, 0.20);
+    border-color: rgba(27,84,192, 0.20);
     color: var(--accent);
   }
   .chip-tag.status .dot {
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(31, 77, 62, 0.12);
+    box-shadow: 0 0 0 3px rgba(27,84,192, 0.12);
     flex-shrink: 0;
     animation: pulse 2.4s ease-in-out infinite;
   }
   @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 4px rgba(31, 77, 62, 0.14); }
-    50% { box-shadow: 0 0 0 7px rgba(31, 77, 62, 0.04); }
+    0%, 100% { box-shadow: 0 0 0 4px rgba(27,84,192, 0.14); }
+    50% { box-shadow: 0 0 0 7px rgba(27,84,192, 0.04); }
   }
   .hero-grid {
     display: grid;
@@ -1080,8 +1080,8 @@
     transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
   }
   .ow-item:hover {
-    background: rgba(31,77,62,0.04);
-    border-color: rgba(31,77,62,0.25);
+    background: rgba(27,84,192,0.04);
+    border-color: rgba(27,84,192,0.25);
     transform: translateY(-2px);
   }
   .ow-title {
@@ -1241,10 +1241,10 @@
   .site-nav a.site-link:hover { color: var(--accent); }
   .site-nav .nav-resume {
     font-family: var(--body); font-size: 13px; font-weight: 500; color: var(--accent);
-    text-decoration: none; padding: 6px 14px; border: 1px solid rgba(31,77,62,0.30);
+    text-decoration: none; padding: 6px 14px; border: 1px solid rgba(27,84,192,0.30);
     border-radius: 999px; transition: background 200ms ease, border-color 200ms ease, transform 180ms ease;
   }
-  .site-nav .nav-resume:hover { background: rgba(31,77,62,0.06); border-color: rgba(31,77,62,0.55); transform: translateY(-1px); }
+  .site-nav .nav-resume:hover { background: rgba(27,84,192,0.06); border-color: rgba(27,84,192,0.55); transform: translateY(-1px); }
   @media (max-width: 640px) {
     .site-nav { padding: 20px 22px; }
     .site-nav ul { gap: 18px; }
@@ -1255,7 +1255,7 @@
   .an-fig{margin:0;}
   .an-strip{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 14px;border:1px solid var(--line);border-bottom:none;border-radius:10px 10px 0 0;background:var(--surface);}
   .an-sl{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);}
-  .an-chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:5px 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);border:1px solid rgba(31,77,62,.18);}
+  .an-chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:5px 11px;border-radius:999px;background:var(--accent-soft);color:var(--accent);border:1px solid rgba(27,84,192,.18);}
   .an-chip .an-tick{width:14px;height:14px;border-radius:50%;background:var(--accent);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:8px;flex-shrink:0;}
   .an-chip.clear{background:transparent;color:var(--ink-mute);border-color:var(--line);}
   .an-stage{position:relative;line-height:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#f4f4ef;}
@@ -1264,7 +1264,7 @@
   .an-spot{position:absolute;width:0;height:0;z-index:3;}
   .an-hot{position:absolute;left:0;top:0;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;cursor:pointer;background:var(--accent);color:#fff;border:3px solid #fff;font-family:var(--body);font-size:13px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;padding:0;box-shadow:0 3px 10px rgba(15,8,40,.28);animation:an-pulse 2.6s ease-in-out infinite;}
   .an-hot:hover,.an-hot:focus-visible{outline:none;transform:translate(-50%,-50%) scale(1.12);}
-  @keyframes an-pulse{0%,100%{box-shadow:0 0 0 0 rgba(31,77,62,.34),0 3px 10px rgba(15,8,40,.28);}50%{box-shadow:0 0 0 8px rgba(31,77,62,0),0 3px 10px rgba(15,8,40,.28);}}
+  @keyframes an-pulse{0%,100%{box-shadow:0 0 0 0 rgba(27,84,192,.34),0 3px 10px rgba(15,8,40,.28);}50%{box-shadow:0 0 0 8px rgba(27,84,192,0),0 3px 10px rgba(15,8,40,.28);}}
   .an-tip{position:absolute;z-index:5;width:240px;background:#171717;color:#fff;border-radius:11px;padding:12px 14px;line-height:1.45;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(4px);transition:opacity .18s ease,transform .18s ease;box-shadow:0 14px 36px rgba(0,0,0,.32);}
   .an-tag{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#9fd9ba;font-weight:700;margin-bottom:5px;}
   .an-tx{font-size:12.5px;color:#fff;}
@@ -1388,7 +1388,7 @@
       <div class="nda-ico" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
       <div class="nda-copy">
         <h4>A note on confidentiality</h4>
-        <p>To respect Onity Group's confidentiality, I've changed the visual treatment, screen names, and workflow details shown here. I chose not to password-gate this case study, since gates only add friction for the people I want to reach; instead I recreated the screens to keep the work open and compliant. The approach, decisions, and outcomes are intact and mine. For the real product and a deeper walkthrough, <a href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener" style="color:#1F4D3E;font-weight:600;">reach out</a>.</p>
+        <p>To respect Onity Group's confidentiality, I've changed the visual treatment, screen names, and workflow details shown here. I chose not to password-gate this case study, since gates only add friction for the people I want to reach; instead I recreated the screens to keep the work open and compliant. The approach, decisions, and outcomes are intact and mine. For the real product and a deeper walkthrough, <a href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener" style="color:#1B54C0;font-weight:600;">reach out</a>.</p>
       </div>
     </div>
   </div>

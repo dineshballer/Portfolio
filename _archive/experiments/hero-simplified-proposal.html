@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero proposal — simplified</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400..700;1,400..700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf7;--surface:#fff;--ink:#171717;--ink-soft:#4a4a4a;--ink-mute:#6E675C;
+    --line:rgba(23,23,23,.10);--accent:#1F4D3E;--accent-soft:#e8efe9;
+    --font:"Hanken Grotesk",-apple-system,system-ui,sans-serif;
+    --ease:cubic-bezier(.2,.65,.3,1);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 40px;}
+
+  /* proposal scaffolding (not part of the site) */
+  .proposal-bar{background:var(--ink);color:#fff;font-size:13px;padding:10px 0;}
+  .proposal-bar .wrap{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+  .proposal-bar b{color:#fff;}
+  .proposal-bar span{color:rgba(255,255,255,.7);}
+
+  /* nav (matches site) */
+  nav.nav{display:flex;align-items:center;justify-content:space-between;max-width:1080px;margin:0 auto;padding:32px 40px;}
+  .wordmark{font-family:"Caveat",cursive;font-size:22px;font-weight:600;color:var(--accent);text-decoration:none;}
+  .nav-links{display:flex;gap:30px;list-style:none;margin:0;padding:0;}
+  .nav-links a{font-size:14px;color:var(--ink-soft);text-decoration:none;}
+  .nav-resume{font-size:13px;color:var(--accent);border:1px solid rgba(31,77,62,.3);border-radius:999px;padding:6px 14px;text-decoration:none;}
+
+  /* ── SIMPLIFIED HERO ── */
+  .hero{padding:8vh 0 14vh;}
+  .greeting{font-size:16px;color:var(--ink-mute);margin:0 0 22px;display:flex;align-items:center;gap:10px;
+    opacity:0;transform:translateY(10px);animation:rise .7s var(--ease) .05s forwards;}
+  .greeting .wavy{display:inline-block;width:74px;height:8px;}
+  .hero h1{
+    font-size:clamp(40px,6.2vw,76px);font-weight:600;letter-spacing:-.03em;line-height:1.04;
+    margin:0;max-width:16ch;color:var(--ink);
+    opacity:0;transform:translateY(14px);animation:rise .8s var(--ease) .12s forwards;}
+  .hero h1 em{font-style:italic;color:var(--accent);}
+  .hero .meta{
+    margin:30px 0 0;font-size:16px;color:var(--ink-soft);max-width:60ch;line-height:1.6;
+    opacity:0;transform:translateY(12px);animation:rise .8s var(--ease) .22s forwards;}
+  .hero .meta .path{color:var(--ink);font-weight:500;}
+  .hero .meta .dot{color:var(--ink-mute);margin:0 8px;}
+
+  /* chat pill (kept, visual only) */
+  .chat{margin-top:44px;max-width:560px;
+    opacity:0;transform:translateY(12px);animation:rise .8s var(--ease) .32s forwards;}
+  .chat-pill{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);
+    border-radius:999px;padding:15px 18px;box-shadow:0 6px 22px -14px rgba(20,20,20,.3);}
+  .chat-spark{width:20px;height:20px;color:var(--accent);flex-shrink:0;}
+  .chat-text{font-size:15px;color:var(--ink-mute);}
+  .chat-kbd{margin-left:auto;font-size:11px;color:var(--ink-mute);border:1px solid var(--line);border-radius:6px;padding:3px 8px;}
+  .chat-note{font-size:12px;color:var(--ink-mute);margin:10px 4px 0;}
+
+  @keyframes rise{to{opacity:1;transform:translateY(0);}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;}.greeting,.hero h1,.hero .meta,.chat{opacity:1;transform:none;}}
+
+  /* ── options + notes panel (proposal only) ── */
+  .panel{border-top:1px solid var(--line);background:#fff;}
+  .panel .wrap{padding:44px 40px 64px;}
+  .panel h2{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-mute);font-weight:700;margin:0 0 18px;}
+  .opt{border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:14px;background:var(--bg);}
+  .opt .tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);}
+  .opt .line{font-size:clamp(24px,3.4vw,34px);font-weight:600;letter-spacing:-.02em;line-height:1.12;margin:8px 0 0;}
+  .opt .line em{font-style:italic;color:var(--accent);}
+  .opt.rec{box-shadow:0 0 0 2px var(--accent);}
+  .opt .recflag{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-left:8px;}
+  .meta-opts{margin-top:26px;}
+  .meta-opt{font-size:15px;color:var(--ink-soft);padding:10px 0;border-bottom:1px solid var(--line);}
+  .meta-opt b{color:var(--ink);font-weight:600;}
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:30px;}
+  .box h3{font-size:14px;margin:0 0 10px;font-weight:600;}
+  .box ul{margin:0;padding:0;list-style:none;}
+  .box li{font-size:14px;color:var(--ink-soft);padding-left:20px;position:relative;margin-bottom:8px;line-height:1.5;}
+  .box li::before{content:"";position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;}
+  .box.keep li::before{background:var(--accent);}
+  .box.cut li::before{background:#b03636;}
+  @media(max-width:760px){.twocol{grid-template-columns:1fr;}.wrap{padding-left:24px;padding-right:24px;}nav.nav{padding:24px;}}
+</style>
+</head>
+<body>
+
+<div class="proposal-bar"><div class="wrap"><b>Proposal preview</b><span>Simplified hero · not live · pick a headline and I'll ship it to prod</span></div></div>
+
+<nav class="nav">
+  <a href="#" class="wordmark">Dinesh Kumar</a>
+  <ul class="nav-links">
+    <li><a href="#">work</a></li>
+    <li><a href="#">story</a></li>
+    <li><a class="nav-resume" href="#">résumé</a></li>
+  </ul>
+</nav>
+
+<!-- SIMPLIFIED HERO (recommended headline shown) -->
+<header class="hero">
+  <div class="wrap">
+    <p class="greeting">Hi, I'm Dinesh
+      <svg class="wavy" viewBox="0 0 74 8" fill="none" stroke="#1F4D3E" stroke-width="2" stroke-linecap="round"><path d="M1 5C8 1 14 1 21 5s13 4 20 0 13-4 20 0"/></svg>
+    </p>
+    <h1>I design <em>calm</em> software for the people who run financial operations.</h1>
+    <p class="meta">
+      <span class="path">Senior product designer.</span> Now at Onity, building the portals and dashboards that mortgage servicing teams use every day.<span class="dot">·</span>Dell and Red Hat before that.
+    </p>
+
+    <div class="chat">
+      <div class="chat-pill">
+        <svg class="chat-spark" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 13.4 9.4 20.8 10.8 13.4 12.2 12 19.6 10.6 12.2 3.2 10.8 10.6 9.4Z"/></svg>
+        <span class="chat-text">Ask me anything about Dinesh</span>
+        <span class="chat-kbd">Enter</span>
+      </div>
+      <p class="chat-note">The Sage chat stays. It just sits under a calmer hero now.</p>
+    </div>
+  </div>
+</header>
+
+<!-- PROPOSAL DETAIL -->
+<section class="panel">
+  <div class="wrap">
+    <h2>Pick your headline</h2>
+
+    <div class="opt rec">
+      <span class="tag">Option A<span class="recflag">· recommended</span></span>
+      <p class="line">I design <em>calm</em> software for the people who run financial operations.</p>
+    </div>
+    <div class="opt">
+      <span class="tag">Option B</span>
+      <p class="line">I build the <em>dashboards and portals</em> that mortgage and lending teams rely on every day.</p>
+    </div>
+    <div class="opt">
+      <span class="tag">Option C</span>
+      <p class="line">I make complex financial workflows <em>feel simple</em>.</p>
+    </div>
+
+    <div class="meta-opts">
+      <h2 style="margin-top:8px;">The small line under it</h2>
+      <div class="meta-opt"><b>Recommended:</b> Senior product designer. Now at Onity, building the portals and dashboards mortgage servicing teams use every day. Dell and Red Hat before that.</div>
+      <div class="meta-opt"><b>Shorter:</b> Senior product designer · Now at Onity · Dell and Red Hat before that.</div>
+    </div>
+
+    <div class="twocol">
+      <div class="box keep">
+        <h3>Kept</h3>
+        <ul>
+          <li>One bold, genuine headline</li>
+          <li>A single small line for who I am and where I've been (Red Hat, Dell, Onity)</li>
+          <li>The Sage "Ask me anything" chat, directly under the hero</li>
+          <li>Generous whitespace, one quiet fade-in, your forest accent and Hanken Grotesk</li>
+        </ul>
+      </div>
+      <div class="box cut">
+        <h3>Archived</h3>
+        <ul>
+          <li>The 5 chip tabs: What I do / Who it's for / How I work / The path / Now</li>
+          <li>The rotating lens line that changed per tab</li>
+          <li>The visual clutter and the extra decisions a visitor had to make in the first 10 seconds</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
