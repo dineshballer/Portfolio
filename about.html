@@ -946,11 +946,6 @@
     padding: 40px 32px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
-  }
-  .award-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent);
   }
   .award-card::before {
     content: '';
@@ -960,18 +955,12 @@
     border-radius: 50%;
     background: radial-gradient(circle, rgba(27,84,192, 0.10), transparent 70%);
     filter: blur(40px);
-    transition: transform 0.6s var(--ease-out);
-  }
-  .award-card:hover::before {
-    transform: translate(-30px, 30px) scale(1.15);
   }
   .award-icon {
     font-size: 36px;
     margin-bottom: 20px;
     display: inline-block;
-    transition: transform 0.4s var(--ease-spring);
   }
-  .award-card:hover .award-icon { transform: rotate(-12deg) scale(1.1); }
   .award-name {
     font-family: var(--display);
     font-size: 26px;
@@ -1160,6 +1149,14 @@
   .real-icon.r4{color:#3c6fbf;}
   .award-icon{width:52px;height:52px;border-radius:14px;background:var(--accent-soft);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;}
   .award-icon svg{width:26px;height:26px;}
+  /* nav copy-email button (matches index.html) */
+  .nav-links{ align-items:center; }
+  .nav-copy-btn{ display:inline-flex; align-items:center; gap:7px; padding:6px 14px; font-family:var(--body); font-size:13px; font-weight:500; color:var(--accent); background:transparent; border:1px solid rgba(27,84,192,.30); border-radius:999px; cursor:pointer; letter-spacing:.01em; transition:background 200ms var(--ease), border-color 200ms var(--ease), transform 180ms var(--ease); }
+  .nav-copy-btn:hover{ background:rgba(27,84,192,.06); border-color:rgba(27,84,192,.55); transform:translateY(-1px); }
+  .nav-copy-btn:active{ transform:translateY(0); }
+  .nav-copy-btn .pulse-dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex-shrink:0; opacity:.5; animation:pulse-ring 2.4s ease infinite; }
+  @keyframes pulse-ring{ 0%{box-shadow:0 0 0 0 rgba(27,84,192,.45);} 60%{box-shadow:0 0 0 5px rgba(27,84,192,0);} 100%{box-shadow:0 0 0 0 rgba(27,84,192,0);} }
+  .nav-copy-btn.copied{ color:var(--accent); border-color:rgba(27,84,192,.55); background:rgba(27,84,192,.07); }
 </style>
 </head>
 <body>
@@ -1178,6 +1175,12 @@
       <li><a href="./about.html" class="active">story</a></li>
       <li><a href="https://www.linkedin.com/in/dineshkravikumar/" target="_blank" rel="noopener">LinkedIn&nbsp;↗</a></li>
       <li><a href="/resume.pdf" target="_blank" rel="noopener">résumé</a></li>
+      <li>
+        <button class="nav-copy-btn" id="nav-copy-email" aria-label="Copy email address">
+          <span class="pulse-dot" aria-hidden="true"></span>
+          <span id="nav-copy-label">copy email</span>
+        </button>
+      </li>
     </ul>
   </nav>
 
@@ -1187,7 +1190,7 @@
 
     <div class="hero-text">
       <h1>
-        I design <em>calm</em> B2B software for the analysts and ops teams who run <em>mortgage and lending</em> workflows
+        I design for the <em>quiet wins</em>.
       </h1>
 
       <div class="hero-intro">
@@ -1767,5 +1770,21 @@
   </div>
 </footer>
 
+<script>
+(() => {
+  const btn = document.getElementById("nav-copy-email");
+  const label = document.getElementById("nav-copy-label");
+  if (!btn) return;
+  let timer;
+  btn.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText("dineshkravikumar@gmail.com"); }
+    catch(_) { const ta=document.createElement("textarea"); ta.value="dineshkravikumar@gmail.com"; ta.style.cssText="position:fixed;opacity:0"; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); document.body.removeChild(ta); }
+    label.textContent = "copied ✓";
+    btn.classList.add("copied");
+    clearTimeout(timer);
+    timer = setTimeout(() => { label.textContent = "copy email"; btn.classList.remove("copied"); }, 2000);
+  });
+})();
+</script>
 </body>
 </html>
